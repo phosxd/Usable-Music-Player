@@ -172,4 +172,5 @@ unique_name_in_owner = true
 mix_target = 1
 playback_type = 2
 
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tools/Settings" to="." method="_on_settings_pressed"]
 [connection signal="finished" from="Audio" to="." method="_on_audio_finished"]

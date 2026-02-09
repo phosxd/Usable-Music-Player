@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bk5onib32ckly"]
+
+[node name="Example" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/PKExpressions = &"E for child in S.get_children(): print(child.name)"
+
+[node name="Explanation" type="Label" parent="."]
+layout_mode = 2
+autowrap_mode = 2
+metadata/PKExpressions = &"A:text explanation"
+
+[node name="Text Example 1" type="Label" parent="."]
+layout_mode = 2
+metadata/PKExpressions = &"A:text titles.a\nA:label_settings title_label_settings"
+
+[node name="Text Example 2" type="Label" parent="."]
+layout_mode = 2
+metadata/PKExpressions = &"A:text titles.b\nA:label_settings title_label_settings"
+
+[node name="Random Number" type="Label" parent="."]
+layout_mode = 2
+metadata/PKExpressions = &"V:text PK.random_number_template % randi_range(10000,99999)\nA:label_settings title_label_settings"
+
+[node name="FPS" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+metadata/PKExpressions = &"L:text current_fps"
+
+[node name="Slow Counter" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+metadata/PKExpressions = &"A:text frame_count\nL:text,1.25 frame_count"
+
+[node name="Text Example 3" type="Label" parent="."]
+layout_mode = 2
+metadata/PKExpressions = &"A:text bottom_text.0"

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://o4ncloi2x72l"]
+
+[ext_resource type="Script" uid="uid://cahoexqqkygm" path="res://Scenes/Dir Open/dir_open.gd" id="1_iq4jo"]
+
+[node name="Dir Open" type="FileDialog" unique_id=1648321339]
+oversampling_override = 1.0
+title = "Select Library"
+initial_position = 2
+visible = true
+force_native = true
+mode_overrides_title = false
+file_mode = 2
+access = 2
+use_native_dialog = true
+script = ExtResource("1_iq4jo")
+
+[connection signal="canceled" from="." to="." method="_on_canceled"]
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="dir_selected" from="." to="." method="_on_dir_selected"]
