@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dws2bmipsigb2"]
+
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="1_es5pc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6t3k2"]
+font_size = 12
+font_color = Color(0.59717613, 0.59717613, 0.5971761, 1)
+
+[node name="Details" type="HBoxContainer" unique_id=1700730573]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1603504897]
+layout_mode = 2
+texture = ExtResource("1_es5pc")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1953763841]
+layout_mode = 2
+
+[node name="Current Track" type="Label" parent="VBox" unique_id=846215707]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Track name.."
+
+[node name="Artist Album" type="Label" parent="VBox" unique_id=1544178085]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Artist name... - Album name..."
+label_settings = SubResource("LabelSettings_6t3k2")
