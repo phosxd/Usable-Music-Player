@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="3_hfg1r"]
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="3_y3v7k"]
 [ext_resource type="Texture2D" uid="uid://mljcfripi4u1" path="res://Assets/Icons/add.svg" id="6_imbg2"]
+[ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Assets/Icons/tree_arrow_left.svg" id="9_4e4y2"]
 [ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Assets/Icons/skip_backward.svg" id="9_hfg1r"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="10_4e4y2"]
 [ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Assets/Icons/skip_forward.svg" id="11_6t3k2"]
@@ -121,6 +122,26 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
+[node name="Top Bar" type="PanelContainer" parent="VBox/HBox/VBox" unique_id=1408049158]
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="VBox/HBox/VBox/Top Bar" unique_id=985577296]
+layout_mode = 2
+
+[node name="Page Back" type="Button" parent="VBox/HBox/VBox/Top Bar/HBox" unique_id=563927740]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+icon = ExtResource("9_4e4y2")
+flat = true
+
+[node name="Page Position" type="Label" parent="VBox/HBox/VBox/Top Bar/HBox" unique_id=1023386679]
+unique_name_in_owner = true
+self_modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 1
+
 [node name="Tab Content" type="VBoxContainer" parent="VBox/HBox/VBox" unique_id=1194316930]
 unique_name_in_owner = true
 layout_mode = 2
@@ -133,41 +154,41 @@ size_flags_vertical = 6
 text = "No tab opened..."
 horizontal_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="VBox/HBox/VBox" unique_id=1502318363]
+[node name="Player Bar" type="PanelContainer" parent="VBox/HBox/VBox" unique_id=1502318363]
 layout_mode = 2
 
-[node name="Player" type="VBoxContainer" parent="VBox/HBox/VBox/PanelContainer" unique_id=668194659]
+[node name="Player" type="VBoxContainer" parent="VBox/HBox/VBox/Player Bar" unique_id=668194659]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Queue" type="ScrollContainer" parent="VBox/HBox/VBox/PanelContainer/Player" unique_id=857593353]
+[node name="Queue" type="ScrollContainer" parent="VBox/HBox/VBox/Player Bar/Player" unique_id=857593353]
 layout_mode = 2
 vertical_scroll_mode = 0
 
-[node name="Queue" type="HBoxContainer" parent="VBox/HBox/VBox/PanelContainer/Player/Queue" unique_id=635367219]
+[node name="Queue" type="HBoxContainer" parent="VBox/HBox/VBox/Player Bar/Player/Queue" unique_id=635367219]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Controls" type="HBoxContainer" parent="VBox/HBox/VBox/PanelContainer/Player" unique_id=1293503074]
+[node name="Controls" type="HBoxContainer" parent="VBox/HBox/VBox/Player Bar/Player" unique_id=1293503074]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Skip Backward" type="Button" parent="VBox/HBox/VBox/PanelContainer/Player/Controls" unique_id=883856213]
+[node name="Skip Backward" type="Button" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=883856213]
 unique_name_in_owner = true
 layout_mode = 2
 text = " "
 icon = ExtResource("9_hfg1r")
 icon_alignment = 1
 
-[node name="Play Pause" type="Button" parent="VBox/HBox/VBox/PanelContainer/Player/Controls" unique_id=509900260]
+[node name="Play Pause" type="Button" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=509900260]
 unique_name_in_owner = true
 layout_mode = 2
 text = " "
 icon = ExtResource("10_4e4y2")
 icon_alignment = 1
 
-[node name="Skip Forward" type="Button" parent="VBox/HBox/VBox/PanelContainer/Player/Controls" unique_id=340341016]
+[node name="Skip Forward" type="Button" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=340341016]
 unique_name_in_owner = true
 layout_mode = 2
 text = " "
@@ -183,4 +204,5 @@ playback_type = 2
 [connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tab Button Artists" to="." method="_on_tab_button_pressed" binds= ["artists"]]
 [connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
 [connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
+[connection signal="pressed" from="VBox/HBox/VBox/Top Bar/HBox/Page Back" to="." method="_on_page_back_pressed"]
 [connection signal="finished" from="Audio" to="." method="_on_audio_finished"]

@@ -3,51 +3,53 @@
 [ext_resource type="Script" uid="uid://bufk41o60g01x" path="res://Scenes/Tabs/Settings/settings.gd" id="1_ytwd3"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="2_dm7qj"]
 
-[node name="Settings" type="VBoxContainer" unique_id=1214052994]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vu07l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpqc"]
+
+[node name="Settings" type="ScrollContainer" unique_id=1569633818]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource("1_ytwd3")
-
-[node name="Scroll" type="ScrollContainer" parent="." unique_id=1569633818]
-layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
+script = ExtResource("1_ytwd3")
 
-[node name="VBox" type="VBoxContainer" parent="Scroll" unique_id=876920326]
+[node name="VBox" type="VBoxContainer" parent="." unique_id=876920326]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Scroll/VBox" unique_id=480455043]
+[node name="Links" type="HBoxContainer" parent="VBox" unique_id=480455043]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="User Data" type="LinkButton" parent="Scroll/VBox/HBoxContainer" unique_id=764512823]
+[node name="User Data" type="Button" parent="VBox/Links" unique_id=23274312]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Open user data directory"
 text = "User Data"
-metadata/PKExpressions = &"V:uri OS.get_user_data_dir()"
 
-[node name="Source Code" type="LinkButton" parent="Scroll/VBox/HBoxContainer" unique_id=193250727]
+[node name="Source Code" type="Button" parent="VBox/Links" unique_id=1677530294]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Open source code repository"
 text = "Source Code"
-uri = "https://github.com/phosxd/usable-music-player"
 
-[node name="Report Issue" type="LinkButton" parent="Scroll/VBox/HBoxContainer" unique_id=1193064441]
+[node name="Report Issue" type="Button" parent="VBox/Links" unique_id=1460273289]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Open source code repository issues page"
 text = "Report an Issue"
-uri = "https://github.com/phosxd/usable-music-player/issues"
 
-[node name="Info" type="RichTextLabel" parent="Scroll/VBox" unique_id=1699263480]
+[node name="Info" type="RichTextLabel" parent="VBox" unique_id=1699263480]
 unique_name_in_owner = true
 layout_mode = 2
+focus_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vu07l")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xrpqc")
 bbcode_enabled = true
 text = "[b]Database:[/b]
 [color=yellow]Size:[/color] %smb (%s uncompressed)
@@ -56,29 +58,35 @@ text = "[b]Database:[/b]
 [b]Library:[/b]
 [color=yellow]Size:[/color] %smb (%s tracks)"
 fit_content = true
+selection_enabled = true
+drag_and_drop_selection_enabled = false
 
-[node name="Library" type="HBoxContainer" parent="Scroll/VBox" unique_id=48638074]
+[node name="Library" type="HBoxContainer" parent="VBox" unique_id=48638074]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/VBox/Library" unique_id=709594005]
+[node name="Label" type="Label" parent="VBox/Library" unique_id=709594005]
 layout_mode = 2
-tooltip_text = "Directory to grab all audio files from. We will only ever read from this directory, never write to it.
-
-Playlists & other data are stored in app user data."
+tooltip_text = "Directory to grab all audio files from. We will only ever read from this directory, never write to it."
 mouse_filter = 1
 text = "Library"
 
-[node name="Library Path" type="LineEdit" parent="Scroll/VBox/Library" unique_id=2022043686]
+[node name="Library Path" type="LineEdit" parent="VBox/Library" unique_id=2022043686]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "No directory selected..."
 editable = false
 
-[node name="Select Library" type="Button" parent="Scroll/VBox/Library" unique_id=956764194]
+[node name="Rescan Library" type="Button" parent="VBox/Library" unique_id=1633868751]
 unique_name_in_owner = true
 layout_mode = 2
-icon = ExtResource("2_dm7qj")
+tooltip_text = "Scan the entire library for changes & update accordingly.
 
-[connection signal="text_changed" from="Scroll/VBox/Library/Library Path" to="." method="_on_library_path_text_changed"]
-[connection signal="pressed" from="Scroll/VBox/Library/Select Library" to="." method="_on_select_library_pressed"]
+You should do this everytime you add new tracks to your library."
+text = "Rescan Library"
+
+[node name="Select Library" type="Button" parent="VBox/Library" unique_id=956764194]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Select directory"
+icon = ExtResource("2_dm7qj")

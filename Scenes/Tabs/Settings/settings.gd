@@ -42,3 +42,19 @@ func _on_library_path_text_changed(new_text:String) -> void:
 		update()
 		popup.queue_free()
 	)
+
+
+func _on_rescan_library_pressed() -> void:
+	_on_library_path_text_changed(%'Library Path'.text)
+
+
+func _on_user_data_pressed() -> void:
+	OS.shell_open(OS.get_user_data_dir())
+
+
+func _on_source_code_pressed() -> void:
+	OS.shell_open(AppInfo.source_code)
+
+
+func _on_report_issue_pressed() -> void:
+	OS.shell_open(AppInfo.issues_page)
