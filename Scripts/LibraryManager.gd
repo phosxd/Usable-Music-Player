@@ -113,7 +113,7 @@ static func index_file(path:String) -> void:
 	var track_number := metadata.track_no
 	if artist.is_empty(): artist = 'UNKNOWN'
 	if album.is_empty(): album = 'UNKNOWN'
-	if track_title.is_empty(): track_title = path.split('/')[-1]
+	if track_title.is_empty(): track_title = path.split('/')[-1].split('.')[0]
 	# Add to database.
 	var db_artist:Dictionary = database.artists.get_or_add(artist, {'albums':{}})
 	var db_album:Dictionary = db_artist.albums.get_or_add(album, {

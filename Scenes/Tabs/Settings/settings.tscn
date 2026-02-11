@@ -90,3 +90,10 @@ unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Select directory"
 icon = ExtResource("2_dm7qj")
+
+[connection signal="pressed" from="VBox/Links/User Data" to="." method="_on_user_data_pressed"]
+[connection signal="pressed" from="VBox/Links/Source Code" to="." method="_on_source_code_pressed"]
+[connection signal="pressed" from="VBox/Links/Report Issue" to="." method="_on_report_issue_pressed"]
+[connection signal="text_changed" from="VBox/Library/Library Path" to="." method="_on_library_path_text_changed"]
+[connection signal="pressed" from="VBox/Library/Rescan Library" to="." method="_on_rescan_library_pressed"]
+[connection signal="pressed" from="VBox/Library/Select Library" to="." method="_on_select_library_pressed"]

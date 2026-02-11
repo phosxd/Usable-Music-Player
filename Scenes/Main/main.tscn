@@ -12,6 +12,11 @@
 [ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Assets/Icons/skip_backward.svg" id="9_hfg1r"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="10_4e4y2"]
 [ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Assets/Icons/skip_forward.svg" id="11_6t3k2"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="13_6t3k2"]
+[ext_resource type="Texture2D" uid="uid://bkkmi7knca7st" path="res://Assets/Icons/audio.svg" id="14_vk4q2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vk4q2"]
+font_size = 12
 
 [node name="Main" type="Control" unique_id=2008879500]
 layout_mode = 3
@@ -170,6 +175,11 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="_label" type="Label" parent="VBox/HBox/VBox/Player Bar/Player/Queue/Queue" unique_id=1342404503]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "No tracks queued..."
+
 [node name="Controls" type="HBoxContainer" parent="VBox/HBox/VBox/Player Bar/Player" unique_id=1293503074]
 unique_name_in_owner = true
 layout_mode = 2
@@ -177,6 +187,7 @@ layout_mode = 2
 [node name="Skip Backward" type="Button" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=883856213]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 4
 text = " "
 icon = ExtResource("9_hfg1r")
 icon_alignment = 1
@@ -184,6 +195,7 @@ icon_alignment = 1
 [node name="Play Pause" type="Button" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=509900260]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 4
 text = " "
 icon = ExtResource("10_4e4y2")
 icon_alignment = 1
@@ -191,9 +203,87 @@ icon_alignment = 1
 [node name="Skip Forward" type="Button" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=340341016]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 4
 text = " "
 icon = ExtResource("11_6t3k2")
 icon_alignment = 1
+
+[node name="Track Info" type="PanelContainer" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=25253419]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Open Current Track" type="Button" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info" unique_id=487400687]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.78431374)
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info" unique_id=2048716029]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Track Cover" type="TextureRect" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info/HBox" unique_id=775996927]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("13_6t3k2")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="VBox" type="VBoxContainer" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info/HBox" unique_id=214543257]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Track Name" type="Label" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info/HBox/VBox" unique_id=1989536274]
+unique_name_in_owner = true
+layout_mode = 2
+text = "No track playing..."
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Artist Name" type="Label" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info/HBox/VBox" unique_id=1360542628]
+unique_name_in_owner = true
+self_modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+text = "No artist - No album"
+label_settings = SubResource("LabelSettings_vk4q2")
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Current Track Length" type="Label" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info/HBox" unique_id=720579045]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0:00 / 0:00"
+
+[node name="Sep 1" type="VSeparator" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=1844514872]
+layout_mode = 2
+
+[node name="Audio Icon" type="TextureRect" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=1636992296]
+layout_mode = 2
+texture = ExtResource("14_vk4q2")
+stretch_mode = 5
+
+[node name="Volume" type="HSlider" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=1054243039]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+value = 100.0
+tick_count = 4
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="Progress" type="HBoxContainer" parent="VBox/HBox/VBox/Player Bar/Player" unique_id=1249537283]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Play Progress" type="HSlider" parent="VBox/HBox/VBox/Player Bar/Player/Progress" unique_id=1646692005]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 
 [node name="Audio" type="AudioStreamPlayer" parent="." unique_id=219349854]
 unique_name_in_owner = true

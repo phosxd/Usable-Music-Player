@@ -14,12 +14,12 @@ func _ready() -> void:
 			var album:Dictionary = LibraryManager.database.artists[artist_name].albums[album_name]
 			for track in album.tracks:
 				if track is not Dictionary: continue
-				add_card(track.title, track.length, album_name, artist_name, album.cover, _on_track_selected.bind(track.path))
+				add_card(track.title, track.path, track.length, album_name, artist_name, album.cover, _on_track_selected.bind(track.path))
 
 
-func add_card(track_name:String, track_length:float, album_name:String, artist_name:String, album_cover, callback:Callable) -> void:
+func add_card(track_name:String, track_path:String, track_length:float, album_name:String, artist_name:String, album_cover, callback:Callable) -> void:
 	var card:Control = card_scene.instantiate()
-	card.init(track_name, track_length, album_name, artist_name, album_cover)
+	card.init(track_name, track_path, track_length, album_name, artist_name, album_cover)
 	card.selected.connect(callback)
 	%Grid.add_child(card)
 
