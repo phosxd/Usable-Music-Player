@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://dd6tyj20c15hb"]
+
+[ext_resource type="Script" uid="uid://y00lv45g0138" path="res://Scenes/Tabs/Artists/card.gd" id="1_7rdfy"]
+
+[node name="Card" type="PanelContainer" unique_id=927718466]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7rdfy")
+
+[node name="Button" type="Button" parent="." unique_id=481831511]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1832504744]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Images" type="GridContainer" parent="VBox" unique_id=1519472399]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+columns = 2
+
+[node name="Label" type="Label" parent="VBox" unique_id=824305555]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Artist name..."
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 5
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

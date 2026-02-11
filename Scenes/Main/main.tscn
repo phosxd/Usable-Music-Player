@@ -71,13 +71,14 @@ layout_mode = 2
 tooltip_text = "Import playlist"
 icon = ExtResource("3_hfg1r")
 
-[node name="Settings" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox/Tools" unique_id=2144540982]
+[node name="Tab Button Settings" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox/Tools" unique_id=2144540982]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Settings"
+toggle_mode = true
 icon = ExtResource("2_hryqi")
 
-[node name="Tab Button Artists" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=1763016178]
+[node name="Tab Button Artists" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=1763016178 groups=["Tab Button"]]
 unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
@@ -85,7 +86,7 @@ text = "Artists"
 icon = ExtResource("2_xlvfx")
 alignment = 0
 
-[node name="Tab Button Albums2" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=1427389950]
+[node name="Tab Button Albums" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=1427389950 groups=["Tab Button"]]
 unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
@@ -93,7 +94,7 @@ text = "Albums"
 icon = ExtResource("3_y3v7k")
 alignment = 0
 
-[node name="Tab Button Tracks" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=1047248625]
+[node name="Tab Button Tracks" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=1047248625 groups=["Tab Button"]]
 unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
@@ -125,6 +126,12 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="_label" type="Label" parent="VBox/HBox/VBox/Tab Content" unique_id=850495634]
+layout_mode = 2
+size_flags_vertical = 6
+text = "No tab opened..."
+horizontal_alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="VBox/HBox/VBox" unique_id=1502318363]
 layout_mode = 2
@@ -172,5 +179,8 @@ unique_name_in_owner = true
 mix_target = 1
 playback_type = 2
 
-[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tools/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tools/Tab Button Settings" to="." method="_on_tab_button_pressed" binds= ["settings"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tab Button Artists" to="." method="_on_tab_button_pressed" binds= ["artists"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
 [connection signal="finished" from="Audio" to="." method="_on_audio_finished"]

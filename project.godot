@@ -15,8 +15,14 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Usable Music Player"
+config/description="A usable music player."
 run/main_scene="uid://clcbjy34jselh"
+run/print_header=false
+config/use_custom_user_dir=true
+config/custom_user_dir_name="SOHP/Usable Music Player"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+run/low_processor_mode=true
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [autoload]
@@ -25,12 +31,14 @@ PowerKey="*uid://dpkv4s4787jc1"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/PowerKey/plugin.cfg")
+enabled=PackedStringArray("res://addons/PowerKey/plugin.cfg", "res://addons/music_metadata/plugin.cfg")
 
 [file_customization]
 
 folder_colors={
-"res://Assets/": "yellow"
+"res://Assets/": "yellow",
+"res://Scenes/": "blue",
+"res://Scripts/": "red"
 }
 
 [gui]
@@ -41,3 +49,4 @@ theme/custom="uid://b41t6vrmtbok6"
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+shader_compiler/shader_cache/enabled=false

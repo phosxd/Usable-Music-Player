@@ -6,8 +6,6 @@
 oversampling_override = 1.0
 title = "Select Library"
 initial_position = 2
-visible = true
-force_native = true
 mode_overrides_title = false
 file_mode = 2
 access = 2
