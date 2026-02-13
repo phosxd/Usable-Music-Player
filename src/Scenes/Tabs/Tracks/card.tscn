@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://bup81pbj7sl2i" path="res://Assets/Icons/options.svg" id="2_1pull"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="2_57cvb"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_57cvb"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_pbwpk"]
 font_size = 12
 
@@ -26,15 +28,17 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/icon_max_width = 14
 icon = ExtResource("2_1pull")
-item_count = 4
+item_count = 5
 popup/item_0/text = "Play (replace queue)"
 popup/item_0/id = 0
 popup/item_1/text = "Add to queue"
-popup/item_1/id = 3
+popup/item_1/id = 1
 popup/item_2/text = "Add to playlist"
 popup/item_2/id = 2
 popup/item_3/text = "Go to file"
-popup/item_3/id = 1
+popup/item_3/id = 3
+popup/item_4/text = "Rescan"
+popup/item_4/id = 4
 
 [node name="Image" type="TextureRect" parent="HBox" unique_id=581354418]
 unique_name_in_owner = true
@@ -52,7 +56,19 @@ size_flags_vertical = 4
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="Name" type="Label" parent="HBox/VBox" unique_id=824305555]
+[node name="HBox" type="HBoxContainer" parent="HBox/VBox" unique_id=1963608250]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Track Number" type="Label" parent="HBox/VBox/HBox" unique_id=2042461310]
+unique_name_in_owner = true
+self_modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+text = "1"
+label_settings = SubResource("LabelSettings_57cvb")
+
+[node name="Name" type="Label" parent="HBox/VBox/HBox" unique_id=824305555]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

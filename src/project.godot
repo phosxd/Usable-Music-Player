@@ -28,6 +28,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 PowerKey="*uid://dpkv4s4787jc1"
+PlayerManager="*uid://bsri8hvvykwnh"
 
 [editor_plugins]
 

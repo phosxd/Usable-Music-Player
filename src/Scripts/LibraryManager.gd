@@ -33,10 +33,17 @@ static var database:Dictionary = {
 static var db_cache_size_compressed:int =0
 ## Database cache size in bytes.
 static var db_cache_size:int = 0
-## Library directory size in bytes.
-static var library_size:int = 0
-## Number of tracks in the library directory.
-static var library_track_count:int = 0
+
+
+## Rescans the track & updates the database accordingly.
+## Returns the updated DBTrack.
+static func rescan_track(track:DBTrack) -> DBTrack:
+	database.artists[track.artist.name].albums[track.album.name].tracks.set(track.number, null)
+	database.library_track_count -= 1
+	var track_size = FileAccess.get_size(track.path)
+	if track_size > 0: database.library_size -= track_size
+	index_file(track.path)
+	return DBTrack.new(track.artist, track.album, track.number)
 
 
 static func wipe_database() -> void:
@@ -70,10 +77,6 @@ static func load_library_from_cache() -> void:
 	if result is Dictionary:
 		database = result
 
-	library_size = database.get('library_size', 0)
-	library_track_count = database.get('library_track_count', 0)
-
-
 
 static func load_library(root_path:String) -> void:
 	LibraryManager.wipe_database()
@@ -81,8 +84,6 @@ static func load_library(root_path:String) -> void:
 	database.set('timestamp', Time.get_datetime_string_from_system(true, true))
 	_load_library(root_path)
 	save_database()
-	library_size = database.get('library_size', 0)
-	library_track_count = database.get('library_track_count', 0)
 
 
 static func _load_library(root_path:String) -> void:
@@ -111,14 +112,13 @@ static func index_file(path:String) -> void:
 	var album := metadata.album.replace('\n','')
 	var track_title:String = metadata.title.replace('\n','')
 	var track_number := metadata.track_no
-	if artist.is_empty(): artist = 'UNKNOWN'
-	if album.is_empty(): album = 'UNKNOWN'
 	if track_title.is_empty(): track_title = path.split('/')[-1].split('.')[0]
 	# Add to database.
 	var db_artist:Dictionary = database.artists.get_or_add(artist, {'albums':{}})
+	@warning_ignore('incompatible_ternary')
 	var db_album:Dictionary = db_artist.albums.get_or_add(album, {
-		'year': str(metadata.year) if metadata.year > 10 else 'UNKNOWN',
-		'genre': metadata.genre if not metadata.genre.is_empty() else 'UNKNOWN',
+		'year': str(metadata.year) if metadata.year > 10 else null,
+		'genre': metadata.genre if not metadata.genre.is_empty() else null,
 		'cover': metadata.get_most_relevent_cover(),
 		'tracks': [],
 	})
@@ -126,6 +126,13 @@ static func index_file(path:String) -> void:
 	var track_data = {
 		'title': track_title,
 		'length': audio_stream.get_length(),
+		'channels': str(metadata.get_tag('channels',-1)),
+		'bit_rate': str(metadata.get_tag('bit_rate',-1)),
+		'sample_rate': str(metadata.get_tag('sample_rate',-1)),
+		'bpm': metadata.bpm,
+		'copyright': metadata.copyright,
+		'urls': metadata.urls,
+		'comments': metadata.comments,
 		'path': path,
 	}
 	if track_number > 0:

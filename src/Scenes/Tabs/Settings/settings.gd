@@ -15,8 +15,8 @@ func update() -> void:
 		LibraryManager.db_cache_size_compressed/1000/1000,
 		LibraryManager.db_cache_size/1000/1000,
 		LibraryManager.database.get('timestamp', 'Never'),
-		LibraryManager.library_size/1000/1000,
-		LibraryManager.library_track_count,
+		LibraryManager.database.library_size/1000/1000,
+		LibraryManager.database.library_track_count,
 	]
 	%'Library Path'.text = LibraryManager.database.location
 
@@ -49,7 +49,7 @@ func _on_rescan_library_pressed() -> void:
 
 
 func _on_user_data_pressed() -> void:
-	OS.shell_open(OS.get_user_data_dir())
+	OS.shell_show_in_file_manager(OS.get_user_data_dir())
 
 
 func _on_source_code_pressed() -> void:

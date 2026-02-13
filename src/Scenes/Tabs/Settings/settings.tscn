@@ -52,14 +52,17 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_vu07l")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_xrpqc")
 bbcode_enabled = true
 text = "[b]Database:[/b]
-[color=yellow]Size:[/color] %smb (%s uncompressed)
-[color=yellow]Last Updated:[/color] %s
+[color=light_blue]Size:[/color] %smb (%s uncompressed)
+[color=light_blue]Last Updated:[/color] %s
 
 [b]Library:[/b]
-[color=yellow]Size:[/color] %smb (%s tracks)"
+[color=light_blue]Size:[/color] %smb (%s tracks)"
 fit_content = true
 selection_enabled = true
 drag_and_drop_selection_enabled = false
+
+[node name="Sep 1" type="HSeparator" parent="VBox" unique_id=933197618]
+layout_mode = 2
 
 [node name="Library" type="HBoxContainer" parent="VBox" unique_id=48638074]
 layout_mode = 2
