@@ -94,6 +94,9 @@ layout_mode = 2
 tooltip_text = "Select directory"
 icon = ExtResource("2_dm7qj")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="VBox" unique_id=897758891]
+layout_mode = 2
+
 [connection signal="pressed" from="VBox/Links/User Data" to="." method="_on_user_data_pressed"]
 [connection signal="pressed" from="VBox/Links/Source Code" to="." method="_on_source_code_pressed"]
 [connection signal="pressed" from="VBox/Links/Report Issue" to="." method="_on_report_issue_pressed"]

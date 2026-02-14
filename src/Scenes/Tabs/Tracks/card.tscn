@@ -1,15 +1,23 @@
 [gd_scene format=3 uid="uid://wl3vx05t4mx8"]
 
 [ext_resource type="Script" uid="uid://crd0eykqnn4b0" path="res://Scenes/Tabs/Tracks/card.gd" id="1_pbwpk"]
-[ext_resource type="Texture2D" uid="uid://bup81pbj7sl2i" path="res://Assets/Icons/options.svg" id="2_1pull"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_1pull"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="2_57cvb"]
+[ext_resource type="LabelSettings" uid="uid://wadklneh8tg0" path="res://Assets/primary_label_dark.tres" id="4_cn4eg"]
+[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="5_b7mt2"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_57cvb"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cn4eg"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
 
 [sub_resource type="LabelSettings" id="LabelSettings_pbwpk"]
 font_size = 12
 
 [node name="Card" type="PanelContainer" unique_id=927718466]
+self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 60.0
@@ -17,72 +25,63 @@ grow_horizontal = 2
 script = ExtResource("1_pbwpk")
 
 [node name="Button" type="Button" parent="." unique_id=481831511]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="HBox" type="HBoxContainer" parent="." unique_id=387191703]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Options" type="MenuButton" parent="HBox" unique_id=1343021557]
+[node name="Image" type="Panel" parent="HBox" unique_id=1164999575]
 unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/icon_max_width = 14
-icon = ExtResource("2_1pull")
-item_count = 5
-popup/item_0/text = "Play (replace queue)"
-popup/item_0/id = 0
-popup/item_1/text = "Add to queue"
-popup/item_1/id = 1
-popup/item_2/text = "Add to playlist"
-popup/item_2/id = 2
-popup/item_3/text = "Go to file"
-popup/item_3/id = 3
-popup/item_4/text = "Rescan"
-popup/item_4/id = 4
-
-[node name="Image" type="TextureRect" parent="HBox" unique_id=581354418]
-unique_name_in_owner = true
+clip_children = 1
+custom_minimum_size = Vector2(75, 75)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cn4eg")
+script = ExtResource("2_1pull")
 texture = ExtResource("2_57cvb")
-expand_mode = 2
 stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
 
-[node name="VBox" type="VBoxContainer" parent="HBox" unique_id=1039579818]
+[node name="HBox" type="HBoxContainer" parent="HBox" unique_id=1963608250]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="HBox" type="HBoxContainer" parent="HBox/VBox" unique_id=1963608250]
-layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="Track Number" type="Label" parent="HBox/VBox/HBox" unique_id=2042461310]
+[node name="Track Number" type="Label" parent="HBox/HBox" unique_id=2042461310]
 unique_name_in_owner = true
 self_modulate = Color(0.75, 0.75, 0.75, 1)
 layout_mode = 2
 text = "1"
-label_settings = SubResource("LabelSettings_57cvb")
 
-[node name="Name" type="Label" parent="HBox/VBox/HBox" unique_id=824305555]
+[node name="Sep 1" type="VSeparator" parent="HBox/HBox" unique_id=1768593009]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Name" type="Label" parent="HBox/HBox" unique_id=824305555]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
 text = "Track name..."
-clip_text = true
-text_overrun_behavior = 5
+label_settings = ExtResource("4_cn4eg")
 
-[node name="Artist" type="Label" parent="HBox/VBox" unique_id=965784348]
+[node name="Sep 2" type="VSeparator" parent="HBox/HBox" unique_id=168385932]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Artist" type="Label" parent="HBox/HBox" unique_id=965784348]
 unique_name_in_owner = true
 self_modulate = Color(0.75, 0.75, 0.75, 1)
 layout_mode = 2
-size_flags_vertical = 8
-text = "Artist name... - Album name..."
+size_flags_horizontal = 3
+text = "Album name... - by artist name..."
+label_settings = ExtResource("5_b7mt2")
 clip_text = true
 text_overrun_behavior = 5
 
@@ -96,6 +95,7 @@ label_settings = SubResource("LabelSettings_pbwpk")
 [node name="Sep 1" type="VSeparator" parent="HBox" unique_id=1248280519]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Length" type="Label" parent="HBox" unique_id=369639375]
 unique_name_in_owner = true
@@ -105,5 +105,8 @@ text = "0:00"
 [node name="Sep 2" type="VSeparator" parent="HBox" unique_id=1825734486]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+mouse_filter = 2
 
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

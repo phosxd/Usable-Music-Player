@@ -20,6 +20,7 @@ run/main_scene="uid://clcbjy34jselh"
 run/print_header=false
 config/use_custom_user_dir=true
 config/custom_user_dir_name="SOHP/Usable Music Player"
+config/auto_accept_quit=false
 config/features=PackedStringArray("4.6", "GL Compatibility")
 run/low_processor_mode=true
 boot_splash/show_image=false
@@ -32,7 +33,7 @@ PlayerManager="*uid://bsri8hvvykwnh"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/PowerKey/plugin.cfg", "res://addons/music_metadata/plugin.cfg")
+enabled=PackedStringArray("res://addons/PowerKey/plugin.cfg", "res://addons/TextureRectRounded/plugin.cfg", "res://addons/music_metadata/plugin.cfg")
 
 [file_customization]
 

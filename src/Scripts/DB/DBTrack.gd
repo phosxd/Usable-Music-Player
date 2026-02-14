@@ -47,3 +47,12 @@ func _init(db_artist:DBArtist, db_album:DBAlbum, track_number:int, raw_info=null
 
 func _invalidate() -> void:
 	valid = false
+
+
+func get_stream() -> AudioStream:
+	return LibraryManager.load_audio(path)
+
+
+static func get_track_position_formatted(value:float) -> String:
+	var remainder := int(fmod(value,60))
+	return '%s:%s' % [int(value/60), ('0' if remainder < 10 else '') + str(remainder)]

@@ -1,0 +1,144 @@
+[gd_scene format=3 uid="uid://bo7ts6clgp3k6"]
+
+[ext_resource type="Script" uid="uid://dsftqlnga24af" path="res://Scenes/Player/player.gd" id="1_dd0ac"]
+[ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Assets/Icons/skip_backward.svg" id="1_htcer"]
+[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="2_dd0ac"]
+[ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Assets/Icons/skip_forward.svg" id="3_0u5uq"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="4_jlvik"]
+[ext_resource type="Texture2D" uid="uid://bkkmi7knca7st" path="res://Assets/Icons/audio.svg" id="5_gk6dx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vk4q2"]
+font_size = 12
+
+[node name="Player" type="VBoxContainer" unique_id=1333926168]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_constants/separation = 0
+script = ExtResource("1_dd0ac")
+
+[node name="Queue" type="ScrollContainer" parent="." unique_id=2061769273]
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="Queue" type="HBoxContainer" parent="Queue" unique_id=1962450365]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="_label" type="Label" parent="Queue/Queue" unique_id=99512310]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "No tracks queued..."
+
+[node name="Controls" type="HBoxContainer" parent="." unique_id=1424881654]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Skip Backward" type="Button" parent="Controls" unique_id=887661311]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+text = " "
+icon = ExtResource("1_htcer")
+icon_alignment = 1
+
+[node name="Play Pause" type="Button" parent="Controls" unique_id=689319497]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+text = " "
+icon = ExtResource("2_dd0ac")
+icon_alignment = 1
+
+[node name="Skip Forward" type="Button" parent="Controls" unique_id=25641869]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+text = " "
+icon = ExtResource("3_0u5uq")
+icon_alignment = 1
+
+[node name="Track Info" type="PanelContainer" parent="Controls" unique_id=1261719850]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Open Current Track" type="Button" parent="Controls/Track Info" unique_id=2114978259]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.78431374)
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="Controls/Track Info" unique_id=1794297873]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Track Cover" type="TextureRect" parent="Controls/Track Info/HBox" unique_id=1866886619]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_jlvik")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="VBox" type="VBoxContainer" parent="Controls/Track Info/HBox" unique_id=303485689]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Track Name" type="Label" parent="Controls/Track Info/HBox/VBox" unique_id=1362576810]
+unique_name_in_owner = true
+layout_mode = 2
+text = "No track playing..."
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Artist Name" type="Label" parent="Controls/Track Info/HBox/VBox" unique_id=450202542]
+unique_name_in_owner = true
+self_modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+text = "No artist - No album"
+label_settings = SubResource("LabelSettings_vk4q2")
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Track Length" type="Label" parent="Controls/Track Info/HBox" unique_id=563463115]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0:00 / 0:00"
+
+[node name="Sep 1" type="VSeparator" parent="Controls" unique_id=7527476]
+layout_mode = 2
+
+[node name="Audio Icon" type="TextureRect" parent="Controls" unique_id=602492324]
+layout_mode = 2
+texture = ExtResource("5_gk6dx")
+stretch_mode = 5
+
+[node name="Volume" type="HSlider" parent="Controls" unique_id=1459485244]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+value = 100.0
+
+[node name="Progress" type="HBoxContainer" parent="." unique_id=703227769]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Play Progress" type="HSlider" parent="Progress" unique_id=853495948]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 0.01
+
+[connection signal="pressed" from="Controls/Skip Backward" to="." method="_on_skip_backward_pressed"]
+[connection signal="pressed" from="Controls/Play Pause" to="." method="_on_play_pause_pressed"]
+[connection signal="pressed" from="Controls/Skip Forward" to="." method="_on_skip_forward_pressed"]
+[connection signal="pressed" from="Controls/Track Info/Open Current Track" to="." method="_on_open_current_track_pressed"]
+[connection signal="value_changed" from="Controls/Volume" to="." method="_on_volume_value_changed"]
+[connection signal="drag_ended" from="Progress/Play Progress" to="." method="_on_play_progress_drag_ended"]
+[connection signal="drag_started" from="Progress/Play Progress" to="." method="_on_play_progress_drag_started"]

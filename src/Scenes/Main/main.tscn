@@ -8,15 +8,22 @@
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="3_hfg1r"]
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="3_y3v7k"]
 [ext_resource type="Texture2D" uid="uid://mljcfripi4u1" path="res://Assets/Icons/add.svg" id="6_imbg2"]
-[ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Assets/Icons/tree_arrow_left.svg" id="9_4e4y2"]
-[ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Assets/Icons/skip_backward.svg" id="9_hfg1r"]
-[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="10_4e4y2"]
-[ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Assets/Icons/skip_forward.svg" id="11_6t3k2"]
-[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="13_6t3k2"]
-[ext_resource type="Texture2D" uid="uid://bkkmi7knca7st" path="res://Assets/Icons/audio.svg" id="14_vk4q2"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="9_6t3k2"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="9_hfg1r"]
+[ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Scenes/Player/player2.tscn" id="10_imbg2"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_vk4q2"]
-font_size = 12
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4e4y2"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hfg1r"]
+bg_color = Color(0.15, 0.15, 0.15, 0)
+shadow_color = Color(0, 0, 0, 0.50980395)
+shadow_size = 25
+shadow_offset = Vector2(0, 2)
 
 [node name="Main" type="Control" unique_id=2008879500]
 layout_mode = 3
@@ -28,6 +35,7 @@ grow_vertical = 2
 script = ExtResource("1_y3v7k")
 
 [node name="Background" type="Panel" parent="." unique_id=618173329]
+z_index = -1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -55,36 +63,48 @@ horizontal_scroll_mode = 0
 
 [node name="Panel" type="PanelContainer" parent="VBox/HBox/Sidebar" unique_id=1774174444]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBox" type="VBoxContainer" parent="VBox/HBox/Sidebar/Panel" unique_id=1503885424]
+[node name="Margin" type="MarginContainer" parent="VBox/HBox/Sidebar/Panel" unique_id=1800367145]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBox" type="VBoxContainer" parent="VBox/HBox/Sidebar/Panel/Margin" unique_id=1503885424]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Tools" type="HBoxContainer" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=1840235616]
+[node name="Search" type="HBoxContainer" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=359429552]
 layout_mode = 2
 
-[node name="Search" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox/Tools" unique_id=1213776138]
-unique_name_in_owner = true
+[node name="TextEdit" type="LineEdit" parent="VBox/HBox/Sidebar/Panel/Margin/VBox/Search" unique_id=161792188]
 layout_mode = 2
-tooltip_text = "Search entire library"
-icon = ExtResource("2_imbg2")
+size_flags_horizontal = 3
+placeholder_text = "Search..."
+right_icon = ExtResource("2_imbg2")
 
-[node name="Import" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox/Tools" unique_id=216821876]
-unique_name_in_owner = true
+[node name="Tools" type="HBoxContainer" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=1840235616]
 layout_mode = 2
-tooltip_text = "Import playlist"
-icon = ExtResource("3_hfg1r")
 
-[node name="Tab Button Settings" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox/Tools" unique_id=2144540982]
+[node name="Tab Button Settings" type="Button" parent="VBox/HBox/Sidebar/Panel/Margin/VBox/Tools" unique_id=2144540982]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 tooltip_text = "Settings"
 toggle_mode = true
 icon = ExtResource("2_hryqi")
+icon_alignment = 1
 
-[node name="Tab Button Artists" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=1763016178 groups=["Tab Button"]]
+[node name="Import" type="Button" parent="VBox/HBox/Sidebar/Panel/Margin/VBox/Tools" unique_id=216821876]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Import playlist"
+icon = ExtResource("3_hfg1r")
+icon_alignment = 1
+
+[node name="Tab Button Artists" type="Button" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=1763016178 groups=["Tab Button"]]
 unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
@@ -92,7 +112,7 @@ text = "Artists"
 icon = ExtResource("2_xlvfx")
 alignment = 0
 
-[node name="Tab Button Albums" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=1427389950 groups=["Tab Button"]]
+[node name="Tab Button Albums" type="Button" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=1427389950 groups=["Tab Button"]]
 unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
@@ -100,7 +120,7 @@ text = "Albums"
 icon = ExtResource("3_y3v7k")
 alignment = 0
 
-[node name="Tab Button Tracks" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=1047248625 groups=["Tab Button"]]
+[node name="Tab Button Tracks" type="Button" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=1047248625 groups=["Tab Button"]]
 unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
@@ -108,19 +128,45 @@ text = "Tracks"
 icon = ExtResource("1_1r6ip")
 alignment = 0
 
-[node name="Sep 1" type="HSeparator" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=894733907]
+[node name="Sep 1" type="HSeparator" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=894733907]
 layout_mode = 2
 
-[node name="Playlists" type="VBoxContainer" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=1774428216]
+[node name="Playlists" type="VBoxContainer" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=1774428216]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
-[node name="Add Playlist" type="Button" parent="VBox/HBox/Sidebar/Panel/VBox" unique_id=163145109]
+[node name="Add Playlist" type="Button" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=163145109]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Add playlist"
 icon = ExtResource("6_imbg2")
 icon_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=1146409671]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Currently Playing Track Cover" type="Panel" parent="VBox/HBox/Sidebar/Panel/Margin/VBox/CenterContainer" unique_id=994365269]
+unique_name_in_owner = true
+clip_children = 1
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_vertical = 10
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_4e4y2")
+script = ExtResource("9_6t3k2")
+texture = ExtResource("9_hfg1r")
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[node name="Tab Button Full Screen Player" type="Button" parent="VBox/HBox/Sidebar/Panel/Margin/VBox/CenterContainer" unique_id=1246569638]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.19607843)
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+toggle_mode = true
 
 [node name="VBox" type="VBoxContainer" parent="VBox/HBox" unique_id=665951843]
 layout_mode = 2
@@ -133,22 +179,16 @@ layout_mode = 2
 [node name="HBox" type="HBoxContainer" parent="VBox/HBox/VBox/Top Bar" unique_id=985577296]
 layout_mode = 2
 
-[node name="Page Back" type="Button" parent="VBox/HBox/VBox/Top Bar/HBox" unique_id=563927740]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 0
-icon = ExtResource("9_4e4y2")
-flat = true
-
 [node name="Page Position" type="Label" parent="VBox/HBox/VBox/Top Bar/HBox" unique_id=1023386679]
 unique_name_in_owner = true
-self_modulate = Color(0.75, 0.75, 0.75, 1)
+self_modulate = Color(0.75, 0.75, 0.75, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 autowrap_mode = 1
 
-[node name="Tab Content" type="VBoxContainer" parent="VBox/HBox/VBox" unique_id=1194316930]
+[node name="Tab Content" type="VBoxContainer" parent="VBox/HBox/VBox" unique_id=249872197]
 unique_name_in_owner = true
+z_index = -1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -159,140 +199,21 @@ size_flags_vertical = 6
 text = "No tab opened..."
 horizontal_alignment = 1
 
-[node name="Player Bar" type="PanelContainer" parent="VBox/HBox/VBox" unique_id=1502318363]
-layout_mode = 2
-
-[node name="Player" type="VBoxContainer" parent="VBox/HBox/VBox/Player Bar" unique_id=668194659]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Queue" type="ScrollContainer" parent="VBox/HBox/VBox/Player Bar/Player" unique_id=857593353]
-layout_mode = 2
-vertical_scroll_mode = 0
-
-[node name="Queue" type="HBoxContainer" parent="VBox/HBox/VBox/Player Bar/Player/Queue" unique_id=635367219]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="_label" type="Label" parent="VBox/HBox/VBox/Player Bar/Player/Queue/Queue" unique_id=1342404503]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "No tracks queued..."
-
-[node name="Controls" type="HBoxContainer" parent="VBox/HBox/VBox/Player Bar/Player" unique_id=1293503074]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Skip Backward" type="Button" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=883856213]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 4
-text = " "
-icon = ExtResource("9_hfg1r")
-icon_alignment = 1
-
-[node name="Play Pause" type="Button" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=509900260]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 4
-text = " "
-icon = ExtResource("10_4e4y2")
-icon_alignment = 1
-
-[node name="Skip Forward" type="Button" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=340341016]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 4
-text = " "
-icon = ExtResource("11_6t3k2")
-icon_alignment = 1
-
-[node name="Track Info" type="PanelContainer" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=25253419]
+[node name="Player Bar" type="MarginContainer" parent="VBox/HBox/VBox" unique_id=477050872]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="Open Current Track" type="Button" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info" unique_id=487400687]
+[node name="Player Shadow" type="Panel" parent="VBox/HBox/VBox/Player Bar" unique_id=1496811867]
 unique_name_in_owner = true
-self_modulate = Color(1, 1, 1, 0.78431374)
+z_index = -1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hfg1r")
+
+[node name="Player" parent="VBox/HBox/VBox/Player Bar" unique_id=1333926168 instance=ExtResource("10_imbg2")]
 layout_mode = 2
 
-[node name="HBox" type="HBoxContainer" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info" unique_id=2048716029]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="Track Cover" type="TextureRect" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info/HBox" unique_id=775996927]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("13_6t3k2")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="VBox" type="VBoxContainer" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info/HBox" unique_id=214543257]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="Track Name" type="Label" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info/HBox/VBox" unique_id=1989536274]
-unique_name_in_owner = true
-layout_mode = 2
-text = "No track playing..."
-clip_text = true
-text_overrun_behavior = 5
-
-[node name="Artist Name" type="Label" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info/HBox/VBox" unique_id=1360542628]
-unique_name_in_owner = true
-self_modulate = Color(0.75, 0.75, 0.75, 1)
-layout_mode = 2
-text = "No artist - No album"
-label_settings = SubResource("LabelSettings_vk4q2")
-clip_text = true
-text_overrun_behavior = 5
-
-[node name="Current Track Length" type="Label" parent="VBox/HBox/VBox/Player Bar/Player/Controls/Track Info/HBox" unique_id=720579045]
-unique_name_in_owner = true
-layout_mode = 2
-text = "0:00 / 0:00"
-
-[node name="Sep 1" type="VSeparator" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=1844514872]
-layout_mode = 2
-
-[node name="Audio Icon" type="TextureRect" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=1636992296]
-layout_mode = 2
-texture = ExtResource("14_vk4q2")
-stretch_mode = 5
-
-[node name="Volume" type="HSlider" parent="VBox/HBox/VBox/Player Bar/Player/Controls" unique_id=1054243039]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_vertical = 4
-value = 100.0
-tick_count = 4
-ticks_on_borders = true
-ticks_position = 3
-
-[node name="Progress" type="HBoxContainer" parent="VBox/HBox/VBox/Player Bar/Player" unique_id=1249537283]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Play Progress" type="HSlider" parent="VBox/HBox/VBox/Player Bar/Player/Progress" unique_id=1646692005]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-
-[node name="Audio" type="AudioStreamPlayer" parent="." unique_id=219349854]
-unique_name_in_owner = true
-mix_target = 1
-playback_type = 2
-
-[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tools/Tab Button Settings" to="." method="_on_tab_button_pressed" binds= ["settings"]]
-[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tab Button Artists" to="." method="_on_tab_button_pressed" binds= ["artists"]]
-[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
-[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
-[connection signal="pressed" from="VBox/HBox/VBox/Top Bar/HBox/Page Back" to="." method="_on_page_back_pressed"]
-[connection signal="finished" from="Audio" to="." method="_on_audio_finished"]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/Margin/VBox/Tools/Tab Button Settings" to="." method="_on_tab_button_pressed" binds= ["settings"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/Margin/VBox/Tab Button Artists" to="." method="_on_tab_button_pressed" binds= ["artists"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/Margin/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/Margin/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/Margin/VBox/CenterContainer/Tab Button Full Screen Player" to="." method="_on_tab_button_pressed" binds= [".full_screen_player"]]

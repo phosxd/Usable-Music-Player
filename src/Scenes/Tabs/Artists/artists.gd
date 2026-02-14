@@ -7,19 +7,17 @@ func _ready() -> void:
 	var artists:Array = LibraryManager.database.artists.keys()
 	artists.sort()
 
-	for artist:String in artists:
-		add_card(artist)
+	for artist_name:String in artists:
+		var albums = LibraryManager.database.artists[artist_name].albums
+		var album_names = albums.keys(); album_names.sort()
+		var covers:Array[ImageTexture] = []
+		for album_name in album_names:
+			var album = LibraryManager.database.artists[artist_name].albums[album_name]
+			covers.append(album.cover)
+		add_card(artist_name, covers)
 
 
-func add_card(artist_name:String) -> void:
-	# Get album covers.
-	var albums:Dictionary = LibraryManager.database.artists[artist_name].albums
-	var album_keys := albums.keys()
-	album_keys.sort()
-	var album_covers:Array[ImageTexture] = []
-	for key:String in album_keys:
-		album_covers.append(albums[key].cover)
-	# Add card.
+func add_card(artist_name:String, covers:Array[ImageTexture]) -> void:
 	var card:Control = card_scene.instantiate()
-	card.init(artist_name, album_covers)
+	card.init(artist_name, covers)
 	%Grid.add_child(card)

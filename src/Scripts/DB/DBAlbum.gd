@@ -60,3 +60,9 @@ func get_track(track_number:int) -> void:
 		return
 
 	return DBTrack.new(artist, self, track_number, raw_track)
+
+
+func get_album_dominant_color() -> Color:
+	var image:Image = cover.get_image()
+	image.crop(1,1)
+	return image.get_pixel(0,0)

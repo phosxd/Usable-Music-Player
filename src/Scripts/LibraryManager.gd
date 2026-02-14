@@ -9,8 +9,15 @@ static var database:Dictionary = {
 	'location': '',
 	'library_size': 0,
 	'library_track_count': 0,
+	'open_track': {
+		'artist': '',
+		'album': '',
+		'track_number': 0,
+		'track_progress': 0,
+	},
 	'artists': {
 		'Example Artist': {
+			'cover': null,
 			'albums': {
 				'Example Album': {
 					'year': '2026',
@@ -42,7 +49,9 @@ static func rescan_track(track:DBTrack) -> DBTrack:
 	database.library_track_count -= 1
 	var track_size = FileAccess.get_size(track.path)
 	if track_size > 0: database.library_size -= track_size
-	index_file(track.path)
+	index_file(track.path, track.number)
+	save_database()
+
 	return DBTrack.new(track.artist, track.album, track.number)
 
 
@@ -100,7 +109,7 @@ static func _load_library(root_path:String) -> void:
 	root_dir.list_dir_end()
 
 
-static func index_file(path:String) -> void:
+static func index_file(path:String, track_number_override:int=-1) -> void:
 	var extension:String = path.split('.')[-1].to_lower()
 	if extension not in LibraryManager.valid_audio_extensions: return
 	# Load audio file.
@@ -114,7 +123,10 @@ static func index_file(path:String) -> void:
 	var track_number := metadata.track_no
 	if track_title.is_empty(): track_title = path.split('/')[-1].split('.')[0]
 	# Add to database.
-	var db_artist:Dictionary = database.artists.get_or_add(artist, {'albums':{}})
+	var db_artist:Dictionary = database.artists.get_or_add(artist, {
+		#'cover': fetch_artist_cover(artist),
+		'albums': {},
+	})
 	@warning_ignore('incompatible_ternary')
 	var db_album:Dictionary = db_artist.albums.get_or_add(album, {
 		'year': str(metadata.year) if metadata.year > 10 else null,
@@ -127,7 +139,7 @@ static func index_file(path:String) -> void:
 		'title': track_title,
 		'length': audio_stream.get_length(),
 		'channels': str(metadata.get_tag('channels',-1)),
-		'bit_rate': str(metadata.get_tag('bit_rate',-1)),
+		'bit_rate': str(metadata.get_tag('bitrate',-1)),
 		'sample_rate': str(metadata.get_tag('sample_rate',-1)),
 		'bpm': metadata.bpm,
 		'copyright': metadata.copyright,
@@ -135,10 +147,12 @@ static func index_file(path:String) -> void:
 		'comments': metadata.comments,
 		'path': path,
 	}
-	if track_number > 0:
-		db_album.tracks.set(track_number-1, track_data)
-	else:
+	if track_number_override != -1:
+		db_album.tracks.set(track_number_override, track_data)
+	elif track_number == -1:
 		db_album.tracks.append(track_data)
+	else:
+		db_album.tracks.set(track_number-1, track_data)
 
 	database.library_size += FileAccess.get_size(path)
 	database.library_track_count += 1
@@ -158,3 +172,8 @@ static func load_audio(path:String) -> AudioStream:
 		audio_stream = AudioStreamOggVorbis.load_from_file(path)
 
 	return audio_stream
+
+
+#static func fetch_artist_cover(artist_name:String) -> ImageTexture:
+	#'https://webservice.fanart.tv/{version}/{resource}/{id}?api_key='
+	#'7e7651b46fca21ce80d7ac1863093b69'

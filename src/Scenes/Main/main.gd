@@ -1,16 +1,44 @@
 extends Control
 
+@onready var default_player_shadow_style:StyleBox = %'Player Shadow'.get_theme_stylebox('panel')
 @onready var tabs:Dictionary[String,Array] = {
 	'settings': [%'Tab Button Settings', preload('res://Scenes/Tabs/Settings/settings.tscn')],
 	'artists': [%'Tab Button Artists', preload('res://Scenes/Tabs/Artists/artists.tscn')],
 	'albums': [%'Tab Button Albums', preload('res://Scenes/Tabs/Albums/albums.tscn')],
 	'tracks': [%'Tab Button Tracks', preload('res://Scenes/Tabs/Tracks/tracks.tscn')],
+	'.full_screen_player': [%'Tab Button Full Screen Player', preload('res://Scenes/Tabs/Full Screen Player/full_screen_player.tscn')]
 }
 var tab_history:Array[String] = []
 
 
 func _ready() -> void:
-	LibraryManager.load_library_from_cache()
+	set_tab('albums')
+	PlayerManager.current_track_updated.connect(update_current_track)
+	update_current_track(PlayerManager.queue_position)
+
+
+func update_current_track(track_queue_position:int) -> void:
+	var current_track = PlayerManager.queue[track_queue_position]
+	if not current_track.album.cover == %'Currently Playing Track Cover'.texture:
+		%'Currently Playing Track Cover'.texture = current_track.album.cover
+
+		var dominant_color:Color = current_track.album.get_album_dominant_color()
+		var tinted_dominant_color:Color = dominant_color.lerp(Color.WHITE, 0.75)
+		var dark_tinted_dominant_color:Color = dominant_color.lerp(Color.WHITE, 0.55)
+		var new_style = default_player_shadow_style.duplicate()
+		new_style.shadow_color = Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.4)
+		%'Player Shadow'.remove_theme_stylebox_override('panel')
+		%'Player Shadow'.add_theme_stylebox_override('panel', new_style)
+
+		var global_theme := ThemeDB.get_project_theme()
+		global_theme.set_color('icon_normal_color', 'Button', dark_tinted_dominant_color)
+		global_theme.set_color('icon_hover_color', 'Button', dark_tinted_dominant_color)
+		global_theme.set_color('icon_pressed_color', 'Button', tinted_dominant_color)
+		global_theme.set_color('icon_hover_pressed_color', 'Button', tinted_dominant_color)
+		var new_slider_style:StyleBoxFlat = global_theme.get_stylebox('grabber_area', 'HSlider').duplicate()
+		new_slider_style.bg_color = dark_tinted_dominant_color
+		global_theme.set_stylebox('grabber_area', 'HSlider', new_slider_style)
+		global_theme.set_stylebox('grabber_area_highlight', 'HSlider', new_slider_style)
 
 
 func clear_tab_history() -> void:
@@ -67,11 +95,8 @@ func _on_audio_finished() -> void:
 
 
 func _on_tab_button_pressed(tab:String) -> void:
-	clear_tab_history()
-	if tabs[tab][0].button_pressed:
-		set_tab(tab)
-	else:
-		set_tab('')
+	if not tab.begins_with('.'): clear_tab_history()
+	set_tab(tab)
 
 
 func _on_page_back_pressed() -> void:
