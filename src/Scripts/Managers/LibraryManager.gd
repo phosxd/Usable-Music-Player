@@ -1,6 +1,39 @@
 ## Static class for managing an audio library.
 class_name LibraryManager extends RefCounted
 
+enum ArtistSortMode {
+	## Sort by title in alphabetical order.
+	TITLE,
+}
+
+enum AlbumSortMode {
+	## Sort by title in alphabetical order.
+	TITLE,
+	## Sort by artist title in alphabetical order.
+	ARTIST,
+	## Sort by year released.
+	YEAR,
+	## Sort by genre.
+	GENRE,
+}
+
+enum TrackSortMode {
+	## Sort by title in alphabetical order.
+	TITLE,
+	## Sort by album title in alphabetical order.
+	ALBUM,
+	## Sort by artist title in alphabetical order.
+	ARTIST,
+	## Sort by year released.
+	YEAR,
+	## Sort by genre.
+	GENRE,
+	## Sort by track number.
+	NUMBER,
+	## Sort by length.
+	LENGTH,
+}
+
 const valid_audio_extensions:Array[String] = ['wav','ogg','mp3','mpga']
 const db_cache_path:String = 'user://database.dat'
 
@@ -9,12 +42,6 @@ static var database:Dictionary = {
 	'location': '',
 	'library_size': 0,
 	'library_track_count': 0,
-	'open_track': {
-		'artist': '',
-		'album': '',
-		'track_number': 0,
-		'track_progress': 0,
-	},
 	'artists': {
 		'Example Artist': {
 			'cover': null,
@@ -27,6 +54,7 @@ static var database:Dictionary = {
 							'title': 'Example Track',
 							'length': 65,
 							'path': 'full/path/to/audio/file.wav',
+							'last_accessed': '',
 						},
 					],
 					'cover': null,
@@ -40,6 +68,89 @@ static var database:Dictionary = {
 static var db_cache_size_compressed:int =0
 ## Database cache size in bytes.
 static var db_cache_size:int = 0
+
+
+## Returns a sorted array of [DBArtist] objects.
+## Will always sort ascending. Use [code]Array.reverse[/code] method to make the array descending.
+static func get_artists_sorted(sort_mode:=ArtistSortMode.TITLE) -> Array[DBArtist]:
+	var result:Array[DBArtist]
+	for artist_name:String in database.get('artists',{}):
+		result.append(DBArtist.new(artist_name))
+
+	match sort_mode:
+		ArtistSortMode.TITLE:
+			result.sort_custom(func(a:DBArtist, b:DBArtist) -> bool:
+				return a.name < b.name
+			)
+
+	return result
+
+
+static func get_albums_sorted(sort_mode:=AlbumSortMode.TITLE) -> Array[DBAlbum]:
+	var result:Array[DBAlbum] = []
+	for artist:DBArtist in get_artists_sorted():
+		for album_name:String in artist.album_names:
+			result.append(DBAlbum.new(artist, album_name))
+
+	match sort_mode:
+		AlbumSortMode.TITLE:
+			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
+				return a.name < b.name
+			)
+		AlbumSortMode.ARTIST:
+			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
+				return a.artist.name < b.artist.name
+			)
+		AlbumSortMode.YEAR:
+			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
+				return a.year.to_int() < b.year.to_int()
+			)
+		AlbumSortMode.GENRE:
+			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
+				return a.genre < b.genre
+			)
+
+	return result
+
+
+static func get_tracks_sorted(sort_mode:TrackSortMode) -> Array[DBTrack]:
+	var result:Array[DBTrack] = []
+	for album:DBAlbum in get_albums_sorted():
+		for track_number:int in album.track_count:
+			var track:DBTrack = album.get_track(track_number)
+			if track: result.append(track)
+
+	match sort_mode:
+		TrackSortMode.TITLE:
+			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				return a.name < b.name
+			)
+		TrackSortMode.ALBUM:
+			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				return a.ablum.name < b.ablum.name
+			)
+		TrackSortMode.ARTIST:
+			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				return a.album.artist.name < b.album.artist.name
+			)
+		TrackSortMode.YEAR:
+			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				return a.ablum.year.to_int() < b.album.year.to_int()
+			)
+		TrackSortMode.GENRE:
+			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				return a.ablum.genre < b.album.genre
+			)
+		TrackSortMode.NUMBER:
+			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				return a.number > b.number
+			)
+		TrackSortMode.LENGTH:
+			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				return a.length < b.length
+			)
+
+	return result
 
 
 ## Rescans the track & updates the database accordingly.
@@ -113,8 +224,9 @@ static func index_file(path:String, track_number_override:int=-1) -> void:
 	var extension:String = path.split('.')[-1].to_lower()
 	if extension not in LibraryManager.valid_audio_extensions: return
 	# Load audio file.
-	var audio_stream := load_audio(path)
-	if audio_stream == null: return
+	var audio_stream = load_audio(path)
+	if audio_stream is not AudioStream: return
+	audio_stream = audio_stream as AudioStream
 	# Grab metadata.
 	var metadata:MusicMetadata = MusicMetadata.new(audio_stream)
 	var artist := metadata.get_most_relevent_artist().replace('\n','')
@@ -146,6 +258,7 @@ static func index_file(path:String, track_number_override:int=-1) -> void:
 		'urls': metadata.urls,
 		'comments': metadata.comments,
 		'path': path,
+		'last_accessed': FileAccess.get_access_time(path),
 	}
 	if track_number_override != -1:
 		db_album.tracks.set(track_number_override, track_data)

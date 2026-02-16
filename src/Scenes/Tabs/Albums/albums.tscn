@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://bn8lud3nkrjb2"]
 
 [ext_resource type="Script" uid="uid://br1c0ohgvfc5x" path="res://Scenes/Tabs/Albums/albums.gd" id="1_dnlf2"]
+[ext_resource type="PackedScene" uid="uid://dtrs3vfap1m5b" path="res://Elements/Top Bar/top_bar.tscn" id="2_grj0y"]
+[ext_resource type="Texture2D" uid="uid://clvub0o51v8eh" path="res://Assets/Icons/scale_x2/change_sort_mode.svg" id="3_f5c24"]
 
 [node name="Albums" type="VBoxContainer" unique_id=213465202]
 anchors_preset = 15
@@ -12,21 +14,62 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_dnlf2")
 
-[node name="Margin" type="MarginContainer" parent="." unique_id=79693074]
+[node name="Top Bar" parent="." unique_id=403812495 instance=ExtResource("2_grj0y")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
 
-[node name="Scroll" type="ScrollContainer" parent="Margin" unique_id=1093367767]
+[node name="Content" parent="Top Bar" index="1" unique_id=189060353]
+size_flags_horizontal = 8
+
+[node name="Sort Mode" type="OptionButton" parent="Top Bar/Content" index="0" unique_id=1901045184]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+theme_override_constants/icon_max_width = 22
+theme_override_icons/icon = ExtResource("3_f5c24")
+selected = 0
+fit_to_longest_item = false
+item_count = 4
+popup/item_0/text = "Sort by: Title"
+popup/item_0/id = 0
+popup/item_1/text = "Sort by: Artist"
+popup/item_1/id = 1
+popup/item_2/text = "Sort by: Year"
+popup/item_2/id = 2
+popup/item_3/text = "Sort by: Genre"
+popup/item_3/id = 3
+
+[node name="Ascend Mode" type="OptionButton" parent="Top Bar/Content" index="1" unique_id=1085388051]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 1
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "Descending"
+popup/item_0/id = 0
+popup/item_1/text = "Ascending"
+popup/item_1/id = 1
+
+[node name="Scroll" type="ScrollContainer" parent="." unique_id=1093367767]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="Grid" type="HFlowContainer" parent="Margin/Scroll" unique_id=1859326185]
+[node name="Margin" type="MarginContainer" parent="Scroll" unique_id=79693074]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 12
+
+[node name="Grid" type="HFlowContainer" parent="Scroll/Margin" unique_id=1859326185]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/h_separation = 16
-theme_override_constants/v_separation = 12
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 8
+
+[connection signal="item_selected" from="Top Bar/Content/Sort Mode" to="." method="_on_sort_mode_item_selected"]
+[connection signal="item_selected" from="Top Bar/Content/Ascend Mode" to="." method="_on_ascend_mode_item_selected"]
+
+[editable path="Top Bar"]

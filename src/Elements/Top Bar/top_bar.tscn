@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dtrs3vfap1m5b"]
+
+[node name="Top Bar" type="PanelContainer" unique_id=403812495]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+
+[node name="_label" type="Label" parent="." unique_id=800551452]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Content" type="HBoxContainer" parent="." unique_id=189060353]
+layout_mode = 2

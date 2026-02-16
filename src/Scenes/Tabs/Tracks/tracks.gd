@@ -1,22 +1,30 @@
 extends VBoxContainer
 
 const card_scene := preload('res://Scenes/Tabs/Tracks/card.tscn')
+const placeholder_card_scene := preload('res://Scenes/Tabs/Tracks/placeholder_card.tscn')
+const page_size:int = 50
+
+var tracks:Array[DBTrack] = []
+var selected_track_index: int
 
 
 func _ready() -> void:
-	var artists:Array = LibraryManager.database.artists.keys()
-	artists.sort()
+	for i_ in range(1):
+		var artists:Array = LibraryManager.database.artists.keys()
+		artists.sort()
 
-	for artist_name:String in artists:
-		var artist := DBArtist.new(artist_name)
-		var albums:Dictionary = LibraryManager.database.artists[artist_name].albums
-		albums.sort()
-		for album_name:String in albums:
-			var album := DBAlbum.new(artist, album_name)
-			for i in range(album.track_count):
-				var track := DBTrack.new(artist, album, i)
-				if track.path.is_empty(): continue
-				add_card(track, _on_track_selected.bind(track.path))
+		for artist_name:String in artists:
+			var artist := DBArtist.new(artist_name)
+			var albums:Dictionary = LibraryManager.database.artists[artist_name].albums
+			albums.sort()
+			for album_name:String in albums:
+				var album := DBAlbum.new(artist, album_name)
+				for i in range(album.track_count):
+					var track := DBTrack.new(artist, album, i)
+					if track.path.is_empty(): continue
+					if tracks.has(track): continue
+					tracks.append(track)
+					add_card(track, _on_track_selected.bind(track))
 
 
 func add_card(track:DBTrack, callback:Callable) -> void:
@@ -24,7 +32,25 @@ func add_card(track:DBTrack, callback:Callable) -> void:
 	card.init(track)
 	card.selected.connect(callback)
 	%Grid.add_child(card)
+	#var placeholder_card:Control = placeholder_card_scene.instantiate()
+	#placeholder_card.init(%Scroll)
+	#placeholder_card.activated.connect(func()->void:
+		#print('added')
+		#placeholder_card.queue_free()
+		#var function = func()->void:
+			#var card:Control = card_scene.instantiate()
+			#card.init(track)
+			#card.selected.connect(callback)
+			#%Grid.add_child(card)
+		#function.call_deferred()
+	#)
+	#%Grid.add_child(placeholder_card)
 
 
-func _on_track_selected(_track_path:String) -> void:
-	pass
+func _on_track_selected(track:DBTrack) -> void:
+	PlayerManager.queue.clear()
+	for track_:DBTrack in tracks:
+		PlayerManager.add_to_queue(track_)
+
+	PlayerManager.set_current_track(PlayerManager.queue.find(track))
+	PlayerManager.set_playing(true)

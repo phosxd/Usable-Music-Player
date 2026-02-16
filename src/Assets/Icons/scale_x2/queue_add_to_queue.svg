@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="16"
+   height="16"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="queue_add_to_queue.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="powerclip"
+       message=""
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1"
+       inverse="true"
+       flatten="false"
+       hide_clip="false" />
+    <inkscape:path-effect
+       effect="powerclip"
+       message=""
+       id="path-effect5"
+       is_visible="true"
+       lpeversion="1"
+       inverse="true"
+       flatten="false"
+       hide_clip="false" />
+    <filter
+       id="mask-powermask-path-effect2_inverse"
+       inkscape:label="filtermask-powermask-path-effect2"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect2_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect2_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#000000"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="31.681215"
+     inkscape:cx="14.204001"
+     inkscape:cy="6.8968315"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     d="m 12.534563,11.195783 c 0,-0.552285 -0.447715,-1 -1,-1 H 3.5345632 c -0.4440554,0 1.3983963,0.73452 1.3505765,1.5 -0.070049,0.870705 -1.759447,1.5 -1.3505765,1.5 h 7.9999998 c 0.552285,0 1,-0.447715 1,-1 z"
+     id="path1"
+     style="fill:#e0e0e0;fill-opacity:1"
+     clip-path="none"
+     sodipodi:nodetypes="ssscssss" />
+  <path
+     d="m 13,7.5 c 0,-0.552285 -0.447715,-1 -1,-1 H 4 c -0.552285,0 -1,0.447715 -1,1 v 1 c 0,0.552285 0.447715,1 1,1 h 8 c 0.552285,0 1,-0.447715 1,-1 z"
+     id="path1-2"
+     style="fill:#e0e0e0;fill-opacity:1" />
+  <path
+     d="M 1.0157263,8.8290441 C 0.70468572,8.8368241 0.45643486,9.0909292 0.45590956,9.4020669 v 4.5933691 c -1.803e-4,0.481651 0.55704004,0.74946 0.93302804,0.448428 l 2.8708562,-2.296685 c 0.286489,-0.229844 0.286489,-0.665862 0,-0.895707 L 1.3889376,8.9547875 C 1.2832482,8.8701853 1.1510642,8.8256493 1.0157263,8.8290441 Z"
+     id="path2-6"
+     style="fill:#e0e0e0;fill-opacity:1;stroke:#ffffff;stroke-width:0.574171;stroke-opacity:0" />
+  <path
+     d="m 13,3.8042175 c 0,-0.552285 -0.447715,-1 -1,-1 H 3.9999998 c -0.552285,0 -1,0.447715 -1,1 v 1 c 0,0.552284 0.447715,1 1,1 H 12 c 0.552285,0 1,-0.447716 1,-1 z"
+     id="path1-2-7"
+     style="fill:#e0e0e0;fill-opacity:1" />
+</svg>

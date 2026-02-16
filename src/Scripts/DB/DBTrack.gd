@@ -24,8 +24,8 @@ func _init(db_artist:DBArtist, db_album:DBAlbum, track_number:int, raw_info=null
 	album = db_album
 	number = track_number
 	if raw_info is not Dictionary:
-		var raw_artist:Dictionary = LibraryManager.database.artists.get(artist.name,{})
-		var raw_album:Dictionary = raw_artist.albums.get(album.name,{})
+		var raw_artist:Dictionary = LibraryManager.database.artists.get(artist.name,{'albums':{}})
+		var raw_album:Dictionary = raw_artist.albums.get(album.name,{'tracks':[]})
 		raw_info = raw_album.tracks.get(track_number)
 		if raw_info is not Dictionary: raw_info = {}
 

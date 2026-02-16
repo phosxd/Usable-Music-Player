@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_uvggc"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="3_rlp7w"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="4_84yul"]
+[ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_2atuy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2atuy"]
 corner_radius_top_left = 8
@@ -77,15 +78,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jnl4f")
 
-[node name="Button" type="Button" parent="." unique_id=481831511]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-mouse_default_cursor_shape = 2
-
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1832504744]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 0
 
 [node name="Center" type="CenterContainer" parent="VBox" unique_id=1613175038]
 layout_mode = 2
@@ -99,12 +95,12 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("2_dgsdd")
 
-[node name="Image" type="Panel" parent="VBox/Center" unique_id=2069591801]
+[node name="Image" type="PanelContainer" parent="VBox/Center" unique_id=606887220]
 unique_name_in_owner = true
 visible = false
 clip_children = 1
+custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
-size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_2atuy")
@@ -119,6 +115,14 @@ layout_mode = 2
 mouse_filter = 2
 columns = 2
 
+[node name="Button" parent="VBox/Center" unique_id=519598093 instance=ExtResource("6_2atuy")]
+custom_minimum_size = Vector2(225, 225)
+layout_mode = 2
+
+[node name="Sep 1" type="HSeparator" parent="VBox" unique_id=651886000]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
 [node name="Name" type="Label" parent="VBox" unique_id=824305555]
 unique_name_in_owner = true
 layout_mode = 2
@@ -129,7 +133,7 @@ horizontal_alignment = 1
 clip_text = true
 text_overrun_behavior = 5
 
-[node name="hehehe" type="Label" parent="VBox" unique_id=1074414330]
+[node name="placeholder" type="Label" parent="VBox" unique_id=1074414330]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
@@ -142,6 +146,6 @@ text_overrun_behavior = 5
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_eamsa")
 
-[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
-[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="VBox/Center/Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="VBox/Center/Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="VBox/Center/Button" to="." method="_on_button_pressed"]

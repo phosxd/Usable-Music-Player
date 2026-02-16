@@ -1,50 +1,77 @@
 [gd_scene format=3 uid="uid://css64p4ao5gyl"]
 
+[ext_resource type="PackedScene" uid="uid://dtrs3vfap1m5b" path="res://Elements/Top Bar/top_bar.tscn" id="1_xrpqc"]
 [ext_resource type="Script" uid="uid://bufk41o60g01x" path="res://Scenes/Tabs/Settings/settings.gd" id="1_ytwd3"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="2_dm7qj"]
+[ext_resource type="Texture2D" uid="uid://dvf313eolgmy2" path="res://icon.svg" id="3_7y23f"]
+[ext_resource type="LabelSettings" uid="uid://bpdf3n2ydkv6m" path="res://Assets/primary_label_large.tres" id="4_a0g4d"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vu07l"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpqc"]
 
-[node name="Settings" type="ScrollContainer" unique_id=1569633818]
+[node name="Settings" type="VBoxContainer" unique_id=1717973559]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+
+[node name="Top Bar" parent="." unique_id=403812495 instance=ExtResource("1_xrpqc")]
+layout_mode = 2
+
+[node name="Settings" type="ScrollContainer" parent="." unique_id=1569633818]
+layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 script = ExtResource("1_ytwd3")
 
-[node name="VBox" type="VBoxContainer" parent="." unique_id=876920326]
+[node name="VBox" type="VBoxContainer" parent="Settings" unique_id=876920326]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Links" type="HBoxContainer" parent="VBox" unique_id=480455043]
+[node name="Links" type="HBoxContainer" parent="Settings/VBox" unique_id=480455043]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="User Data" type="Button" parent="VBox/Links" unique_id=23274312]
+[node name="User Data" type="Button" parent="Settings/VBox/Links" unique_id=23274312]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Open user data directory"
 text = "User Data"
 
-[node name="Source Code" type="Button" parent="VBox/Links" unique_id=1677530294]
+[node name="Source Code" type="Button" parent="Settings/VBox/Links" unique_id=1677530294]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Open source code repository"
 text = "Source Code"
 
-[node name="Report Issue" type="Button" parent="VBox/Links" unique_id=1460273289]
+[node name="Report Issue" type="Button" parent="Settings/VBox/Links" unique_id=1460273289]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Open source code repository issues page"
 text = "Report an Issue"
 
-[node name="Info" type="RichTextLabel" parent="VBox" unique_id=1699263480]
+[node name="App Info" type="HBoxContainer" parent="Settings/VBox" unique_id=295003127]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Settings/VBox/App Info" unique_id=1011713632]
+layout_mode = 2
+texture = ExtResource("3_7y23f")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Settings/VBox/App Info" unique_id=624301356]
+layout_mode = 2
+text = "Usable Music Player v0.0.1"
+label_settings = ExtResource("4_a0g4d")
+
+[node name="Info" type="RichTextLabel" parent="Settings/VBox" unique_id=1699263480]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 2
@@ -61,26 +88,26 @@ fit_content = true
 selection_enabled = true
 drag_and_drop_selection_enabled = false
 
-[node name="Sep 1" type="HSeparator" parent="VBox" unique_id=933197618]
+[node name="Sep 1" type="HSeparator" parent="Settings/VBox" unique_id=933197618]
 layout_mode = 2
 
-[node name="Library" type="HBoxContainer" parent="VBox" unique_id=48638074]
+[node name="Library" type="HBoxContainer" parent="Settings/VBox" unique_id=48638074]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBox/Library" unique_id=709594005]
+[node name="Label" type="Label" parent="Settings/VBox/Library" unique_id=709594005]
 layout_mode = 2
 tooltip_text = "Directory to grab all audio files from. We will only ever read from this directory, never write to it."
 mouse_filter = 1
 text = "Library"
 
-[node name="Library Path" type="LineEdit" parent="VBox/Library" unique_id=2022043686]
+[node name="Library Path" type="LineEdit" parent="Settings/VBox/Library" unique_id=2022043686]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "No directory selected..."
 editable = false
 
-[node name="Rescan Library" type="Button" parent="VBox/Library" unique_id=1633868751]
+[node name="Rescan Library" type="Button" parent="Settings/VBox/Library" unique_id=1633868751]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Scan the entire library for changes & update accordingly.
@@ -88,18 +115,49 @@ tooltip_text = "Scan the entire library for changes & update accordingly.
 You should do this everytime you add new tracks to your library."
 text = "Rescan Library"
 
-[node name="Select Library" type="Button" parent="VBox/Library" unique_id=956764194]
+[node name="Select Library" type="Button" parent="Settings/VBox/Library" unique_id=956764194]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Select directory"
 icon = ExtResource("2_dm7qj")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBox" unique_id=897758891]
+[node name="Dynamic Accents" type="HBoxContainer" parent="Settings/VBox" unique_id=1655818264]
 layout_mode = 2
 
-[connection signal="pressed" from="VBox/Links/User Data" to="." method="_on_user_data_pressed"]
-[connection signal="pressed" from="VBox/Links/Source Code" to="." method="_on_source_code_pressed"]
-[connection signal="pressed" from="VBox/Links/Report Issue" to="." method="_on_report_issue_pressed"]
-[connection signal="text_changed" from="VBox/Library/Library Path" to="." method="_on_library_path_text_changed"]
-[connection signal="pressed" from="VBox/Library/Rescan Library" to="." method="_on_rescan_library_pressed"]
-[connection signal="pressed" from="VBox/Library/Select Library" to="." method="_on_select_library_pressed"]
+[node name="Label" type="Label" parent="Settings/VBox/Dynamic Accents" unique_id=737435311]
+layout_mode = 2
+text = "Dynamic Accents"
+
+[node name="Dynamic Accents" type="CheckButton" parent="Settings/VBox/Dynamic Accents" unique_id=235272779]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+
+[node name="Visualizer Mode" type="HBoxContainer" parent="Settings/VBox" unique_id=699538138]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/VBox/Visualizer Mode" unique_id=691839164]
+layout_mode = 2
+text = "Visualizer Mode"
+
+[node name="Visualizer Mode" type="OptionButton" parent="Settings/VBox/Visualizer Mode" unique_id=1167130548]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 3
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "Glow"
+popup/item_1/id = 1
+popup/item_2/text = "Bar"
+popup/item_2/id = 2
+
+[connection signal="pressed" from="Settings/VBox/Links/User Data" to="Settings" method="_on_user_data_pressed"]
+[connection signal="pressed" from="Settings/VBox/Links/Source Code" to="Settings" method="_on_source_code_pressed"]
+[connection signal="pressed" from="Settings/VBox/Links/Report Issue" to="Settings" method="_on_report_issue_pressed"]
+[connection signal="text_changed" from="Settings/VBox/Library/Library Path" to="Settings" method="_on_library_path_text_changed"]
+[connection signal="pressed" from="Settings/VBox/Library/Rescan Library" to="Settings" method="_on_rescan_library_pressed"]
+[connection signal="pressed" from="Settings/VBox/Library/Select Library" to="Settings" method="_on_select_library_pressed"]
+[connection signal="toggled" from="Settings/VBox/Dynamic Accents/Dynamic Accents" to="Settings" method="_on_dynamic_accents_toggled"]
+[connection signal="item_selected" from="Settings/VBox/Visualizer Mode/Visualizer Mode" to="Settings" method="_on_visualizer_mode_item_selected"]

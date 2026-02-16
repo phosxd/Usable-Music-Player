@@ -1,6 +1,6 @@
 @tool
 class_name TextureRectRounded
-extends Panel
+extends PanelContainer
 
 @export var corner_detail: int = 8:
 	set(new_value):

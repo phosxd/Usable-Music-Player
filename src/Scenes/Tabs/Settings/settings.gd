@@ -19,6 +19,8 @@ func update() -> void:
 		LibraryManager.database.library_track_count,
 	]
 	%'Library Path'.text = LibraryManager.database.location
+	%'Dynamic Accents'.button_pressed = SessionManager.dynamic_accents
+	%'Visualizer Mode'.selected = SessionManager.visualizer_mode
 
 
 func _on_select_library_pressed() -> void:
@@ -58,3 +60,11 @@ func _on_source_code_pressed() -> void:
 
 func _on_report_issue_pressed() -> void:
 	OS.shell_open(AppInfo.issues_page)
+
+
+func _on_dynamic_accents_toggled(toggled_on:bool) -> void:
+	SessionManager.dynamic_accents = toggled_on
+
+
+func _on_visualizer_mode_item_selected(index:int) -> void:
+	SessionManager.visualizer_mode = index as SessionManager.VisualizerMode

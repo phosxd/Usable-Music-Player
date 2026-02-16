@@ -53,7 +53,7 @@ func hover(value:float=0) -> void:
 		var dominant_color := image.get_pixel(0,0)
 
 		var style = default_style.duplicate()
-		style.shadow_color = (default_style.shadow_color as Color).lerp(Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.4), value)
+		style.shadow_color = (default_style.shadow_color as Color).lerp(Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.45), value)
 		style.shadow_size = lerpf(default_style.shadow_size, 14, value)
 		%Shadow.remove_theme_stylebox_override('panel')
 		%Shadow.add_theme_stylebox_override('panel', style)

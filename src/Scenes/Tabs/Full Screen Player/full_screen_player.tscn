@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://cdfkywij1vpe5"]
 
 [ext_resource type="Script" uid="uid://d3kxsvnf3vv3b" path="res://Scenes/Tabs/Full Screen Player/full_screen_player.gd" id="1_omp21"]
+[ext_resource type="PackedScene" uid="uid://dtrs3vfap1m5b" path="res://Elements/Top Bar/top_bar.tscn" id="1_wgrao"]
 [ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_4m0va"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_hy8yd"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="3_4m0va"]
+[ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_b60yv"]
 
 [sub_resource type="Shader" id="Shader_hy8yd"]
 code = "shader_type canvas_item;
@@ -22,90 +24,108 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4m0va"]
 shader = SubResource("Shader_hy8yd")
-shader_parameter/topleft = Color(0, 0, 0, 1)
+shader_parameter/topleft = Color(1, 1, 1, 1)
 shader_parameter/topright = Color(0, 0, 0, 1)
 shader_parameter/bottomleft = Color(0, 0, 0, 1)
 shader_parameter/bottomright = Color(0, 0, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hy8yd"]
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b60yv"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 anti_aliasing = false
 
-[node name="Full ScreenPlayer" type="ScrollContainer" unique_id=1569633818]
+[node name="Full Screen Player" type="VBoxContainer" unique_id=1347349079]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
-horizontal_scroll_mode = 0
-script = ExtResource("1_omp21")
+theme_override_constants/separation = 0
 
-[node name="Center" type="MarginContainer" parent="." unique_id=1807500962]
+[node name="Top Bar" parent="." unique_id=403812495 instance=ExtResource("1_wgrao")]
+layout_mode = 2
+
+[node name="Full Screen Player" type="MarginContainer" parent="." unique_id=425870283]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_omp21")
 
-[node name="Background" type="ColorRect" parent="Center" unique_id=181722797]
+[node name="Background" type="ColorRect" parent="Full Screen Player" unique_id=181722797]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_4m0va")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Margin" type="MarginContainer" parent="." unique_id=1992604410]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 16
-
-[node name="VBox" type="VBoxContainer" parent="Margin" unique_id=183707687]
+[node name="Shadow Container" type="Control" parent="Full Screen Player" unique_id=1306541130]
 layout_mode = 2
 
-[node name="Margin" type="MarginContainer" parent="Margin/VBox" unique_id=867192465]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.5
-theme_override_constants/margin_left = 175
-theme_override_constants/margin_top = 100
-
-[node name="HBox" type="HBoxContainer" parent="Margin/VBox/Margin" unique_id=62130101]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="CenterContainer" type="MarginContainer" parent="Margin/VBox/Margin/HBox" unique_id=992932172]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Shadow" type="Panel" parent="Margin/VBox/Margin/HBox/CenterContainer" unique_id=2125278853]
+[node name="Shadow" type="Panel" parent="Full Screen Player/Shadow Container" unique_id=2125278853]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(350, 350)
-layout_mode = 2
-size_flags_horizontal = 0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
+mouse_behavior_recursive = 1
 theme_override_styles/panel = ExtResource("2_4m0va")
 
-[node name="Image" type="Panel" parent="Margin/VBox/Margin/HBox/CenterContainer" unique_id=290980722]
+[node name="Image Margin" type="MarginContainer" parent="Full Screen Player" unique_id=1199381498]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 175
+theme_override_constants/margin_top = 175
+theme_override_constants/margin_right = 175
+theme_override_constants/margin_bottom = 175
+
+[node name="Image" type="PanelContainer" parent="Full Screen Player/Image Margin" unique_id=411174489]
 unique_name_in_owner = true
 clip_children = 1
-custom_minimum_size = Vector2(350, 0)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 3
+size_flags_horizontal = 4
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_hy8yd")
+theme_override_styles/panel = SubResource("StyleBoxFlat_b60yv")
 script = ExtResource("2_hy8yd")
+radius_bottom_left = 16
+radius_bottom_right = 16
+radius_top_left = 16
+radius_top_right = 16
 texture = ExtResource("3_4m0va")
+expand_mode = 2
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
 
-[node name="HBox2" type="HBoxContainer" parent="Margin/VBox" unique_id=1360188133]
+[node name="Button Container" type="Control" parent="Full Screen Player" unique_id=684032733]
 layout_mode = 2
-size_flags_vertical = 3
+
+[node name="Button" parent="Full Screen Player/Button Container" unique_id=519598093 instance=ExtResource("6_b60yv")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -6.0
+offset_right = 8.0
+offset_bottom = 6.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[connection signal="item_rect_changed" from="Full Screen Player/Image Margin" to="Full Screen Player" method="_on_image_margin_item_rect_changed"]
+[connection signal="item_rect_changed" from="Full Screen Player/Image Margin/Image" to="Full Screen Player" method="_on_image_item_rect_changed"]
+[connection signal="pressed" from="Full Screen Player/Button Container/Button" to="Full Screen Player" method="_on_button_pressed"]

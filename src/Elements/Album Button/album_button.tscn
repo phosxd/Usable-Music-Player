@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://ffqky4tb7tv8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s0lup"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ma46"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.13725491)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mb8ih"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.039215688)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 4
+
+[node name="Album Button" type="Button" unique_id=519598093]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_s0lup")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_8ma46")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mb8ih")
