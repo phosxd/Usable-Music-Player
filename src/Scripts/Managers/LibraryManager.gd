@@ -73,7 +73,7 @@ static var db_cache_size:int = 0
 ## Returns a sorted array of [DBArtist] objects.
 ## Will always sort ascending. Use [code]Array.reverse[/code] method to make the array descending.
 static func get_artists_sorted(sort_mode:=ArtistSortMode.TITLE) -> Array[DBArtist]:
-	var result:Array[DBArtist]
+	var result:Array[DBArtist] = []
 	for artist_name:String in database.get('artists',{}):
 		result.append(DBArtist.new(artist_name))
 
@@ -109,6 +109,17 @@ static func get_albums_sorted(sort_mode:=AlbumSortMode.TITLE) -> Array[DBAlbum]:
 			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
 				return a.genre < b.genre
 			)
+
+	return result
+
+
+## Returns a dictionary of [DBAlbum] objects with the genre as the key.
+## Will always sort ascending. Use [code]Array.reverse[/code] method to make the array descending.
+static func get_genres_sorted() -> Dictionary[String,Array]:
+	var result:Dictionary[String,Array] = {}
+	for album:DBAlbum in get_albums_sorted():
+		result.get_or_add(album.genre, [])
+		result[album.genre].append(album)
 
 	return result
 

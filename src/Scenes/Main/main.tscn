@@ -7,13 +7,17 @@
 [ext_resource type="Texture2D" uid="uid://utn627e88d32" path="res://Assets/Icons/artist.svg" id="2_xlvfx"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="3_hfg1r"]
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="3_y3v7k"]
+[ext_resource type="Texture2D" uid="uid://ifuhlvhg7w82" path="res://Assets/Icons/change_sort_mode.svg" id="5_vk4q2"]
 [ext_resource type="Texture2D" uid="uid://mljcfripi4u1" path="res://Assets/Icons/add.svg" id="6_imbg2"]
+[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="9_2ok46"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="9_6t3k2"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="9_hfg1r"]
+[ext_resource type="Texture2D" uid="uid://5llssbcnf4kg" path="res://Assets/Icons/instrument.svg" id="10_2ok46"]
 [ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Scenes/Player/player.tscn" id="10_imbg2"]
+[ext_resource type="PackedScene" uid="uid://c1hitsliaah3m" path="res://Elements/Queue/queue.tscn" id="11_6t3k2"]
 [ext_resource type="PackedScene" uid="uid://ctrjekyy7gs7r" path="res://Elements/Bar Visualizer/bar_visualizer.tscn" id="12_4e4y2"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4e4y2"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ok46"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -49,7 +53,7 @@ bg_color = Color(0.15, 0.15, 0.15, 0)
 shadow_color = Color(0, 0, 0, 0.39215687)
 shadow_size = 25
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vk4q2"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koken"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -151,6 +155,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Search..."
+editable = false
 right_icon = ExtResource("2_imbg2")
 
 [node name="Tools" type="HBoxContainer" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=1840235616]
@@ -173,6 +178,16 @@ size_flags_horizontal = 3
 tooltip_text = "Import playlist"
 theme_type_variation = &"AccentButton"
 icon = ExtResource("3_hfg1r")
+icon_alignment = 1
+
+[node name="Customize" type="Button" parent="VBox/HBox/Sidebar/Panel/Margin/VBox/Tools" unique_id=1381731172]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Edit tab"
+theme_type_variation = &"AccentButton"
+disabled = true
+icon = ExtResource("5_vk4q2")
 icon_alignment = 1
 
 [node name="Tab Button Artists" type="Button" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=1763016178 groups=["Tab Button"]]
@@ -200,6 +215,25 @@ theme_type_variation = &"AccentButton"
 toggle_mode = true
 text = "Tracks"
 icon = ExtResource("1_1r6ip")
+alignment = 0
+
+[node name="Tab Button Music Videos" type="Button" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=1915086436 groups=["Tab Button"]]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Music Videos"
+icon = ExtResource("9_2ok46")
+alignment = 0
+
+[node name="Tab Button Genres" type="Button" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=1082185498 groups=["Tab Button"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Genres"
+icon = ExtResource("10_2ok46")
 alignment = 0
 
 [node name="Sep 1" type="HSeparator" parent="VBox/HBox/Sidebar/Panel/Margin/VBox" unique_id=894733907]
@@ -231,7 +265,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_4e4y2")
+theme_override_styles/panel = SubResource("StyleBoxFlat_2ok46")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
@@ -271,22 +305,8 @@ size_flags_vertical = 6
 text = "No tab opened..."
 horizontal_alignment = 1
 
-[node name="Queue" type="PanelContainer" parent="VBox/HBox/Tab VBox/HBox" unique_id=227738275]
-unique_name_in_owner = true
+[node name="Queue" parent="VBox/HBox/Tab VBox/HBox" unique_id=1119812283 instance=ExtResource("11_6t3k2")]
 visible = false
-custom_minimum_size = Vector2(265, 0)
-layout_mode = 2
-size_flags_horizontal = 8
-
-[node name="VBox" type="VBoxContainer" parent="VBox/HBox/Tab VBox/HBox/Queue" unique_id=1298116708]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBox/HBox/Tab VBox/HBox/Queue/VBox" unique_id=728485923]
-layout_mode = 2
-text = "PLaying next..."
-horizontal_alignment = 1
-
-[node name="Sep 1" type="HSeparator" parent="VBox/HBox/Tab VBox/HBox/Queue/VBox" unique_id=457104930]
 layout_mode = 2
 
 [node name="Lyrics" type="PanelContainer" parent="VBox/HBox/Tab VBox/HBox" unique_id=1172262487]
@@ -338,7 +358,7 @@ offset_bottom = 150.0
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_vk4q2")
+theme_override_styles/panel = SubResource("StyleBoxFlat_koken")
 script = ExtResource("9_6t3k2")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
@@ -353,5 +373,7 @@ libraries/ = SubResource("AnimationLibrary_2ok46")
 [connection signal="pressed" from="VBox/HBox/Sidebar/Panel/Margin/VBox/Tab Button Artists" to="." method="_on_tab_button_pressed" binds= ["artists"]]
 [connection signal="pressed" from="VBox/HBox/Sidebar/Panel/Margin/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
 [connection signal="pressed" from="VBox/HBox/Sidebar/Panel/Margin/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/Margin/VBox/Tab Button Music Videos" to="." method="_on_tab_button_pressed" binds= ["music_videos"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Panel/Margin/VBox/Tab Button Genres" to="." method="_on_tab_button_pressed" binds= ["genres"]]
 [connection signal="pressed" from="VBox/HBox/Sidebar/Panel/Margin/VBox/Current Track Cover Container/Tab Button Full Screen Player" to="." method="_on_tab_button_pressed" binds= [".full_screen_player"]]
 [connection signal="item_rect_changed" from="VBox/HBox/Tab VBox/Player Bar" to="." method="_on_player_bar_item_rect_changed"]

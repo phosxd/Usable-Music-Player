@@ -37,8 +37,13 @@ func _on_option_id_pressed(id:int) -> void:
 		0:
 			selected.emit()
 		1:
-			PlayerManager.queue.insert(PlayerManager.queue_position+1, track)
-		2: PlayerManager.add_to_queue(track)
+			PlayerManager.insert_to_queue(PlayerManager.queue_position+1, track)
+			PlayerManager.auto_queue_start_index = PlayerManager.queue_position+1
+		2:
+			if PlayerManager.auto_queue_start_index > PlayerManager.queue_position:
+				PlayerManager.insert_to_queue(PlayerManager.auto_queue_start_index, track)
+			else:
+				PlayerManager.add_to_queue(track)
 		3: OS.shell_show_in_file_manager(track.path)
 		4: init(LibraryManager.rescan_track(track))
 

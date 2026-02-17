@@ -1,7 +1,8 @@
 extends Node
 
-## Emitted when the queue has been updated. [param queue] is an array of DBTrack objects.
-signal queue_updated(queue:Array[DBTrack])
+## Emitted when the queue has been updated via queue control functions.
+## Does not emit when queue is changed manually.
+signal queue_updated()
 ## Emitted when play has been requested.
 signal play_requested()
 ## Emitted when pause has been requested.
@@ -12,13 +13,21 @@ signal track_progress_updated(track_progress:float)
 ## [param db] is a float with a minimum of -100.
 signal track_peak_volume_changed(db:float)
 
+enum LoopMode {
+	OFF,
+	TRACK,
+	QUEUE,
+}
+
 
 ## Queued tracks.
 var queue:Array[DBTrack] = []
 var queue_position:int = 0
+var auto_queue_start_index:int = -1
 var audio_stream_player: AudioStreamPlayer
 var track_progress: float
 var last_peak_volume: float
+var loop_mode := LoopMode.OFF
 
 
 func _ready() -> void:
@@ -95,7 +104,10 @@ func set_current_track(track_queue_position:int) -> void:
 
 func skip_forward() -> void:
 	var is_playing:bool = audio_stream_player.playing
-	set_current_track(queue_position+1)
+	if loop_mode == LoopMode.QUEUE && queue.size() == queue_position+1:
+		set_current_track(0)
+	else:
+		set_current_track(queue_position+1)
 	if is_playing:
 		set_playing(true)
 
@@ -110,17 +122,34 @@ func skip_backward() -> void:
 			set_playing(true)
 
 
+func set_queue(new_queue:Array[DBTrack]) -> void:
+	queue = new_queue
+	queue_updated.emit()
+
+
 func add_to_queue(track:DBTrack) -> void:
 	if not queue.has(track):
 		queue.append(track)
-	queue_updated.emit(queue)
+		queue_updated.emit()
 
 
 func remove_from_queue(track:DBTrack) -> void:
 	queue.erase(track)
-	queue_updated.emit(queue)
+	queue_updated.emit()
+
+
+func insert_to_queue(position:int, track:DBTrack) -> void:
+	if not queue.has(track):
+		queue.insert(position, track)
+		queue_updated.emit()
+
+
+func shuffle_queue() -> void:
+	queue.shuffle()
+	queue_updated.emit()
 
 
 func _current_track_finished() -> void:
 	audio_stream_player.playing = true
-	skip_forward()
+	if loop_mode == LoopMode.TRACK: audio_stream_player.play()
+	else: skip_forward()

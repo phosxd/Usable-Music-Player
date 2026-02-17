@@ -134,18 +134,19 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"AccentButton"
-disabled = true
 toggle_mode = true
 icon = ExtResource("7_5infn")
 expand_icon = true
 
-[node name="Swap Loop Mode" type="Button" parent="VBox/GridContainer/Controls/Controls 2" unique_id=606610091]
-custom_minimum_size = Vector2(32, 32)
+[node name="Swap Loop Mode" type="Button" parent="VBox/GridContainer/Controls/Controls 2" unique_id=1189711306]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 32)
 layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"AccentButton"
-disabled = true
+toggle_mode = true
 icon = ExtResource("8_yqmis")
+icon_alignment = 1
 expand_icon = true
 
 [node name="Toggle Queue" type="Button" parent="VBox/GridContainer/Controls/Controls 2" unique_id=1712790552]
@@ -205,6 +206,8 @@ step = 0.01
 [connection signal="pressed" from="VBox/GridContainer/Controls/Controls/Skip Backward" to="." method="_on_skip_backward_pressed"]
 [connection signal="pressed" from="VBox/GridContainer/Controls/Controls/Play Pause" to="." method="_on_play_pause_pressed"]
 [connection signal="pressed" from="VBox/GridContainer/Controls/Controls/Skip Forward" to="." method="_on_skip_forward_pressed"]
+[connection signal="toggled" from="VBox/GridContainer/Controls/Controls 2/Toggle Shuffle" to="." method="_on_toggle_shuffle_toggled"]
+[connection signal="pressed" from="VBox/GridContainer/Controls/Controls 2/Swap Loop Mode" to="." method="_on_swap_loop_mode_pressed"]
 [connection signal="toggled" from="VBox/GridContainer/Controls/Controls 2/Toggle Queue" to="." method="_on_toggle_queue_toggled"]
 [connection signal="toggled" from="VBox/GridContainer/Controls/Controls 2/Toggle Lyrics" to="." method="_on_toggle_lyrics_toggled"]
 [connection signal="value_changed" from="VBox/GridContainer/Volume/Volume" to="." method="_on_volume_value_changed"]

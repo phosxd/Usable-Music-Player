@@ -1,8 +1,13 @@
 extends Control
 
+const loop_off_icon := preload('res://Assets/Icons/scale_x2/loop.svg')
+const loop_track_icon := preload('res://Assets/Icons/scale_x2/loop_track.svg')
+const loop_queue_icon := preload('res://Assets/Icons/scale_x2/loop_queue.svg')
 const play_icon := preload('res://Assets/Icons/play.svg')
 const pause_icon := preload('res://Assets/Icons/pause.svg')
 
+var original_queue:Array[DBTrack] = []
+var original_queue_position:int = -1
 var current_track: DBTrack
 var track_progress_blocked := false
 
@@ -100,3 +105,30 @@ func _on_toggle_lyrics_toggled(toggled_on:bool) -> void:
 			%'Toggle Queue'.button_pressed = false
 	else:
 		lyrics_bar.hide()
+
+
+func _on_toggle_shuffle_toggled(toggled_on:bool) -> void:
+	if toggled_on:
+		original_queue_position = PlayerManager.queue_position
+		original_queue = PlayerManager.queue.duplicate()
+		PlayerManager.shuffle_queue()
+	else:
+		PlayerManager.set_queue(original_queue)
+		PlayerManager.queue_position = original_queue_position
+		original_queue = []
+
+
+func _on_swap_loop_mode_pressed() -> void:
+	match PlayerManager.loop_mode:
+		PlayerManager.LoopMode.OFF:
+			PlayerManager.loop_mode = PlayerManager.LoopMode.TRACK
+			%'Swap Loop Mode'.icon = loop_track_icon
+			%'Swap Loop Mode'.button_pressed = true
+		PlayerManager.LoopMode.TRACK:
+			PlayerManager.loop_mode = PlayerManager.LoopMode.QUEUE
+			%'Swap Loop Mode'.icon = loop_queue_icon
+			%'Swap Loop Mode'.button_pressed = true
+		PlayerManager.LoopMode.QUEUE:
+			PlayerManager.loop_mode = PlayerManager.LoopMode.OFF
+			%'Swap Loop Mode'.icon = loop_off_icon
+			%'Swap Loop Mode'.button_pressed = false

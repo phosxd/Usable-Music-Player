@@ -71,9 +71,9 @@ func _on_image_margin_item_rect_changed() -> void:
 
 func _on_image_item_rect_changed() -> void:
 	%Shadow.size = %Image.size
-	%Shadow.position = %Image.position
+	%Shadow.position = %Image.global_position
 	%Button.size = %Image.size
-	%Button.position = %Image.position
+	%Button.position = %Image.global_position
 
 
 func _on_button_pressed() -> void:

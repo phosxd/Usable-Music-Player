@@ -6,6 +6,7 @@ extends Control
 	'artists': [%'Tab Button Artists', preload('res://Scenes/Tabs/Artists/artists.tscn')],
 	'albums': [%'Tab Button Albums', preload('res://Scenes/Tabs/Albums/albums.tscn')],
 	'tracks': [%'Tab Button Tracks', preload('res://Scenes/Tabs/Tracks/tracks.tscn')],
+	'genres': [%'Tab Button Genres', preload('res://Scenes/Tabs/Genres/genres.tscn')],
 	'.full_screen_player': [%'Tab Button Full Screen Player', preload('res://Scenes/Tabs/Full Screen Player/full_screen_player.tscn')]
 }
 var tab_history:Array[String] = []
@@ -31,7 +32,8 @@ func _ready() -> void:
 func update_accents() -> void:
 	var prev_album_dominant_color:Color = album_dominant_color
 	if SessionManager.dynamic_accents:
-		album_dominant_color = PlayerManager.queue[PlayerManager.queue_position].album.get_album_dominant_color()
+		if not PlayerManager.queue.is_empty():
+			album_dominant_color = PlayerManager.queue[PlayerManager.queue_position].album.get_album_dominant_color()
 	else:
 		album_dominant_color = Color(0.75,0.75,0.75)
 	if prev_album_dominant_color == album_dominant_color: return
