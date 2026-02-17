@@ -13,7 +13,7 @@ func _ready() -> void:
 
 	PlayerManager.current_track_updated.connect(update_current_track)
 	PlayerManager.track_peak_volume_changed.connect(update_visualizer)
-	update_current_track(PlayerManager.get_current_track())
+	update_current_track(0, PlayerManager.get_current_track())
 	_on_image_margin_item_rect_changed()
 
 
@@ -23,7 +23,7 @@ func _exit_tree() -> void:
 		sidebar.show()
 
 
-func update_current_track(track:DBTrack) -> void:
+func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 	if not track: return
 	%Image.texture = track.album.cover
 	var dominant_color = track.album.get_album_dominant_color()

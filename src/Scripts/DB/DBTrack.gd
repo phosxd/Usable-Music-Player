@@ -42,6 +42,13 @@ static func update(db_artist:DBArtist, db_album:DBAlbum, track_number:int, raw_i
 		raw_info = raw_album.tracks.get(track_number)
 		if raw_info is not Dictionary: raw_info = {}
 
+	var raw_path = raw_info.get('path')
+	if raw_path is String && not raw_path.is_empty(): object.path = raw_path
+	else: object.path = ''
+
+	if object.path.is_empty() or object.length < 0:
+		object._invalidate()
+
 	var raw_title = raw_info.get('title')
 	if raw_title is String && not raw_title.is_empty(): object.name = raw_title
 	else: object.name = 'No title found'
@@ -49,13 +56,6 @@ static func update(db_artist:DBArtist, db_album:DBAlbum, track_number:int, raw_i
 	var raw_length = raw_info.get('length')
 	if raw_length is float: object.length = raw_length
 	else: object.length = 0
-
-	var raw_path = raw_info.get('path')
-	if raw_path is String && not raw_path.is_empty(): object.path = raw_path
-	else: object.path = ''
-
-	if object.path.is_empty() or object.length < 0:
-		object._invalidate()
 
 
 ## Construct new DBTrack.

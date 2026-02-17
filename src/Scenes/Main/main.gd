@@ -39,7 +39,7 @@ func update_accents() -> void:
 	if prev_album_dominant_color == album_dominant_color: return
 
 	var tinted_dominant_color:Color = album_dominant_color.lerp(Color.WHITE, 0.75)
-	var dark_tinted_dominant_color:Color = album_dominant_color.lerp(Color.WHITE, 0.55)
+	var dark_tinted_dominant_color:Color = album_dominant_color.lerp(Color.WHITE, 0.4)
 	var global_theme := ThemeDB.get_project_theme()
 	global_theme.set_color('icon_normal_color', 'AccentButton', dark_tinted_dominant_color)
 	global_theme.set_color('icon_hover_color', 'AccentButton', dark_tinted_dominant_color)

@@ -58,6 +58,11 @@ func _init(db_artist:DBArtist, album_name:String, raw_info=null) -> void:
 	if raw_cover is ImageTexture: cover = raw_cover
 	else: cover = default_cover
 
+	var raw_palette = raw_info.get('palette')
+	if raw_palette is Dictionary:
+		palette = Dictionary(raw_palette, TYPE_STRING, '', null, TYPE_COLOR, '', null)
+	else: palette = {}
+
 	var raw_year = raw_info.get('year')
 	if raw_year is String && not raw_year.is_empty(): year = raw_year
 	else: year = 'None found'
@@ -89,23 +94,24 @@ func get_track(track_number:int) -> DBTrack:
 ## Grabs the album dominant colors from cache.
 ## If the returned color is not accurate there may be no image available or the album may need to be rescanned.
 func get_album_dominant_color() -> Color:
-	var primary:Color = palette.get('primary', Color.WHITE)
-	var secondary = palette.get('secondary', null)
-	var trinary = palette.get('trinary', null)
-
-	var result:Color = primary
-	if secondary is Color:
-		secondary.a = 0.5
-		result = result.blend(secondary)
-	if trinary is Color:
-		trinary.a = 0.25
-		result = result.blend(trinary)
-
-	return result
+	#var primary:Color = palette.get('primary', Color.WHITE)
+	#var secondary = palette.get('secondary', null)
+	#var trinary = palette.get('trinary', null)
+#
+	#var result:Color = primary
+	#if secondary is Color:
+		#secondary.a = 0.5
+		#result = result.blend(secondary)
+	#if trinary is Color:
+		#trinary.a = 0.25
+		#result = result.blend(trinary)
+	var blend_full:Color = palette.get('blend_full', Color.WHITE)
+	return blend_full
 
 
 static func calculate_colors(image_texture:ImageTexture) -> Dictionary[String,Color]:
 	var result:Dictionary[String,Color] = {
+		'blend_full': Color.WHITE,
 		'primary': Color.WHITE,
 		'secondary': Color.WHITE,
 		'trinary': Color.WHITE,
@@ -127,6 +133,14 @@ static func calculate_colors(image_texture:ImageTexture) -> Dictionary[String,Co
 	# Return if no colors found.
 	if sorted.is_empty(): return result
 
+	var colors_2 := colors.duplicate()
+	var sorted_reversed:Array[int] = sorted.duplicate(); sorted_reversed.reverse()
+	for count:int in sorted_reversed:
+		var blend_color:Color = colors_2.find_key(count)
+		colors_2.erase(blend_color)
+		blend_color.a = 0.4/count
+		result.blend_full = result.blend_full.blend(blend_color)
+
 	# Get primary color.
 	result.primary = colors.find_key(sorted[-1])
 	colors.erase(result.primary)
@@ -145,6 +159,6 @@ static func calculate_colors(image_texture:ImageTexture) -> Dictionary[String,Co
 	if not sorted.is_empty():
 		result.last = colors.find_key(sorted[0])
 		colors.erase(result.last)
-		sorted.remove_at(-1)
+		sorted.remove_at(0)
 
 	return result

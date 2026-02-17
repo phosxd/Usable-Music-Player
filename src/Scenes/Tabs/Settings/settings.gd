@@ -68,3 +68,7 @@ func _on_dynamic_accents_toggled(toggled_on:bool) -> void:
 
 func _on_visualizer_mode_item_selected(index:int) -> void:
 	SessionManager.visualizer_mode = index as SessionManager.VisualizerMode
+
+
+func _on_hd_album_covers_toggled(toggled_on:bool) -> void:
+	SessionManager.hd_album_covers = toggled_on

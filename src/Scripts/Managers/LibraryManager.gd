@@ -36,6 +36,8 @@ enum TrackSortMode {
 
 const valid_audio_extensions:Array[String] = ['wav','ogg','mp3','mpga']
 const db_cache_path:String = 'user://database.dat'
+## Album cover size limit to save space.
+const db_album_cover_max_size := Vector2i(450,450)
 
 
 static var database:Dictionary = {
@@ -239,14 +241,26 @@ static func index_file(path:String, track_number_override:int=-1) -> void:
 	var audio_stream = load_audio(path)
 	if audio_stream is not AudioStream: return
 	audio_stream = audio_stream as AudioStream
+
 	# Grab metadata.
 	var metadata:MusicMetadata = MusicMetadata.new(audio_stream)
 	var artist:String = metadata.get_most_relevent_artist().replace('\n','')
 	var album:String = metadata.album.replace('\n','')
-	var cover:ImageTexture = metadata.get_most_relevent_cover()
+
+	var cover_image:Image = metadata.get_most_relevent_cover().get_image()
+	if not SessionManager.hd_album_covers:
+		var cover_image_size:Vector2i = cover_image.get_size()
+		if cover_image_size.x > db_album_cover_max_size.x:
+			cover_image.resize(db_album_cover_max_size.x, cover_image_size.y, Image.INTERPOLATE_BILINEAR)
+			cover_image_size.x = db_album_cover_max_size.x
+		if cover_image_size.y > db_album_cover_max_size.y:
+			cover_image.resize(cover_image_size.x, db_album_cover_max_size.y, Image.INTERPOLATE_BILINEAR)
+	var cover := ImageTexture.create_from_image(cover_image)
+
 	var track_title:String = metadata.title.replace('\n','')
 	var track_number:int = metadata.track_no
 	if track_title.is_empty(): track_title = path.split('/')[-1].split('.')[0]
+
 	# Add to database.
 	var db_artist:Dictionary = database.artists.get_or_add(artist, {
 		#'cover': fetch_artist_cover(artist),

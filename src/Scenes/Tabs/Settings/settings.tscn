@@ -3,8 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dtrs3vfap1m5b" path="res://Elements/Top Bar/top_bar.tscn" id="1_xrpqc"]
 [ext_resource type="Script" uid="uid://bufk41o60g01x" path="res://Scenes/Tabs/Settings/settings.gd" id="1_ytwd3"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="2_dm7qj"]
-[ext_resource type="Texture2D" uid="uid://dvf313eolgmy2" path="res://icon.svg" id="3_7y23f"]
-[ext_resource type="LabelSettings" uid="uid://bpdf3n2ydkv6m" path="res://Assets/primary_label_large.tres" id="4_a0g4d"]
+[ext_resource type="Texture2D" uid="uid://6b3lu8ow810g" path="res://Assets/Icons/info.svg" id="3_0uie8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vu07l"]
 
@@ -56,21 +55,6 @@ layout_mode = 2
 tooltip_text = "Open source code repository issues page"
 text = "Report an Issue"
 
-[node name="App Info" type="HBoxContainer" parent="Settings/VBox" unique_id=295003127]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="Settings/VBox/App Info" unique_id=1011713632]
-layout_mode = 2
-texture = ExtResource("3_7y23f")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="Settings/VBox/App Info" unique_id=624301356]
-layout_mode = 2
-text = "Usable Music Player v0.0.1"
-label_settings = ExtResource("4_a0g4d")
-
 [node name="Info" type="RichTextLabel" parent="Settings/VBox" unique_id=1699263480]
 unique_name_in_owner = true
 layout_mode = 2
@@ -94,10 +78,14 @@ layout_mode = 2
 [node name="Library" type="HBoxContainer" parent="Settings/VBox" unique_id=48638074]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Settings/VBox/Library" unique_id=709594005]
+[node name="Info" type="TextureRect" parent="Settings/VBox/Library" unique_id=2046241061]
 layout_mode = 2
 tooltip_text = "Directory to grab all audio files from. We will only ever read from this directory, never write to it."
-mouse_filter = 1
+texture = ExtResource("3_0uie8")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Settings/VBox/Library" unique_id=709594005]
+layout_mode = 2
 text = "Library"
 
 [node name="Library Path" type="LineEdit" parent="Settings/VBox/Library" unique_id=2022043686]
@@ -121,8 +109,36 @@ layout_mode = 2
 tooltip_text = "Select directory"
 icon = ExtResource("2_dm7qj")
 
+[node name="HD Covers" type="HBoxContainer" parent="Settings/VBox" unique_id=2057322696]
+layout_mode = 2
+
+[node name="Info" type="TextureRect" parent="Settings/VBox/HD Covers" unique_id=1040908388]
+layout_mode = 2
+tooltip_text = "If enabled, the next time you scan your library album covers will be in their highest quality.
+But keep in mind that HD album covers take up significantly more space in database cache & in memory."
+texture = ExtResource("3_0uie8")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Settings/VBox/HD Covers" unique_id=1542467478]
+layout_mode = 2
+text = "HD Album Covers"
+
+[node name="HD Album Covers" type="CheckButton" parent="Settings/VBox/HD Covers" unique_id=152858950]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Sep 2" type="HSeparator" parent="Settings/VBox" unique_id=2028500508]
+layout_mode = 2
+
 [node name="Dynamic Accents" type="HBoxContainer" parent="Settings/VBox" unique_id=1655818264]
 layout_mode = 2
+
+[node name="Info" type="TextureRect" parent="Settings/VBox/Dynamic Accents" unique_id=616780147]
+layout_mode = 2
+tooltip_text = "If enabled, the app theme will match the album you are playing.
+This can have a significant performance impact in certain menus."
+texture = ExtResource("3_0uie8")
+stretch_mode = 5
 
 [node name="Label" type="Label" parent="Settings/VBox/Dynamic Accents" unique_id=737435311]
 layout_mode = 2
@@ -159,5 +175,6 @@ popup/item_2/id = 2
 [connection signal="text_changed" from="Settings/VBox/Library/Library Path" to="Settings" method="_on_library_path_text_changed"]
 [connection signal="pressed" from="Settings/VBox/Library/Rescan Library" to="Settings" method="_on_rescan_library_pressed"]
 [connection signal="pressed" from="Settings/VBox/Library/Select Library" to="Settings" method="_on_select_library_pressed"]
+[connection signal="toggled" from="Settings/VBox/HD Covers/HD Album Covers" to="Settings" method="_on_hd_album_covers_toggled"]
 [connection signal="toggled" from="Settings/VBox/Dynamic Accents/Dynamic Accents" to="Settings" method="_on_dynamic_accents_toggled"]
 [connection signal="item_selected" from="Settings/VBox/Visualizer Mode/Visualizer Mode" to="Settings" method="_on_visualizer_mode_item_selected"]

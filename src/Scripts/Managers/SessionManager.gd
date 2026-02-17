@@ -17,6 +17,8 @@ const property_data:Array[Array] = [
 	['album_ascend_mode',[TYPE_BOOL]],
 	['track_sort_mode',[TYPE_INT]],
 	['track_ascend_mode',[TYPE_BOOL]],
+	# DB Settings.
+	['hd_album_covers',[TYPE_BOOL]],
 	# UI settings.
 	['visualizer_mode',[TYPE_INT]],
 	['dynamic_accents',[TYPE_BOOL]],
@@ -36,6 +38,7 @@ var data:Dictionary = {
 		'track_number': -1,
 		'track_progress': 0,
 	},
+	'hd_album_covers': false,
 	'visualizer_mode': 0,
 	'dynamic_accents': true,
 }
@@ -101,6 +104,11 @@ var track_ascend_mode:bool = true:
 	set(value):
 		track_ascend_mode = value
 		value_changed.emit('track_ascend_mode')
+
+var hd_album_covers:bool = false:
+	set(value):
+		hd_album_covers = value
+		value_changed.emit('hd_album_covers')
 
 var dynamic_accents:bool = true:
 	set(value):
