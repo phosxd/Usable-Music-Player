@@ -26,7 +26,7 @@ func _ready() -> void:
 			update_accents()
 			update_visualizer()
 	)
-	update_current_track(PlayerManager.queue_position)
+	update_current_track(0, PlayerManager.get_current_track())
 
 
 func update_accents() -> void:
@@ -51,11 +51,10 @@ func update_accents() -> void:
 	global_theme.set_stylebox('grabber_area_highlight', 'HSlider', new_slider_style)
 
 
-func update_current_track(track_queue_position:int) -> void:
-	if PlayerManager.queue.get(track_queue_position) == null: return
-	var current_track = PlayerManager.queue[track_queue_position]
-	if not current_track.album.cover == %'Current Track Cover'.texture:
-		%'Current Track Cover'.texture = current_track.album.cover
+func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
+	if track == null: return
+	if not track.album.cover == %'Current Track Cover'.texture:
+		%'Current Track Cover'.texture = track.album.cover
 		%'Glow Visualizer'.add_theme_stylebox_override('panel', default_player_shadow_style.duplicate())
 		update_visualizer(0)
 		update_accents()

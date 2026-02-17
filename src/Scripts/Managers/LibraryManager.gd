@@ -75,7 +75,7 @@ static var db_cache_size:int = 0
 static func get_artists_sorted(sort_mode:=ArtistSortMode.TITLE) -> Array[DBArtist]:
 	var result:Array[DBArtist] = []
 	for artist_name:String in database.get('artists',{}):
-		result.append(DBArtist.new(artist_name))
+		result.append(DBArtist.new_or_reuse(artist_name))
 
 	match sort_mode:
 		ArtistSortMode.TITLE:
@@ -90,7 +90,7 @@ static func get_albums_sorted(sort_mode:=AlbumSortMode.TITLE) -> Array[DBAlbum]:
 	var result:Array[DBAlbum] = []
 	for artist:DBArtist in get_artists_sorted():
 		for album_name:String in artist.album_names:
-			result.append(DBAlbum.new(artist, album_name))
+			result.append(DBAlbum.new_or_reuse(artist, album_name))
 
 	match sort_mode:
 		AlbumSortMode.TITLE:
@@ -124,7 +124,7 @@ static func get_genres_sorted() -> Dictionary[String,Array]:
 	return result
 
 
-static func get_tracks_sorted(sort_mode:TrackSortMode) -> Array[DBTrack]:
+static func get_tracks_sorted(sort_mode:=TrackSortMode.TITLE) -> Array[DBTrack]:
 	var result:Array[DBTrack] = []
 	for album:DBAlbum in get_albums_sorted():
 		for track_number:int in album.track_count:
@@ -174,7 +174,8 @@ static func rescan_track(track:DBTrack) -> DBTrack:
 	index_file(track.path, track.number)
 	save_database()
 
-	return DBTrack.new(track.artist, track.album, track.number)
+	DBTrack.update(track.artist, track.album, track.number)
+	return DBTrack.new_or_reuse(track.artist, track.album, track.number)
 
 
 static func wipe_database() -> void:
@@ -240,10 +241,11 @@ static func index_file(path:String, track_number_override:int=-1) -> void:
 	audio_stream = audio_stream as AudioStream
 	# Grab metadata.
 	var metadata:MusicMetadata = MusicMetadata.new(audio_stream)
-	var artist := metadata.get_most_relevent_artist().replace('\n','')
-	var album := metadata.album.replace('\n','')
+	var artist:String = metadata.get_most_relevent_artist().replace('\n','')
+	var album:String = metadata.album.replace('\n','')
+	var cover:ImageTexture = metadata.get_most_relevent_cover()
 	var track_title:String = metadata.title.replace('\n','')
-	var track_number := metadata.track_no
+	var track_number:int = metadata.track_no
 	if track_title.is_empty(): track_title = path.split('/')[-1].split('.')[0]
 	# Add to database.
 	var db_artist:Dictionary = database.artists.get_or_add(artist, {
@@ -254,8 +256,9 @@ static func index_file(path:String, track_number_override:int=-1) -> void:
 	var db_album:Dictionary = db_artist.albums.get_or_add(album, {
 		'year': str(metadata.year) if metadata.year > 10 else null,
 		'genre': metadata.genre if not metadata.genre.is_empty() else null,
-		'cover': metadata.get_most_relevent_cover(),
+		'cover': cover,
 		'tracks': [],
+		'palette': DBAlbum.calculate_colors(cover),
 	})
 	if track_number > db_album.tracks.size(): db_album.tracks.resize(track_number)
 	var track_data = {

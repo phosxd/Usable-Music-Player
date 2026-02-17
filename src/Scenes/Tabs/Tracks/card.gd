@@ -58,10 +58,11 @@ func _on_button_mouse_exited() -> void:
 
 func _on_button_gui_input(event:InputEvent) -> void:
 	if event.is_action_pressed('right_click'):
-		var mouse_position:Vector2i = DisplayServer.mouse_get_position()
+		var mouse_position:Vector2i = get_global_mouse_position()
+		options_popup.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
 		options_popup.popup(Rect2(
 			mouse_position.x-50,
-			mouse_position.y-10,
+			mouse_position.y+10,
 			0,
 			0,
 		))

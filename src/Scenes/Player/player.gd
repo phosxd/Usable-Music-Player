@@ -17,13 +17,13 @@ func  _ready() -> void:
 	PlayerManager.track_progress_updated.connect(update_track_progress)
 	PlayerManager.play_requested.connect(update_playing.bind(true))
 	PlayerManager.pause_requested.connect(update_playing.bind(false))
-	update_current_track(PlayerManager.queue_position)
+	update_current_track(0, PlayerManager.get_current_track())
 	update_track_progress(PlayerManager.track_progress)
 
 
-func update_current_track(track_queue_position:int) -> void:
-	if PlayerManager.queue.get(track_queue_position) == null: return
-	current_track = PlayerManager.queue[track_queue_position]
+func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
+	if not track: return
+	current_track = track
 	%'Track Name'.text = current_track.name
 	%'Artist Name'.text = '%s' % [current_track.artist.name]
 	#var last_char_rect:Rect2 = %'Track Name'.get_character_bounds(%'Track Name'.text.length()-1)
@@ -111,7 +111,7 @@ func _on_toggle_shuffle_toggled(toggled_on:bool) -> void:
 	if toggled_on:
 		original_queue_position = PlayerManager.queue_position
 		original_queue = PlayerManager.queue.duplicate()
-		PlayerManager.shuffle_queue()
+		PlayerManager.shuffle_queue(current_track)
 	else:
 		PlayerManager.set_queue(original_queue)
 		PlayerManager.queue_position = original_queue_position

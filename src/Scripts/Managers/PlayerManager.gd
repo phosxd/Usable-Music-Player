@@ -7,7 +7,7 @@ signal queue_updated()
 signal play_requested()
 ## Emitted when pause has been requested.
 signal pause_requested()
-signal current_track_updated(queue_position:int)
+signal current_track_updated(track_queue_position:int, track:DBTrack)
 ## Emitted when the track has progressed (E.g. during playback). [param track_prgress] is the track progress in seconds.
 signal track_progress_updated(track_progress:float)
 ## [param db] is a float with a minimum of -100.
@@ -29,6 +29,9 @@ var track_progress: float
 var last_peak_volume: float
 var loop_mode := LoopMode.OFF
 
+var is_playing:bool = false
+var is_shuffled:bool = false
+
 
 func _ready() -> void:
 	LibraryManager.load_library_from_cache()
@@ -42,13 +45,13 @@ func _ready() -> void:
 	if raw_open_track is Dictionary:
 		var artist_name:String = raw_open_track.get('artist')
 		if not artist_name.is_empty():
-			var artist := DBArtist.new(artist_name)
+			var artist := DBArtist.new_or_reuse(artist_name)
 			var album_name:String = raw_open_track.get('album')
 			if not album_name.is_empty():
-				var album := DBAlbum.new(artist, album_name)
+				var album := DBAlbum.new_or_reuse(artist, album_name)
 				var track_number = raw_open_track.get('track_number',null)
 				if track_number is int:
-					var track := DBTrack.new(artist, album, track_number)
+					var track := DBTrack.new_or_reuse(artist, album, track_number)
 					add_to_queue(track)
 					set_current_track(0)
 					var raw_track_progress = raw_open_track.get('track_progress',0)
@@ -67,10 +70,12 @@ func _process(_delta:float) -> void:
 
 
 func get_current_track() -> DBTrack:
+	if queue_position >= queue.size(): return
 	return queue.get(queue_position)
 
 
 func set_playing(playing:bool) -> void:
+	is_playing = playing
 	if playing:
 		audio_stream_player.play(track_progress)
 		play_requested.emit()
@@ -91,19 +96,20 @@ func set_track_progress(progress:float) -> void:
 
 
 func set_current_track(track_queue_position:int) -> void:
-	if track_queue_position > queue.size()-1 or track_queue_position < 0: return
+	if track_queue_position >= queue.size() or track_queue_position < 0: return
 	var track = queue.get(track_queue_position)
 	if track is not DBTrack or track.valid == false:
+		print(track.name)
 		return
 	audio_stream_player.stream = track.get_stream()
+	if is_playing: set_playing(true)
 	queue_position = track_queue_position
-	current_track_updated.emit(queue_position)
+	current_track_updated.emit(track_queue_position, track)
 	SessionManager.track = track
 	set_track_progress(0)
 
 
 func skip_forward() -> void:
-	var is_playing:bool = audio_stream_player.playing
 	if loop_mode == LoopMode.QUEUE && queue.size() == queue_position+1:
 		set_current_track(0)
 	else:
@@ -116,13 +122,13 @@ func skip_backward() -> void:
 	if track_progress > 3.0:
 		set_track_progress(0.0)
 	else:
-		var is_playing:bool = audio_stream_player.playing
 		set_current_track(queue_position-1)
 		if is_playing:
 			set_playing(true)
 
 
 func set_queue(new_queue:Array[DBTrack]) -> void:
+	is_shuffled = false
 	queue = new_queue
 	queue_updated.emit()
 
@@ -144,12 +150,20 @@ func insert_to_queue(position:int, track:DBTrack) -> void:
 		queue_updated.emit()
 
 
-func shuffle_queue() -> void:
+## Shuffles the queue. If [param anchor] track is used, will shuffle the queue & move anchor track to the beginning.
+func shuffle_queue(anchor:DBTrack=null) -> void:
+	is_shuffled = true
 	queue.shuffle()
+	if anchor:
+		queue.erase(anchor)
+		insert_to_queue(0, anchor)
+		var track_progress_:float = track_progress
+		set_current_track(0)
+		set_track_progress(track_progress_)
 	queue_updated.emit()
 
 
 func _current_track_finished() -> void:
-	audio_stream_player.playing = true
-	if loop_mode == LoopMode.TRACK: audio_stream_player.play()
+	if queue_position+1 >= queue.size(): is_playing = false
+	if loop_mode == LoopMode.TRACK: set_playing(true)
 	else: skip_forward()

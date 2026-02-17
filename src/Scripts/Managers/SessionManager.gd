@@ -139,14 +139,14 @@ func load_session() -> void:
 	if raw_track is Dictionary:
 		var artist_name = raw_track.get('artist')
 		if artist_name is String && not artist_name.is_empty():
-			var artist := DBArtist.new(artist_name)
+			var artist := DBArtist.new_or_reuse(artist_name)
 			var album_name = raw_track.get('album')
 			if album_name is String && not album_name.is_empty():
-				var album := DBAlbum.new(artist, album_name)
+				var album := DBAlbum.new_or_reuse(artist, album_name)
 				var track_number = raw_track.get('track_number')
 				if (track_number is int or track_number is float) && track_number != -1:
 					track_number = int(track_number)
-					track = DBTrack.new(artist, album, track_number)
+					track = DBTrack.new_or_reuse(artist, album, track_number)
 
 	for i in property_data:
 		var data_entry = data.get(i[0])

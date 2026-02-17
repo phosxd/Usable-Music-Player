@@ -1,3 +1,5 @@
+## Database item for music albums.
+## Use [param new_or_reuse] when instantiating.
 class_name DBAlbum extends RefCounted
 
 enum DominantColorMethod {
@@ -6,7 +8,9 @@ enum DominantColorMethod {
 	ACCURATE_BLEND,
 }
 
-var default_cover := ImageTexture.create_from_image(preload('res://Assets/Icons/texture.svg').get_image())
+## Keeps track of unique [DBAlbum] objects. Will use existing object when instantiating when possible.
+static var _objects:Dictionary[String,DBAlbum] = {}
+static var default_cover := ImageTexture.create_from_image(preload('res://Assets/Icons/texture.svg').get_image())
 
 ## Parent artist.
 var artist: DBArtist
@@ -20,14 +24,25 @@ var cover: ImageTexture
 var year: String
 ## Album genre. No guaranteed to be formatted or be a valid genre.
 var genre: String
+## Cached color palette for the album cover image.
+var palette:Dictionary[String,Color] = {}
 ## Whether or not the DB entry is valid.
 ## This may become false when the raw entry can no longer be found.
 var valid := true
 
 
+## Same as [param new] method, except if this album has already been created before, just reuse an existing object.
+static func new_or_reuse(db_artist:DBArtist, album_name:String, raw_info=null) -> DBAlbum:
+	var old_object = _objects.get('%s:%s' % [db_artist.name, album_name], null)
+	if old_object is DBAlbum:
+		return old_object
+	else:
+		return DBAlbum.new(db_artist, album_name, raw_info)
+
+
 ## Construct new DBAlbum.
-## Do not use [param raw_info].
 func _init(db_artist:DBArtist, album_name:String, raw_info=null) -> void:
+	_objects.set('%s:%s' % [db_artist.name, album_name], self)
 	artist = db_artist
 	name = album_name
 	if raw_info is not Dictionary:
@@ -45,11 +60,11 @@ func _init(db_artist:DBArtist, album_name:String, raw_info=null) -> void:
 
 	var raw_year = raw_info.get('year')
 	if raw_year is String && not raw_year.is_empty(): year = raw_year
-	else: year = 'No year found'
+	else: year = 'None found'
 
 	var raw_genre = raw_info.get('genre')
 	if raw_genre is String && not raw_genre.is_empty(): genre = raw_genre
-	else: genre = 'No genre found'
+	else: genre = 'None found'
 
 
 func _invalidate() -> void:
@@ -66,41 +81,70 @@ func get_track(track_number:int) -> DBTrack:
 		_invalidate()
 		return null
 
-	return DBTrack.new(artist, self, track_number, raw_track)
+	var result = DBTrack.new_or_reuse(artist, self, track_number, raw_track)
+	if not result.valid: return null
+	return result
 
 
-func get_album_dominant_color(method:=DominantColorMethod.ACCURATE_BLEND) -> Color:
-	var image:Image = cover.get_image()
-	if method == DominantColorMethod.EASY:
-		image.crop(1,1)
-		return image.get_pixel(0,0)
+## Grabs the album dominant colors from cache.
+## If the returned color is not accurate there may be no image available or the album may need to be rescanned.
+func get_album_dominant_color() -> Color:
+	var primary:Color = palette.get('primary', Color.WHITE)
+	var secondary = palette.get('secondary', null)
+	var trinary = palette.get('trinary', null)
 
-	if method in [DominantColorMethod.ACCURATE, DominantColorMethod.ACCURATE_BLEND]:
-		image.resize(8,8, Image.INTERPOLATE_BILINEAR)
-		var image_size:Vector2i = image.get_size()
-		var colors:Dictionary[Color,int] = {}
-		# Iterate on each pixel & count the instances.
-		for x in image_size.x:
-			for y in image_size.y:
-				var pixel:Color = image.get_pixel(x,y)
-				if pixel.a != 1.0: continue # Exclude transparent pixels.
-				colors.get_or_add(pixel, 0)
-				colors[pixel] += 1
-		var sorted:Array[int] = colors.values(); sorted.sort()
-		# Return white if no colors found.
-		if sorted.is_empty(): return Color.WHITE
-		# Get top colors & return it.
-		var color:Color = colors.find_key(sorted[-1])
-		colors.erase(color)
+	var result:Color = primary
+	if secondary is Color:
+		secondary.a = 0.5
+		result = result.blend(secondary)
+	if trinary is Color:
+		trinary.a = 0.25
+		result = result.blend(trinary)
+
+	return result
+
+
+static func calculate_colors(image_texture:ImageTexture) -> Dictionary[String,Color]:
+	var result:Dictionary[String,Color] = {
+		'primary': Color.WHITE,
+		'secondary': Color.WHITE,
+		'trinary': Color.WHITE,
+		'last': Color.WHITE,
+	}
+	var image = image_texture.get_image()
+	image.resize(8,8, Image.INTERPOLATE_BILINEAR)
+	var image_size:Vector2i = image.get_size()
+
+	# Iterate on each pixel & count the instances.
+	var colors:Dictionary[Color,int] = {}
+	for x in image_size.x:
+		for y in image_size.y:
+			var pixel:Color = image.get_pixel(x,y)
+			if pixel.a != 1.0: continue # Exclude transparent pixels.
+			colors.get_or_add(pixel, 0)
+			colors[pixel] += 1
+	var sorted:Array[int] = colors.values(); sorted.sort()
+	# Return if no colors found.
+	if sorted.is_empty(): return result
+
+	# Get primary color.
+	result.primary = colors.find_key(sorted[-1])
+	colors.erase(result.primary)
+	sorted.remove_at(-1)
+	# Get secondary color.
+	if not sorted.is_empty():
+		result.secondary = colors.find_key(sorted[-1])
+		colors.erase(result.secondary)
 		sorted.remove_at(-1)
-		# Blend remaining colors.
-		if method == DominantColorMethod.ACCURATE_BLEND:
-			var sorted_reversed:Array[int] = sorted.duplicate(); sorted_reversed.reverse()
-			for count:int in sorted_reversed:
-				var blend_color:Color = colors.find_key(count)
-				colors.erase(blend_color)
-				blend_color.a = 0.5/count
-				color = color.blend(blend_color)
-		return color
+	# Get trinary color.
+	if not sorted.is_empty():
+		result.trinary = colors.find_key(sorted[-1])
+		colors.erase(result.trinary)
+		sorted.remove_at(-1)
+	# Get last color.
+	if not sorted.is_empty():
+		result.last = colors.find_key(sorted[0])
+		colors.erase(result.last)
+		sorted.remove_at(-1)
 
-	return Color.WHITE
+	return result
