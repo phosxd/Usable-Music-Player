@@ -17,36 +17,14 @@
        id="linearGradient19"
        inkscape:collect="always">
       <stop
-         style="stop-color:#559dff;stop-opacity:1;"
+         style="stop-color:#5b5b5b;stop-opacity:1;"
          offset="0"
          id="stop19" />
       <stop
-         style="stop-color:#c991ff;stop-opacity:1;"
-         offset="1"
+         style="stop-color:#7e7e7e;stop-opacity:1;"
+         offset="0.99751663"
          id="stop20" />
     </linearGradient>
-    <linearGradient
-       id="linearGradient17"
-       inkscape:collect="always">
-      <stop
-         style="stop-color:#7b6cde;stop-opacity:1;"
-         offset="0"
-         id="stop17" />
-      <stop
-         style="stop-color:#f087b8;stop-opacity:1;"
-         offset="1"
-         id="stop18" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient17"
-       id="linearGradient18"
-       x1="-0.625"
-       y1="8"
-       x2="16.625"
-       y2="8"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(2.1499999,2.65)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19"
@@ -57,7 +35,7 @@
        y2="10.949924"
        gradientUnits="userSpaceOnUse"
        spreadMethod="pad"
-       gradientTransform="translate(2.1499999,2.65)" />
+       gradientTransform="matrix(0.93333063,0,0,0.93333065,2.683355,3.1833551)" />
   </defs>
   <sodipodi:namedview
      id="namedview4"
@@ -68,38 +46,44 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="6.408331"
-     inkscape:cx="21.456445"
-     inkscape:cy="52.041632"
+     inkscape:zoom="4.1204146"
+     inkscape:cx="22.085156"
+     inkscape:cy="60.430812"
      inkscape:window-width="1920"
      inkscape:window-height="1008"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg4" />
+     inkscape:current-layer="g20" />
   <g
      id="g20"
      transform="matrix(4.3478261,0,0,4.3478261,-4.1304352,-6.3043483)">
     <rect
-       style="fill:url(#linearGradient20);stroke:url(#linearGradient18);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       style="fill:url(#linearGradient20);stroke:none;stroke-width:1.16671;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
        id="rect9"
-       width="16"
-       height="16"
-       x="2.1500001"
-       y="2.6500001" />
-    <path
-       fill="none"
-       d="m 15,4.5 a 1,1 0 0 0 -1,-1 l -7.246,2 A 1,1 0 0 0 6,6.5 v 5.55 A 2.5,2.5 0 1 0 8,14.5 V 7.256 L 13,5.828 V 9 l 2,-1 z"
-       id="path3"
-       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1" />
-    <path
-       fill="none"
-       stroke="none"
-       stroke-linecap="round"
-       d="M 12.5,10.5 V 13.033166 15.5 m 2,-4 v 3 m -4,-2 v 1 m 6,-1 v 1"
-       id="path4"
-       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-opacity:1"
-       sodipodi:nodetypes="ccccccccc"
-       inkscape:label="path4" />
+       width="14.93329"
+       height="14.93329"
+       x="2.6833551"
+       y="3.1833551"
+       ry="2.4994648" />
+    <g
+       id="g1"
+       transform="matrix(0.86313149,0,0,0.86313149,1.3405338,1.3445463)"
+       style="fill:#6fbfff;fill-opacity:1;stroke:none;stroke-opacity:1">
+      <path
+         fill="none"
+         d="m 15,4.5 a 1,1 0 0 0 -1,-1 l -7.246,2 A 1,1 0 0 0 6,6.5 v 5.55 A 2.5,2.5 0 1 0 8,14.5 V 7.256 L 13,5.828 V 9 l 2,-1 z"
+         id="path3"
+         style="fill:#6fbfff;fill-opacity:1;stroke:none;stroke-opacity:1" />
+      <path
+         fill="none"
+         stroke="none"
+         stroke-linecap="round"
+         d="M 12.5,10.5 V 13.033166 15.5 m 2,-4 v 3 m -4,-2 v 1 m 6,-1 v 1"
+         id="path4"
+         style="fill:#6fbfff;fill-opacity:1;stroke:#ffffff;stroke-opacity:1"
+         sodipodi:nodetypes="ccccccccc"
+         inkscape:label="path4" />
+    </g>
   </g>
 </svg>

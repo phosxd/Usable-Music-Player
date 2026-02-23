@@ -1,0 +1,80 @@
+extends Control
+
+@export var tab_config:Dictionary[String,Variant] = {
+	'sort_mode': {
+		'enabled': false,
+	},
+	'ascend_mode': {
+		'enabled': false,
+	},
+	'search': {
+		'enabled': false,
+	}
+}
+var card_scene:PackedScene = SessionManager.get_layout_theme_scene('tracks_card')
+const overlay_color := Color(0.25, 0.25, 0.25, 0.5)
+var loaded_tracks:Array[DBTrack] = []
+var album: DBAlbum
+
+
+func _ready() -> void:
+	if not album:
+		SessionManager.main_scene.set_tab('albums')
+
+
+func init(album_:DBAlbum) -> void:
+	if not album_: return
+	album = album_
+	%Title.text = album.name
+	%Artist.text = album.artist.name
+	%Year.text = album.year
+	album.get_cover_threaded(func(cover) -> void:
+		%Icon.texture = cover
+	)
+	var dominant_color = album.get_album_dominant_color()
+	var dominant_colors = [
+		dominant_color,
+		album.palette.get('secondary', Color.WHITE),
+		album.palette.get('trinary', Color.WHITE),
+		album.palette.get('blend_full', Color.WHITE),
+	]
+	dominant_colors.shuffle()
+	var mat = %Gradient.material
+	var index:int = -1
+	for i in ['topright','topleft','bottomright','bottomleft']:
+		index += 1
+		mat.set_shader_parameter(i, dominant_colors[index].blend(overlay_color))
+		
+	for i in album.track_count:
+		var track = album.get_track(i)
+		if track is not DBTrack: continue
+		loaded_tracks.append(track)
+		add_card(track)
+
+
+func add_card(track:DBTrack) -> void:
+	var card:Control = card_scene.instantiate()
+	card.selected.connect(_on_track_selected.bind(track))
+	card.init(track)
+	card.set_mode(1)
+	%'Track List'.add_child(card)
+
+
+func _on_track_selected(track:DBTrack) -> void:
+	PlayerManager.queue.clear()
+	for track_:DBTrack in loaded_tracks:
+		PlayerManager.add_to_queue(track_)
+
+	PlayerManager.set_current_track(PlayerManager.queue.find(track))
+	if PlayerManager.is_shuffled:
+		PlayerManager.shuffle_queue(track)
+	PlayerManager.set_playing(true)
+
+
+func _on_album_button_pressed() -> void:
+	SessionManager.main_scene.go_back()
+
+
+func _on_play_pressed() -> void:
+	if loaded_tracks.is_empty(): return
+	_on_track_selected(loaded_tracks[0])

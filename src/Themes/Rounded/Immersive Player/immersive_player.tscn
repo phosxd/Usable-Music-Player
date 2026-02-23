@@ -1,0 +1,188 @@
+[gd_scene format=3 uid="uid://b60il7hbyk3d0"]
+
+[ext_resource type="Script" uid="uid://d3kxsvnf3vv3b" path="res://Scripts/UI/Immersive Player/immersive_player.gd" id="1_3tk8y"]
+[ext_resource type="Script" uid="uid://bp4yo15fcef1s" path="res://Themes/Rounded/Immersive Player/init.gd" id="1_kuk2b"]
+[ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_4eqns"]
+[ext_resource type="Shader" uid="uid://dvoc7ypde1coe" path="res://Assets/gradient.gdshader" id="2_kuk2b"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_kuk2b"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="4_mi67m"]
+[ext_resource type="Script" uid="uid://b8luuj3yfd61c" path="res://Scripts/UI/Immersive Player/lyrics_container.gd" id="5_euhoj"]
+[ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_olwlc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4m0va"]
+shader = ExtResource("2_kuk2b")
+shader_parameter/topleft = Color(0, 0, 0, 1)
+shader_parameter/topright = Color(0, 0, 0, 1)
+shader_parameter/bottomleft = Color(0, 0, 0, 1)
+shader_parameter/bottomright = Color(0.12225223, 0.12225223, 0.12225223, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kuk2b"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+anti_aliasing = false
+
+[node name="Immersive Player" type="VBoxContainer" unique_id=1347349079]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Node" type="Node" parent="." unique_id=1333821091]
+script = ExtResource("1_kuk2b")
+
+[node name="Immersive Player" type="MarginContainer" parent="." unique_id=425870283]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_3tk8y")
+
+[node name="Background" type="ColorRect" parent="Immersive Player" unique_id=181722797]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_4m0va")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Shadow Container" type="Control" parent="Immersive Player" unique_id=1306541130]
+layout_mode = 2
+
+[node name="Shadow" type="Panel" parent="Immersive Player/Shadow Container" unique_id=2125278853]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = ExtResource("2_4eqns")
+
+[node name="Image Margin" type="MarginContainer" parent="Immersive Player" unique_id=1199381498]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 175
+theme_override_constants/margin_top = 175
+theme_override_constants/margin_right = 175
+theme_override_constants/margin_bottom = 175
+
+[node name="HBox" type="HBoxContainer" parent="Immersive Player/Image Margin" unique_id=1218817030]
+layout_mode = 2
+
+[node name="Image" type="PanelContainer" parent="Immersive Player/Image Margin/HBox" unique_id=411174489]
+unique_name_in_owner = true
+clip_children = 1
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_kuk2b")
+script = ExtResource("3_kuk2b")
+radius_bottom_left = 16
+radius_bottom_right = 16
+radius_top_left = 16
+radius_top_right = 16
+texture = ExtResource("4_mi67m")
+expand_mode = 2
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[node name="Lyrics Container" type="ScrollContainer" parent="Immersive Player/Image Margin/HBox" unique_id=1289380820]
+visible = false
+show_behind_parent = true
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("5_euhoj")
+
+[node name="Lyrics Label" type="Label" parent="Immersive Player/Image Margin/HBox/Lyrics Container" unique_id=194350132]
+unique_name_in_owner = true
+show_behind_parent = true
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Hip-hip
+Hip-hip
+Hip-hip
+Hip-hip
+
+When you're on a holiday
+You can't find the words to say
+All the things that come to you
+And I wanna feel it too
+
+On an island in the sun
+We'll be playing and having fun
+And it makes me feel so fine
+I can't control my brain
+
+Hip-hip
+Hip-hip
+
+When you're on a golden sea
+You don't need no memory
+Just a place to call your own
+As we drift into the zone
+
+On an island in the sun
+We'll be playing and having fun
+And it makes me feel so fine
+I can't control my brain
+
+We'll run away together
+We'll spend some time forever
+We'll never feel bad anymore
+
+Hip-hip
+Hip-hip
+Hip-hip
+
+On an island in the sun
+We'll be playing and having fun
+And it makes me feel so fine
+I can't control my brain
+
+We'll run away together
+We'll spend some time forever
+We'll never feel bad anymore
+
+Hip-hip
+(Hip-hip) we'll never feel bad anymore
+Hip-hip
+No, no (hip-hip)
+(Hip-hip) we'll never feel bad anymore
+(Hip-hip)
+No, no (hip-hip)
+No, no (hip-hip)"
+
+[node name="Button Container" type="Control" parent="Immersive Player" unique_id=684032733]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Button" parent="Immersive Player/Button Container" unique_id=519598093 instance=ExtResource("6_olwlc")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -6.0
+offset_right = 8.0
+offset_bottom = 6.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[connection signal="item_rect_changed" from="Immersive Player/Image Margin" to="Immersive Player" method="_on_image_margin_item_rect_changed"]
+[connection signal="item_rect_changed" from="Immersive Player/Image Margin/HBox/Image" to="Immersive Player" method="_on_image_item_rect_changed"]
+[connection signal="pressed" from="Immersive Player/Button Container/Button" to="Immersive Player" method="_on_button_pressed"]

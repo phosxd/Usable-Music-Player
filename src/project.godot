@@ -16,7 +16,8 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Usable Music Player"
 config/description="A usable music player."
-run/main_scene="uid://clcbjy34jselh"
+config/version="0.0.4"
+run/main_scene="uid://dfup02arqsdd8"
 run/print_header=false
 config/use_custom_user_dir=true
 config/custom_user_dir_name="SOHP/Usable Music Player"
@@ -35,14 +36,20 @@ buses/default_bus_layout="uid://b0h23vtwas46l"
 PowerKey="*uid://dpkv4s4787jc1"
 PlayerManager="*uid://bsri8hvvykwnh"
 SessionManager="*uid://caowd7sywd5u3"
+CLI="*uid://cht4oe1otvdde"
 
 [display]
 
 window/size/viewport_width=1175
+window/per_pixel_transparency/allowed=true
+
+[dotnet]
+
+project/assembly_name="Usable Music Player"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/PowerKey/plugin.cfg", "res://addons/TextureRectRounded/plugin.cfg", "res://addons/music_metadata/plugin.cfg")
+enabled=PackedStringArray("res://addons/PowerKey/plugin.cfg", "res://addons/SmoothScroll/plugin.cfg", "res://addons/TextureRectRounded/plugin.cfg")
 
 [file_customization]
 
@@ -70,4 +77,5 @@ right_click={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 shader_compiler/shader_cache/enabled=false

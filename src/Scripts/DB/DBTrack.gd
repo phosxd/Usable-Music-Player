@@ -39,7 +39,8 @@ static func update(db_artist:DBArtist, db_album:DBAlbum, track_number:int, raw_i
 	if raw_info is not Dictionary:
 		var raw_artist:Dictionary = LibraryManager.database.artists.get(db_artist.name,{'albums':{}})
 		var raw_album:Dictionary = raw_artist.albums.get(db_album.name,{'tracks':[]})
-		raw_info = raw_album.tracks.get(track_number)
+		if track_number < raw_album.tracks.size():
+			raw_info = raw_album.tracks.get(track_number)
 		if raw_info is not Dictionary: raw_info = {}
 
 	var raw_path = raw_info.get('path')
@@ -74,6 +75,24 @@ func _invalidate() -> void:
 
 func get_stream() -> AudioStream:
 	return LibraryManager.load_audio(path)
+
+
+## Returns file system firendly name of the track.
+func as_filename() -> String:
+	return '%s__%s__%s' % [artist.name.replace('/','_'), album.name.replace('/','_'), number]
+
+
+## Returns any stored lyrics for this track, or an empty string if none found.
+func get_lyrics() -> String:
+	var text = FileAccess.get_file_as_string(LibraryManager.lyrics_path+'/'+as_filename())
+	return text
+
+
+func save_lyrics(lyrics:String) -> void:
+	DirAccess.make_dir_recursive_absolute(LibraryManager.lyrics_path)
+	var file := FileAccess.open(LibraryManager.lyrics_path+'/'+as_filename(), FileAccess.WRITE)
+	file.store_string(lyrics)
+	file.close()
 
 
 static func get_track_position_formatted(value:float) -> String:

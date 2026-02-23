@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dh7gii6xqmoom"]
+
+[ext_resource type="Script" uid="uid://cwwjfcnw2krtk" path="res://Scripts/UI/Artists/artists.gd" id="1_b37cn"]
+
+[node name="Artists" type="VBoxContainer" unique_id=213465202]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_b37cn")
+
+[node name="Scroll" type="ScrollContainer" parent="." unique_id=1093367767]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Margin" type="MarginContainer" parent="Scroll" unique_id=79693074]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+
+[node name="Grid" type="HFlowContainer" parent="Scroll/Margin" unique_id=1859326185]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 8

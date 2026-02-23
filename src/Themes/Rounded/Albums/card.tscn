@@ -1,0 +1,156 @@
+[gd_scene format=3 uid="uid://wj2msykag6fk"]
+
+[ext_resource type="Script" uid="uid://dq72v1xlxhdva" path="res://Scripts/UI/Albums/card.gd" id="1_x2woc"]
+[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="2_2pbjv"]
+[ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="3_tngmq"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="4_htipw"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="5_pqd0m"]
+[ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_7jewn"]
+[ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="7_5nta3"]
+[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="8_wnkme"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5uw8l"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+anti_aliasing = false
+
+[sub_resource type="Animation" id="Animation_h18sm"]
+resource_name = "Hover"
+length = 0.3
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.075, 0.115, 0.15, 0.19, 0.225, 0.26666668, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [0.0],
+"method": &"hover"
+}, {
+"args": [0.125],
+"method": &"hover"
+}, {
+"args": [0.25],
+"method": &"hover"
+}, {
+"args": [0.375],
+"method": &"hover"
+}, {
+"args": [0.5],
+"method": &"hover"
+}, {
+"args": [0.625],
+"method": &"hover"
+}, {
+"args": [0.75],
+"method": &"hover"
+}, {
+"args": [0.875],
+"method": &"hover"
+}, {
+"args": [1.0],
+"method": &"hover"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eamsa"]
+_data = {
+&"Hover": SubResource("Animation_h18sm")
+}
+
+[node name="Card" type="PanelContainer" unique_id=927718466]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x2woc")
+
+[node name="Options" type="MenuButton" parent="." unique_id=984699097]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+item_count = 1
+popup/item_0/text = "Play (clear queue)"
+popup/item_0/icon = ExtResource("2_2pbjv")
+popup/item_0/id = 0
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1832504744]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Center" type="CenterContainer" parent="VBox" unique_id=1613175038]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Shadow" type="Panel" parent="VBox/Center" unique_id=2098105743]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(225, 225)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("3_tngmq")
+
+[node name="Image" type="PanelContainer" parent="VBox/Center" unique_id=1571072300]
+unique_name_in_owner = true
+clip_children = 1
+custom_minimum_size = Vector2(225, 225)
+layout_mode = 2
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_5uw8l")
+script = ExtResource("4_htipw")
+radius_bottom_left = 16
+radius_bottom_right = 16
+radius_top_left = 16
+radius_top_right = 16
+texture = ExtResource("5_pqd0m")
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[node name="Button" parent="VBox/Center" unique_id=519598093 instance=ExtResource("6_7jewn")]
+custom_minimum_size = Vector2(225, 225)
+layout_mode = 2
+
+[node name="Sep 1" type="HSeparator" parent="VBox" unique_id=1927269189]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="VBox" unique_id=1275566713]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="VBox/HBox" unique_id=824305555]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "Album name..."
+label_settings = ExtResource("7_5nta3")
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Artist" type="Label" parent="VBox" unique_id=965784348]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+text = "Artist name..."
+label_settings = ExtResource("8_wnkme")
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1487263792]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_eamsa")
+
+[connection signal="mouse_entered" from="VBox/Center/Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="VBox/Center/Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="VBox/Center/Button" to="." method="_on_button_pressed"]

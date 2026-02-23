@@ -34,22 +34,14 @@ func _process(_delta:float) -> void:
 
 func _draw() -> void:
 	for i in bar_count:
-		var height = heights[i].current+size.y
-		var min_height = bar_width -2
+		var height = heights[i].current
 		var l_rect := Rect2(
 			i * bar_width,
-			size.y - heights[i].current-size.y,
-			min_height,
-			height,
+			size.y/2,
+			bar_width-2,
+			-height-size.y/2,
 		)
 		draw_rect(l_rect, color_1)
-		#var diff = MathUtils.transfer_range_of_value(Vector2(0,size.y), Vector2(0,1), height-min_height)
-		#draw_rect(l_rect, Color(
-			#lerp(color_1.r, color_2.r, diff),
-			#lerp(color_1.g, color_2.g, diff),
-			#lerp(color_1.b, color_2.b, diff),
-			#lerp(color_1.a, color_2.a, diff),
-		#))
 
 
 func _on_resized():

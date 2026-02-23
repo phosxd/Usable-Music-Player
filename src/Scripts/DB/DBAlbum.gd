@@ -18,8 +18,8 @@ var artist: DBArtist
 var name: String
 ## Number of tracks in the album.
 var track_count: int
-## Album cover image.
-var cover: ImageTexture
+## Album cover image path. Use [param get_cover] to get a usable texture.
+var cover_path: String
 ## Album release year. Not guaranteed to be formatted or be a valid year.
 var year: String
 ## Album genre. No guaranteed to be formatted or be a valid genre.
@@ -29,6 +29,8 @@ var palette:Dictionary[String,Color] = {}
 ## Whether or not the DB entry is valid.
 ## This may become false when the raw entry can no longer be found.
 var valid := true
+
+var _cover: ImageTexture
 
 
 ## Same as [param new] method, except if this album has already been created before, just reuse an existing object.
@@ -54,9 +56,8 @@ func _init(db_artist:DBArtist, album_name:String, raw_info=null) -> void:
 
 	track_count = raw_info.get('tracks',[]).size()
 
-	var raw_cover = raw_info.get('cover')
-	if raw_cover is ImageTexture: cover = raw_cover
-	else: cover = default_cover
+	var raw_cover_path = raw_info.get('cover')
+	if raw_cover_path is String: cover_path = raw_cover_path
 
 	var raw_palette = raw_info.get('palette')
 	if raw_palette is Dictionary:
@@ -81,14 +82,38 @@ func _invalidate() -> void:
 func get_track(track_number:int) -> DBTrack:
 	var raw_artist:Dictionary = LibraryManager.database.artists.get(artist.name,{})
 	var raw_album:Dictionary = raw_artist.get('albums',{}).get(name,{})
-	var raw_track = raw_album.get('tracks',[]).get(track_number)
 	if raw_album is not Dictionary:
 		_invalidate()
 		return null
 
+	var raw_track_list:Array = raw_album.get('tracks',[])
+	if raw_track_list.size() <= track_number: return null
+	var raw_track = raw_track_list.get(track_number)
+
 	var result = DBTrack.new_or_reuse(artist, self, track_number, raw_track)
 	if not result.valid: return null
 	return result
+
+
+## Returns the album cover [ImageTexture] or [code]null[/code] if it cannot be found.
+func get_cover() -> ImageTexture:
+	if _cover: return _cover
+	var cover
+	if FileAccess.file_exists(cover_path):
+		var image = Image.load_from_file(cover_path)
+		if image is Image:
+			cover = ImageTexture.create_from_image(image)
+	if not cover: return null
+	_cover = cover
+	return cover
+
+
+## Calls [param get_cover] in a separate thread then calls [param callback] with the result.
+func get_cover_threaded(callback:Callable) -> void:
+	if _cover:
+		callback.call(_cover)
+		return
+	ThreadHelper.create_thread(get_cover, callback)
 
 
 ## Grabs the album dominant colors from cache.
@@ -117,6 +142,7 @@ static func calculate_colors(image_texture:ImageTexture) -> Dictionary[String,Co
 		'trinary': Color.WHITE,
 		'last': Color.WHITE,
 	}
+	if image_texture == null: return result
 	var image = image_texture.get_image()
 	image.resize(8,8, Image.INTERPOLATE_BILINEAR)
 	var image_size:Vector2i = image.get_size()

@@ -10,6 +10,8 @@ signal pause_requested()
 signal current_track_updated(track_queue_position:int, track:DBTrack)
 ## Emitted when the track has progressed (E.g. during playback). [param track_prgress] is the track progress in seconds.
 signal track_progress_updated(track_progress:float)
+## Emitted when the volume has changed.
+signal volume_updated(value:float)
 ## [param db] is a float with a minimum of -100.
 signal track_peak_volume_changed(db:float)
 
@@ -84,29 +86,32 @@ func set_playing(playing:bool) -> void:
 		pause_requested.emit()
 
 
-func set_volume(value:float) -> void:
-	audio_stream_player.volume_db = linear_to_db(value/100.0)
+func set_volume(value:float, emit:bool=true) -> void:
+	var big_value:float = value/100.0
+	audio_stream_player.volume_db = linear_to_db(big_value)
+	if emit: volume_updated.emit(value)
+
+
+func get_volume() -> float:
+	return audio_stream_player.volume_linear*100.0
 
 
 func set_track_progress(progress:float) -> void:
 	track_progress = progress
 	audio_stream_player.seek(progress)
 	track_progress_updated.emit(progress)
-	SessionManager.track_progress = progress
 
 
 func set_current_track(track_queue_position:int) -> void:
 	if track_queue_position >= queue.size() or track_queue_position < 0: return
 	var track = queue.get(track_queue_position)
-	if track is not DBTrack or track.valid == false:
-		print(track.name)
-		return
+	if track is not DBTrack or track.valid == false: return
+	set_track_progress(0)
+	audio_stream_player.stop()
 	audio_stream_player.stream = track.get_stream()
 	if is_playing: set_playing(true)
 	queue_position = track_queue_position
 	current_track_updated.emit(track_queue_position, track)
-	SessionManager.track = track
-	set_track_progress(0)
 
 
 func skip_forward() -> void:
@@ -133,34 +138,36 @@ func set_queue(new_queue:Array[DBTrack]) -> void:
 	queue_updated.emit()
 
 
-func add_to_queue(track:DBTrack) -> void:
-	if not queue.has(track):
-		queue.append(track)
-		queue_updated.emit()
+func add_to_queue(track:DBTrack, emit:bool=true) -> void:
+	queue.append(track)
+	if emit: queue_updated.emit()
 
 
-func remove_from_queue(track:DBTrack) -> void:
+func remove_from_queue(track:DBTrack, emit:bool=true) -> void:
 	queue.erase(track)
 	queue_updated.emit()
 
 
-func insert_to_queue(position:int, track:DBTrack) -> void:
-	if not queue.has(track):
+func insert_to_queue(position:int, track:DBTrack, emit:bool=true) -> void:
+	if position > queue.size():
+		queue.append(track)
+		print('adding')
+	else:
 		queue.insert(position, track)
-		queue_updated.emit()
+	if emit: queue_updated.emit()
 
 
 ## Shuffles the queue. If [param anchor] track is used, will shuffle the queue & move anchor track to the beginning.
-func shuffle_queue(anchor:DBTrack=null) -> void:
+func shuffle_queue(anchor:DBTrack=null, emit:bool=true) -> void:
 	is_shuffled = true
 	queue.shuffle()
 	if anchor:
 		queue.erase(anchor)
-		insert_to_queue(0, anchor)
+		insert_to_queue(0, anchor, emit)
 		var track_progress_:float = track_progress
 		set_current_track(0)
 		set_track_progress(track_progress_)
-	queue_updated.emit()
+	if emit: queue_updated.emit()
 
 
 func _current_track_finished() -> void:

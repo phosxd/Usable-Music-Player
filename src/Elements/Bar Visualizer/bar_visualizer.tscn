@@ -2,12 +2,15 @@
 
 [ext_resource type="Script" uid="uid://c83idpx5w5o3v" path="res://Elements/Bar Visualizer/bar_visualizer.gd" id="1_0ryst"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7um7k"]
+
 [node name="Control" type="PanelContainer" unique_id=416864971]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_7um7k")
 script = ExtResource("1_0ryst")
 
 [connection signal="resized" from="." to="." method="_on_resized"]

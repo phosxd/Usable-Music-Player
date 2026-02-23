@@ -1,0 +1,472 @@
+[gd_scene format=3 uid="uid://clcbjy34jselh"]
+
+[ext_resource type="Texture2D" uid="uid://btawryg8volu3" path="res://Assets/Icons/audio_stream.svg" id="1_1r6ip"]
+[ext_resource type="Script" uid="uid://bwovnwhmbywrv" path="res://Scripts/UI/Main/main.gd" id="1_y3v7k"]
+[ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Assets/Icons/modifiers.svg" id="2_hryqi"]
+[ext_resource type="Texture2D" uid="uid://utn627e88d32" path="res://Assets/Icons/artist.svg" id="2_xlvfx"]
+[ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="3_hfg1r"]
+[ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="3_y3v7k"]
+[ext_resource type="Texture2D" uid="uid://ifuhlvhg7w82" path="res://Assets/Icons/change_sort_mode.svg" id="5_vk4q2"]
+[ext_resource type="Texture2D" uid="uid://mljcfripi4u1" path="res://Assets/Icons/add.svg" id="6_imbg2"]
+[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="9_2ok46"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="9_6t3k2"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="9_hfg1r"]
+[ext_resource type="Texture2D" uid="uid://5llssbcnf4kg" path="res://Assets/Icons/instrument.svg" id="10_2ok46"]
+[ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Themes/Normal/Player/player.tscn" id="10_imbg2"]
+[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="11_ahhj6"]
+[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="12_eeh6y"]
+[ext_resource type="Script" uid="uid://dtel3yhuvbpap" path="res://Elements/Top Bar/top_bar.gd" id="13_2ok46"]
+[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="13_lj0cr"]
+[ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Assets/Icons/search.svg" id="14_koken"]
+[ext_resource type="Texture2D" uid="uid://clvub0o51v8eh" path="res://Assets/Icons/scale_x2/change_sort_mode.svg" id="15_0fk8q"]
+[ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Assets/Icons/tree_arrow_left.svg" id="16_eeh6y"]
+[ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Themes/Normal/Queue/queue.tscn" id="19_eqlsm"]
+[ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Themes/Normal/Lyrics/lyrics.tscn" id="20_lj0cr"]
+
+[sub_resource type="Animation" id="Animation_vk4q2"]
+resource_name = "FSP Init"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Current Track Cover Overlay:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 500)]
+}
+
+[sub_resource type="Animation" id="Animation_wliom"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Current Track Cover Overlay:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2ok46"]
+_data = {
+&"FSP Init": SubResource("Animation_vk4q2"),
+&"RESET": SubResource("Animation_wliom")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ok46"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.13682577, 0.13682574, 0.13682571, 1)
+anti_aliasing = false
+
+[sub_resource type="Resource" id="Resource_eqlsm"]
+script = ExtResource("12_eeh6y")
+rebound_strength = 14.0
+
+[sub_resource type="Resource" id="Resource_lj0cr"]
+script = ExtResource("12_eeh6y")
+rebound_strength = 14.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eqlsm"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6t3k2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6t3k2"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.39215687)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.40319997, 0.40319997, 0.40319997, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+shadow_color = Color(0, 0, 0, 0.005)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lj0cr"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[node name="Main" type="Control" unique_id=2008879500]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y3v7k")
+
+[node name="Animations" type="Node" parent="." unique_id=87760192]
+
+[node name="FSP Animation" type="AnimationPlayer" parent="Animations" unique_id=633130627]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_2ok46")
+
+[node name="Background" type="Panel" parent="." unique_id=618173329]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1163084167]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="HBox" type="HBoxContainer" parent="VBox" unique_id=1751914993]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Sidebar" type="PanelContainer" parent="VBox/HBox" unique_id=1774174444]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2ok46")
+
+[node name="Margin" type="MarginContainer" parent="VBox/HBox/Sidebar" unique_id=1800367145]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBox" type="VBoxContainer" parent="VBox/HBox/Sidebar/Margin" unique_id=1444570615]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tools" type="HBoxContainer" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1840235616]
+layout_mode = 2
+
+[node name="Tab Button Settings" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox/Tools" unique_id=2144540982]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Settings"
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = " "
+icon = ExtResource("2_hryqi")
+icon_alignment = 1
+
+[node name="Import" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox/Tools" unique_id=216821876]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Import playlist"
+theme_type_variation = &"AccentButton"
+icon = ExtResource("3_hfg1r")
+icon_alignment = 1
+
+[node name="Customize" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox/Tools" unique_id=1381731172]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Edit tab"
+theme_type_variation = &"AccentButton"
+disabled = true
+icon = ExtResource("5_vk4q2")
+icon_alignment = 1
+
+[node name="Tab Button Artists" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1763016178 groups=["Tab Button"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Artists"
+icon = ExtResource("2_xlvfx")
+alignment = 0
+
+[node name="Tab Button Albums" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1427389950 groups=["Tab Button"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Albums"
+icon = ExtResource("3_y3v7k")
+alignment = 0
+
+[node name="Tab Button Tracks" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1047248625 groups=["Tab Button"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Tracks"
+icon = ExtResource("1_1r6ip")
+alignment = 0
+
+[node name="Tab Button Music Videos" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1915086436 groups=["Tab Button"]]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Music Videos"
+icon = ExtResource("9_2ok46")
+alignment = 0
+
+[node name="Tab Button Genres" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1082185498 groups=["Tab Button"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Genres"
+icon = ExtResource("10_2ok46")
+alignment = 0
+
+[node name="Sep 1" type="HSeparator" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=894733907]
+layout_mode = 2
+
+[node name="Add Playlist" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=163145109]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Add playlist"
+mouse_filter = 1
+theme_type_variation = &"AccentButton"
+icon = ExtResource("6_imbg2")
+icon_alignment = 1
+metadata/_smooth_scroll_default_mouse_filter_set = true
+
+[node name="Playlists Scroll" type="ScrollContainer" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1677478848]
+layout_direction = 3
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+script = ExtResource("11_ahhj6")
+speed = 200.0
+wheel_scroll_damper = SubResource("Resource_eqlsm")
+dragging_scroll_damper = SubResource("Resource_lj0cr")
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="Playlists" type="VBoxContainer" parent="VBox/HBox/Sidebar/Margin/VBox/Playlists Scroll" unique_id=1774428216]
+unique_name_in_owner = true
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_smooth_scroll_default_mouse_filter_set = true
+
+[node name="Sep 2" type="HSeparator" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1375742465]
+layout_mode = 2
+
+[node name="Indexing Label" type="Label" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=544104366]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Indexing... (%s)"
+label_settings = ExtResource("13_lj0cr")
+
+[node name="Current Track Cover Container" type="CenterContainer" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1146409671]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Current Track Cover" type="PanelContainer" parent="VBox/HBox/Sidebar/Margin/VBox/Current Track Cover Container" unique_id=828797786]
+unique_name_in_owner = true
+clip_children = 1
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_vertical = 10
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_eqlsm")
+script = ExtResource("9_6t3k2")
+texture = ExtResource("9_hfg1r")
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[node name="Tab Button Immersive Player" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox/Current Track Cover Container" unique_id=1246569638]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.19607843)
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6t3k2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6t3k2")
+toggle_mode = true
+
+[node name="Tab VBox" type="VBoxContainer" parent="VBox/HBox" unique_id=665951843]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Topbar" type="HBoxContainer" parent="VBox/HBox/Tab VBox" unique_id=168760710]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("13_2ok46")
+
+[node name="Island 1" type="PanelContainer" parent="VBox/HBox/Tab VBox/Topbar" unique_id=2055693322]
+layout_mode = 2
+
+[node name="Topbar Content" type="HBoxContainer" parent="VBox/HBox/Tab VBox/Topbar/Island 1" unique_id=228170220]
+layout_mode = 2
+
+[node name="Back Button" type="Button" parent="VBox/HBox/Tab VBox/Topbar/Island 1/Topbar Content" unique_id=317194944]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+icon = ExtResource("16_eeh6y")
+flat = true
+
+[node name="Island 2" type="PanelContainer" parent="VBox/HBox/Tab VBox/Topbar" unique_id=403812495]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="_label" type="Label" parent="VBox/HBox/Tab VBox/Topbar/Island 2" unique_id=800551452]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Topbar Content" type="HBoxContainer" parent="VBox/HBox/Tab VBox/Topbar/Island 2" unique_id=189060353]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Search Icon" type="TextureRect" parent="VBox/HBox/Tab VBox/Topbar/Island 2/Topbar Content" unique_id=157011682]
+layout_mode = 2
+texture = ExtResource("14_koken")
+stretch_mode = 5
+
+[node name="Search" type="LineEdit" parent="VBox/HBox/Tab VBox/Topbar/Island 2/Topbar Content" unique_id=420801843]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search..."
+editable = false
+clear_button_enabled = true
+flat = true
+
+[node name="Island 3" type="PanelContainer" parent="VBox/HBox/Tab VBox/Topbar" unique_id=1616870286]
+layout_mode = 2
+
+[node name="_label" type="Label" parent="VBox/HBox/Tab VBox/Topbar/Island 3" unique_id=571711661]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Tab Tool Buttons" type="HBoxContainer" parent="VBox/HBox/Tab VBox/Topbar/Island 3" unique_id=1924207957]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Sort Mode" type="OptionButton" parent="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons" unique_id=1117008205]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"AccentButton"
+theme_override_constants/icon_max_width = 16
+theme_override_icons/icon = ExtResource("15_0fk8q")
+disabled = true
+selected = 0
+fit_to_longest_item = false
+item_count = 1
+popup/item_0/text = "Sort by: Title"
+popup/item_0/id = 0
+
+[node name="Ascend Mode" type="OptionButton" parent="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons" unique_id=1217841413]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+selected = 0
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "Descending"
+popup/item_0/id = 0
+popup/item_1/text = "Ascending"
+popup/item_1/id = 1
+
+[node name="HBox" type="HBoxContainer" parent="VBox/HBox/Tab VBox" unique_id=8467318]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Tab Content" type="VBoxContainer" parent="VBox/HBox/Tab VBox/HBox" unique_id=249872197]
+unique_name_in_owner = true
+z_index = -1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="_label" type="Label" parent="VBox/HBox/Tab VBox/HBox/Tab Content" unique_id=850495634]
+layout_mode = 2
+size_flags_vertical = 6
+text = "No tab opened..."
+horizontal_alignment = 1
+
+[node name="Right Sidebar" type="MarginContainer" parent="VBox/HBox/Tab VBox/HBox" unique_id=747587161]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Queue" parent="VBox/HBox/Tab VBox/HBox/Right Sidebar" unique_id=1119812283 instance=ExtResource("19_eqlsm")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Lyrics" parent="VBox/HBox/Tab VBox/HBox/Right Sidebar" unique_id=564984742 instance=ExtResource("20_lj0cr")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Player Bar" type="MarginContainer" parent="VBox/HBox/Tab VBox" unique_id=477050872]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Player" parent="VBox/HBox/Tab VBox/Player Bar" unique_id=1333926168 instance=ExtResource("10_imbg2")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Current Track Cover Overlay" type="PanelContainer" parent="." unique_id=1187956265]
+unique_name_in_owner = true
+visible = false
+clip_children = 1
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 150.0
+size_flags_vertical = 10
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_lj0cr")
+script = ExtResource("9_6t3k2")
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[connection signal="pressed" from="VBox/HBox/Sidebar/Margin/VBox/Tools/Tab Button Settings" to="." method="_on_tab_button_pressed" binds= ["settings"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Margin/VBox/Tab Button Artists" to="." method="_on_tab_button_pressed" binds= ["artists"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Margin/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Margin/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Margin/VBox/Tab Button Genres" to="." method="_on_tab_button_pressed" binds= ["genres"]]
+[connection signal="pressed" from="VBox/HBox/Sidebar/Margin/VBox/Current Track Cover Container/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= [".immersive_player"]]
+[connection signal="pressed" from="VBox/HBox/Tab VBox/Topbar/Island 1/Topbar Content/Back Button" to="." method="_on_back_button_pressed"]
+[connection signal="text_changed" from="VBox/HBox/Tab VBox/Topbar/Island 2/Topbar Content/Search" to="VBox/HBox/Tab VBox/Topbar" method="_on_search_text_changed"]
+[connection signal="text_submitted" from="VBox/HBox/Tab VBox/Topbar/Island 2/Topbar Content/Search" to="VBox/HBox/Tab VBox/Topbar" method="_on_search_text_submitted"]
+[connection signal="item_rect_changed" from="VBox/HBox/Tab VBox/Player Bar" to="." method="_on_player_bar_item_rect_changed"]

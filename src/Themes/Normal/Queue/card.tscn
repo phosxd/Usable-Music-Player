@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://dscdam6ju3xix"]
+
+[ext_resource type="Script" uid="uid://ojf8wjtcntis" path="res://Scripts/UI/Queue/card.gd" id="1_yikp6"]
+[ext_resource type="Texture2D" uid="uid://bup81pbj7sl2i" path="res://Assets/Icons/options.svg" id="2_oidgt"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_2c8cp"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="4_po36v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yikp6"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_7nu5k"]
+font_size = 12
+outline_size = 1
+shadow_size = 2
+shadow_color = Color(1, 1, 1, 0)
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_uvxfr"]
+font_size = 10
+font_color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="Queue Card" type="PanelContainer" unique_id=927718466]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+script = ExtResource("1_yikp6")
+
+[node name="Button" type="Button" parent="." unique_id=481831511]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+
+[node name="Image Margin" type="MarginContainer" parent="." unique_id=1899763293]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBox" type="HBoxContainer" parent="Image Margin" unique_id=1963608250]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Image Margin/HBox" unique_id=352632287]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = -8
+theme_override_constants/margin_right = -8
+
+[node name="Drag Button" type="Button" parent="Image Margin/HBox/MarginContainer" unique_id=1513288822]
+layout_mode = 2
+mouse_default_cursor_shape = 7
+theme_type_variation = &"AccentButton"
+icon = ExtResource("2_oidgt")
+flat = true
+
+[node name="Image" type="PanelContainer" parent="Image Margin/HBox" unique_id=1182272309]
+unique_name_in_owner = true
+clip_children = 1
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_yikp6")
+script = ExtResource("3_2c8cp")
+texture = ExtResource("4_po36v")
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[node name="Sep 1" type="VSeparator" parent="Image Margin/HBox" unique_id=1768593009]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Track Info" type="VBoxContainer" parent="Image Margin/HBox" unique_id=46995429]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Name" type="Label" parent="Image Margin/HBox/Track Info" unique_id=824305555]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Track name..."
+label_settings = SubResource("LabelSettings_7nu5k")
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Artist" type="Label" parent="Image Margin/HBox/Track Info" unique_id=965784348]
+unique_name_in_owner = true
+self_modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Artist name..."
+label_settings = SubResource("LabelSettings_uvxfr")
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Sep 2" type="VSeparator" parent="Image Margin/HBox" unique_id=898225209]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Length" type="Label" parent="Image Margin/HBox" unique_id=369639375]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0:00"
+
+[node name="Sep 3" type="VSeparator" parent="Image Margin/HBox" unique_id=1534869226]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

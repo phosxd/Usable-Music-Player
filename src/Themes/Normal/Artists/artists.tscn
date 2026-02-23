@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://b5oca2own8bkq"]
+
+[ext_resource type="Script" uid="uid://cwwjfcnw2krtk" path="res://Scripts/UI/Artists/artists.gd" id="1_5muxx"]
+[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_8q1cx"]
+[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_c0qo1"]
+
+[sub_resource type="Resource" id="Resource_2h1n7"]
+script = ExtResource("3_c0qo1")
+rebound_strength = 14.0
+
+[sub_resource type="Resource" id="Resource_2cxwe"]
+script = ExtResource("3_c0qo1")
+
+[node name="Artists" type="VBoxContainer" unique_id=213465202]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_5muxx")
+
+[node name="Scroll" type="ScrollContainer" parent="." unique_id=498043292]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+script = ExtResource("2_8q1cx")
+speed = 500.0
+wheel_scroll_damper = SubResource("Resource_2h1n7")
+dragging_scroll_damper = SubResource("Resource_2cxwe")
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="Margin" type="MarginContainer" parent="Scroll" unique_id=79693074]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+
+[node name="Grid" type="HFlowContainer" parent="Scroll/Margin" unique_id=1859326185]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 8

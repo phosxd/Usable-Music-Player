@@ -1,0 +1,705 @@
+[gd_scene format=3 uid="uid://3uhlwy3fb3dy"]
+
+[ext_resource type="Script" uid="uid://bwovnwhmbywrv" path="res://Scripts/UI/Main/main.gd" id="1_fqikl"]
+[ext_resource type="Script" uid="uid://dtel3yhuvbpap" path="res://Elements/Top Bar/top_bar.gd" id="2_es6iu"]
+[ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Assets/Icons/modifiers.svg" id="2_uho53"]
+[ext_resource type="Texture2D" uid="uid://ctss2j5ddtfy4" path="res://Assets/Icons/tibbixel-dot-com-8717-svg.svg" id="3_koken"]
+[ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="3_vs1c8"]
+[ext_resource type="Texture2D" uid="uid://ifuhlvhg7w82" path="res://Assets/Icons/change_sort_mode.svg" id="4_yres7"]
+[ext_resource type="Texture2D" uid="uid://utn627e88d32" path="res://Assets/Icons/artist.svg" id="5_y1fcp"]
+[ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="6_vm5c2"]
+[ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Assets/Icons/tree_arrow_left.svg" id="7_3ysos"]
+[ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Assets/Icons/search.svg" id="7_c4b4r"]
+[ext_resource type="Texture2D" uid="uid://btawryg8volu3" path="res://Assets/Icons/audio_stream.svg" id="7_yq2c8"]
+[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="8_31d3k"]
+[ext_resource type="Texture2D" uid="uid://clvub0o51v8eh" path="res://Assets/Icons/scale_x2/change_sort_mode.svg" id="8_outxi"]
+[ext_resource type="Texture2D" uid="uid://5llssbcnf4kg" path="res://Assets/Icons/instrument.svg" id="9_ah1we"]
+[ext_resource type="Texture2D" uid="uid://mljcfripi4u1" path="res://Assets/Icons/add.svg" id="10_2xrvr"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="11_bcyco"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="12_f5uy8"]
+[ext_resource type="PackedScene" uid="uid://c1hitsliaah3m" path="res://Themes/Rounded/Queue/queue.tscn" id="13_fp1qp"]
+[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="16_4ypmf"]
+[ext_resource type="PackedScene" uid="uid://b0wgne7i4qqau" path="res://Themes/Rounded/Player/player.tscn" id="17_e8shw"]
+[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="17_orlbe"]
+[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="18_yq5a6"]
+[ext_resource type="PackedScene" uid="uid://bf8hx6kw8ug4x" path="res://Themes/Rounded/Lyrics/lyrics.tscn" id="21_orlbe"]
+
+[sub_resource type="Animation" id="Animation_vk4q2"]
+resource_name = "FSP Init"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Current Track Cover Overlay:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 500)]
+}
+
+[sub_resource type="Animation" id="Animation_wliom"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Current Track Cover Overlay:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2ok46"]
+_data = {
+&"FSP Init": SubResource("Animation_vk4q2"),
+&"RESET": SubResource("Animation_wliom")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4o5wv"]
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.18, 0.18, 0.18, 1)
+corner_detail = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ok46"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.13682577, 0.13682574, 0.13682571, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+anti_aliasing = false
+
+[sub_resource type="Resource" id="Resource_yq5a6"]
+script = ExtResource("17_orlbe")
+minimum_velocity = 0.2
+rebound_strength = 36.0
+
+[sub_resource type="Resource" id="Resource_10u81"]
+script = ExtResource("17_orlbe")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2ok46"]
+blend_mode = 4
+
+[sub_resource type="Gradient" id="Gradient_orlbe"]
+colors = PackedColorArray(0.13725491, 0.13725491, 0.13725491, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_koken"]
+gradient = SubResource("Gradient_orlbe")
+height = 6
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="Gradient" id="Gradient_yq5a6"]
+colors = PackedColorArray(0.13725491, 0.13725491, 0.13725491, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c4b4r"]
+gradient = SubResource("Gradient_yq5a6")
+height = 48
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1t20g"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.13682577, 0.13682574, 0.13682571, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_left = 16
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_10u81"]
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+corner_detail = 11
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6t3k2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6t3k2"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.39215687)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.40319997, 0.40319997, 0.40319997, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+shadow_color = Color(0, 0, 0, 0.005)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c4b4r"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.13682577, 0.13682574, 0.13682571, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3se3j"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[node name="Main" type="Control" unique_id=2008879500]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fqikl")
+
+[node name="Animations" type="Node" parent="." unique_id=87760192]
+
+[node name="FSP Animation" type="AnimationPlayer" parent="Animations" unique_id=633130627]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_2ok46")
+
+[node name="Background" type="Panel" parent="." unique_id=618173329]
+unique_name_in_owner = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4o5wv")
+
+[node name="Scene Margin" type="MarginContainer" parent="." unique_id=497052325]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Scene Margin" unique_id=1163084167]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Scene Margin/VBox" unique_id=1795959409]
+layout_mode = 2
+theme_override_constants/margin_right = 10
+
+[node name="Topbar" type="HBoxContainer" parent="Scene Margin/VBox/MarginContainer" unique_id=856577762]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("2_es6iu")
+
+[node name="Island 1" type="PanelContainer" parent="Scene Margin/VBox/MarginContainer/Topbar" unique_id=403812495]
+layout_mode = 2
+
+[node name="_label" type="Label" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 1" unique_id=800551452]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 1" unique_id=1800481770]
+layout_mode = 2
+theme_override_constants/margin_right = 6
+
+[node name="TopbarContent" type="HBoxContainer" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 1/MarginContainer" unique_id=189060353]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 1/MarginContainer/TopbarContent" unique_id=1840235616]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 1/MarginContainer/TopbarContent/HBox" unique_id=234158808]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 1/MarginContainer/TopbarContent/HBox/MarginContainer" unique_id=942524409]
+texture_filter = 4
+layout_mode = 2
+texture = ExtResource("3_koken")
+expand_mode = 2
+stretch_mode = 5
+flip_h = true
+
+[node name="Tab Button Settings" type="Button" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 1/MarginContainer/TopbarContent/HBox" unique_id=2144540982]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Settings"
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+icon = ExtResource("2_uho53")
+icon_alignment = 1
+
+[node name="Import" type="Button" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 1/MarginContainer/TopbarContent/HBox" unique_id=216821876]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Import playlist"
+theme_type_variation = &"AccentButton"
+icon = ExtResource("3_vs1c8")
+icon_alignment = 1
+
+[node name="Customize" type="Button" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 1/MarginContainer/TopbarContent/HBox" unique_id=1381731172]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Edit tab"
+theme_type_variation = &"AccentButton"
+disabled = true
+icon = ExtResource("4_yres7")
+icon_alignment = 1
+
+[node name="Island 2" type="PanelContainer" parent="Scene Margin/VBox/MarginContainer/Topbar" unique_id=217193883]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="_label" type="Label" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 2" unique_id=1795468749]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 2" unique_id=205920029]
+layout_mode = 2
+theme_override_constants/margin_right = 0
+
+[node name="HBox" type="HBoxContainer" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 2/Margin" unique_id=1404129714]
+layout_mode = 2
+
+[node name="Back Button" type="Button" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 2/Margin/HBox" unique_id=1090978878]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_type_variation = &"AccentButton"
+icon = ExtResource("7_3ysos")
+flat = true
+
+[node name="Search Icon" type="TextureRect" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 2/Margin/HBox" unique_id=989483378]
+layout_mode = 2
+texture = ExtResource("7_c4b4r")
+stretch_mode = 5
+
+[node name="Search" type="LineEdit" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 2/Margin/HBox" unique_id=945888293]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search..."
+clear_button_enabled = true
+flat = true
+
+[node name="Island 3" type="PanelContainer" parent="Scene Margin/VBox/MarginContainer/Topbar" unique_id=1890368751]
+layout_mode = 2
+
+[node name="_label" type="Label" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 3" unique_id=1693927663]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Tab Tool Buttons" type="HBoxContainer" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 3" unique_id=1939431492]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(235, 0)
+layout_mode = 2
+
+[node name="Sort Mode" type="OptionButton" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 3/Tab Tool Buttons" unique_id=2061900611]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+theme_type_variation = &"AccentButton"
+theme_override_constants/icon_max_width = 12
+theme_override_font_sizes/font_size = 12
+theme_override_icons/icon = ExtResource("8_outxi")
+selected = 0
+fit_to_longest_item = false
+item_count = 4
+popup/item_0/text = "Sort by: Title"
+popup/item_0/id = 0
+popup/item_1/text = "Sort by: Artist"
+popup/item_1/id = 1
+popup/item_2/text = "Sort by: Year"
+popup/item_2/id = 2
+popup/item_3/text = "Sort by: Genre"
+popup/item_3/id = 3
+
+[node name="Ascend Mode" type="OptionButton" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 3/Tab Tool Buttons" unique_id=660075559]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+selected = 1
+fit_to_longest_item = false
+item_count = 2
+popup/item_0/text = "Descending"
+popup/item_0/id = 0
+popup/item_1/text = "Ascending"
+popup/item_1/id = 1
+
+[node name="HBox" type="HBoxContainer" parent="Scene Margin/VBox" unique_id=1751914993]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Sidebar" type="MarginContainer" parent="Scene Margin/VBox/HBox" unique_id=1800367145]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBox" type="VBoxContainer" parent="Scene Margin/VBox/HBox/Sidebar" unique_id=1503885424]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Sep 1" type="HSeparator" parent="Scene Margin/VBox/HBox/Sidebar/VBox" unique_id=852272464]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Panel" type="PanelContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox" unique_id=1774174444]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2ok46")
+
+[node name="Margin" type="MarginContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel" unique_id=244053102]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 6
+
+[node name="VBox" type="VBoxContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin" unique_id=1444570615]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tab Button Artists" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox" unique_id=1763016178 groups=["Tab Button"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Artists"
+icon = ExtResource("5_y1fcp")
+alignment = 0
+
+[node name="Tab Button Albums" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox" unique_id=1427389950 groups=["Tab Button"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Albums"
+icon = ExtResource("6_vm5c2")
+alignment = 0
+
+[node name="Tab Button Tracks" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox" unique_id=1047248625 groups=["Tab Button"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Tracks"
+icon = ExtResource("7_yq2c8")
+alignment = 0
+
+[node name="Tab Button Music Videos" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox" unique_id=1915086436 groups=["Tab Button"]]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Music Videos"
+icon = ExtResource("8_31d3k")
+alignment = 0
+
+[node name="Tab Button Genres" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox" unique_id=1082185498 groups=["Tab Button"]]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Genres"
+icon = ExtResource("9_ah1we")
+alignment = 0
+
+[node name="Sep 1" type="HSeparator" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox" unique_id=894733907]
+layout_mode = 2
+
+[node name="Add Playlist" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox" unique_id=163145109]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Add playlist"
+theme_type_variation = &"AccentButton"
+icon = ExtResource("10_2xrvr")
+icon_alignment = 1
+
+[node name="VBoxContainer" type="MarginContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox" unique_id=1481691655]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Playlists Scroll" type="ScrollContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer" unique_id=1665365725]
+layout_direction = 3
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+script = ExtResource("16_4ypmf")
+speed = 500.0
+wheel_scroll_damper = SubResource("Resource_yq5a6")
+dragging_scroll_damper = SubResource("Resource_10u81")
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="Playlists" type="VBoxContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll" unique_id=1774428216]
+unique_name_in_owner = true
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HSeparator" type="HSeparator" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=2061329598]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Button" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1048283314]
+layout_mode = 2
+text = "I Don't Know Grammar har har har"
+text_overrun_behavior = 5
+clip_text = true
+
+[node name="Button2" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=721479064]
+layout_mode = 2
+text = "I Don't Know Grammar har har har"
+text_overrun_behavior = 5
+clip_text = true
+
+[node name="Button3" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=302260751]
+layout_mode = 2
+text = "I Don't Know Grammar har har har"
+text_overrun_behavior = 5
+clip_text = true
+
+[node name="Button4" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1185070106]
+layout_mode = 2
+text = "I Don't Know Grammar har har har"
+text_overrun_behavior = 5
+clip_text = true
+
+[node name="Button5" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=166544721]
+layout_mode = 2
+text = "I Don't Know Grammar har har har"
+text_overrun_behavior = 5
+clip_text = true
+
+[node name="Button6" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=979798419]
+layout_mode = 2
+text = "I Don't Know Grammar har har har"
+text_overrun_behavior = 5
+clip_text = true
+
+[node name="Button7" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=943697465]
+layout_mode = 2
+text = "I Don't Know Grammar har har har"
+text_overrun_behavior = 5
+clip_text = true
+
+[node name="Button8" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=508348175]
+layout_mode = 2
+text = "I Don't Know Grammar har har har"
+text_overrun_behavior = 5
+clip_text = true
+
+[node name="Control" type="Control" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer" unique_id=199870231]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+mouse_behavior_recursive = 1
+
+[node name="TextureRect" type="TextureRect" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Control" unique_id=638422524]
+material = SubResource("CanvasItemMaterial_2ok46")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 6.0
+grow_horizontal = 2
+texture = SubResource("GradientTexture2D_koken")
+
+[node name="TextureRect2" type="TextureRect" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Control" unique_id=738797001]
+material = SubResource("CanvasItemMaterial_2ok46")
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_c4b4r")
+
+[node name="Sep 2" type="HSeparator" parent="Scene Margin/VBox/HBox/Sidebar/VBox" unique_id=1192124816]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Indexing Label" type="Label" parent="Scene Margin/VBox/HBox/Sidebar/VBox" unique_id=2099064635]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Indexing... (%s)"
+label_settings = ExtResource("18_yq5a6")
+
+[node name="Current Track Cover Container" type="CenterContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox" unique_id=1146409671]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Panel" type="PanelContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Current Track Cover Container" unique_id=48801650]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1t20g")
+
+[node name="Current Track Cover" type="PanelContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Current Track Cover Container/Panel" unique_id=828797786]
+unique_name_in_owner = true
+clip_children = 1
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_vertical = 10
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_10u81")
+script = ExtResource("11_bcyco")
+corner_detail = 11
+radius_bottom_left = 11
+radius_bottom_right = 11
+radius_top_left = 11
+radius_top_right = 11
+texture = ExtResource("12_f5uy8")
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[node name="Tab Button Immersive Player" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Current Track Cover Container/Panel" unique_id=1246569638]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.19607843)
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6t3k2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6t3k2")
+toggle_mode = true
+
+[node name="Tab VBox" type="VBoxContainer" parent="Scene Margin/VBox/HBox" unique_id=665951843]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="HBox" type="HBoxContainer" parent="Scene Margin/VBox/HBox/Tab VBox" unique_id=8467318]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Tab Content" type="VBoxContainer" parent="Scene Margin/VBox/HBox/Tab VBox/HBox" unique_id=249872197]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="_label" type="Label" parent="Scene Margin/VBox/HBox/Tab VBox/HBox/Tab Content" unique_id=850495634]
+layout_mode = 2
+size_flags_vertical = 6
+text = "No tab opened..."
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Scene Margin/VBox/HBox/Tab VBox/HBox" unique_id=1506147138]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Scene Margin/VBox/HBox/Tab VBox/HBox/VBoxContainer" unique_id=623446061]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Right Sidebar" type="MarginContainer" parent="Scene Margin/VBox/HBox/Tab VBox/HBox/VBoxContainer" unique_id=973760294]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_right = 10
+
+[node name="Queue" parent="Scene Margin/VBox/HBox/Tab VBox/HBox/VBoxContainer/Right Sidebar" unique_id=1119812283 instance=ExtResource("13_fp1qp")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_c4b4r")
+
+[node name="Lyrics" parent="Scene Margin/VBox/HBox/Tab VBox/HBox/VBoxContainer/Right Sidebar" unique_id=177106171 instance=ExtResource("21_orlbe")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="Scene Margin/VBox/HBox/Tab VBox/HBox/VBoxContainer" unique_id=1800557826]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Player Bar" type="MarginContainer" parent="Scene Margin/VBox/HBox/Tab VBox" unique_id=477050872]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
+z_index = 2
+layout_mode = 2
+theme_override_constants/margin_right = 10
+
+[node name="Player" parent="Scene Margin/VBox/HBox/Tab VBox/Player Bar" unique_id=110111644 instance=ExtResource("17_e8shw")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Current Track Cover Overlay" type="PanelContainer" parent="." unique_id=1187956265]
+unique_name_in_owner = true
+visible = false
+clip_children = 1
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 150.0
+size_flags_vertical = 10
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_3se3j")
+script = ExtResource("11_bcyco")
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[connection signal="pressed" from="Scene Margin/VBox/MarginContainer/Topbar/Island 1/MarginContainer/TopbarContent/HBox/Tab Button Settings" to="." method="_on_tab_button_pressed" binds= ["settings"]]
+[connection signal="pressed" from="Scene Margin/VBox/MarginContainer/Topbar/Island 2/Margin/HBox/Back Button" to="." method="_on_back_button_pressed"]
+[connection signal="text_changed" from="Scene Margin/VBox/MarginContainer/Topbar/Island 2/Margin/HBox/Search" to="Scene Margin/VBox/MarginContainer/Topbar" method="_on_search_text_changed"]
+[connection signal="text_submitted" from="Scene Margin/VBox/MarginContainer/Topbar/Island 2/Margin/HBox/Search" to="Scene Margin/VBox/MarginContainer/Topbar" method="_on_search_text_submitted"]
+[connection signal="pressed" from="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/Tab Button Artists" to="." method="_on_tab_button_pressed" binds= ["artists"]]
+[connection signal="pressed" from="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
+[connection signal="pressed" from="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
+[connection signal="pressed" from="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/Tab Button Genres" to="." method="_on_tab_button_pressed" binds= ["genres"]]
+[connection signal="pressed" from="Scene Margin/VBox/HBox/Sidebar/VBox/Current Track Cover Container/Panel/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= [".immersive_player"]]
+[connection signal="item_rect_changed" from="Scene Margin/VBox/HBox/Tab VBox/Player Bar" to="." method="_on_player_bar_item_rect_changed"]

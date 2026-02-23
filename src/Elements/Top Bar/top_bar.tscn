@@ -1,11 +1,15 @@
 [gd_scene format=3 uid="uid://dtrs3vfap1m5b"]
 
-[node name="Top Bar" type="PanelContainer" unique_id=403812495]
+[ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Assets/Icons/search.svg" id="1_rdnah"]
+[ext_resource type="Script" uid="uid://dtel3yhuvbpap" path="res://Elements/Top Bar/top_bar.gd" id="1_t5bxd"]
+
+[node name="Topbar" type="PanelContainer" unique_id=403812495]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 32.0
 grow_horizontal = 2
 size_flags_horizontal = 3
+script = ExtResource("1_t5bxd")
 
 [node name="_label" type="Label" parent="." unique_id=800551452]
 self_modulate = Color(1, 1, 1, 0)
@@ -13,3 +17,17 @@ layout_mode = 2
 
 [node name="Content" type="HBoxContainer" parent="." unique_id=189060353]
 layout_mode = 2
+
+[node name="Search Icon" type="TextureRect" parent="Content" unique_id=157011682]
+layout_mode = 2
+texture = ExtResource("1_rdnah")
+stretch_mode = 5
+
+[node name="Search" type="LineEdit" parent="Content" unique_id=420801843]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search..."
+flat = true
+
+[connection signal="text_submitted" from="Content/Search" to="." method="_on_search_text_submitted"]
