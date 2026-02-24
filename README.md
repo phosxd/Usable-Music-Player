@@ -1,22 +1,29 @@
-Introducing the music player made with [Godot](https://godotengine.org)! This is a silly project & I don't expect anyone to actually be using this, but hey it's out there anyway.
+Introducing the music player made with [Godot](https://godotengine.org)!
 
-# Features
-## User-friendly
-Everything is in a reachable & intuitive place. No clutter, no menu-hell, it's just usable.
+# What does UMP have to offer?
 
-## Sorted
-View artists, albums, or individual tracks.
-Search with release date, genre, quality & more.
+## The basics
+Like every music player you have the basic controls:
+- Queue management
+- Repeat track/queue
+- Shuffle & unshuffle queue
+- Volume slider
+- Track position slider
 
-## Effortless playlists
-Create a playlist, give it a name & icon, find then add your songs. Simple.
+## Sorted library
+Categorize your songs by artist, album, tracks, & genres.
+You can also manual search for items using filters like title, artist, year, genre, duration, & more.
 
-Import & export playlist files to share with your friends.
+## Format support
+UMP can playback MP3, WAV, OggVorvis, & FLAC audio files.
 
-## Widget integration
-Usable Music Player integrates with your Linux desktop environment so you can manage media with shortcuts & widgets.
+## Automatic lyrics
+Play your song, then click the lyrics button to open a lyrics panel on your right. If no lyrics are found for your song locally, they will automatically be fetched & saved for later.
 
-## Use on anything
-Remember this is built on Godot meaning you can run this on Windows, Linux, Mac, mobile, or even Web!
+## Usable UI
+The UI is simple & easy to understand all while looking good.
 
-However I only developed this with PC (specifically Linux) in mind, so other platforms are not guaranteed to work. But the beauty of open source is you can just fork it & make your own version that *does* work for your needs.
+## Aesthetic options
+UMP offers visual enhancements that bring your experience to the next level.
+- **Bar visualizer**: visualize frequencies above your player.
+- **Dyanmic accents**: match all UI elements to the song you're playing.
