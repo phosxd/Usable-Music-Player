@@ -49,6 +49,8 @@ static var database:Dictionary = {
 }
 
 static var currently_updating:bool = false
+## Array of image paths already calculated & processed.
+static var updated_images:Array[String] = []
 
 
 ## Returns a sorted array of [DBArtist] objects.
@@ -108,9 +110,10 @@ static func get_genres_sorted() -> Dictionary[String,Array]:
 static func get_tracks_sorted(sort_mode:=TrackSortMode.TITLE) -> Array[DBTrack]:
 	var result:Array[DBTrack] = []
 	for album:DBAlbum in get_albums_sorted():
-		for track_number:int in album.track_count:
-			var track:DBTrack = album.get_track(track_number)
-			if track: result.append(track)
+		for disc in album.discs:
+			for i in album.discs[disc]:
+				var track:DBTrack = album.get_track(i, int(disc))
+				if track: result.append(track)
 
 	match sort_mode:
 		TrackSortMode.TITLE:
@@ -148,15 +151,15 @@ static func get_tracks_sorted(sort_mode:=TrackSortMode.TITLE) -> Array[DBTrack]:
 ## Rescans the track & updates the database accordingly.
 ## Returns the updated DBTrack.
 static func rescan_track(track:DBTrack, custom_data:Dictionary={}) -> DBTrack:
-	database.artists[track.artist.name].albums[track.album.name].tracks.set(track.number, null)
-	database.library_track_count -= 1
+	database.artists[track.artist.name].albums[track.album.name].discs[str(track.disc)].tracks.set(track.number, null)
+	database.track_count -= 1
 	var track_size = FileAccess.get_size(track.path)
 	if track_size > 0: database.library_size -= track_size
-	index_file(track.path, track.number, custom_data)
+	_index(track.raw, track.number, -1, custom_data)
 	save_database()
 
-	DBTrack.update(track.artist, track.album, track.number)
-	return DBTrack.new_or_reuse(track.artist, track.album, track.number)
+	DBTrack.update(track.artist, track.album, track.number, track.disc)
+	return DBTrack.new_or_reuse(track.artist, track.album, track.number, track.disc)
 
 
 static func wipe_database() -> void:
@@ -220,37 +223,150 @@ static func load_library(root_path:String, callback:Callable) -> void:
 	SessionManager.library_location = root_path
 	LibraryManager.wipe_database()
 	LibraryManager.wipe_image_cache()
-	database.location = root_path
 	database.set('timestamp', Time.get_datetime_string_from_system(true, true))
-	## GDScript trickery.
-	callback = callback
 	# Load library threaded.
 	_load_library(root_path, func(_result) -> void:
 		currently_updating = false
 		save_database()
 		load_library_from_cache()
-		if callback && not callback.is_null() && callback.get_object() && callback.is_valid(): callback.call()
+		if callback && callback.is_valid() && callback.get_object():
+			callback.call()
 	)
+
+	var timer := Timer.new()
+	timer.one_shot = false
+	timer.timeout.connect(func() -> void:
+		var indexing_label = SessionManager.main_scene.get_node('%Indexing Label')
+		if indexing_label is not Label: return
+		indexing_label.show()
+		indexing_label.text = SessionManager.main_scene.indexing_label_template % LibraryManager.database.track_count
+		if LibraryManager.currently_updating == false:
+			indexing_label.hide()
+			timer.stop()
+			timer.queue_free()
+	)
+	SessionManager.add_child(timer)
+	timer.start(1.0)
 
 
 static func _load_library(root_path:String, callback:Callable) -> void:
 	var root_dir := DirAccess.open(root_path)
-	if root_dir == null: return
+	if root_dir == null:
+		if callback && callback.is_valid(): callback.call(null)
+		return
+
+	updated_images.clear()
+	DirAccess.make_dir_recursive_absolute(image_cache_path)
 	ThreadHelper.create_thread((func() -> void:
-		FileUtils.walk_dir(root_path, func(path:String) -> void:
-			LibraryManager.index_file(path)
-			LibraryManager.database.library_size += FileAccess.get_file_as_bytes(path).size()
-		,Callable())
+		# Batch grab metadata from all audio files in the "root_path".
+		var output:Array = []
+		CLI.execute('interface', ['dump_audio_meta', root_path, image_cache_path], output)
+		if output.size() > 0 && output[0] is String:
+			var meta_dump = JSON.parse_string(output[0])
+			if meta_dump is not Array: return
+			for item in meta_dump:
+				if item is not Dictionary: continue
+				LibraryManager._index(item)
 	),callback)
+
+
+static func _index(metadata:Dictionary, track_number_override:int=-1, disc_number_override:int=-1, custom_data:Dictionary={}) -> void:
+	var path:String = metadata.get('path','')
+	if path.is_empty(): return
+	var duration:float = metadata.get('duration',0)
+	var artist:String = metadata.get('artist','').replace('\n','')
+	var actual_artist:String = artist
+	var album:String = metadata.get('album','').replace('\n','')
+	var album_artist:String = metadata.get('albumartist','').replace('\n','')
+	if not album_artist.is_empty(): artist = album_artist
+	if artist.is_empty():
+		artist = placeholder_meta
+		actual_artist = artist
+	if album.is_empty(): album = placeholder_meta
+
+	var palette = {}
+	var cover_path:String = metadata.get('cover_path','')
+	if not cover_path.is_empty() && cover_path not in updated_images:
+		var image = Image.load_from_file(cover_path)
+		image = ImageTexture.create_from_image(image)
+		palette = DBAlbum.calculate_colors(image)
+		updated_images.append(cover_path)
+
+	var track_title:String = metadata.get('title','').replace('\n','')
+	var track_number:int = int(metadata.get('track',0))
+	track_number = track_number_override
+	var disc_number:int = int(metadata.get('disc',1))
+	var year:String = metadata.get('year','').replace('\n','')
+	var internal_lyrics:String = metadata.get('lyrics','')
+
+	if track_title.is_empty(): track_title = path
+	if disc_number == 0: disc_number = 1
+	if year.is_empty(): year = placeholder_meta
+
+	# Add to database.
+	var db_artist:Dictionary = database.artists.get_or_add(artist, {
+		#'cover': fetch_artist_cover(artist),
+		'albums': {},
+	})
+	@warning_ignore('incompatible_ternary')
+	var db_album:Dictionary = db_artist.albums.get_or_add(album, {
+		'year': metadata.get('year',placeholder_meta),
+		'genre': metadata.get('genre',placeholder_meta),
+		'cover': cover_path,
+		'discs': {
+			'1': {'tracks': []},
+		},
+		'palette': palette,
+	})
+	if db_album.discs.get(str(disc_number)) == null:
+		db_album.discs.set(str(disc_number), {
+			'tracks':[]},
+		)
+	if track_number > db_album.discs[str(disc_number)].tracks.size():
+		db_album.discs[str(disc_number)].tracks.resize(track_number)
+	var track_data = {
+		'title': track_title,
+		'actual_artist': actual_artist,
+		'length': duration,
+		'lyrics': internal_lyrics,
+		'channels': str(metadata.get('channels',-1)),
+		'bit_rate': str(metadata.get('bitrate',-1)),
+		'sample_rate': str(metadata.get('samplerate',-1)),
+		'bpm': metadata.get('bpm'),
+		'copyright': metadata.get('copyright'),
+		'urls': metadata.get('urls'),
+		'comment': metadata.get('comment'),
+		'path': path,
+		'last_modified': FileAccess.get_modified_time(path),
+	}
+	track_data.merge(custom_data, true)
+	if track_number > 0:
+		db_album.discs[str(disc_number)].tracks.set(track_number-1, track_data)
+	else:
+		db_album.discs[str(disc_number)].tracks.append(track_data)
+
+	database.artists[artist].albums.set(album, db_album)
+	database.track_count += 1
+	print('Indexed into DB: '+path)
+
+
+static func reload_library(callback:Callable) -> void:
+	return
+	#var root_dir := DirAccess.open(SessionManager.library_location)
+	#if root_dir == null:
+		#if callback && callback.is_valid(): callback.call(null)
+		#return
+	#ThreadHelper.create_thread((func() -> void:
+		#FileUtils.walk_dir(SessionManager.library_location, func(path:String) -> void:
+			#LibraryManager.rescan_track()
+		#,Callable())
+	#),callback)
 
 
 static func index_file(path:String, track_number_override:int=-1, custom_data:Dictionary={}) -> void:
 	var extension:String = path.split('.')[-1].to_lower()
 	if extension not in LibraryManager.valid_audio_extensions: return
-	# Load audio file.
-	var audio_stream = load_audio(path)
-	if audio_stream is not AudioStream: return
-	audio_stream = audio_stream as AudioStream
+	if not FileAccess.file_exists(path): return
 
 	# Grab metadata.
 	DirAccess.make_dir_recursive_absolute(out_path)
@@ -258,14 +374,16 @@ static func index_file(path:String, track_number_override:int=-1, custom_data:Di
 	if exit_code != OK: return
 	var metadata = JSON.parse_string(FileAccess.get_file_as_string(out_path+'/out.txt'))
 	if metadata is not Dictionary: return
+	var duration:float = metadata.get('duration',0)
 	var artist:String = metadata.get('artist','').replace('\n','')
 	var album:String = metadata.get('album','').replace('\n','')
 	if artist.is_empty(): artist = placeholder_meta
 	if album.is_empty(): album = placeholder_meta
 
-	var cover_path:String = image_cache_path+'/%s.jpg' % album.replace('/','_')
+	var image_extension:String = metadata.get('image_extension','jpg')
+	var cover_path:String = image_cache_path+'/%s.%s' % [album.replace('/','_'), image_extension]
 	DirAccess.make_dir_recursive_absolute(image_cache_path)
-	DirAccess.rename_absolute(out_path+'/out.jpg', cover_path)
+	DirAccess.rename_absolute(out_path+'/out.%s' % image_extension, cover_path)
 	var image = Image.load_from_file(cover_path)
 	image = ImageTexture.create_from_image(image)
 
@@ -292,7 +410,7 @@ static func index_file(path:String, track_number_override:int=-1, custom_data:Di
 	if track_number > db_album.tracks.size(): db_album.tracks.resize(track_number)
 	var track_data = {
 		'title': track_title,
-		'length': audio_stream.get_length(),
+		'length': duration,
 		'channels': str(metadata.get('channels',-1)),
 		'bit_rate': str(metadata.get('bitrate',-1)),
 		'sample_rate': str(metadata.get('samplerate',-1)),
@@ -301,7 +419,6 @@ static func index_file(path:String, track_number_override:int=-1, custom_data:Di
 		'urls': metadata.get('urls'),
 		'comment': metadata.get('comment'),
 		'path': path,
-		'last_accessed': FileAccess.get_access_time(path),
 		'last_modified': FileAccess.get_modified_time(path),
 	}
 	track_data.merge(custom_data, true)
@@ -313,6 +430,7 @@ static func index_file(path:String, track_number_override:int=-1, custom_data:Di
 		db_album.tracks.append(track_data)
 
 	database.track_count += 1
+	print('Indexed into DB: '+path)
 
 
 static func load_audio(path:String) -> AudioStream:
@@ -332,7 +450,7 @@ static func load_audio(path:String) -> AudioStream:
 		audio_stream = AudioStreamFLAC.new()
 		audio_stream.data = file.get_buffer(file.get_length())
 
-	print('Loaded: '+path)
+	print('Loaded stream from: '+path)
 	return audio_stream
 
 

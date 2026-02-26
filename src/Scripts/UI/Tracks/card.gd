@@ -10,6 +10,7 @@ const hover_button_color := Color(1,1,1, 0.2)
 
 @onready var options_popup:PopupMenu = %Options.get_popup()
 var track: DBTrack
+var selected_mode := CardMode.detailed
 
 
 func _ready() -> void:
@@ -25,12 +26,13 @@ func init(db_track:DBTrack) -> void:
 	%Length.text = DBTrack.get_track_position_formatted(track.length)
 	%Format.text = '.%s' % track.path.split('.')[-1].to_lower()
 	%Image.texture = track.album.get_cover()
-	set_mode(CardMode.detailed)
+	set_mode(selected_mode)
 
 
 func set_mode(mode:CardMode) -> void:
+	selected_mode = mode
 	if mode == CardMode.detailed:
-		%Artist.text = '%s - by %s' % [track.album.name, track.artist.name]
+		%Artist.text = '%s - by %s' % [track.album.name, track.actual_artist]
 		%Image.show()
 		%'Image Sep'.hide()
 	if mode == CardMode.minimal:

@@ -6,6 +6,11 @@ const cli_path:String = 'CLIs'
 const clis:Array[String] = [
 	'interface',
 ]
+## CLI versions.
+const cli_versions:Dictionary[String,int] = {
+	'interface': 4,
+}
+## Runtime absolute paths to the executable binary.
 var cli_executable_paths:Dictionary[String,String] = {
 	'interface': '',
 }
@@ -17,18 +22,20 @@ func _ready() -> void:
 
 	for cli:String in clis:
 		var ext: String
+		var version:int = cli_versions[cli]
 		if os == 'Linux' or os.ends_with('BSD'):
 			ext = 'linux'
 		elif os == 'Windows':
 			ext = 'windows'
 		else: ext = ''
 
-		var path:String = 'res://%s/%s.%s_%s' % [cli_path, cli, ext, arch]
-		var bytes:PackedByteArray = FileAccess.get_file_as_bytes(path)
+		var internal_path:String = 'res://%s/%s.%s_%s' % [cli_path, cli, ext, arch]
+		var bytes:PackedByteArray = FileAccess.get_file_as_bytes(internal_path)
 		if bytes.is_empty():
 			printerr('Could not find embedded CLI executable "%s" for platform "%s".' % [cli, ext+'_'+arch])
 			continue
 
+		var path:String = 'res://%s/%s-%s.%s_%s' % [cli_path, cli, version, ext, arch]
 		cli_executable_paths.set(cli, path.replace('res://',OS.get_user_data_dir()+'/'))
 		DirAccess.make_dir_recursive_absolute(OS.get_user_data_dir()+'/'+cli_path)
 		var file := FileAccess.open(cli_executable_paths[cli], FileAccess.WRITE)

@@ -19,6 +19,7 @@ const layout_theme_name:Array[String] = [
 
 const property_data:Array[Array] = [
 	['library_location',[TYPE_STRING]],
+	['auto_fetch_lyrics',[TYPE_BOOL]],
 	# Tab data.
 	['last_tab',[TYPE_STRING]],
 	['artists_tab_scroll_value',[TYPE_FLOAT]],
@@ -70,7 +71,8 @@ var current_window_size: Vector2i:
 		current_window_size = value
 		value_changed.emit('current_window_size')
 
-var library_location:String = ''
+var library_location:String = OS.get_system_dir(OS.SYSTEM_DIR_MUSIC)
+var auto_fetch_lyrics:bool = true
 
 var search_term:String = '':
 	set(value):

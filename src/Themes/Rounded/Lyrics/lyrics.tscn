@@ -62,13 +62,34 @@ size_flags_vertical = 3
 theme_override_styles/normal = SubResource("StyleBoxEmpty_1rp2w")
 autowrap_mode = 3
 
-[node name="Info Label" type="Label" parent="VBox/Margin" unique_id=1218225724]
+[node name="VBox" type="VBoxContainer" parent="VBox/Margin" unique_id=2073667341]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Info Label" type="Label" parent="VBox/Margin/VBox" unique_id=1218225724]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Fetching lyrics..."
 label_settings = ExtResource("4_1rp2w")
 horizontal_alignment = 1
 
+[node name="Add Lyrics" type="Button" parent="VBox/Margin/VBox" unique_id=507451002]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Add your own"
+
+[node name="Refresh" type="Button" parent="VBox/Margin/VBox" unique_id=1811558746]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Refresh"
+
 [node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1415831965]
 unique_name_in_owner = true
 max_redirects = 4
+
+[connection signal="pressed" from="VBox/Margin/VBox/Add Lyrics" to="." method="_on_add_lyrics_pressed"]
+[connection signal="pressed" from="VBox/Margin/VBox/Refresh" to="." method="_on_refresh_pressed"]

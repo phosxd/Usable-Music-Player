@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://b207dxj67u4o8"]
+
+[ext_resource type="Script" uid="uid://dkv7vgyikv687" path="res://Scenes/Credits/credits.gd" id="1_gi1as"]
+[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="1_ut8rr"]
+[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="2_4hn7j"]
+[ext_resource type="StyleBox" uid="uid://qs4oi71axaux" path="res://Themes/Normal/Assets/settings_section.tres" id="3_fax7y"]
+[ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="4_8pn86"]
+
+[sub_resource type="Resource" id="Resource_oug0m"]
+script = ExtResource("2_4hn7j")
+
+[sub_resource type="Resource" id="Resource_kchua"]
+script = ExtResource("2_4hn7j")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_civ60"]
+
+[node name="Credits" type="Window" unique_id=208625171]
+oversampling_override = 1.0
+title = "Credits"
+initial_position = 2
+size = Vector2i(600, 360)
+script = ExtResource("1_gi1as")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1226707189]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="Panel" unique_id=563559659]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Scroll" type="ScrollContainer" parent="Panel/Margin" unique_id=1939691289]
+layout_mode = 2
+script = ExtResource("1_ut8rr")
+wheel_scroll_damper = SubResource("Resource_oug0m")
+dragging_scroll_damper = SubResource("Resource_kchua")
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin/Scroll" unique_id=1164704190]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="Info" type="PanelContainer" parent="Panel/Margin/Scroll/VBox" unique_id=1847151330]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_fax7y")
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin/Scroll/VBox/Info" unique_id=616918895]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/Margin/Scroll/VBox/Info/VBox" unique_id=1938271816]
+layout_mode = 2
+text = "Usable Music Player"
+label_settings = ExtResource("4_8pn86")
+
+[node name="Sep 1" type="HSeparator" parent="Panel/Margin/Scroll/VBox/Info/VBox" unique_id=43276401]
+layout_mode = 2
+
+[node name="Content" type="RichTextLabel" parent="Panel/Margin/Scroll/VBox/Info/VBox" unique_id=1861500073]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_civ60")
+bbcode_enabled = true
+text = "UMP is made inside the open source [color=sky_blue][url=https://godotengine.org]Godot[/url][/color] game engine.
+And in-part with the [color=sky_blue][url=https://python.org]Python[/url][/color] language using [color=sky_blue][url=https://pyinstaller.org]PyInstaller[/url][/color].
+
+"
+fit_content = true
+scroll_active = false
+
+[node name="Processing" type="PanelContainer" parent="Panel/Margin/Scroll/VBox" unique_id=727223768]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_fax7y")
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin/Scroll/VBox/Processing" unique_id=1383307373]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/Margin/Scroll/VBox/Processing/VBox" unique_id=361574553]
+layout_mode = 2
+text = "Processing"
+label_settings = ExtResource("4_8pn86")
+
+[node name="Sep 1" type="HSeparator" parent="Panel/Margin/Scroll/VBox/Processing/VBox" unique_id=1190274274]
+layout_mode = 2
+
+[node name="Content" type="RichTextLabel" parent="Panel/Margin/Scroll/VBox/Processing/VBox" unique_id=707477996]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_civ60")
+bbcode_enabled = true
+text = "[color=sky_blue][url=https://github.com/tinytag/tinytag]TinyTag[/url][/color]: Audio metadata extractor.
+[color=sky_blue][url=https://github.com/V-Sekai/V-Sekai.flac]V-Sekai.flac[/url][/color]: Native FLAC playback.
+
+"
+fit_content = true
+scroll_active = false
+
+[node name="Frontend" type="PanelContainer" parent="Panel/Margin/Scroll/VBox" unique_id=326214583]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_fax7y")
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin/Scroll/VBox/Frontend" unique_id=1674751177]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/Margin/Scroll/VBox/Frontend/VBox" unique_id=310399985]
+layout_mode = 2
+text = "Frontend"
+label_settings = ExtResource("4_8pn86")
+
+[node name="Sep 1" type="HSeparator" parent="Panel/Margin/Scroll/VBox/Frontend/VBox" unique_id=158872717]
+layout_mode = 2
+
+[node name="Content" type="RichTextLabel" parent="Panel/Margin/Scroll/VBox/Frontend/VBox" unique_id=1251915911]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_civ60")
+bbcode_enabled = true
+text = "[color=sky_blue][url=https://github.com/kuruk-mm/texture-rect-rounded]TextureRectRounded[/url][/color]: Rounded image rendering.
+[color=sky_blue][url=https://github.com/SpyrexDE/SmoothScroll]SmoothScroll[/url][/color]: Smooth scrolling containers.
+
+"
+fit_content = true
+scroll_active = false
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="meta_clicked" from="Panel/Margin/Scroll/VBox/Info/VBox/Content" to="." method="_on_content_meta_clicked"]
+[connection signal="meta_clicked" from="Panel/Margin/Scroll/VBox/Processing/VBox/Content" to="." method="_on_content_meta_clicked"]
+[connection signal="meta_clicked" from="Panel/Margin/Scroll/VBox/Frontend/VBox/Content" to="." method="_on_content_meta_clicked"]

@@ -70,6 +70,12 @@ layout_mode = 2
 tooltip_text = "Open source code repository issues page"
 text = "Report an Issue"
 
+[node name="Credits" type="Button" parent="MarginContainer/Settings/VBox/Links" unique_id=1585602774]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Open source code repository issues page"
+text = "Credits"
+
 [node name="Sep 1" type="HSeparator" parent="MarginContainer/Settings/VBox" unique_id=2012825676]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -107,7 +113,7 @@ layout_mode = 2
 text = "Library"
 label_settings = ExtResource("3_vbj3s")
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library" unique_id=1003039447]
+[node name="Sep 1" type="VSeparator" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library" unique_id=1003039447]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 6
@@ -132,6 +138,23 @@ unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Select directory"
 icon = ExtResource("3_swu2f")
+
+[node name="Fetch Lyrics" type="HBoxContainer" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer" unique_id=621578105]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Fetch Lyrics" unique_id=656936251]
+layout_mode = 2
+text = "Auto Fetch Lyrics"
+label_settings = ExtResource("3_vbj3s")
+
+[node name="Sep 1" type="VSeparator" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Fetch Lyrics" unique_id=417476389]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Fetch Lyrics" type="CheckButton" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Fetch Lyrics" unique_id=1998370400]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="Sep 2" type="HSeparator" parent="MarginContainer/Settings/VBox" unique_id=1396201131]
 self_modulate = Color(1, 1, 1, 0)
@@ -166,7 +189,6 @@ theme_override_constants/separation = 3
 [node name="Dynamic Accents" type="CheckButton" parent="MarginContainer/Settings/VBox/Theme Section/VBox/Dynamic Accents" unique_id=235272779]
 unique_name_in_owner = true
 layout_mode = 2
-button_pressed = true
 
 [node name="Visualizer Mode" type="HBoxContainer" parent="MarginContainer/Settings/VBox/Theme Section/VBox" unique_id=699538138]
 layout_mode = 2
@@ -281,9 +303,11 @@ theme_override_styles/separator = SubResource("StyleBoxLine_rhe31")
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Links/User Data" to="MarginContainer/Settings" method="_on_user_data_pressed"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Links/Source Code" to="MarginContainer/Settings" method="_on_source_code_pressed"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Links/Report Issue" to="MarginContainer/Settings" method="_on_report_issue_pressed"]
+[connection signal="pressed" from="MarginContainer/Settings/VBox/Links/Credits" to="MarginContainer/Settings" method="_on_credits_pressed"]
 [connection signal="text_submitted" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library/Library Path" to="MarginContainer/Settings" method="_on_library_path_text_submitted"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library/Rescan Library" to="MarginContainer/Settings" method="_on_rescan_library_pressed"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library/Select Library" to="MarginContainer/Settings" method="_on_select_library_pressed"]
+[connection signal="toggled" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Fetch Lyrics/Fetch Lyrics" to="MarginContainer/Settings" method="_on_fetch_lyrics_toggled"]
 [connection signal="toggled" from="MarginContainer/Settings/VBox/Theme Section/VBox/Dynamic Accents/Dynamic Accents" to="MarginContainer/Settings" method="_on_dynamic_accents_toggled"]
 [connection signal="item_selected" from="MarginContainer/Settings/VBox/Theme Section/VBox/Visualizer Mode/Visualizer Mode" to="MarginContainer/Settings" method="_on_visualizer_mode_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Settings/VBox/Theme Section/VBox/Layout Theme/Layout Theme" to="MarginContainer/Settings" method="_on_layout_theme_item_selected"]

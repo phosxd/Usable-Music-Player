@@ -1,0 +1,9 @@
+- Fix rescan track breaking metadata.
+- Add album info at bottom of album page.
+- Add playlists.
+- Add gradual loading of queue cards.
+- Fix library size incorrect.
+- Add auto scan for changes in library.
+- Add artist/genre page.
+- Fix sort options not staying selected.
+- Fix title a-z sorting backwards.

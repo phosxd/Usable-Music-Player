@@ -19,6 +19,7 @@ func  _ready() -> void:
 	PlayerManager.play_requested.connect(update_playing.bind(true))
 	PlayerManager.pause_requested.connect(update_playing.bind(false))
 	PlayerManager.volume_updated.connect(update_volume)
+	PlayerManager.track_peak_volume_changed.connect(update_visualizer_2)
 	update_current_track(0, PlayerManager.get_current_track())
 	update_track_progress(PlayerManager.track_progress)
 	update_volume(PlayerManager.get_volume())
@@ -37,25 +38,36 @@ func update_volume(value:float) -> void:
 		%'Mute Button'.button_pressed = true
 
 
-func update_visualizer(album_dominant_color:Color, db:float=0) -> void:
+func update_visualizer(album_dominant_color:Color, _db:float=0) -> void:
 	var glow_gradient = %Glow.texture.gradient as Gradient
 	glow_gradient.set_color(0, album_dominant_color)
 	if SessionManager.visualizer_mode == SessionManager.VisualizerMode.OFF:
 		%'Bar Visualizer'.hide()
-		%Glow.position.y = -30
+		%Glow.position.y = -50
 	if SessionManager.visualizer_mode == SessionManager.VisualizerMode.GLOW:
 		%'Bar Visualizer'.hide()
-		%Glow.position.y = -30
-		var linear = db_to_linear(db)
-		glow_gradient.set_color(0, Color(album_dominant_color.r, album_dominant_color.g, album_dominant_color.b, MathUtils.transfer_range_of_value(Vector2(0,1), Vector2(0.25, 1), linear)))
+		%Glow.position.y = -50
 	elif SessionManager.visualizer_mode == SessionManager.VisualizerMode.BAR:
 		%'Bar Visualizer'.show()
-		%Glow.position.y = -40
+		%Glow.position.y = -60
 		glow_gradient.set_color(0, Color.BLACK)
 		%'Bar Visualizer'.color_1 = album_dominant_color
 	%Glow.texture.gradient = glow_gradient
 	var color_2:Color = glow_gradient.get_color(1)
 	glow_gradient.set_color(1, Color(color_2.r, color_2.g, color_2.b, 0))
+
+
+func update_visualizer_2(db:float) -> void:
+	if SessionManager.visualizer_mode == SessionManager.VisualizerMode.GLOW:
+		var glow_gradient = %Glow.texture.gradient as Gradient
+		var album_dominant_color = current_track.album.palette.get('blend_full', Color.WHITE)
+		var linear:float = db_to_linear(db)
+		glow_gradient.set_color(0, Color(album_dominant_color.r, album_dominant_color.g, album_dominant_color.b,
+			MathUtils.transfer_range_of_value(Vector2(0,1), Vector2(0.25, 1), linear))
+		)
+		%Glow.texture.gradient = glow_gradient
+		var color_2:Color = glow_gradient.get_color(1)
+		glow_gradient.set_color(1, Color(color_2.r, color_2.g, color_2.b, 0))
 
 
 func update_track_progress(value:float) -> void:

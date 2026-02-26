@@ -10,6 +10,8 @@ func _ready() -> void:
 
 func update(_queue_position:int, track:DBTrack) -> void:
 	current_track = track
+	%'Add Lyrics'.hide()
+	%'Refresh'.hide()
 	%Label.text = ''
 	%'Info Label'.show()
 	%'Info Label'.text= 'No track...'
@@ -17,7 +19,7 @@ func update(_queue_position:int, track:DBTrack) -> void:
 	var stored_lyrics = track.get_lyrics()
 
 	# Fetch from API if not in DB.
-	if stored_lyrics.is_empty():
+	if stored_lyrics.is_empty() && SessionManager.auto_fetch_lyrics:
 		var url = 'https://lrclib.net/api/get?artist_name=%s&track_name=%s&album_name=%s&duration=%s' % [
 			track.artist.name.uri_encode(),
 			track.name.uri_encode(),
@@ -31,9 +33,13 @@ func update(_queue_position:int, track:DBTrack) -> void:
 		%HTTPRequest.request_completed.connect(_on_http_request_request_completed.bind(track))
 		%'Info Label'.text = 'Fetching lyrics...'
 
-	else:
+	elif not stored_lyrics.is_empty():
 		%'Info Label'.hide()
 		%Label.text = stored_lyrics
+
+	elif not SessionManager.auto_fetch_lyrics:
+		%'Info Label'.text = 'No lyrics found...'
+		%'Add Lyrics'.show()
 
 
 func _on_http_request_request_completed(result:int, _response_code:int, _headers:PackedStringArray, body:PackedByteArray, track:DBTrack) -> void:
@@ -56,7 +62,21 @@ func _on_http_request_request_completed(result:int, _response_code:int, _headers
 	if plain_lyrics is not String or plain_lyrics.is_empty():
 		%'Info Label'.text = 'No lyrics found...'
 		%'Info Label'.show()
+		%'Add Lyrics'.show()
 		return
 
 	track.save_lyrics(plain_lyrics)
 	%Label.text = plain_lyrics
+
+
+func _on_add_lyrics_pressed() -> void:
+	%'Add Lyrics'.hide()
+	%'Refresh'.show()
+	var file_path:String = current_track.get_lyrics_path()
+	var file := FileAccess.open(file_path, FileAccess.WRITE)
+	file.store_string('')
+	OS.shell_open(file_path)
+
+
+func _on_refresh_pressed() -> void:
+	update(0, current_track)

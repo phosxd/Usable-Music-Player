@@ -16,8 +16,10 @@ static var default_cover := ImageTexture.create_from_image(preload('res://Assets
 var artist: DBArtist
 ## Album name.
 var name: String
-## Number of tracks in the album.
-var track_count: int
+## Discs & the number of tracks in those discs.
+var discs:Dictionary[String,int] = {
+	'1': 0,
+}
 ## Album cover image path. Use [param get_cover] to get a usable texture.
 var cover_path: String
 ## Album release year. Not guaranteed to be formatted or be a valid year.
@@ -54,7 +56,13 @@ func _init(db_artist:DBArtist, album_name:String, raw_info=null) -> void:
 			_invalidate()
 			return
 
-	track_count = raw_info.get('tracks',[]).size()
+	var raw_discs = raw_info.get('discs',{})
+	for disc in raw_discs:
+		if disc is not String: continue
+		var raw_disc = raw_discs[disc]
+		if raw_disc is not Dictionary: continue
+		var raw_tracks:Array = raw_disc.get('tracks',[])
+		discs.set(disc, raw_tracks.size())
 
 	var raw_cover_path = raw_info.get('cover')
 	if raw_cover_path is String: cover_path = raw_cover_path
@@ -77,20 +85,21 @@ func _invalidate() -> void:
 	valid = false
 
 
-## Get specific track from the [param track_number].
+## Get specific track from the [param track_number] & [param disc_number].
 ## Can return null if track cannot be found.
-func get_track(track_number:int) -> DBTrack:
+func get_track(track_number:int, disc_number:int=1) -> DBTrack:
 	var raw_artist:Dictionary = LibraryManager.database.artists.get(artist.name,{})
 	var raw_album:Dictionary = raw_artist.get('albums',{}).get(name,{})
 	if raw_album is not Dictionary:
 		_invalidate()
 		return null
 
-	var raw_track_list:Array = raw_album.get('tracks',[])
-	if raw_track_list.size() <= track_number: return null
-	var raw_track = raw_track_list.get(track_number)
+	
+	var raw_discs:Dictionary = raw_album.get('discs',{})
+	var raw_disc:Dictionary = raw_discs.get(str(disc_number),{'tracks':[]})
+	var raw_track = raw_disc.tracks.get(track_number)
 
-	var result = DBTrack.new_or_reuse(artist, self, track_number, raw_track)
+	var result = DBTrack.new_or_reuse(artist, self, track_number, disc_number, raw_track)
 	if not result.valid: return null
 	return result
 
@@ -144,7 +153,7 @@ static func calculate_colors(image_texture:ImageTexture) -> Dictionary[String,Co
 	}
 	if image_texture == null: return result
 	var image = image_texture.get_image()
-	image.resize(8,8, Image.INTERPOLATE_BILINEAR)
+	image.resize(12,12, Image.INTERPOLATE_BILINEAR)
 	var image_size:Vector2i = image.get_size()
 
 	# Iterate on each pixel & count the instances.

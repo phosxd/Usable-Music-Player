@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://pi87rt13cyfa"]
+[gd_scene format=3 uid="uid://uyq481ryqgg6"]
 
 [ext_resource type="Script" uid="uid://c7gq1h6e80h5w" path="res://Scripts/UI/Album Page/album_page.gd" id="1_0e0sc"]
 [ext_resource type="Shader" uid="uid://dvoc7ypde1coe" path="res://Assets/gradient.gdshader" id="1_4xg1o"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Assets/Icons/shuffle.svg" id="5_ygsep"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_05ng2"]
 [ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Assets/Icons/options_horizontal.svg" id="6_5v6re"]
+[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="7_vrl77"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="10_ppkub"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="11_vrl77"]
 
@@ -41,14 +42,6 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_detail = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_61gau"]
-content_margin_left = 6.0
-content_margin_top = 4.0
-content_margin_right = 6.0
-content_margin_bottom = 4.0
-bg_color = Color(0.103743516, 0.10374353, 0.103743516, 1)
-corner_detail = 4
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0e0sc"]
 content_margin_left = 6.0
 content_margin_top = 4.0
@@ -59,6 +52,19 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 corner_detail = 4
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ppkub"]
+blend_mode = 4
+
+[sub_resource type="Gradient" id="Gradient_1chwj"]
+offsets = PackedFloat32Array(0, 0.9896907)
+colors = PackedColorArray(0, 0, 0, 0.1764706, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ina2b"]
+gradient = SubResource("Gradient_1chwj")
+height = 6
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ppkub"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
@@ -66,15 +72,14 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 anti_aliasing = false
 
-[sub_resource type="LabelSettings" id="LabelSettings_5v6re"]
-font_size = 34
-outline_size = 2
-
-[sub_resource type="LabelSettings" id="LabelSettings_1fnuh"]
-font_size = 14
-font_color = Color(0.6215242, 0.62152374, 0.6215238, 1)
-outline_size = 2
-outline_color = Color(0.61960787, 0.61960787, 0.61960787, 1)
+[sub_resource type="LabelSettings" id="LabelSettings_1chwj"]
+font_size = 36
+font_color = Color(0.9, 0.9, 0.9, 1)
+outline_size = 3
+outline_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
+shadow_size = 2
+shadow_color = Color(1, 1, 1, 0)
+shadow_offset = Vector2(0, 0)
 
 [sub_resource type="Resource" id="Resource_1chwj"]
 script = ExtResource("11_vrl77")
@@ -84,15 +89,12 @@ rebound_strength = 14.0
 [sub_resource type="Resource" id="Resource_ina2b"]
 script = ExtResource("11_vrl77")
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ppkub"]
-blend_mode = 4
-
 [sub_resource type="Gradient" id="Gradient_vrl77"]
 colors = PackedColorArray(0.13725491, 0.13725491, 0.13725491, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_1chwj"]
 gradient = SubResource("Gradient_vrl77")
-height = 6
+height = 20
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
@@ -101,7 +103,7 @@ colors = PackedColorArray(0.13725491, 0.13725491, 0.13725491, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_vrl77"]
 gradient = SubResource("Gradient_ppkub")
-height = 48
+height = 20
 fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
 
@@ -147,13 +149,8 @@ unique_name_in_owner = true
 material = SubResource("ShaderMaterial_gnhfw")
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 1.19
 theme_override_styles/panel = SubResource("StyleBoxFlat_05ng2")
-
-[node name="Title Panel" type="Panel" parent="MarginContainer/BG" unique_id=1995779736]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.4
-theme_override_styles/panel = SubResource("StyleBoxFlat_61gau")
 
 [node name="List Panel" type="Panel" parent="MarginContainer/BG" unique_id=333820995]
 layout_mode = 2
@@ -163,38 +160,60 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_0e0sc")
 
 [node name="Items" type="VBoxContainer" parent="MarginContainer" unique_id=579479730]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="Primary Info" type="HBoxContainer" parent="MarginContainer/Items" unique_id=1818763071]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Items" unique_id=1728412738]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.7
+size_flags_stretch_ratio = 0.64
+
+[node name="Control" type="Control" parent="MarginContainer/Items/MarginContainer" unique_id=421392623]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+mouse_behavior_recursive = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Items/MarginContainer/Control" unique_id=2075613841]
+material = SubResource("CanvasItemMaterial_ppkub")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_ina2b")
+
+[node name="Primary Info" type="HBoxContainer" parent="MarginContainer/Items/MarginContainer" unique_id=1818763071]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 14
 
-[node name="Left Sep" type="VSeparator" parent="MarginContainer/Items/Primary Info" unique_id=34311133]
+[node name="Left Sep" type="VSeparator" parent="MarginContainer/Items/MarginContainer/Primary Info" unique_id=34311133]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.01
 theme_override_constants/separation = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Items/Primary Info" unique_id=2074718638]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Items/MarginContainer/Primary Info" unique_id=2074718638]
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="MarginContainer/Items/Primary Info/VBoxContainer" unique_id=1819679671]
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer" unique_id=1819679671]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.2
+size_flags_stretch_ratio = 0.15
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Items/Primary Info/VBoxContainer" unique_id=1186668406]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer" unique_id=1186668406]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Panel" type="Panel" parent="MarginContainer/Items/Primary Info/VBoxContainer/MarginContainer" unique_id=1007525857]
+[node name="Panel" type="Panel" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer/MarginContainer" unique_id=1007525857]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("3_scbuu")
 
-[node name="Icon" type="PanelContainer" parent="MarginContainer/Items/Primary Info/VBoxContainer/MarginContainer" unique_id=2014446729]
+[node name="Icon" type="PanelContainer" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer/MarginContainer" unique_id=2014446729]
 unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
@@ -210,82 +229,82 @@ expand_mode = 2
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
 
-[node name="Album Button" parent="MarginContainer/Items/Primary Info/VBoxContainer/MarginContainer" unique_id=519598093 instance=ExtResource("6_05ng2")]
+[node name="Album Button" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer/MarginContainer" unique_id=519598093 instance=ExtResource("6_05ng2")]
 layout_mode = 2
 
-[node name="HSeparator3" type="HSeparator" parent="MarginContainer/Items/Primary Info/VBoxContainer" unique_id=1783796464]
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer" unique_id=1783796464]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.01
+size_flags_stretch_ratio = 0.05
 theme_override_constants/separation = 0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Items/Primary Info" unique_id=1976052526]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Items/MarginContainer/Primary Info" unique_id=1976052526]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/Items/Primary Info/VBoxContainer2" unique_id=234157587]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2" unique_id=234157587]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 2.65
+size_flags_stretch_ratio = 1.6
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Items/Primary Info/VBoxContainer2" unique_id=1441968863]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2" unique_id=1441968863]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer" unique_id=721181397]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer" unique_id=721181397]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer" unique_id=589713385]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer" unique_id=589713385]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = -7
+theme_override_constants/separation = -6
 
-[node name="Title" type="Label" parent="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer" unique_id=1814440858]
+[node name="Title" type="Label" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer" unique_id=1814440858]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 10
 text = "ALBUM NAME"
-label_settings = SubResource("LabelSettings_5v6re")
+label_settings = SubResource("LabelSettings_1chwj")
 clip_text = true
 text_overrun_behavior = 5
 
-[node name="Secondary Info" type="HBoxContainer" parent="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer" unique_id=1499052233]
+[node name="Secondary Info" type="HBoxContainer" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer" unique_id=1499052233]
 layout_mode = 2
 theme_override_constants/separation = -1
 
-[node name="Artist" type="Label" parent="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=696956641]
+[node name="Artist" type="Label" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=696956641]
 unique_name_in_owner = true
 layout_mode = 2
 text = "ARTIST NAME"
-label_settings = SubResource("LabelSettings_1fnuh")
+label_settings = ExtResource("7_vrl77")
 vertical_alignment = 1
 
-[node name="VSeparator2" type="VSeparator" parent="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=1320867812]
+[node name="VSeparator2" type="VSeparator" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=1320867812]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Year" type="Label" parent="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=649305992]
+[node name="Year" type="Label" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=649305992]
 unique_name_in_owner = true
 layout_mode = 2
 text = "1994"
-label_settings = SubResource("LabelSettings_1fnuh")
+label_settings = ExtResource("7_vrl77")
 vertical_alignment = 1
 
-[node name="Controls" type="HBoxContainer" parent="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer" unique_id=1447041976]
+[node name="Controls" type="HBoxContainer" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer" unique_id=1447041976]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-size_flags_vertical = 4
+size_flags_vertical = 8
 theme_override_constants/separation = 14
 
-[node name="Play" type="Button" parent="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer/Controls" unique_id=245581158]
+[node name="Play" type="Button" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/Controls" unique_id=245581158]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
@@ -293,7 +312,7 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("4_gnhfw")
 icon_alignment = 1
 
-[node name="Shuffle" type="Button" parent="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer/Controls" unique_id=333186358]
+[node name="Shuffle" type="Button" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/Controls" unique_id=333186358]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
@@ -301,7 +320,7 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("5_ygsep")
 icon_alignment = 1
 
-[node name="Options" type="MenuButton" parent="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer/Controls" unique_id=807633223]
+[node name="Options" type="MenuButton" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/Controls" unique_id=807633223]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
@@ -310,29 +329,24 @@ icon = ExtResource("6_5v6re")
 flat = false
 icon_alignment = 1
 
-[node name="Right Sep" type="VSeparator" parent="MarginContainer/Items/Primary Info" unique_id=996924522]
+[node name="Right Sep" type="VSeparator" parent="MarginContainer/Items/MarginContainer/Primary Info" unique_id=996924522]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.02
 theme_override_constants/separation = 0
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/Items" unique_id=753297774]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.0
-theme_override_constants/separation = 2
-
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/Items" unique_id=83077900]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 1.1
+size_flags_stretch_ratio = 1.16
 theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 12
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Items/MarginContainer2" unique_id=549837124]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Items/MarginContainer2" unique_id=364153742]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Items/MarginContainer2/MarginContainer" unique_id=549837124]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
@@ -342,12 +356,27 @@ wheel_scroll_damper = SubResource("Resource_1chwj")
 dragging_scroll_damper = SubResource("Resource_ina2b")
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="Track List" type="VBoxContainer" parent="MarginContainer/Items/MarginContainer2/ScrollContainer" unique_id=925906313]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer" unique_id=873261739]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Track List" type="VBoxContainer" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer" unique_id=925906313]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer/Track List" unique_id=64887149]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer" unique_id=666875449]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 6
 
 [node name="Control" type="Control" parent="MarginContainer/Items/MarginContainer2" unique_id=1243036437]
 layout_mode = 2
@@ -365,17 +394,17 @@ offset_bottom = 6.0
 grow_horizontal = 2
 texture = SubResource("GradientTexture2D_1chwj")
 
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/Items/MarginContainer2/Control" unique_id=1099278657]
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/Items/MarginContainer2/Control" unique_id=863356588]
 material = SubResource("CanvasItemMaterial_ppkub")
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -48.0
+offset_top = -61.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = SubResource("GradientTexture2D_vrl77")
 
-[connection signal="pressed" from="MarginContainer/Items/Primary Info/VBoxContainer/MarginContainer/Album Button" to="." method="_on_album_button_pressed"]
-[connection signal="pressed" from="MarginContainer/Items/Primary Info/VBoxContainer2/HBoxContainer/Controls/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer/MarginContainer/Album Button" to="." method="_on_album_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/Controls/Play" to="." method="_on_play_pressed"]

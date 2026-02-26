@@ -25,5 +25,5 @@ static func create_thread(run:Callable, callback=null) -> void:
 			timer.stop()
 			timer.queue_free()
 	)
-	SessionManager.get_tree().current_scene.add_child.call_deferred(timer)
-	timer.start.call_deferred(0.01)
+	SessionManager.add_child.call_deferred(timer)
+	timer.start.call_deferred(0.02)

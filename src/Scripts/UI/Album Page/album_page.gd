@@ -45,11 +45,23 @@ func init(album_:DBAlbum) -> void:
 		index += 1
 		mat.set_shader_parameter(i, dominant_colors[index].blend(overlay_color))
 		
-	for i in album.track_count:
-		var track = album.get_track(i)
-		if track is not DBTrack: continue
-		loaded_tracks.append(track)
-		add_card(track)
+	for disc in album.discs:
+		if album.discs.size() > 1:
+			add_disc_sep(disc)
+		for i in album.discs[disc]:
+			var track = album.get_track(i, int(disc))
+			if track is not DBTrack: continue
+			loaded_tracks.append(track)
+			add_card(track)
+
+
+func add_disc_sep(disc:String) -> void:
+	var label := Label.new()
+	label.label_settings = preload('res://Assets/primary_label_large.tres')
+	label.text = 'Disc %s' % disc
+	%'Track List'.add_spacer(false)
+	%'Track List'.add_child(label)
+	%'Track List'.add_spacer(false)
 
 
 func add_card(track:DBTrack) -> void:

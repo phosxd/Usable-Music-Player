@@ -1,8 +1,7 @@
-[gd_scene format=3 uid="uid://b0wgne7i4qqau"]
+[gd_scene format=3 uid="uid://bmqg8dq57bmu6"]
 
 [ext_resource type="Script" uid="uid://dsftqlnga24af" path="res://Scripts/UI/Player/player.gd" id="1_rk0es"]
 [ext_resource type="PackedScene" uid="uid://ctrjekyy7gs7r" path="res://Elements/Bar Visualizer/bar_visualizer.tscn" id="2_20q0p"]
-[ext_resource type="LabelSettings" uid="uid://bpdf3n2ydkv6m" path="res://Assets/primary_label_large.tres" id="3_rp1k4"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="4_k8swy"]
 [ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Assets/Icons/skip_backward.svg" id="5_5f1qt"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="6_mbwg2"]
@@ -103,12 +102,15 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_8fvqj")
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Track Name" type="Label" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1362576810]
+[node name="Track Name" type="LinkButton" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1576920972]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 20
 text = "No track playing..."
-label_settings = ExtResource("3_rp1k4")
-vertical_alignment = 1
+underline = 2
 
 [node name="Sep 3" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=175285363]
 self_modulate = Color(1, 1, 1, 0)
@@ -118,6 +120,7 @@ theme_override_constants/separation = 12
 [node name="Artist Name" type="Label" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=450202542]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 8
 text = "No artist"
 label_settings = ExtResource("4_k8swy")
 vertical_alignment = 1
@@ -130,6 +133,7 @@ theme_override_constants/separation = 12
 [node name="Track Length" type="Label" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=563463115]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 8
 text = "0:00 / 0:00"
 
 [node name="Controls" type="HBoxContainer" parent="Panel/VBox/GridContainer" unique_id=1069252317]
@@ -253,6 +257,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 step = 0.01
 
+[connection signal="pressed" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Track Name" to="." method="_on_track_name_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Skip Backward" to="." method="_on_skip_backward_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Play Pause" to="." method="_on_play_pause_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Skip Forward" to="." method="_on_skip_forward_pressed"]

@@ -20,8 +20,9 @@ const landing_page_options:Array[String] = [
 ]
 const dir_open_popup := preload('res://Scenes/Dir Open/dir_open.tscn')
 const info_popup := preload('res://Scenes/Info Popup/info_popup.tscn')
+const credits_popup := preload('res://Scenes/Credits/credits.tscn')
 @onready var info_text_template:String = %Info.text
-@onready var settings:Array[Node] = [%Info, %'Library Path', %'Dynamic Accents', %'Visualizer Mode', %'Layout Theme', %'Landing Page']
+@onready var settings:Array[Node] = [%Info, %'Library Path', %'Dynamic Accents', %'Visualizer Mode', %'Layout Theme', %'Landing Page', %'Fetch Lyrics']
 
 
 func _ready() -> void:
@@ -41,9 +42,11 @@ func update(nodes:Array[Node]) -> void:
 	nodes[3].selected = SessionManager.visualizer_mode
 	nodes[4].selected = SessionManager.layout_theme
 	nodes[5].selected = landing_page_options.find(SessionManager.landing_page)
+	nodes[6].button_pressed = SessionManager.auto_fetch_lyrics
 
 
 func _on_select_library_pressed() -> void:
+	if LibraryManager.currently_updating: return
 	@warning_ignore('shadowed_variable_base_class')
 	var popup:FileDialog = dir_open_popup.instantiate()
 	popup.dir_selected.connect(func(path:String) -> void:
@@ -54,6 +57,7 @@ func _on_select_library_pressed() -> void:
 
 
 func _on_library_path_text_submitted(new_text:String) -> void:
+	if LibraryManager.currently_updating: return
 	@warning_ignore('shadowed_variable_base_class')
 	var popup:AcceptDialog = info_popup.instantiate()
 	popup.get_ok_button().hide()
@@ -70,21 +74,6 @@ func _on_library_path_text_submitted(new_text:String) -> void:
 		update(nodes)
 		if popup: popup.queue_free()
 	).bind(self, %'Library Path', %'Rescan Library', settings))
-
-	var timer := Timer.new()
-	timer.one_shot = false
-	timer.timeout.connect(func() -> void:
-		var indexing_label = SessionManager.main_scene.get_node('%Indexing Label')
-		if indexing_label is not Label: return
-		indexing_label.show()
-		indexing_label.text = SessionManager.main_scene.indexing_label_template % LibraryManager.database.track_count
-		if LibraryManager.currently_updating == false:
-			indexing_label.hide()
-			timer.stop()
-			timer.queue_free()
-	)
-	SessionManager.main_scene.add_child(timer)
-	timer.start(1.0)
 
 
 func _on_rescan_library_pressed() -> void:
@@ -103,6 +92,11 @@ func _on_report_issue_pressed() -> void:
 	OS.shell_open(AppInfo.issues_page)
 
 
+func _on_credits_pressed() -> void:
+	var popup = credits_popup.instantiate()
+	self.add_child(popup)
+
+
 func _on_dynamic_accents_toggled(toggled_on:bool) -> void:
 	SessionManager.dynamic_accents = toggled_on
 
@@ -119,3 +113,7 @@ func _on_layout_theme_item_selected(index:int) -> void:
 
 func _on_landing_page_item_selected(index:int) -> void:
 	SessionManager.landing_page = landing_page_options[index]
+
+
+func _on_fetch_lyrics_toggled(toggled_on:bool) -> void:
+	SessionManager.auto_fetch_lyrics = toggled_on
