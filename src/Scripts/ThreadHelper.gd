@@ -1,13 +1,16 @@
 class_name ThreadHelper extends RefCounted
 
 
+static var threads:Array[Thread]
+
+
 ## Creates a thread & starts it with [param run].
-## Thread will automatically check if finished every frame.
+## Returns the created thread. 
 ##
-## Calls [param callback] once finished, which will not be called before the [param minimum_time] has passed.
+## Calls [param callback] with the result once finished, which will not be called before the [param minimum_time] has passed.
 ##
 ## If failed to create the thread, will run on the main thread.
-static func create_thread(run:Callable, callback=null) -> void:
+static func create_thread(run:Callable, callback=null) -> Thread:
 	var thread := Thread.new()
 	var err := thread.start(run)
 	if err != OK:
@@ -27,3 +30,5 @@ static func create_thread(run:Callable, callback=null) -> void:
 	)
 	SessionManager.add_child.call_deferred(timer)
 	timer.start.call_deferred(0.02)
+
+	return thread

@@ -22,6 +22,7 @@ extends VBoxContainer
 var card_scene := SessionManager.get_layout_theme_scene('artists_card')
 var sort_mode: LibraryManager.ArtistSortMode
 var ascend_mode = null
+var update_count:int = 0
 
 
 func _ready() -> void:
@@ -31,6 +32,7 @@ func _ready() -> void:
 
 
 func sort() -> void:
+	update_count += 1
 	SessionManager.artist_sort_mode = sort_mode
 	if ascend_mode != null: SessionManager.artist_ascend_mode = ascend_mode
 	for child:Node in %Grid.get_children():
@@ -38,20 +40,30 @@ func sort() -> void:
 
 	var artists := LibraryManager.get_artists_sorted(sort_mode)
 	if ascend_mode == false: artists.reverse()
-	for artist:DBArtist in artists:
-		# Filter with search term.
-		if not SessionManager.search_term.is_empty():
-			var search_term:String = SessionManager.search_term.to_lower()
-			if not artist.name.to_lower().contains(search_term):
-				continue
+	var current_count:Array[int] = [update_count]
+	ThreadHelper.create_thread((func(scene:Node, grid:Control) -> void:
+		for artist:DBArtist in artists:
+			if update_count != current_count[0]: return
+			# Filter with search term.
+			if not SessionManager.search_term.is_empty():
+				var search_term:String = SessionManager.search_term.to_lower()
+				if not artist.name.to_lower().contains(search_term):
+					continue
+			# Add card.
+			if not scene: return
+			add_card(scene, grid, artist)
+			# Add artificial delay so that there is time for the new card to be added to the tree.
+			# Without this, the app would skip frames & stutter.
+			await get_tree().create_timer(0.01).timeout
+	).bind(self, %Grid))
 
-		add_card(artist)
 
-
-func add_card(artist:DBArtist) -> void:
+func add_card(scene:Node, grid:Control, artist:DBArtist) -> void:
+	if not scene: return
 	var card:Control = card_scene.instantiate()
 	card.init(artist)
-	%Grid.add_child(card)
+	if not grid: return
+	grid.add_child.call_deferred(card)
 
 
 func _on_sort_mode_item_selected(_index:int) -> void:

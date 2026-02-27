@@ -102,7 +102,7 @@ func set_track_progress(progress:float) -> void:
 	track_progress_updated.emit(progress)
 
 
-func set_current_track(track_queue_position:int) -> void:
+func set_current_track(track_queue_position:int, save_session:bool=true) -> void:
 	if track_queue_position >= queue.size() or track_queue_position < 0: return
 	var track = queue.get(track_queue_position)
 	if track is not DBTrack or track.valid == false: return
@@ -110,8 +110,10 @@ func set_current_track(track_queue_position:int) -> void:
 	audio_stream_player.stop()
 	audio_stream_player.stream = track.get_stream()
 	if is_playing: set_playing(true)
+
 	queue_position = track_queue_position
 	current_track_updated.emit(track_queue_position, track)
+	if save_session: SessionManager.save_session()
 
 
 func skip_forward() -> void:

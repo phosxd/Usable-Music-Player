@@ -2,24 +2,39 @@ extends PanelContainer
 
 var card_scene = SessionManager.get_layout_theme_scene('queue_card')
 var last_node: Node
+var update_count:int = 0
+
 
 
 func _ready() -> void:
 	update()
-	track_updated(PlayerManager.queue_position, PlayerManager.get_current_track())
 	PlayerManager.queue_updated.connect(update)
 	PlayerManager.current_track_updated.connect(track_updated)
 
 
 func update() -> void:
+	update_count += 1
 	for child:Node in %List.get_children():
 		child.queue_free()
+
 	var queue = PlayerManager.queue
-	for track:DBTrack in queue:
-		add_card(track)
+	var current_count:Array[int] = [update_count]
+	ThreadHelper.create_thread((func(list:Control) -> void:
+		for track:DBTrack in queue:
+			if update_count != current_count[0]: return
+			add_card(list, track)
+			# Add artificial delay so that there is time for the new card to be added to the tree.
+			# Without this, the app would skip frames & stutter.
+			await get_tree().create_timer(0.01).timeout
+	).bind(%List),
+	func(_result) -> void:
+		if update_count != current_count[0]: return
+		track_updated(PlayerManager.queue_position, PlayerManager.get_current_track())
+	)
 
 
 func track_updated(queue_position:int, _track:DBTrack) -> void:
+	if %List.get_child_count() <= queue_position: return
 	var node = %List.get_child(queue_position)
 	if not node: return
 	node.highlight(true)
@@ -28,7 +43,7 @@ func track_updated(queue_position:int, _track:DBTrack) -> void:
 	last_node = node
 
 
-func add_card(track:DBTrack) -> void:
+func add_card(list:Control, track:DBTrack) -> void:
 	var card = card_scene.instantiate()
 	card.init(track)
-	%List.add_child(card)
+	list.add_child.call_deferred(card)

@@ -36,7 +36,7 @@ func set_mode(mode:CardMode) -> void:
 		%Image.show()
 		%'Image Sep'.hide()
 	if mode == CardMode.minimal:
-		%Artist.text = '%s' % [track.artist.name]
+		%Artist.text = '%s' % [track.actual_artist]
 		%Image.hide()
 		%'Image Sep'.show()
 

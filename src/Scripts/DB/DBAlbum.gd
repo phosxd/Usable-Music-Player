@@ -162,8 +162,13 @@ static func calculate_colors(image_texture:ImageTexture) -> Dictionary[String,Co
 		for y in image_size.y:
 			var pixel:Color = image.get_pixel(x,y)
 			if pixel.a != 1.0: continue # Exclude transparent pixels.
+			# Exclude similar pixels.
+			for color:Color in colors:
+				if pixel.is_equal_approx(color): continue
+			# Add color to count.
 			colors.get_or_add(pixel, 0)
 			colors[pixel] += 1
+
 	var sorted:Array[int] = colors.values(); sorted.sort()
 	# Return if no colors found.
 	if sorted.is_empty(): return result
@@ -173,7 +178,7 @@ static func calculate_colors(image_texture:ImageTexture) -> Dictionary[String,Co
 	for count:int in sorted_reversed:
 		var blend_color:Color = colors_2.find_key(count)
 		colors_2.erase(blend_color)
-		blend_color.a = 0.4/count
+		blend_color.a = 0.3/count
 		result.blend_full = result.blend_full.blend(blend_color)
 
 	# Get primary color.

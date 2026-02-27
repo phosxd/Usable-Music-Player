@@ -127,9 +127,9 @@ placeholder_text = "No directory selected..."
 [node name="Rescan Library" type="Button" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library" unique_id=1633868751]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Scan the entire library for changes & update accordingly.
+tooltip_text = "Delete all cached data & rescan the library.
 
-You should do this everytime you add new tracks to your library."
+Manually saved data, lyrics, & preferences will be kept."
 text = "Reset Database"
 icon = ExtResource("4_vbj3s")
 
@@ -144,6 +144,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Fetch Lyrics" unique_id=656936251]
 layout_mode = 2
+tooltip_text = "Automatically fetch lyrics from an API & save to user data upon playing a track."
 text = "Auto Fetch Lyrics"
 label_settings = ExtResource("3_vbj3s")
 

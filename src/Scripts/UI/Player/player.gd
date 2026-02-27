@@ -38,23 +38,24 @@ func update_volume(value:float) -> void:
 		%'Mute Button'.button_pressed = true
 
 
-func update_visualizer(album_dominant_color:Color, _db:float=0) -> void:
+func update_visualizer(color:Color, _db:float=0) -> void:
 	var glow_gradient = %Glow.texture.gradient as Gradient
-	glow_gradient.set_color(0, album_dominant_color)
+	glow_gradient.set_color(0, color)
+	%'Bar Visualizer'.hide()
+	%'Bar Visualizer'.process_mode = Node.PROCESS_MODE_DISABLED
 	if SessionManager.visualizer_mode == SessionManager.VisualizerMode.OFF:
-		%'Bar Visualizer'.hide()
-		%Glow.position.y = -50
+		%Glow.position.y = -40
 	if SessionManager.visualizer_mode == SessionManager.VisualizerMode.GLOW:
-		%'Bar Visualizer'.hide()
-		%Glow.position.y = -50
+		%Glow.position.y = -40
 	elif SessionManager.visualizer_mode == SessionManager.VisualizerMode.BAR:
+		%'Bar Visualizer'.process_mode = Node.PROCESS_MODE_INHERIT
 		%'Bar Visualizer'.show()
-		%Glow.position.y = -60
-		glow_gradient.set_color(0, Color.BLACK)
-		%'Bar Visualizer'.color_1 = album_dominant_color
+		%Glow.position.y = -50
+		glow_gradient.set_color(0, Color(0,0,0,0.5))
+		%'Bar Visualizer'.color_1 = color
 	%Glow.texture.gradient = glow_gradient
-	var color_2:Color = glow_gradient.get_color(1)
-	glow_gradient.set_color(1, Color(color_2.r, color_2.g, color_2.b, 0))
+	#var color_2:Color = glow_gradient.get_color(1)
+	glow_gradient.set_color(1, Color(0,0,0,0))
 
 
 func update_visualizer_2(db:float) -> void:

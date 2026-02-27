@@ -32,7 +32,7 @@ var loaded_tracks:Array[DBTrack] = []
 var selected_track_index: int
 var sort_mode: LibraryManager.TrackSortMode
 var ascend_mode = null
-var currently_updating_property:bool = false
+var update_count:int = 0
 
 
 func _ready() -> void:
@@ -47,6 +47,7 @@ func _process(_delta:float) -> void:
 
 
 func sort(callback=null) -> void:
+	update_count += 1
 	SessionManager.track_sort_mode = sort_mode
 	if ascend_mode != null: SessionManager.track_ascend_mode = ascend_mode
 	for child:Node in %Grid.get_children():
@@ -55,9 +56,11 @@ func sort(callback=null) -> void:
 	var tracks := LibraryManager.get_tracks_sorted(sort_mode)
 	if ascend_mode == false: tracks.reverse()
 	loaded_tracks.clear()
-	
+
+	var current_count:Array[int] = [update_count]
 	ThreadHelper.create_thread((func(scene:Node, grid:Control) -> void:
 		for track:DBTrack in tracks:
+			if update_count != current_count[0]: return
 			# Filter with search term.
 			if not SessionManager.search_term.is_empty():
 				var search_term:String = SessionManager.search_term
@@ -76,9 +79,9 @@ func sort(callback=null) -> void:
 
 
 func add_card(scene:Node, grid:Control, track:DBTrack, callback:Callable) -> void:
+	if not scene: return
 	var card:Control = card_scene.instantiate()
 	card.init(track)
-	if not scene: return
 	card.selected.connect(callback)
 	if not grid: return
 	grid.add_child.call_deferred(card)

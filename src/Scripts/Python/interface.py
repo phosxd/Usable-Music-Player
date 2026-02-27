@@ -49,6 +49,9 @@ def get_audio_meta(tag, path):
 	for property in ['duration', 'channels', 'bitrate', 'bitdepth', 'samplerate', 'track', 'disc']:
 		meta[property] = raw_meta.get(property,0)
 
+	if meta['albumartist'] == '':
+		meta['albumartist'] = meta['artist']
+
 	cover_image = tag.images.any
 	meta['image_extension'] = ''
 	if cover_image is not None:
@@ -65,7 +68,7 @@ def meta_as_file_name(meta, mode=0):
 		return '%s__%s__%s-%s' % (meta['artist'].replace('/','_'), meta['album'].replace('/','_'), meta['title'].replace('/','_'), str(int(meta['duration'])))
 	# Album mode.
 	if mode == 1:
-		return '%s__%s' % (meta['artist'].replace('/','_'), meta['album'].replace('/','_'))
+		return '%s__%s' % (meta['albumartist'].replace('/','_'), meta['album'].replace('/','_'))
 
 
 def save_audio_meta(tag, meta, output_path):

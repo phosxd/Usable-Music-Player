@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b62hwhyefqusc"]
+
+[ext_resource type="Shader" uid="uid://gl5bbctp0th" path="res://Assets/blur.gdshader" id="1_2x171"]
+
+[resource]
+shader = ExtResource("1_2x171")
+shader_parameter/lod = 2.50000011875

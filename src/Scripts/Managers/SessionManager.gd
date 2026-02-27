@@ -217,7 +217,7 @@ func load_session() -> void:
 
 	var raw_queue_position = data.get('queue_position')
 	if (raw_queue_position is int or raw_queue_position is float) && raw_queue_position != -1:
-		PlayerManager.set_current_track(int(raw_queue_position))
+		PlayerManager.set_current_track(int(raw_queue_position), false)
 
 	var raw_track_progress = data.get('track_progress')
 	if raw_track_progress is float:

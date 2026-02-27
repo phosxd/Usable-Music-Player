@@ -8,7 +8,7 @@ const clis:Array[String] = [
 ]
 ## CLI versions.
 const cli_versions:Dictionary[String,int] = {
-	'interface': 4,
+	'interface': 5,
 }
 ## Runtime absolute paths to the executable binary.
 var cli_executable_paths:Dictionary[String,String] = {

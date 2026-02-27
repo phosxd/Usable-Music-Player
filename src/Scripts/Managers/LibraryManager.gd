@@ -47,7 +47,8 @@ static var database:Dictionary = {
 	'library_size': 0,
 	'artists': {},
 }
-
+static var db_cache_size:int = 0
+## If true, the database is currently updating.
 static var currently_updating:bool = false
 ## Array of image paths already calculated & processed.
 static var updated_images:Array[String] = []
@@ -163,6 +164,7 @@ static func rescan_track(track:DBTrack, custom_data:Dictionary={}) -> DBTrack:
 
 
 static func wipe_database() -> void:
+	db_cache_size = 0
 	database.set('artists', {})
 	database.set('track_count', 0)
 	database.set('library_size', 0)
@@ -189,6 +191,7 @@ static func get_cache_size() -> int:
 		total[0] += FileAccess.get_file_as_bytes(path).size()
 	,Callable())
 
+	db_cache_size = total[0]
 	return total[0]
 
 
@@ -270,7 +273,7 @@ static func _load_library(root_path:String, callback:Callable) -> void:
 	),callback)
 
 
-static func _index(metadata:Dictionary, track_number_override:int=-1, disc_number_override:int=-1, custom_data:Dictionary={}) -> void:
+static func _index(metadata:Dictionary, track_number_override:int=-1, _disc_number_override:int=-1, custom_data:Dictionary={}) -> void:
 	var path:String = metadata.get('path','')
 	if path.is_empty(): return
 	var duration:float = metadata.get('duration',0)
@@ -281,7 +284,6 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, disc_numbe
 	if not album_artist.is_empty(): artist = album_artist
 	if artist.is_empty():
 		artist = placeholder_meta
-		actual_artist = artist
 	if album.is_empty(): album = placeholder_meta
 
 	var palette = {}
@@ -317,6 +319,7 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, disc_numbe
 			'1': {'tracks': []},
 		},
 		'palette': palette,
+		'copyright': metadata.get('copyright'),
 	})
 	if db_album.discs.get(str(disc_number)) == null:
 		db_album.discs.set(str(disc_number), {
@@ -333,7 +336,6 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, disc_numbe
 		'bit_rate': str(metadata.get('bitrate',-1)),
 		'sample_rate': str(metadata.get('samplerate',-1)),
 		'bpm': metadata.get('bpm'),
-		'copyright': metadata.get('copyright'),
 		'urls': metadata.get('urls'),
 		'comment': metadata.get('comment'),
 		'path': path,
@@ -347,10 +349,11 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, disc_numbe
 
 	database.artists[artist].albums.set(album, db_album)
 	database.track_count += 1
+	database.library_size += FileAccess.get_size(path)
 	print('Indexed into DB: '+path)
 
 
-static func reload_library(callback:Callable) -> void:
+static func reload_library(_callback:Callable) -> void:
 	return
 	#var root_dir := DirAccess.open(SessionManager.library_location)
 	#if root_dir == null:
@@ -363,79 +366,10 @@ static func reload_library(callback:Callable) -> void:
 	#),callback)
 
 
-static func index_file(path:String, track_number_override:int=-1, custom_data:Dictionary={}) -> void:
-	var extension:String = path.split('.')[-1].to_lower()
-	if extension not in LibraryManager.valid_audio_extensions: return
-	if not FileAccess.file_exists(path): return
-
-	# Grab metadata.
-	DirAccess.make_dir_recursive_absolute(out_path)
-	var exit_code:int = CLI.execute('interface', ['get_audio_meta', path, out_path])
-	if exit_code != OK: return
-	var metadata = JSON.parse_string(FileAccess.get_file_as_string(out_path+'/out.txt'))
-	if metadata is not Dictionary: return
-	var duration:float = metadata.get('duration',0)
-	var artist:String = metadata.get('artist','').replace('\n','')
-	var album:String = metadata.get('album','').replace('\n','')
-	if artist.is_empty(): artist = placeholder_meta
-	if album.is_empty(): album = placeholder_meta
-
-	var image_extension:String = metadata.get('image_extension','jpg')
-	var cover_path:String = image_cache_path+'/%s.%s' % [album.replace('/','_'), image_extension]
-	DirAccess.make_dir_recursive_absolute(image_cache_path)
-	DirAccess.rename_absolute(out_path+'/out.%s' % image_extension, cover_path)
-	var image = Image.load_from_file(cover_path)
-	image = ImageTexture.create_from_image(image)
-
-	var track_title:String = metadata.get('title','').replace('\n','')
-	var track_number:int = metadata.get('track',0)
-	var year:String = metadata.get('year','').replace('\n','')
-	if track_title.is_empty(): track_title = path.split('/')[-1]
-	if track_title.is_empty(): track_title = placeholder_meta
-	if year.is_empty(): year = placeholder_meta
-
-	# Add to database.
-	var db_artist:Dictionary = database.artists.get_or_add(artist, {
-		#'cover': fetch_artist_cover(artist),
-		'albums': {},
-	})
-	@warning_ignore('incompatible_ternary')
-	var db_album:Dictionary = db_artist.albums.get_or_add(album, {
-		'year': metadata.get('year',placeholder_meta),
-		'genre': metadata.get('genre',placeholder_meta),
-		'cover': cover_path,
-		'tracks': [],
-		'palette': DBAlbum.calculate_colors(image),
-	})
-	if track_number > db_album.tracks.size(): db_album.tracks.resize(track_number)
-	var track_data = {
-		'title': track_title,
-		'length': duration,
-		'channels': str(metadata.get('channels',-1)),
-		'bit_rate': str(metadata.get('bitrate',-1)),
-		'sample_rate': str(metadata.get('samplerate',-1)),
-		'bpm': metadata.get('bpm'),
-		'copyright': metadata.get('copyright'),
-		'urls': metadata.get('urls'),
-		'comment': metadata.get('comment'),
-		'path': path,
-		'last_modified': FileAccess.get_modified_time(path),
-	}
-	track_data.merge(custom_data, true)
-	if track_number_override != -1:
-		db_album.tracks.set(track_number_override, track_data)
-	elif track_number > 0:
-		db_album.tracks.set(track_number-1, track_data)
-	else:
-		db_album.tracks.append(track_data)
-
-	database.track_count += 1
-	print('Indexed into DB: '+path)
-
-
 static func load_audio(path:String) -> AudioStream:
 	var extension:String = path.split('.')[-1].to_lower()
 	if extension not in LibraryManager.valid_audio_extensions: return null
+	if not FileAccess.file_exists(path): return null
 	var audio_stream: AudioStream
 	if extension == 'wav':
 		audio_stream = AudioStreamWAV.load_from_file(path, {
@@ -447,8 +381,10 @@ static func load_audio(path:String) -> AudioStream:
 		audio_stream = AudioStreamOggVorbis.load_from_file(path)
 	elif extension == 'flac':
 		var file := FileAccess.open(path, FileAccess.READ)
-		audio_stream = AudioStreamFLAC.new()
-		audio_stream.data = file.get_buffer(file.get_length())
+		if file:
+			audio_stream = AudioStreamFLAC.new()
+			if audio_stream:
+				audio_stream.data = file.get_buffer(file.get_length())
 
 	print('Loaded stream from: '+path)
 	return audio_stream

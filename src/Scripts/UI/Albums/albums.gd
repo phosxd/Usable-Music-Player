@@ -25,6 +25,7 @@ extends VBoxContainer
 var card_scene := SessionManager.get_layout_theme_scene('albums_card')
 var sort_mode: LibraryManager.AlbumSortMode
 var ascend_mode = null
+var update_count:int = 0
 
 
 func _ready() -> void:
@@ -34,6 +35,7 @@ func _ready() -> void:
 
 
 func sort() -> void:
+	update_count += 1
 	SessionManager.album_sort_mode = sort_mode
 	if ascend_mode != null: SessionManager.album_ascend_mode = ascend_mode
 	for child:Node in %Grid.get_children():
@@ -42,8 +44,10 @@ func sort() -> void:
 	var albums := LibraryManager.get_albums_sorted(sort_mode)
 	if ascend_mode == false: albums.reverse()
 
+	var current_count:Array[int] = [update_count]
 	ThreadHelper.create_thread((func(scene:Node, grid:Control) -> void:
 		for album:DBAlbum in albums:
+			if update_count != current_count[0]: return
 			var display_data:String = ''
 			match sort_mode:
 				LibraryManager.AlbumSortMode.YEAR: display_data = album.year
@@ -65,9 +69,9 @@ func sort() -> void:
 
 
 func add_card(scene:Node, grid:Control, album:DBAlbum, display_data:String) -> void:
+	if not scene: return
 	var card:Control = card_scene.instantiate()
 	card.init(album, display_data)
-	if not scene: return
 	card.selected.connect(_on_card_selected.bind(album))
 	if not grid: return
 	grid.add_child.call_deferred(card)

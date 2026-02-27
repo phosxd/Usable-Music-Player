@@ -26,6 +26,7 @@ func init(album_:DBAlbum) -> void:
 	if not album_: return
 	album = album_
 	%Title.text = album.name
+	%Title.tooltip_text = album.name
 	%Artist.text = album.artist.name
 	%Year.text = album.year
 	album.get_cover_threaded(func(cover) -> void:
@@ -75,11 +76,12 @@ func add_card(track:DBTrack) -> void:
 func _on_track_selected(track:DBTrack) -> void:
 	PlayerManager.queue.clear()
 	for track_:DBTrack in loaded_tracks:
-		PlayerManager.add_to_queue(track_)
+		PlayerManager.add_to_queue(track_, false)
 
 	PlayerManager.set_current_track(PlayerManager.queue.find(track))
 	if PlayerManager.is_shuffled:
 		PlayerManager.shuffle_queue(track)
+	PlayerManager.queue_updated.emit()
 	PlayerManager.set_playing(true)
 
 

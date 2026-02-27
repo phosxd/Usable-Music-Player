@@ -29,6 +29,7 @@ config/icon="uid://dvf313eolgmy2"
 [audio]
 
 buses/default_bus_layout="uid://b0h23vtwas46l"
+driver/output_latency=30
 
 [autoload]
 
@@ -38,7 +39,7 @@ CLI="*uid://cht4oe1otvdde"
 
 [display]
 
-window/size/viewport_width=1175
+window/size/viewport_width=1185
 
 [dotnet]
 

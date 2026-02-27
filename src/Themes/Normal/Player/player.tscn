@@ -16,7 +16,8 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_74mp2"]
 
 [sub_resource type="Gradient" id="Gradient_74mp2"]
-colors = PackedColorArray(0, 0, 0, 1, 0.14, 0.14, 0.14, 0)
+interpolation_mode = 2
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_oikmp"]
 gradient = SubResource("Gradient_74mp2")
@@ -53,7 +54,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -50.0
-offset_bottom = -40.0
+offset_bottom = -60.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_oikmp")
