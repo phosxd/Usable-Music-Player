@@ -296,7 +296,7 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, _disc_numb
 
 	var track_title:String = metadata.get('title','').replace('\n','')
 	var track_number:int = int(metadata.get('track',0))
-	track_number = track_number_override
+	if track_number_override != -1: track_number = track_number_override
 	var disc_number:int = int(metadata.get('disc',1))
 	var year:String = metadata.get('year','').replace('\n','')
 	var internal_lyrics:String = metadata.get('lyrics','')
@@ -325,8 +325,10 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, _disc_numb
 		db_album.discs.set(str(disc_number), {
 			'tracks':[]},
 		)
-	if track_number > db_album.discs[str(disc_number)].tracks.size():
-		db_album.discs[str(disc_number)].tracks.resize(track_number)
+	var disc_size:int = db_album.discs[str(disc_number)].tracks.size()
+	if track_number > disc_size:
+		for _i:int in track_number-disc_size:
+			db_album.discs[str(disc_number)].tracks.append(null)
 	var track_data = {
 		'title': track_title,
 		'actual_artist': actual_artist,
@@ -350,7 +352,7 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, _disc_numb
 	database.artists[artist].albums.set(album, db_album)
 	database.track_count += 1
 	database.library_size += FileAccess.get_size(path)
-	print('Indexed into DB: '+path)
+	#print('Indexed into DB: '+path)
 
 
 static func reload_library(_callback:Callable) -> void:

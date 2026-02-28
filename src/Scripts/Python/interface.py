@@ -43,7 +43,7 @@ def get_audio_meta(tag, path):
 	meta:dict = {}
 
 	# Add list properties.
-	for property in ['artist', 'album', 'albumartist', 'title', 'genre', 'year', 'comment', 'lyrics']:
+	for property in ['artist', 'album', 'albumartist', 'title', 'genre', 'year', 'comment', 'lyrics', 'copyright']:
 		meta[property] = list_get(raw_meta.get(property,[]),0,'')
 	# Add number properties.
 	for property in ['duration', 'channels', 'bitrate', 'bitdepth', 'samplerate', 'track', 'disc']:

@@ -19,7 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="12_f5uy8"]
 [ext_resource type="PackedScene" uid="uid://c1hitsliaah3m" path="res://Themes/Rounded/Queue/queue.tscn" id="13_fp1qp"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="16_4ypmf"]
-[ext_resource type="PackedScene" uid="uid://b0wgne7i4qqau" path="res://Themes/Rounded/Player/player.tscn" id="17_e8shw"]
+[ext_resource type="PackedScene" uid="uid://bmqg8dq57bmu6" path="res://Themes/Rounded/Player/player.tscn" id="17_e8shw"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="17_orlbe"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="18_yq5a6"]
 [ext_resource type="PackedScene" uid="uid://bf8hx6kw8ug4x" path="res://Themes/Rounded/Lyrics/lyrics.tscn" id="21_orlbe"]
@@ -121,7 +121,7 @@ corner_radius_top_right = 16
 corner_radius_bottom_left = 16
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_10u81"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yq5a6"]
 corner_radius_top_left = 11
 corner_radius_top_right = 11
 corner_radius_bottom_right = 11
@@ -163,7 +163,7 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3se3j"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_10u81"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -486,54 +486,6 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Button" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1048283314]
-layout_mode = 2
-text = "I Don't Know Grammar har har har"
-text_overrun_behavior = 5
-clip_text = true
-
-[node name="Button2" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=721479064]
-layout_mode = 2
-text = "I Don't Know Grammar har har har"
-text_overrun_behavior = 5
-clip_text = true
-
-[node name="Button3" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=302260751]
-layout_mode = 2
-text = "I Don't Know Grammar har har har"
-text_overrun_behavior = 5
-clip_text = true
-
-[node name="Button4" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1185070106]
-layout_mode = 2
-text = "I Don't Know Grammar har har har"
-text_overrun_behavior = 5
-clip_text = true
-
-[node name="Button5" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=166544721]
-layout_mode = 2
-text = "I Don't Know Grammar har har har"
-text_overrun_behavior = 5
-clip_text = true
-
-[node name="Button6" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=979798419]
-layout_mode = 2
-text = "I Don't Know Grammar har har har"
-text_overrun_behavior = 5
-clip_text = true
-
-[node name="Button7" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=943697465]
-layout_mode = 2
-text = "I Don't Know Grammar har har har"
-text_overrun_behavior = 5
-clip_text = true
-
-[node name="Button8" type="Button" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=508348175]
-layout_mode = 2
-text = "I Don't Know Grammar har har har"
-text_overrun_behavior = 5
-clip_text = true
-
 [node name="Control" type="Control" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer" unique_id=199870231]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -591,7 +543,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_10u81")
+theme_override_styles/panel = SubResource("StyleBoxFlat_yq5a6")
 script = ExtResource("11_bcyco")
 corner_detail = 11
 radius_bottom_left = 11
@@ -688,7 +640,7 @@ offset_bottom = 150.0
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_3se3j")
+theme_override_styles/panel = SubResource("StyleBoxFlat_10u81")
 script = ExtResource("11_bcyco")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"

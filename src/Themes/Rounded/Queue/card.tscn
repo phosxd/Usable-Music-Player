@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_00fpt"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="4_h5iqc"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_333hc"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyh6p"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -24,20 +24,37 @@ shadow_offset = Vector2(0, 0)
 font_size = 10
 font_color = Color(0.8, 0.8, 0.8, 1)
 
-[node name="Queue Card" type="PanelContainer" unique_id=927718466]
-self_modulate = Color(1, 1, 1, 0)
+[node name="Queue Card" type="VBoxContainer" unique_id=1047913755]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 51.0
+offset_bottom = 75.0
 grow_horizontal = 2
+theme_override_constants/separation = 0
 script = ExtResource("1_p6qrm")
 
-[node name="Button" type="Button" parent="." unique_id=481831511]
+[node name="Auto Queue Indicator" type="HBoxContainer" parent="." unique_id=1773369769]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Auto Queue Indicator" unique_id=2035511328]
+layout_mode = 2
+text = "Continuing"
+
+[node name="HSeparator" type="HSeparator" parent="Auto Queue Indicator" unique_id=1586791475]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=927718466]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Panel" unique_id=481831511]
 unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
 
-[node name="Image Margin" type="MarginContainer" parent="." unique_id=1899763293]
+[node name="Image Margin" type="MarginContainer" parent="Panel" unique_id=1899763293]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -46,50 +63,50 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="HBox" type="HBoxContainer" parent="Image Margin" unique_id=1963608250]
+[node name="HBox" type="HBoxContainer" parent="Panel/Image Margin" unique_id=1963608250]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Image Margin/HBox" unique_id=352632287]
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Image Margin/HBox" unique_id=352632287]
 layout_mode = 2
 theme_override_constants/margin_left = -8
 theme_override_constants/margin_right = -8
 
-[node name="Drag Button" type="Button" parent="Image Margin/HBox/MarginContainer" unique_id=1513288822]
+[node name="Drag Button" type="Button" parent="Panel/Image Margin/HBox/MarginContainer" unique_id=1513288822]
 layout_mode = 2
 mouse_default_cursor_shape = 7
 theme_type_variation = &"AccentButton"
 icon = ExtResource("2_xo80x")
 flat = true
 
-[node name="Image" type="PanelContainer" parent="Image Margin/HBox" unique_id=1182272309]
+[node name="Image" type="PanelContainer" parent="Panel/Image Margin/HBox" unique_id=1182272309]
 unique_name_in_owner = true
 clip_children = 1
 custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_333hc")
+theme_override_styles/panel = SubResource("StyleBoxFlat_jyh6p")
 script = ExtResource("3_00fpt")
 texture = ExtResource("4_h5iqc")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
 
-[node name="Sep 1" type="VSeparator" parent="Image Margin/HBox" unique_id=1768593009]
+[node name="Sep 1" type="VSeparator" parent="Panel/Image Margin/HBox" unique_id=1768593009]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="Track Info" type="VBoxContainer" parent="Image Margin/HBox" unique_id=46995429]
+[node name="Track Info" type="VBoxContainer" parent="Panel/Image Margin/HBox" unique_id=46995429]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="Name" type="Label" parent="Image Margin/HBox/Track Info" unique_id=824305555]
+[node name="Name" type="Label" parent="Panel/Image Margin/HBox/Track Info" unique_id=824305555]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Track name..."
@@ -97,7 +114,7 @@ label_settings = SubResource("LabelSettings_7nu5k")
 clip_text = true
 text_overrun_behavior = 5
 
-[node name="Artist" type="Label" parent="Image Margin/HBox/Track Info" unique_id=965784348]
+[node name="Artist" type="Label" parent="Panel/Image Margin/HBox/Track Info" unique_id=965784348]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -106,24 +123,26 @@ label_settings = SubResource("LabelSettings_uvxfr")
 clip_text = true
 text_overrun_behavior = 5
 
-[node name="Sep 2" type="VSeparator" parent="Image Margin/HBox" unique_id=898225209]
+[node name="Sep 2" type="VSeparator" parent="Panel/Image Margin/HBox" unique_id=898225209]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="Length" type="Label" parent="Image Margin/HBox" unique_id=369639375]
+[node name="Length" type="Label" parent="Panel/Image Margin/HBox" unique_id=369639375]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 text = "0:00"
 
-[node name="VSeparator" type="VSeparator" parent="Image Margin/HBox" unique_id=1534869226]
+[node name="VSeparator" type="VSeparator" parent="Panel/Image Margin/HBox" unique_id=1534869226]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
-[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
-[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="gui_input" from="Panel/Button" to="Panel" method="_on_button_gui_input"]
+[connection signal="mouse_entered" from="Panel/Button" to="Panel" method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Panel/Button" to="Panel" method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Panel/Button" to="Panel" method="_on_button_pressed"]
+[connection signal="button_down" from="Panel/Image Margin/HBox/MarginContainer/Drag Button" to="Panel" method="_on_drag_button_button_down"]
+[connection signal="button_up" from="Panel/Image Margin/HBox/MarginContainer/Drag Button" to="Panel" method="_on_drag_button_button_up"]

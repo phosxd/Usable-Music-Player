@@ -30,6 +30,9 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 	current_track = track
 	%'Track Name'.text = current_track.name
 	%'Artist Name'.text = '%s' % [current_track.artist.name]
+	if %'Toggle Shuffle'.button_pressed:
+		original_queue.clear()
+		%'Toggle Shuffle'.button_pressed = false
 
 
 func update_volume(value:float) -> void:
@@ -150,7 +153,7 @@ func _on_toggle_shuffle_toggled(toggled_on:bool) -> void:
 		original_queue_position = PlayerManager.queue_position
 		original_queue = PlayerManager.queue.duplicate()
 		PlayerManager.shuffle_queue(current_track)
-	else:
+	elif not original_queue.is_empty():
 		PlayerManager.set_queue(original_queue)
 		PlayerManager.queue_position = original_queue_position
 		original_queue = []

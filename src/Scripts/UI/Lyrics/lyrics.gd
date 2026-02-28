@@ -1,6 +1,7 @@
 extends PanelContainer
 
 var current_track: DBTrack
+var attempts_left:int = 4
 
 
 func _ready() -> void:
@@ -9,6 +10,13 @@ func _ready() -> void:
 
 
 func update(_queue_position:int, track:DBTrack) -> void:
+	if track != current_track:
+		attempts_left = 4
+	if attempts_left == 0:
+		%'Info Label'.text = 'No lyrics found...'
+		%'Add Lyrics'.show()
+		return
+	attempts_left -= 1
 	current_track = track
 	%'Add Lyrics'.hide()
 	%'Refresh'.hide()

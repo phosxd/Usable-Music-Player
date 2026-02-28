@@ -86,6 +86,12 @@ layout_mode = 2
 tooltip_text = "Open source code repository issues page"
 text = "Report an Issue"
 
+[node name="Credits" type="Button" parent="MarginContainer/Settings/VBox/Links" unique_id=453323288]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Open source code repository issues page"
+text = "Credits"
+
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/Settings/VBox" unique_id=2012825676]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -148,71 +154,54 @@ layout_mode = 2
 tooltip_text = "Select directory"
 icon = ExtResource("3_v5vgm")
 
-[node name="Fetch Lyrics" type="HBoxContainer" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer" unique_id=2060809075]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Fetch Lyrics" unique_id=525295274]
-layout_mode = 2
-text = "Auto Fetch Lyrics"
-label_settings = ExtResource("4_yg7oy")
-
-[node name="Sep 1" type="VSeparator" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Fetch Lyrics" unique_id=110300487]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Fetch Lyrics" type="CheckButton" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Fetch Lyrics" unique_id=839871071]
-unique_name_in_owner = true
-layout_mode = 2
-
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/Settings/VBox" unique_id=1396201131]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_rhe31")
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Settings/VBox" unique_id=1588836059]
+[node name="Customization" type="PanelContainer" parent="MarginContainer/Settings/VBox" unique_id=1588836059]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_rhe31")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Settings/VBox/PanelContainer" unique_id=1265648481]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Settings/VBox/Customization" unique_id=1265648481]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer" unique_id=1761194698]
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer" unique_id=1761194698]
 layout_mode = 2
 text = "Customization"
 label_settings = ExtResource("5_fb8vy")
 
-[node name="Dynamic Accents" type="HBoxContainer" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer" unique_id=1655818264]
+[node name="Dynamic Accents" type="HBoxContainer" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer" unique_id=1655818264]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Dynamic Accents" unique_id=737435311]
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Dynamic Accents" unique_id=737435311]
 layout_mode = 2
 text = "Dynamic Accents"
 label_settings = ExtResource("4_yg7oy")
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Dynamic Accents" unique_id=832723907]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Dynamic Accents" unique_id=832723907]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="Dynamic Accents" type="CheckButton" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Dynamic Accents" unique_id=235272779]
+[node name="Dynamic Accents" type="CheckButton" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Dynamic Accents" unique_id=235272779]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Visualizer Mode" type="HBoxContainer" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer" unique_id=699538138]
+[node name="Visualizer Mode" type="HBoxContainer" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer" unique_id=699538138]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Visualizer Mode" unique_id=691839164]
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Visualizer Mode" unique_id=691839164]
 layout_mode = 2
 text = "Visualizer Mode"
 label_settings = ExtResource("4_yg7oy")
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Visualizer Mode" unique_id=1497137780]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Visualizer Mode" unique_id=1497137780]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Visualizer Mode" type="OptionButton" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Visualizer Mode" unique_id=1167130548]
+[node name="Visualizer Mode" type="OptionButton" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Visualizer Mode" unique_id=1167130548]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -226,27 +215,27 @@ popup/item_1/id = 1
 popup/item_2/text = "Bar"
 popup/item_2/id = 2
 
-[node name="VSeparator2" type="VSeparator" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Visualizer Mode" unique_id=2046676545]
+[node name="VSeparator2" type="VSeparator" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Visualizer Mode" unique_id=2046676545]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.0
 theme_override_constants/separation = 0
 
-[node name="Layout Theme" type="HBoxContainer" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer" unique_id=1894780978]
+[node name="Layout Theme" type="HBoxContainer" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer" unique_id=1894780978]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Layout Theme" unique_id=1782414603]
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Layout Theme" unique_id=1782414603]
 layout_mode = 2
 text = "Layout Theme"
 label_settings = ExtResource("4_yg7oy")
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Layout Theme" unique_id=855275219]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Layout Theme" unique_id=855275219]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 34
 
-[node name="Layout Theme" type="OptionButton" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Layout Theme" unique_id=752043]
+[node name="Layout Theme" type="OptionButton" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Layout Theme" unique_id=752043]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -258,28 +247,28 @@ popup/item_0/id = 0
 popup/item_1/text = "Rounded"
 popup/item_1/id = 1
 
-[node name="VSeparator3" type="VSeparator" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Layout Theme" unique_id=1225742955]
+[node name="VSeparator3" type="VSeparator" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Layout Theme" unique_id=1225742955]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.0
 theme_override_constants/separation = 0
 
-[node name="Landing Page" type="HBoxContainer" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer" unique_id=361946554]
+[node name="Landing Page" type="HBoxContainer" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer" unique_id=361946554]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Landing Page" unique_id=1931427182]
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Landing Page" unique_id=1931427182]
 layout_mode = 2
 text = "Landing Page"
 label_settings = ExtResource("4_yg7oy")
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Landing Page" unique_id=343120969]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Landing Page" unique_id=343120969]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 38
 
-[node name="Landing Page" type="OptionButton" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Landing Page" unique_id=724397766]
+[node name="Landing Page" type="OptionButton" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Landing Page" unique_id=724397766]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -297,7 +286,7 @@ popup/item_3/id = 3
 popup/item_4/text = "Genres"
 popup/item_4/id = 4
 
-[node name="VSeparator3" type="VSeparator" parent="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Landing Page" unique_id=1949197650]
+[node name="VSeparator3" type="VSeparator" parent="MarginContainer/Settings/VBox/Customization/VBoxContainer/Landing Page" unique_id=1949197650]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -309,14 +298,78 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_rhe31")
 
+[node name="APIs" type="PanelContainer" parent="MarginContainer/Settings/VBox" unique_id=1567623870]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_rhe31")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Settings/VBox/APIs" unique_id=694581808]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer" unique_id=573104199]
+layout_mode = 2
+text = "APIs"
+label_settings = ExtResource("5_fb8vy")
+
+[node name="Fetch Lyrics" type="HBoxContainer" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer" unique_id=2060809075]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Lyrics" unique_id=525295274]
+layout_mode = 2
+text = "Fetch Lyrics"
+label_settings = ExtResource("4_yg7oy")
+
+[node name="Sep 1" type="VSeparator" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Lyrics" unique_id=110300487]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Fetch Lyrics" type="CheckButton" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Lyrics" unique_id=839871071]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Fetch Album Art" type="HBoxContainer" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer" unique_id=323332064]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Album Art" unique_id=2111124328]
+layout_mode = 2
+text = "Fetch Album Art"
+label_settings = ExtResource("4_yg7oy")
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Album Art" unique_id=1948800948]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 11
+
+[node name="Fetch Album Art" type="CheckButton" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Album Art" unique_id=2028354627]
+layout_mode = 2
+disabled = true
+
+[node name="Fetch Artist Art" type="HBoxContainer" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer" unique_id=302861213]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Artist Art" unique_id=333222870]
+layout_mode = 2
+text = "Fetch Artist Art"
+label_settings = ExtResource("4_yg7oy")
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Artist Art" unique_id=30600358]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 19
+
+[node name="Fetch Artist Art" type="CheckButton" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Artist Art" unique_id=1656692042]
+layout_mode = 2
+disabled = true
+
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Links/User Data" to="MarginContainer/Settings" method="_on_user_data_pressed"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Links/Source Code" to="MarginContainer/Settings" method="_on_source_code_pressed"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Links/Report Issue" to="MarginContainer/Settings" method="_on_report_issue_pressed"]
+[connection signal="pressed" from="MarginContainer/Settings/VBox/Links/Credits" to="MarginContainer/Settings" method="_on_credits_pressed"]
 [connection signal="text_changed" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library/Library Path" to="MarginContainer/Settings" method="_on_library_path_text_changed"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library/Rescan Library" to="MarginContainer/Settings" method="_on_rescan_library_pressed"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library/Select Library" to="MarginContainer/Settings" method="_on_select_library_pressed"]
-[connection signal="toggled" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Fetch Lyrics/Fetch Lyrics" to="MarginContainer/Settings" method="_on_fetch_lyrics_toggled"]
-[connection signal="toggled" from="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Dynamic Accents/Dynamic Accents" to="MarginContainer/Settings" method="_on_dynamic_accents_toggled"]
-[connection signal="item_selected" from="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Visualizer Mode/Visualizer Mode" to="MarginContainer/Settings" method="_on_visualizer_mode_item_selected"]
-[connection signal="item_selected" from="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Layout Theme/Layout Theme" to="MarginContainer/Settings" method="_on_layout_theme_item_selected"]
-[connection signal="item_selected" from="MarginContainer/Settings/VBox/PanelContainer/VBoxContainer/Landing Page/Landing Page" to="MarginContainer/Settings" method="_on_landing_page_item_selected"]
+[connection signal="toggled" from="MarginContainer/Settings/VBox/Customization/VBoxContainer/Dynamic Accents/Dynamic Accents" to="MarginContainer/Settings" method="_on_dynamic_accents_toggled"]
+[connection signal="item_selected" from="MarginContainer/Settings/VBox/Customization/VBoxContainer/Visualizer Mode/Visualizer Mode" to="MarginContainer/Settings" method="_on_visualizer_mode_item_selected"]
+[connection signal="item_selected" from="MarginContainer/Settings/VBox/Customization/VBoxContainer/Layout Theme/Layout Theme" to="MarginContainer/Settings" method="_on_layout_theme_item_selected"]
+[connection signal="item_selected" from="MarginContainer/Settings/VBox/Customization/VBoxContainer/Landing Page/Landing Page" to="MarginContainer/Settings" method="_on_landing_page_item_selected"]
+[connection signal="toggled" from="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Lyrics/Fetch Lyrics" to="MarginContainer/Settings" method="_on_fetch_lyrics_toggled"]

@@ -204,6 +204,7 @@ vertical_alignment = 1
 [node name="Sep 2" type="VSeparator" parent="VBox/Controls/VBox/HBoxContainer/VBox/HBox 2" unique_id=716059256]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+theme_override_constants/separation = 4
 
 [node name="Year" type="Label" parent="VBox/Controls/VBox/HBoxContainer/VBox/HBox 2" unique_id=649305992]
 unique_name_in_owner = true
@@ -284,14 +285,73 @@ wheel_scroll_damper = SubResource("Resource_c52vo")
 dragging_scroll_damper = SubResource("Resource_btmgh")
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="Track List" type="VBoxContainer" parent="VBox/Margin/Margin/Scroll" unique_id=925906313]
+[node name="VBox" type="VBoxContainer" parent="VBox/Margin/Margin/Scroll" unique_id=1792085985]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Track List" type="VBoxContainer" parent="VBox/Margin/Margin/Scroll/VBox" unique_id=925906313]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Sep 1" type="HSeparator" parent="VBox/Margin/Margin/Scroll/Track List" unique_id=1153614261]
+[node name="Sep 1" type="HSeparator" parent="VBox/Margin/Margin/Scroll/VBox/Track List" unique_id=1153614261]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Extra Details" type="HBoxContainer" parent="VBox/Margin/Margin/Scroll/VBox" unique_id=1065747098]
+layout_mode = 2
+
+[node name="Sep 1" type="VSeparator" parent="VBox/Margin/Margin/Scroll/VBox/Extra Details" unique_id=61355166]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Track Count" type="Label" parent="VBox/Margin/Margin/Scroll/VBox/Extra Details" unique_id=1212015662]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Track Count"
+
+[node name="Sep 2" type="VSeparator" parent="VBox/Margin/Margin/Scroll/VBox/Extra Details" unique_id=1810795646]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Runtime" type="Label" parent="VBox/Margin/Margin/Scroll/VBox/Extra Details" unique_id=2041285842]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Runtime"
+
+[node name="Sep 3" type="VSeparator" parent="VBox/Margin/Margin/Scroll/VBox/Extra Details" unique_id=2142115160]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Genre" type="Label" parent="VBox/Margin/Margin/Scroll/VBox/Extra Details" unique_id=448823675]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Genre"
+
+[node name="Sep 4" type="VSeparator" parent="VBox/Margin/Margin/Scroll/VBox/Extra Details" unique_id=1096627741]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Copyright" type="Label" parent="VBox/Margin/Margin/Scroll/VBox/Extra Details" unique_id=1030293778]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Copyright"
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Sep 1" type="HSeparator" parent="VBox/Margin/Margin/Scroll/VBox" unique_id=168058502]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 

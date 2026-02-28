@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://diaugu2crn8p8" path="res://Scripts/UI/Queue/queue.gd" id="1_02mni"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_0inh1"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_j0kya"]
+[ext_resource type="Script" uid="uid://cor5k07keywfa" path="res://addons/ReorderableContainer/reorderable_vbox.gd" id="4_0inh1"]
 
 [sub_resource type="Resource" id="Resource_rqttv"]
 script = ExtResource("3_j0kya")
@@ -50,9 +51,20 @@ wheel_scroll_damper = SubResource("Resource_rqttv")
 dragging_scroll_damper = SubResource("Resource_y0htm")
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="List" type="VBoxContainer" parent="VBox/Margin/Scroll" unique_id=1780200382]
+[node name="List" type="Container" parent="VBox/Margin/Scroll" unique_id=2011907827 node_paths=PackedStringArray("scroll_container")]
 unique_name_in_owner = true
+process_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 0
+script = ExtResource("4_0inh1")
+hold_duration = 0.05
+separation = 0
+is_vertical = true
+scroll_container = NodePath("..")
+auto_scroll_speed = 5.0
+auto_scroll_range = 0.1
+scroll_threshold = 10
+metadata/_custom_type_script = "uid://cor5k07keywfa"
+
+[connection signal="sort_children" from="VBox/Margin/Scroll/List" to="VBox/Margin/Scroll/List" method="_on_sort_children"]

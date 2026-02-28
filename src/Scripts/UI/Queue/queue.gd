@@ -3,6 +3,7 @@ extends PanelContainer
 var card_scene = SessionManager.get_layout_theme_scene('queue_card')
 var last_node: Node
 var update_count:int = 0
+var queue_update_blocked:bool = false
 
 
 
@@ -13,6 +14,9 @@ func _ready() -> void:
 
 
 func update() -> void:
+	if queue_update_blocked:
+		queue_update_blocked = false
+		return
 	update_count += 1
 	for child:Node in %List.get_children():
 		child.queue_free()
@@ -35,15 +39,28 @@ func update() -> void:
 
 func track_updated(queue_position:int, _track:DBTrack) -> void:
 	if %List.get_child_count() <= queue_position: return
-	var node = %List.get_child(queue_position)
+	var node:Control = %List.get_child(queue_position)
 	if not node: return
 	node.highlight(true)
 	if last_node:
 		last_node.highlight(false)
 	last_node = node
+	node.set_focus_mode(Control.FOCUS_ALL)
+	node.grab_focus()
+	#var auto_queue_node = %List.get_child(PlayerManager.auto_queue_start_index)
+	#if auto_queue_node:
+		#auto_queue_node.get_node('%Auto Queue Indicator').show()
 
 
 func add_card(list:Control, track:DBTrack) -> void:
 	var card = card_scene.instantiate()
 	card.init(track)
 	list.add_child.call_deferred(card)
+
+
+func _on_list_reordered(from:int, to:int) -> void:
+	var track = PlayerManager.queue[from]
+	PlayerManager.queue.remove_at(from)
+	queue_update_blocked = true
+	PlayerManager.insert_to_queue(to, track)
+	track_updated(to, track)

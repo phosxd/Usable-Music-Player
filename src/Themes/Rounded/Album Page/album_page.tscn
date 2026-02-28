@@ -65,7 +65,7 @@ height = 6
 fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ppkub"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vrl77"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -88,6 +88,9 @@ rebound_strength = 14.0
 
 [sub_resource type="Resource" id="Resource_ina2b"]
 script = ExtResource("11_vrl77")
+
+[sub_resource type="LabelSettings" id="LabelSettings_vrl77"]
+outline_size = 1
 
 [sub_resource type="Gradient" id="Gradient_vrl77"]
 colors = PackedColorArray(0.13725491, 0.13725491, 0.13725491, 1, 0, 0, 0, 0)
@@ -218,7 +221,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_ppkub")
+theme_override_styles/panel = SubResource("StyleBoxFlat_vrl77")
 script = ExtResource("2_2uwah")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -372,6 +375,60 @@ size_flags_vertical = 3
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1416650657]
+layout_mode = 2
+
+[node name="VSeparator2" type="VSeparator" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1424007900]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Track Count" type="Label" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1482340937]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Track Count"
+label_settings = SubResource("LabelSettings_vrl77")
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=2013258263]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Runtime" type="Label" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1631057767]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Runtime"
+label_settings = SubResource("LabelSettings_vrl77")
+
+[node name="VSeparator3" type="VSeparator" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1563146349]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Genre" type="Label" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=555123682]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Genre"
+label_settings = SubResource("LabelSettings_vrl77")
+
+[node name="VSeparator4" type="VSeparator" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=553454666]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Copyright" type="Label" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=139681362]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Copyright"
+label_settings = SubResource("LabelSettings_vrl77")
+clip_text = true
+text_overrun_behavior = 5
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer" unique_id=666875449]
 self_modulate = Color(1, 1, 1, 0)

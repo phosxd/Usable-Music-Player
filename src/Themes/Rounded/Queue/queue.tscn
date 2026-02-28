@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://diaugu2crn8p8" path="res://Scripts/UI/Queue/queue.gd" id="1_f1elg"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_33dm6"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_kyg7w"]
+[ext_resource type="Script" uid="uid://cor5k07keywfa" path="res://addons/ReorderableContainer/reorderable_vbox.gd" id="4_y0rqi"]
 
 [sub_resource type="Resource" id="Resource_rqttv"]
 script = ExtResource("3_kyg7w")
@@ -49,11 +50,24 @@ script = ExtResource("2_33dm6")
 speed = 500.0
 wheel_scroll_damper = SubResource("Resource_rqttv")
 dragging_scroll_damper = SubResource("Resource_y0htm")
+drag_with_mouse = false
+drag_with_touch = false
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="List" type="VBoxContainer" parent="VBox/Margin/Scroll" unique_id=1780200382]
+[node name="List" type="Container" parent="VBox/Margin/Scroll" unique_id=2035028648 node_paths=PackedStringArray("scroll_container")]
 unique_name_in_owner = true
+process_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 0
+script = ExtResource("4_y0rqi")
+hold_duration = 0.05
+separation = 0
+is_vertical = true
+scroll_container = NodePath("..")
+auto_scroll_speed = 5.0
+scroll_threshold = 10
+metadata/_custom_type_script = "uid://cor5k07keywfa"
+
+[connection signal="reordered" from="VBox/Margin/Scroll/List" to="." method="_on_list_reordered"]
+[connection signal="sort_children" from="VBox/Margin/Scroll/List" to="VBox/Margin/Scroll/List" method="_on_sort_children"]

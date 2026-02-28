@@ -45,7 +45,8 @@ func init(album_:DBAlbum) -> void:
 	for i in ['topright','topleft','bottomright','bottomleft']:
 		index += 1
 		mat.set_shader_parameter(i, dominant_colors[index].blend(overlay_color))
-		
+
+	var runtime:float = 0
 	for disc in album.discs:
 		if album.discs.size() > 1:
 			add_disc_sep(disc)
@@ -53,7 +54,13 @@ func init(album_:DBAlbum) -> void:
 			var track = album.get_track(i, int(disc))
 			if track is not DBTrack: continue
 			loaded_tracks.append(track)
+			runtime += track.length
 			add_card(track)
+
+	%'Track Count'.text = '%s Tracks' % loaded_tracks.size()
+	%'Runtime'.text = '%s Minutes' % int(runtime/60.0)
+	%'Genre'.text = album.genre
+	%'Copyright'.text = album.copyright
 
 
 func add_disc_sep(disc:String) -> void:

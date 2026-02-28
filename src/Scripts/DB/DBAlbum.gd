@@ -26,6 +26,7 @@ var cover_path: String
 var year: String
 ## Album genre. No guaranteed to be formatted or be a valid genre.
 var genre: String
+var copyright: String
 ## Cached color palette for the album cover image.
 var palette:Dictionary[String,Color] = {}
 ## Whether or not the DB entry is valid.
@@ -73,13 +74,18 @@ func _init(db_artist:DBArtist, album_name:String, raw_info=null) -> void:
 	else: palette = {}
 
 	var raw_year = raw_info.get('year')
-	if raw_year is String && not raw_year.is_empty(): year = raw_year
+	if raw_year is String && not raw_year.is_empty():
+		var raw_year_split:PackedStringArray = raw_year.split('T')
+		year = raw_year_split[0]
 	else: year = 'None found'
 
 	var raw_genre = raw_info.get('genre')
 	if raw_genre is String && not raw_genre.is_empty(): genre = raw_genre
 	else: genre = 'None found'
 
+	var raw_copyright = raw_info.get('copyright')
+	if raw_copyright is String && not raw_copyright.is_empty(): copyright = raw_copyright
+	else: copyright = 'None found'
 
 func _invalidate() -> void:
 	valid = false
@@ -94,10 +100,10 @@ func get_track(track_number:int, disc_number:int=1) -> DBTrack:
 		_invalidate()
 		return null
 
-	
 	var raw_discs:Dictionary = raw_album.get('discs',{})
 	var raw_disc:Dictionary = raw_discs.get(str(disc_number),{'tracks':[]})
 	var raw_track = raw_disc.tracks.get(track_number)
+	if raw_track == null: return null
 
 	var result = DBTrack.new_or_reuse(artist, self, track_number, disc_number, raw_track)
 	if not result.valid: return null

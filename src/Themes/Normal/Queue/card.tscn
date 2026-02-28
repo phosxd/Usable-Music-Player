@@ -27,7 +27,7 @@ font_color = Color(0.8, 0.8, 0.8, 1)
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 60.0
+offset_bottom = 51.0
 grow_horizontal = 2
 script = ExtResource("1_yikp6")
 
@@ -127,3 +127,5 @@ layout_mode = 2
 [connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="button_down" from="Image Margin/HBox/MarginContainer/Drag Button" to="." method="_on_drag_button_button_down"]
+[connection signal="button_up" from="Image Margin/HBox/MarginContainer/Drag Button" to="." method="_on_drag_button_button_up"]

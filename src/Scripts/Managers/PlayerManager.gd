@@ -153,9 +153,11 @@ func remove_from_queue(track:DBTrack, emit:bool=true) -> void:
 func insert_to_queue(position:int, track:DBTrack, emit:bool=true) -> void:
 	if position > queue.size():
 		queue.append(track)
-		print('adding')
 	else:
 		queue.insert(position, track)
+		if position < PlayerManager.queue_position:
+			print(position)
+			PlayerManager.queue_position += 1
 	if emit: queue_updated.emit()
 
 
