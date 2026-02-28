@@ -4,6 +4,7 @@ extends Control
 @onready var tabs:Dictionary[String,Array] = {
 	'settings': [%'Tab Button Settings', SessionManager.get_layout_theme_scene('settings')],
 	'artists': [%'Tab Button Artists', SessionManager.get_layout_theme_scene('artists')],
+	'artist_page': [null, SessionManager.get_layout_theme_scene('artist_page')],
 	'albums': [%'Tab Button Albums', SessionManager.get_layout_theme_scene('albums')],
 	'album_page': [null, SessionManager.get_layout_theme_scene('album_page')],
 	'tracks': [%'Tab Button Tracks', SessionManager.get_layout_theme_scene('tracks')],

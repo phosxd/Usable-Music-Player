@@ -168,6 +168,7 @@ func get_layout_theme_scene(scene_name:String) -> PackedScene:
 
 		'artists': return load('res://Themes/%s/Artists/artists.tscn' % path)
 		'artists_card': return load('res://Themes/%s/Artists/card.tscn' % path)
+		'artist_page': return load('res://Themes/%s/Artist Page/artist_page.tscn' % path)
 
 		'albums': return load('res://Themes/%s/Albums/albums.tscn' % path)
 		'albums_card': return load('res://Themes/%s/Albums/card.tscn' % path)

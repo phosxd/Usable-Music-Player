@@ -62,12 +62,17 @@ func add_card(scene:Node, grid:Control, artist:DBArtist) -> void:
 	if not scene: return
 	var card:Control = card_scene.instantiate()
 	card.init(artist)
+	card.selected.connect(_on_card_selected.bind(artist))
 	if not grid: return
 	grid.add_child.call_deferred(card)
 
 
 func _on_sort_mode_item_selected(_index:int) -> void:
 	return
+
+
+func _on_card_selected(artist:DBArtist) -> void:
+	SessionManager.main_scene.set_tab('artist_page', artist)
 
 
 func _on_ascend_mode_item_selected(index:int) -> void:
