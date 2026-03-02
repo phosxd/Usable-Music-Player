@@ -58,7 +58,7 @@ func request(type:RequestType, id:String, url:String, options:Dictionary={}, cal
 						'headers': headers,
 						'body': body,
 					}
-					callback.call(result, data)
+					if callback.get_object(): callback.call(result, data)
 					queued_requests[type].erase(id)
 					http_request.queue_free()
 				)

@@ -15,7 +15,7 @@ static func create_thread(run:Callable, callback=null) -> Thread:
 	var err := thread.start(run)
 	if err != OK:
 		var result = run.call()
-		if callback is Callable && callback: callback.call(result)
+		if is_callable_valid(callback): callback.call(result)
 
 	var timer := Timer.new()
 	timer.one_shot = false
@@ -23,8 +23,8 @@ static func create_thread(run:Callable, callback=null) -> Thread:
 	timer.timeout.connect(func() -> void:
 		if thread.is_started() && not thread.is_alive():
 			if not timer: return
-			var result = await thread.wait_to_finish()
-			if callback is Callable && callback.is_valid(): callback.call(result)
+			var result = thread.wait_to_finish()
+			if is_callable_valid(callback): callback.call(result)
 			timer.stop()
 			timer.queue_free()
 	)
@@ -32,3 +32,13 @@ static func create_thread(run:Callable, callback=null) -> Thread:
 	timer.start.call_deferred(0.02)
 
 	return thread
+
+
+static func is_callable_valid(callable) -> bool:
+	if callable is not Callable: return false
+	callable = callable as Callable
+	if not callable.is_valid(): return false
+	var object = callable.get_object()
+	if not object: return false
+
+	return true

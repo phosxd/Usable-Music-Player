@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c7gq1h6e80h5w" path="res://Scripts/UI/Album Page/album_page.gd" id="1_wngf1"]
 [ext_resource type="Shader" uid="uid://dvoc7ypde1coe" path="res://Assets/gradient.gdshader" id="2_xl2db"]
-[ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="3_g7en1"]
+[ext_resource type="StyleBox" uid="uid://ciopjhtras5rx" path="res://Assets/drop_shadow_panel.tres" id="3_cvxl0"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="4_5r8o4"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="5_d17rs"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_ljtex"]
@@ -129,7 +129,7 @@ theme_override_constants/margin_right = 14
 
 [node name="Panel" type="Panel" parent="VBox/Controls/VBox/HBox/Icon Margin" unique_id=1007525857]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("3_g7en1")
+theme_override_styles/panel = ExtResource("3_cvxl0")
 
 [node name="Icon" type="PanelContainer" parent="VBox/Controls/VBox/HBox/Icon Margin" unique_id=2014446729]
 unique_name_in_owner = true
@@ -247,16 +247,7 @@ theme_override_constants/separation = 20
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Content" type="MarginContainer" parent="VBox" unique_id=83077900]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 1.1
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="Scroll" type="ScrollContainer" parent="VBox/Content" unique_id=608175237]
+[node name="Scroll" type="ScrollContainer" parent="VBox" unique_id=608175237]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
@@ -266,65 +257,75 @@ wheel_scroll_damper = SubResource("Resource_c52vo")
 dragging_scroll_damper = SubResource("Resource_btmgh")
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="VBox" type="VBoxContainer" parent="VBox/Content/Scroll" unique_id=1792085985]
+[node name="Content" type="MarginContainer" parent="VBox/Scroll" unique_id=83077900]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.1
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBox" type="VBoxContainer" parent="VBox/Scroll/Content" unique_id=1792085985]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Sep 2" type="HSeparator" parent="VBox/Content/Scroll/VBox" unique_id=1153614261]
+[node name="Sep 2" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=1153614261]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Track List" type="VBoxContainer" parent="VBox/Content/Scroll/VBox" unique_id=925906313]
+[node name="Track List" type="VBoxContainer" parent="VBox/Scroll/Content/VBox" unique_id=925906313]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Extra Details" type="HBoxContainer" parent="VBox/Content/Scroll/VBox" unique_id=1065747098]
+[node name="Extra Details" type="HBoxContainer" parent="VBox/Scroll/Content/VBox" unique_id=1065747098]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Sep 1" type="VSeparator" parent="VBox/Content/Scroll/VBox/Extra Details" unique_id=61355166]
+[node name="Sep 1" type="VSeparator" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=61355166]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="Track Count" type="Label" parent="VBox/Content/Scroll/VBox/Extra Details" unique_id=1212015662]
+[node name="Track Count" type="Label" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=1212015662]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
 text = "Track Count"
 
-[node name="Sep 2" type="VSeparator" parent="VBox/Content/Scroll/VBox/Extra Details" unique_id=1810795646]
+[node name="Sep 2" type="VSeparator" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=1810795646]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="Runtime" type="Label" parent="VBox/Content/Scroll/VBox/Extra Details" unique_id=2041285842]
+[node name="Runtime" type="Label" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=2041285842]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
 text = "Runtime"
 
-[node name="Sep 3" type="VSeparator" parent="VBox/Content/Scroll/VBox/Extra Details" unique_id=2142115160]
+[node name="Sep 3" type="VSeparator" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=2142115160]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="Genre" type="Label" parent="VBox/Content/Scroll/VBox/Extra Details" unique_id=448823675]
+[node name="Genre" type="Label" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=448823675]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
 text = "Genre"
 
-[node name="Sep 4" type="VSeparator" parent="VBox/Content/Scroll/VBox/Extra Details" unique_id=1096627741]
+[node name="Sep 4" type="VSeparator" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=1096627741]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="Copyright" type="Label" parent="VBox/Content/Scroll/VBox/Extra Details" unique_id=1030293778]
+[node name="Copyright" type="Label" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=1030293778]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -333,7 +334,7 @@ text = "Copyright"
 clip_text = true
 text_overrun_behavior = 5
 
-[node name="Sep 1" type="HSeparator" parent="VBox/Content/Scroll/VBox" unique_id=168058502]
+[node name="Sep 1" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=168058502]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 

@@ -1,34 +1,20 @@
 extends PanelContainer
 
 signal selected
-const max_cover_count:int = 4
-const image_size := Vector2(100,100)
 @onready var default_style:StyleBox = %Shadow.get_theme_stylebox('panel')
 @onready var default_label_settings:LabelSettings = %Name.label_settings
 
 
 func init(artist:DBArtist) -> void:
 	%Name.text = artist.name
-	var count:int = 0
-	for album_name:String in artist.album_names:
-		var album = artist.get_album(album_name)
-		if album is not DBAlbum: continue
-		count += 1
-		if count > max_cover_count: break
-		album.get_cover_threaded(func(cover) -> void:
-			if not cover: return
-			var image:TextureRectRounded = %Image.duplicate()
-			image.texture = cover
-			image.custom_minimum_size = image_size
-			image.show()
-			%'Image Grid'.add_child(image)
-			%'Image Grid'.move_child(image, 0)
-		)
-	for i in range(max_cover_count-count):
-		var image:TextureRectRounded = %Image.duplicate()
-		image.custom_minimum_size = image_size
-		image.show()
-		%'Image Grid'.add_child(image)
+	%'Quad Image'.from_artist(artist)
+	artist.get_cover_threaded(func(cover) -> void:
+		if not cover: return
+		if cover.get_size().x == 1: return
+		%Image.texture = cover
+		%Image.show()
+		%'Quad Image'.queue_free()
+	)
 
 
 func _on_button_pressed() -> void:

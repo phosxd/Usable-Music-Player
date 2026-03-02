@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bkkqe2s88b15r"]
+
+[ext_resource type="Script" uid="uid://cdsrbapg60yo1" path="res://Elements/Quad Image/quad_image.gd" id="1_ni2ji"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_7fr80"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="3_xprxi"]
+
+[node name="Quad Image" type="GridContainer" unique_id=704082384]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+mouse_behavior_recursive = 1
+columns = 2
+script = ExtResource("1_ni2ji")
+
+[node name="Template" type="PanelContainer" parent="." unique_id=1081718870]
+clip_children = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_7fr80")
+texture = ExtResource("3_xprxi")
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
