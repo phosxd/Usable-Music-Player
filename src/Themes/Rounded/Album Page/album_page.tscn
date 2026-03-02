@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Assets/Icons/shuffle.svg" id="5_ygsep"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_05ng2"]
 [ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Assets/Icons/options_horizontal.svg" id="6_5v6re"]
+[ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="7_1chwj"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="7_vrl77"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="10_ppkub"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="11_vrl77"]
@@ -65,7 +66,7 @@ height = 6
 fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vrl77"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ina2b"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -221,7 +222,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_vrl77")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ina2b")
 script = ExtResource("2_2uwah")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -281,13 +282,11 @@ text_overrun_behavior = 5
 layout_mode = 2
 theme_override_constants/separation = -1
 
-[node name="Artist" type="LinkButton" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=317724707]
+[node name="Artist" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=1086494808 instance=ExtResource("7_1chwj")]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-theme_override_colors/font_outline_color = Color(0.8, 0.8, 0.8, 1)
 text = "ARTIST NAME"
-underline = 2
+label_settings = ExtResource("7_vrl77")
 
 [node name="VSeparator2" type="VSeparator" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=1320867812]
 self_modulate = Color(1, 1, 1, 0)
@@ -473,7 +472,5 @@ grow_vertical = 0
 texture = SubResource("GradientTexture2D_vrl77")
 
 [connection signal="pressed" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer/MarginContainer/Album Button" to="." method="_on_album_button_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info/Artist" to="." method="_on_artist_name_mouse_entered"]
-[connection signal="mouse_exited" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info/Artist" to="." method="_on_artist_name_mouse_exited"]
-[connection signal="pressed" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info/Artist" to="." method="_on_artist_name_pressed"]
+[connection signal="pressed" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info/Artist" to="." method="_on_artist_pressed"]
 [connection signal="pressed" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer2/Controls/Play" to="." method="_on_play_pressed"]
