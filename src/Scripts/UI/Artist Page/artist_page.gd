@@ -85,7 +85,7 @@ func update() -> void:
 
 	# Fetch from API if not in DB.
 	if not stored_cover && SessionManager.fetch_artist_cover:
-		print('Fetching')
+		print('Fetching artist cover')
 		var url = 'https://theaudiodb.com/api/v1/json/123/search.php?s=%s' % [
 			artist.name.uri_encode(),
 		]

@@ -16,6 +16,7 @@ func init(artist:DBArtist) -> void:
 		count += 1
 		if count > max_cover_count: break
 		album.get_cover_threaded(func(cover) -> void:
+			if not cover: return
 			var image:TextureRectRounded = %Image.duplicate()
 			image.texture = cover
 			image.custom_minimum_size = image_size

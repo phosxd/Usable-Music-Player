@@ -124,5 +124,5 @@ func _on_fetch_artist_cover_toggled(toggled_on:bool) -> void:
 	SessionManager.fetch_artist_cover = toggled_on
 
 
-func _on_fetch_album_cover_toggled(toggled_on: bool) -> void:
-	pass # Replace with function body.
+func _on_fetch_album_cover_toggled(_toggled_on:bool) -> void:
+	pass

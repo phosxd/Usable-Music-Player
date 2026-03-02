@@ -106,13 +106,13 @@ func set_current_track(track_queue_position:int, save_session:bool=true) -> void
 	if track_queue_position >= queue.size() or track_queue_position < 0: return
 	var track = queue.get(track_queue_position)
 	if track is not DBTrack or track.valid == false: return
-	set_track_progress(0)
 	audio_stream_player.stop()
+	set_track_progress(0)
 	audio_stream_player.stream = track.get_stream()
-	if is_playing: set_playing(true)
 
 	queue_position = track_queue_position
 	current_track_updated.emit(track_queue_position, track)
+	if is_playing: set_playing(true)
 	if save_session: SessionManager.save_session()
 
 
