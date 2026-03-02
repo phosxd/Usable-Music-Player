@@ -36,6 +36,7 @@ driver/output_latency=30
 PlayerManager="*uid://bsri8hvvykwnh"
 SessionManager="*uid://caowd7sywd5u3"
 CLI="*uid://cht4oe1otvdde"
+RequestManager="*uid://cgsfn5sukipn3"
 
 [display]
 
@@ -61,7 +62,7 @@ folder_colors={
 
 [gui]
 
-theme/custom="uid://b41t6vrmtbok6"
+theme/custom="uid://tmqwrbivk7ve"
 
 [input]
 

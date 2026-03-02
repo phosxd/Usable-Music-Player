@@ -1,6 +1,6 @@
 extends Control
 
-@export var tab_config:Dictionary[String,Variant] = {
+var tab_config:Dictionary[String,Variant] = {
 	'sort_mode_button': {
 		'enabled': false,
 	},
@@ -22,7 +22,7 @@ const dir_open_popup := preload('res://Scenes/Dir Open/dir_open.tscn')
 const info_popup := preload('res://Scenes/Info Popup/info_popup.tscn')
 const credits_popup := preload('res://Scenes/Credits/credits.tscn')
 @onready var info_text_template:String = %Info.text
-@onready var settings:Array[Node] = [%Info, %'Library Path', %'Dynamic Accents', %'Visualizer Mode', %'Layout Theme', %'Landing Page', %'Fetch Lyrics']
+@onready var settings:Array[Node] = [%Info, %'Library Path', %'Dynamic Accents', %'Visualizer Mode', %'Layout Theme', %'Landing Page', %'Fetch Lyrics', %'Fetch Artist Cover']
 
 
 func _ready() -> void:
@@ -42,7 +42,8 @@ func update(nodes:Array[Node]) -> void:
 	nodes[3].selected = SessionManager.visualizer_mode
 	nodes[4].selected = SessionManager.layout_theme
 	nodes[5].selected = landing_page_options.find(SessionManager.landing_page)
-	nodes[6].button_pressed = SessionManager.auto_fetch_lyrics
+	nodes[6].button_pressed = SessionManager.fetch_lyrics
+	nodes[7].button_pressed = SessionManager.fetch_artist_cover
 
 
 func _on_select_library_pressed() -> void:
@@ -116,4 +117,12 @@ func _on_landing_page_item_selected(index:int) -> void:
 
 
 func _on_fetch_lyrics_toggled(toggled_on:bool) -> void:
-	SessionManager.auto_fetch_lyrics = toggled_on
+	SessionManager.fetch_lyrics = toggled_on
+
+
+func _on_fetch_artist_cover_toggled(toggled_on:bool) -> void:
+	SessionManager.fetch_artist_cover = toggled_on
+
+
+func _on_fetch_album_cover_toggled(toggled_on: bool) -> void:
+	pass # Replace with function body.

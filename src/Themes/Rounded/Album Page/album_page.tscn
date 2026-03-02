@@ -281,12 +281,13 @@ text_overrun_behavior = 5
 layout_mode = 2
 theme_override_constants/separation = -1
 
-[node name="Artist" type="Label" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=696956641]
+[node name="Artist" type="LinkButton" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=317724707]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.8, 0.8, 0.8, 1)
 text = "ARTIST NAME"
-label_settings = ExtResource("7_vrl77")
-vertical_alignment = 1
+underline = 2
 
 [node name="VSeparator2" type="VSeparator" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info" unique_id=1320867812]
 self_modulate = Color(1, 1, 1, 0)
@@ -300,14 +301,22 @@ text = "1994"
 label_settings = ExtResource("7_vrl77")
 vertical_alignment = 1
 
-[node name="Controls" type="HBoxContainer" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer" unique_id=1447041976]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer" unique_id=1377200242]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer2" unique_id=491329216]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Controls" type="HBoxContainer" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer2" unique_id=1447041976]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme_override_constants/separation = 14
 
-[node name="Play" type="Button" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/Controls" unique_id=245581158]
+[node name="Play" type="Button" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer2/Controls" unique_id=245581158]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
@@ -315,7 +324,7 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("4_gnhfw")
 icon_alignment = 1
 
-[node name="Shuffle" type="Button" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/Controls" unique_id=333186358]
+[node name="Shuffle" type="Button" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer2/Controls" unique_id=333186358]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
@@ -323,7 +332,7 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("5_ygsep")
 icon_alignment = 1
 
-[node name="Options" type="MenuButton" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/Controls" unique_id=807633223]
+[node name="Options" type="MenuButton" parent="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer2/Controls" unique_id=807633223]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
@@ -464,4 +473,7 @@ grow_vertical = 0
 texture = SubResource("GradientTexture2D_vrl77")
 
 [connection signal="pressed" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer/MarginContainer/Album Button" to="." method="_on_album_button_pressed"]
-[connection signal="pressed" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/Controls/Play" to="." method="_on_play_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info/Artist" to="." method="_on_artist_name_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info/Artist" to="." method="_on_artist_name_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer/Secondary Info/Artist" to="." method="_on_artist_name_pressed"]
+[connection signal="pressed" from="MarginContainer/Items/MarginContainer/Primary Info/VBoxContainer2/HBoxContainer/VBoxContainer2/Controls/Play" to="." method="_on_play_pressed"]

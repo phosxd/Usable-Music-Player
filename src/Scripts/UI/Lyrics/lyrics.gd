@@ -27,31 +27,29 @@ func update(_queue_position:int, track:DBTrack) -> void:
 	var stored_lyrics = track.get_lyrics()
 
 	# Fetch from API if not in DB.
-	if stored_lyrics.is_empty() && SessionManager.auto_fetch_lyrics:
+	if stored_lyrics.is_empty() && SessionManager.fetch_lyrics:
 		var url = 'https://lrclib.net/api/get?artist_name=%s&track_name=%s&album_name=%s&duration=%s' % [
 			track.artist.name.uri_encode(),
 			track.name.uri_encode(),
 			track.album.name.uri_encode(),
 			str(int(track.length)),
 		]
-		%HTTPRequest.cancel_request()
-		%HTTPRequest.request(url)
-		for connection:Dictionary in %HTTPRequest.request_completed.get_connections():
-			(%HTTPRequest.request_completed as Signal).disconnect(connection.callable)
-		%HTTPRequest.request_completed.connect(_on_http_request_request_completed.bind(track))
+		RequestManager.request(RequestManager.RequestType.Web, 'lyrics', url, {}, _on_http_request_request_completed.bind(track))
 		%'Info Label'.text = 'Fetching lyrics...'
 
 	elif not stored_lyrics.is_empty():
 		%'Info Label'.hide()
 		%Label.text = stored_lyrics
 
-	elif not SessionManager.auto_fetch_lyrics:
+	elif not SessionManager.fetch_lyrics:
 		%'Info Label'.text = 'No lyrics found...'
 		%'Add Lyrics'.show()
 
 
-func _on_http_request_request_completed(result:int, _response_code:int, _headers:PackedStringArray, body:PackedByteArray, track:DBTrack) -> void:
+func _on_http_request_request_completed(result:int, data:Dictionary, track:DBTrack) -> void:
 	if track != current_track: return
+	var body:PackedByteArray = data.get('body',PackedByteArray([]))
+
 	%Label.text = ''
 	%'Info Label'.show()
 	match result:

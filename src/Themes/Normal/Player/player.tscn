@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Assets/Icons/skip_backward.svg" id="2_rmo75"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="3_on5bc"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="3_rmo75"]
+[ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="3_saahk"]
+[ext_resource type="LabelSettings" uid="uid://6ya8wrmwclpp" path="res://Assets/header_label_small.tres" id="4_saahk"]
 [ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Assets/Icons/skip_forward.svg" id="4_ucxa4"]
 [ext_resource type="Texture2D" uid="uid://bkkmi7knca7st" path="res://Assets/Icons/audio.svg" id="6_5infn"]
 [ext_resource type="Texture2D" uid="uid://1atpjvnl4kp" path="res://Assets/Icons/scale_x2/shuffle.svg" id="7_5infn"]
@@ -91,28 +93,22 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_8fvqj")
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Track Name" type="LinkButton" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1151660997]
+[node name="Track Name" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1086494808 instance=ExtResource("3_saahk")]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 20
 text = "No track"
-underline = 2
+label_settings = ExtResource("4_saahk")
 
 [node name="Sep 3" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=175285363]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Artist Name" type="Label" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=450202542]
+[node name="Artist Name" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1455146447 instance=ExtResource("3_saahk")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 8
 text = "No artist"
 label_settings = ExtResource("3_rmo75")
-vertical_alignment = 1
 
 [node name="Sep 2" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=495887998]
 self_modulate = Color(1, 1, 1, 0)
@@ -255,9 +251,8 @@ step = 0.001
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[connection signal="mouse_entered" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Track Name" to="." method="_on_track_name_mouse_entered"]
-[connection signal="mouse_exited" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Track Name" to="." method="_on_track_name_mouse_exited"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Track Name" to="." method="_on_track_name_pressed"]
+[connection signal="pressed" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Artist Name" to="." method="_on_artist_name_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Skip Backward" to="." method="_on_skip_backward_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Play Pause" to="." method="_on_play_pause_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Skip Forward" to="." method="_on_skip_forward_pressed"]

@@ -187,9 +187,5 @@ func _on_track_name_pressed() -> void:
 	SessionManager.main_scene.set_tab('album_page', PlayerManager.get_current_track().album)
 
 
-func _on_track_name_mouse_entered() -> void:
-	%'Track Name'.add_theme_constant_override('outline_size', 2)
-
-
-func _on_track_name_mouse_exited() -> void:
-	%'Track Name'.add_theme_constant_override('outline_size', 1)
+func _on_artist_name_pressed() -> void:
+	SessionManager.main_scene.set_tab('artist_page', PlayerManager.get_current_track().artist)

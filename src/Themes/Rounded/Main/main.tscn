@@ -21,7 +21,9 @@
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="16_4ypmf"]
 [ext_resource type="PackedScene" uid="uid://bmqg8dq57bmu6" path="res://Themes/Rounded/Player/player.tscn" id="17_e8shw"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="17_orlbe"]
+[ext_resource type="Script" uid="uid://cor5k07keywfa" path="res://addons/ReorderableContainer/reorderable_vbox.gd" id="18_3se3j"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="18_yq5a6"]
+[ext_resource type="PackedScene" uid="uid://d0dfsf7eefhgh" path="res://Themes/Rounded/Playlist/card.tscn" id="19_kxwj3"]
 [ext_resource type="PackedScene" uid="uid://bf8hx6kw8ug4x" path="res://Themes/Rounded/Lyrics/lyrics.tscn" id="21_orlbe"]
 
 [sub_resource type="Animation" id="Animation_vk4q2"]
@@ -92,20 +94,20 @@ script = ExtResource("17_orlbe")
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2ok46"]
 blend_mode = 4
 
-[sub_resource type="Gradient" id="Gradient_orlbe"]
+[sub_resource type="Gradient" id="Gradient_m6r1d"]
 colors = PackedColorArray(0.13725491, 0.13725491, 0.13725491, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_koken"]
-gradient = SubResource("Gradient_orlbe")
+gradient = SubResource("Gradient_m6r1d")
 height = 6
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="Gradient" id="Gradient_yq5a6"]
+[sub_resource type="Gradient" id="Gradient_gc8rt"]
 colors = PackedColorArray(0.13725491, 0.13725491, 0.13725491, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_c4b4r"]
-gradient = SubResource("Gradient_yq5a6")
+gradient = SubResource("Gradient_gc8rt")
 height = 48
 fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
@@ -121,7 +123,7 @@ corner_radius_top_right = 16
 corner_radius_bottom_left = 16
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yq5a6"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3se3j"]
 corner_radius_top_left = 11
 corner_radius_top_right = 11
 corner_radius_bottom_right = 11
@@ -142,11 +144,10 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.40319997, 0.40319997, 0.40319997, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-corner_detail = 4
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
 shadow_color = Color(0, 0, 0, 0.005)
 shadow_size = 8
 shadow_offset = Vector2(0, 4)
@@ -163,7 +164,7 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_10u81"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kxwj3"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -472,19 +473,107 @@ script = ExtResource("16_4ypmf")
 speed = 500.0
 wheel_scroll_damper = SubResource("Resource_yq5a6")
 dragging_scroll_damper = SubResource("Resource_10u81")
+drag_with_mouse = false
+drag_with_touch = false
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="Playlists" type="VBoxContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll" unique_id=1774428216]
+[node name="Playlists" type="Container" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll" unique_id=1421828786 node_paths=PackedStringArray("scroll_container")]
 unique_name_in_owner = true
+process_mode = 1
+custom_minimum_size = Vector2(0, 1025)
 layout_direction = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("18_3se3j")
+hold_duration = 0.05
+separation = 6
+is_vertical = true
+scroll_container = NodePath("..")
+auto_scroll_speed = 2.5
+auto_scroll_range = 0.1
+scroll_threshold = 10
+metadata/_custom_type_script = "uid://cor5k07keywfa"
 
 [node name="HSeparator" type="HSeparator" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=2061329598]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 0
+
+[node name="PanelContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1023882090 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer2" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1384626128 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer3" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1408714761 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer4" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1930671890 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer5" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=267442835 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer6" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1261119049 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer7" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1683624475 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer8" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1445462678 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer9" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=2021188734 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer10" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=393115027 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer11" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=511339257 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer12" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=993817870 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer13" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1773500295 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer14" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1137977487 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer15" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1300998783 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer16" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1139691750 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer17" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=965171208 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer18" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1076017568 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer19" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=279424872 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer20" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=656309525 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer21" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=461175616 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer22" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=91300450 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer23" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=2066813512 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer24" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=477217990 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
+
+[node name="PanelContainer25" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" unique_id=1761256921 instance=ExtResource("19_kxwj3")]
+layout_mode = 2
 
 [node name="Control" type="Control" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer" unique_id=199870231]
 layout_mode = 2
@@ -514,17 +603,17 @@ grow_horizontal = 2
 grow_vertical = 0
 texture = SubResource("GradientTexture2D_c4b4r")
 
-[node name="Sep 2" type="HSeparator" parent="Scene Margin/VBox/HBox/Sidebar/VBox" unique_id=1192124816]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-theme_override_constants/separation = 14
-
-[node name="Indexing Label" type="Label" parent="Scene Margin/VBox/HBox/Sidebar/VBox" unique_id=2099064635]
+[node name="Indexing Label" type="Label" parent="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox" unique_id=2099064635]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 text = "Indexing... (%s)"
 label_settings = ExtResource("18_yq5a6")
+
+[node name="Sep 2" type="HSeparator" parent="Scene Margin/VBox/HBox/Sidebar/VBox" unique_id=1192124816]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 14
 
 [node name="Current Track Cover Container" type="CenterContainer" parent="Scene Margin/VBox/HBox/Sidebar/VBox" unique_id=1146409671]
 unique_name_in_owner = true
@@ -543,7 +632,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_yq5a6")
+theme_override_styles/panel = SubResource("StyleBoxFlat_3se3j")
 script = ExtResource("11_bcyco")
 corner_detail = 11
 radius_bottom_left = 11
@@ -640,7 +729,7 @@ offset_bottom = 150.0
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_10u81")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kxwj3")
 script = ExtResource("11_bcyco")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
@@ -653,5 +742,6 @@ metadata/_custom_type_script = "uid://b4ukv3a8is182"
 [connection signal="pressed" from="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
 [connection signal="pressed" from="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
 [connection signal="pressed" from="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/Tab Button Genres" to="." method="_on_tab_button_pressed" binds= ["genres"]]
+[connection signal="sort_children" from="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" to="Scene Margin/VBox/HBox/Sidebar/VBox/Panel/Margin/VBox/VBoxContainer/Playlists Scroll/Playlists" method="_on_sort_children"]
 [connection signal="pressed" from="Scene Margin/VBox/HBox/Sidebar/VBox/Current Track Cover Container/Panel/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= [".immersive_player"]]
 [connection signal="item_rect_changed" from="Scene Margin/VBox/HBox/Tab VBox/Player Bar" to="." method="_on_player_bar_item_rect_changed"]

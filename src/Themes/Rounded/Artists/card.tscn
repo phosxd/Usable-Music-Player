@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="5_ygvcy"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="6_fu2yc"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2atuy"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ql4x6"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -103,7 +103,7 @@ custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_2atuy")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ql4x6")
 script = ExtResource("3_r0cnv")
 texture = ExtResource("4_fnukk")
 stretch_mode = 5

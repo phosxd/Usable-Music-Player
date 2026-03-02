@@ -10,6 +10,7 @@
 [ext_resource type="LabelSettings" uid="uid://cdw532kd3kld3" path="res://Assets/header_label.tres" id="7_g7en1"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="8_5r8o4"]
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Assets/Icons/shuffle.svg" id="8_btmgh"]
+[ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="8_cvxl0"]
 [ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Assets/Icons/options_horizontal.svg" id="9_cvxl0"]
 [ext_resource type="Texture2D" uid="uid://d3xi2hlyuvtic" path="res://Assets/Icons/queue_play_next.svg" id="12_btmgh"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="12_d17rs"]
@@ -44,7 +45,7 @@ height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d17rs"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvxl0"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -135,7 +136,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_d17rs")
+theme_override_styles/panel = SubResource("StyleBoxFlat_cvxl0")
 script = ExtResource("4_5r8o4")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -172,12 +173,11 @@ text_overrun_behavior = 5
 [node name="Secondary Details" type="HBoxContainer" parent="VBox/Controls/VBox/HBox/Details" unique_id=415955263]
 layout_mode = 2
 
-[node name="Artist" type="Label" parent="VBox/Controls/VBox/HBox/Details/Secondary Details" unique_id=696956641]
+[node name="Artist" parent="VBox/Controls/VBox/HBox/Details/Secondary Details" unique_id=1086494808 instance=ExtResource("8_cvxl0")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "ARTIST NAME"
 label_settings = ExtResource("8_5r8o4")
-vertical_alignment = 1
 
 [node name="Sep 2" type="VSeparator" parent="VBox/Controls/VBox/HBox/Details/Secondary Details" unique_id=716059256]
 self_modulate = Color(1, 1, 1, 0)
@@ -271,16 +271,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Sep 2" type="HSeparator" parent="VBox/Content/Scroll/VBox" unique_id=1153614261]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
 [node name="Track List" type="VBoxContainer" parent="VBox/Content/Scroll/VBox" unique_id=925906313]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="Sep 1" type="HSeparator" parent="VBox/Content/Scroll/VBox/Track List" unique_id=1153614261]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
 
 [node name="Extra Details" type="HBoxContainer" parent="VBox/Content/Scroll/VBox" unique_id=1065747098]
 unique_name_in_owner = true
@@ -338,4 +338,5 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Icon Margin/Album Button" to="." method="_on_album_button_pressed"]
+[connection signal="pressed" from="VBox/Controls/VBox/HBox/Details/Secondary Details/Artist" to="." method="_on_artist_pressed"]
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Play" to="." method="_on_play_pressed"]

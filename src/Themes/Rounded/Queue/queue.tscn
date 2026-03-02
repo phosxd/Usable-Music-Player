@@ -13,6 +13,27 @@ rebound_strength = 36.0
 [sub_resource type="Resource" id="Resource_y0htm"]
 script = ExtResource("3_kyg7w")
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y0rqi"]
+blend_mode = 4
+
+[sub_resource type="Gradient" id="Gradient_orlbe"]
+colors = PackedColorArray(0.13725491, 0.13725491, 0.13725491, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vfkl8"]
+gradient = SubResource("Gradient_orlbe")
+height = 8
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="Gradient" id="Gradient_yq5a6"]
+colors = PackedColorArray(0.13725491, 0.13725491, 0.13725491, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5pu7y"]
+gradient = SubResource("Gradient_yq5a6")
+height = 54
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+
 [node name="Queue" type="PanelContainer" unique_id=1119812283]
 custom_minimum_size = Vector2(265, 0)
 anchors_preset = 15
@@ -65,9 +86,38 @@ hold_duration = 0.05
 separation = 0
 is_vertical = true
 scroll_container = NodePath("..")
-auto_scroll_speed = 5.0
+auto_scroll_speed = 3.5
+auto_scroll_range = 0.1
 scroll_threshold = 10
 metadata/_custom_type_script = "uid://cor5k07keywfa"
+
+[node name="Control" type="Control" parent="VBox/Margin" unique_id=522867792]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+mouse_behavior_recursive = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBox/Margin/Control" unique_id=660043198]
+material = SubResource("CanvasItemMaterial_y0rqi")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 6.0
+grow_horizontal = 2
+texture = SubResource("GradientTexture2D_vfkl8")
+
+[node name="TextureRect2" type="TextureRect" parent="VBox/Margin/Control" unique_id=145530832]
+material = SubResource("CanvasItemMaterial_y0rqi")
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_5pu7y")
 
 [connection signal="reordered" from="VBox/Margin/Scroll/List" to="." method="_on_list_reordered"]
 [connection signal="sort_children" from="VBox/Margin/Scroll/List" to="VBox/Margin/Scroll/List" method="_on_sort_children"]

@@ -99,3 +99,7 @@ func _on_album_button_pressed() -> void:
 func _on_play_pressed() -> void:
 	if loaded_tracks.is_empty(): return
 	_on_track_selected(loaded_tracks[0])
+
+
+func _on_artist_pressed() -> void:
+	SessionManager.main_scene.set_tab('artist_page', album.artist)

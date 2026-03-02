@@ -344,22 +344,22 @@ theme_override_constants/separation = 11
 layout_mode = 2
 disabled = true
 
-[node name="Fetch Artist Art" type="HBoxContainer" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer" unique_id=302861213]
+[node name="Fetch Artist Cover" type="HBoxContainer" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer" unique_id=302861213]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Artist Art" unique_id=333222870]
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Artist Cover" unique_id=333222870]
 layout_mode = 2
 text = "Fetch Artist Art"
 label_settings = ExtResource("4_yg7oy")
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Artist Art" unique_id=30600358]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Artist Cover" unique_id=30600358]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 19
 
-[node name="Fetch Artist Art" type="CheckButton" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Artist Art" unique_id=1656692042]
+[node name="Fetch Artist Cover" type="CheckButton" parent="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Artist Cover" unique_id=1656692042]
+unique_name_in_owner = true
 layout_mode = 2
-disabled = true
 
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Links/User Data" to="MarginContainer/Settings" method="_on_user_data_pressed"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Links/Source Code" to="MarginContainer/Settings" method="_on_source_code_pressed"]
@@ -373,3 +373,4 @@ disabled = true
 [connection signal="item_selected" from="MarginContainer/Settings/VBox/Customization/VBoxContainer/Layout Theme/Layout Theme" to="MarginContainer/Settings" method="_on_layout_theme_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Settings/VBox/Customization/VBoxContainer/Landing Page/Landing Page" to="MarginContainer/Settings" method="_on_landing_page_item_selected"]
 [connection signal="toggled" from="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Lyrics/Fetch Lyrics" to="MarginContainer/Settings" method="_on_fetch_lyrics_toggled"]
+[connection signal="toggled" from="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Artist Cover/Fetch Artist Cover" to="MarginContainer/Settings" method="_on_fetch_artist_cover_toggled"]

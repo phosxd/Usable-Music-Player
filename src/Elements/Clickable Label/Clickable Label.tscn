@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dk2dr0g8mm5n0"]
+
+[ext_resource type="Script" uid="uid://buxni7m08ammp" path="res://Elements/Clickable Label/clickable_label.gd" id="1_4dgfr"]
+
+[node name="Clickable Label" type="Label" unique_id=1086494808]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+script = ExtResource("1_4dgfr")
+
+[node name="Button" type="Button" parent="." unique_id=1604203953]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+flat = true
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

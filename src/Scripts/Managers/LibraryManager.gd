@@ -39,6 +39,7 @@ const db_cache_path:String = 'user://database.txt'
 const placeholder_meta:String = 'None found'
 static var lyrics_path:String = OS.get_user_data_dir()+'/lyrics'
 static var image_cache_path:String = OS.get_user_data_dir()+'/image_cache'
+static var artist_image_cache:String = image_cache_path+'/artist_covers'
 static var out_path:String = OS.get_user_data_dir()+'/out'
 
 
@@ -307,7 +308,6 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, _disc_numb
 
 	# Add to database.
 	var db_artist:Dictionary = database.artists.get_or_add(artist, {
-		#'cover': fetch_artist_cover(artist),
 		'albums': {},
 	})
 	@warning_ignore('incompatible_ternary')

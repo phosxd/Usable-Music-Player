@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dsftqlnga24af" path="res://Scripts/UI/Player/player.gd" id="1_rk0es"]
 [ext_resource type="PackedScene" uid="uid://ctrjekyy7gs7r" path="res://Elements/Bar Visualizer/bar_visualizer.tscn" id="2_20q0p"]
-[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="4_k8swy"]
 [ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Assets/Icons/skip_backward.svg" id="5_5f1qt"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="6_mbwg2"]
 [ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Assets/Icons/skip_forward.svg" id="7_o57gc"]
@@ -117,13 +116,14 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Artist Name" type="Label" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=450202542]
+[node name="Artist Name" type="LinkButton" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1441538902]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 14
 text = "No artist"
-label_settings = ExtResource("4_k8swy")
-vertical_alignment = 1
+underline = 2
 
 [node name="Sep 2" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=495887998]
 self_modulate = Color(1, 1, 1, 0)
@@ -240,7 +240,6 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_vertical = 4
-value = 100.0
 
 [node name="VSeparator" type="VSeparator" parent="Panel/VBox/GridContainer/Volume" unique_id=270971694]
 self_modulate = Color(1, 1, 1, 0)
@@ -267,6 +266,9 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
 [connection signal="pressed" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Track Name" to="." method="_on_track_name_pressed"]
+[connection signal="mouse_entered" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Artist Name" to="." method="_on_artist_name_mouse_entered"]
+[connection signal="mouse_exited" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Artist Name" to="." method="_on_artist_name_mouse_exited"]
+[connection signal="pressed" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Artist Name" to="." method="_on_artist_name_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Skip Backward" to="." method="_on_skip_backward_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Play Pause" to="." method="_on_play_pause_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Skip Forward" to="." method="_on_skip_forward_pressed"]
