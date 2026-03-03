@@ -25,4 +25,9 @@ func _ready() -> void:
 func add_card(genre_name:String, albums:Array) -> void:
 	var card:Control = card_scene.instantiate()
 	card.init(genre_name, albums)
+	card.selected.connect(_on_card_selected.bind(genre_name, albums))
 	%Grid.add_child(card)
+
+
+func _on_card_selected(genre_name:String, albums:Array) -> void:
+	SessionManager.main_scene.set_tab('genre_page', {'genre_name':genre_name, 'albums':albums})

@@ -4,10 +4,11 @@
 [ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_t00ax"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_jrfrx"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="4_33ekx"]
+[ext_resource type="PackedScene" uid="uid://bkkqe2s88b15r" path="res://Elements/Quad Image/Quad Image.tscn" id="5_t00ax"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="5_x7fpi"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="6_u5sxd"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mugn5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jrfrx"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -103,17 +104,15 @@ custom_minimum_size = Vector2(225, 225)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_mugn5")
+theme_override_styles/panel = SubResource("StyleBoxFlat_jrfrx")
 script = ExtResource("3_jrfrx")
 texture = ExtResource("4_33ekx")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
 
-[node name="Image Grid" type="GridContainer" parent="VBox/Center" unique_id=1727387048]
+[node name="Quad Image" parent="VBox/Center" unique_id=704082384 instance=ExtResource("5_t00ax")]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
-columns = 2
 
 [node name="Button" parent="VBox/Center" unique_id=519598093 instance=ExtResource("5_x7fpi")]
 custom_minimum_size = Vector2(225, 225)

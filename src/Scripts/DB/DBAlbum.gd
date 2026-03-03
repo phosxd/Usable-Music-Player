@@ -87,8 +87,21 @@ func _init(db_artist:DBArtist, album_name:String, raw_info=null) -> void:
 	if raw_copyright is String && not raw_copyright.is_empty(): copyright = raw_copyright
 	else: copyright = 'None found'
 
+
 func _invalidate() -> void:
 	valid = false
+
+
+## Returns an array of all tracks in order.
+func get_all_tracks() -> Array[DBTrack]:
+	var tracks:Array[DBTrack] = []
+	for disc in discs:
+		for i in discs[disc]:
+			var track = get_track(i, int(disc))
+			if track is not DBTrack: continue
+			tracks.append(track)
+
+	return tracks
 
 
 ## Get specific track from the [param track_number] & [param disc_number].

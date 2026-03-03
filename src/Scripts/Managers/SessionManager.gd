@@ -184,6 +184,7 @@ func get_layout_theme_scene(scene_name:String) -> PackedScene:
 
 		'genres': return load('res://Themes/%s/Genres/genres.tscn' % path)
 		'genres_card': return load('res://Themes/%s/Genres/card.tscn' % path)
+		'genre_page': return load('res://Themes/%s/Genre Page/genre_page.tscn' % path)
 
 	return null
 

@@ -9,7 +9,7 @@ func from_array(images:Array[ImageTexture]) -> void:
 	_add_images()
 	var image_count:int = images.size()
 	for i in 4:
-		if i <= image_count: continue
+		if i >= image_count: break
 		var image:ImageTexture = images[i]
 		var node = get_child(i)
 		if node is TextureRectRounded:
@@ -36,7 +36,6 @@ func from_artist(artist:DBArtist) -> void:
 		if node is not TextureRectRounded: continue
 		# Set texture rect variables.
 		node.texture = cover
-		node.custom_minimum_size = image_size
 
 
 func _reset_images() -> void:

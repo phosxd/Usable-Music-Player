@@ -115,7 +115,7 @@ if sys.argv[1] == 'dump_audio_meta':
 			if meta['image_extension'] != '':
 				cover_path = sys.argv[3]+'/'+meta_as_file_name(meta, 1)+'.'+meta['image_extension']
 				meta['cover_path'] = cover_path
-			save_audio_cover(tag, cover_path)
+				save_audio_cover(tag, cover_path)
 			dump.append(meta)
 
 	json = json.dumps(dump)

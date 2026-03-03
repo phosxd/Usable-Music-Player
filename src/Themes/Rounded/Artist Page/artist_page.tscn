@@ -365,6 +365,13 @@ theme_override_constants/h_separation = 4
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1416650657]
 layout_mode = 2
 
+[node name="Album Count" type="Label" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1069611729]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Album Count"
+label_settings = SubResource("LabelSettings_vrl77")
+
 [node name="VSeparator2" type="VSeparator" parent="MarginContainer/Items/MarginContainer2/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1424007900]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2

@@ -5,12 +5,14 @@ enum RequestType {
 	Web,
 }
 
-var queued_requests:Dictionary[RequestType,Dictionary] = {}
+var queued_requests:Dictionary[String,APIRequest] = {}
 var local_APIs:Dictionary[String,Object] = {}
 
 
 class APIRequest extends RefCounted:
+	signal completed
 	signal canceled
+	var is_completed:bool = false
 	var is_canceled:bool = false
 	var url: String
 	var options: Dictionary
@@ -19,9 +21,14 @@ class APIRequest extends RefCounted:
 		url = url_
 		options = options_
 
+	func complete() -> void:
+		if is_canceled: return
+		is_completed = true
+		completed.emit()
+
 	func cancel() -> void:
-		canceled.emit()
 		is_canceled = true
+		canceled.emit()
 
 
 func _ready() -> void:
@@ -32,19 +39,30 @@ func _ready() -> void:
 ## Request headers & other data can be passed through [param options].
 ## 
 ## Artificial delay can be added with [param delay].
-func request(type:RequestType, id:String, url:String, options:Dictionary={}, callback:=Callable(), delay:float=0) -> void:
+##
+## Can be queued after the previous request of the same [param id] when [param queue] is set to true.
+func request(type:RequestType, id:String, url:String, options:Dictionary={}, callback:=Callable(), delay:float=0, queue:bool=false) -> void:
 	# Create request & cancel any previous request with the same ID.
 	var req := APIRequest.new(url, options)
-	queued_requests.get_or_add(type, {})
-	var prev_req = queued_requests[type].get(id)
-	if prev_req: prev_req.cancel()
-	queued_requests[type].set(id, req)
+	var prev_req = queued_requests.get(id)
+	var binded_request_func = _request.bind(req,type,id,url,options,callback,delay)
 
+	if queue && prev_req:
+		prev_req.completed.connect(binded_request_func)
+		queued_requests.set(id, req)
+	else:
+		if prev_req: prev_req.cancel()
+		queued_requests.set(id, req)
+		binded_request_func.call()
+
+
+func _request(req:APIRequest, type:RequestType, id:String, url:String, options:Dictionary={}, callback:=Callable(), delay:float=0) -> void:
+	print('MAKING REQUEST: %s' % url)
 	match type:
 		# Make local API request.
 		RequestType.Local:
-			queued_requests[type].erase(id)
 			call_local(url, options, callback)
+			req.complete()
 
 		# Make Web request.
 		RequestType.Web:
@@ -59,7 +77,6 @@ func request(type:RequestType, id:String, url:String, options:Dictionary={}, cal
 						'body': body,
 					}
 					if callback.get_object(): callback.call(result, data)
-					queued_requests[type].erase(id)
 					http_request.queue_free()
 				)
 				# Create timer to only make request after the specified delay.
@@ -72,12 +89,13 @@ func request(type:RequestType, id:String, url:String, options:Dictionary={}, cal
 					var method:HTTPClient.Method = options.get('client_method',0)
 					var data:String = options.get('request_data','')
 					http_request.request(url, headers, method, data)
+					req.complete()
 					timer.queue_free()
 				)
-				add_child(timer)
-				timer.start(delay)
+				add_child.call_deferred(timer)
+				timer.start.call_deferred(delay)
 			)
-			add_child(http_request)
+			add_child.call_deferred(http_request)
 
 
 func call_local(id:String, options:Dictionary, callback:Callable) -> void:

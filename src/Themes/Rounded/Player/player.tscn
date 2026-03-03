@@ -2,8 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dsftqlnga24af" path="res://Scripts/UI/Player/player.gd" id="1_rk0es"]
 [ext_resource type="PackedScene" uid="uid://ctrjekyy7gs7r" path="res://Elements/Bar Visualizer/bar_visualizer.tscn" id="2_20q0p"]
+[ext_resource type="Texture2D" uid="uid://doajyey54rgs2" path="res://Assets/Icons/scale_x2/non_favorite.svg" id="3_5f1qt"]
+[ext_resource type="Texture2D" uid="uid://bvpnplkjunyw0" path="res://Assets/Icons/scale_x2/favorite.svg" id="4_mbwg2"]
 [ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Assets/Icons/skip_backward.svg" id="5_5f1qt"]
+[ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="5_o57gc"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="6_mbwg2"]
+[ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="6_oi2uu"]
+[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="7_7sb8f"]
 [ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Assets/Icons/skip_forward.svg" id="7_o57gc"]
 [ext_resource type="Texture2D" uid="uid://1atpjvnl4kp" path="res://Assets/Icons/scale_x2/shuffle.svg" id="8_oi2uu"]
 [ext_resource type="Texture2D" uid="uid://n2y028woywe1" path="res://Assets/Icons/scale_x2/loop.svg" id="9_7sb8f"]
@@ -101,29 +106,38 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_8fvqj")
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Track Name" type="LinkButton" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1576920972]
+[node name="Favorite" type="TextureButton" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1819305281]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+toggle_mode = true
+texture_normal = ExtResource("3_5f1qt")
+texture_pressed = ExtResource("4_mbwg2")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Sep 4" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1654848113]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Track Name" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1086494808 instance=ExtResource("5_o57gc")]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 20
 text = "No track playing..."
-underline = 2
+label_settings = ExtResource("6_oi2uu")
 
 [node name="Sep 3" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=175285363]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Artist Name" type="LinkButton" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1441538902]
+[node name="Artist Name" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=693421731 instance=ExtResource("5_o57gc")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 8
-theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-theme_override_font_sizes/font_size = 14
 text = "No artist"
-underline = 2
+label_settings = ExtResource("7_7sb8f")
 
 [node name="Sep 2" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=495887998]
 self_modulate = Color(1, 1, 1, 0)
@@ -230,6 +244,7 @@ size_flags_vertical = 4
 [node name="Mute Button" type="TextureButton" parent="Panel/VBox/GridContainer/Volume" unique_id=1928295276]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_default_cursor_shape = 2
 toggle_mode = true
 texture_normal = ExtResource("12_crg0r")
 texture_pressed = ExtResource("13_20q0p")
@@ -266,8 +281,6 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
 [connection signal="pressed" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Track Name" to="." method="_on_track_name_pressed"]
-[connection signal="mouse_entered" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Artist Name" to="." method="_on_artist_name_mouse_entered"]
-[connection signal="mouse_exited" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Artist Name" to="." method="_on_artist_name_mouse_exited"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Artist Name" to="." method="_on_artist_name_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Skip Backward" to="." method="_on_skip_backward_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Play Pause" to="." method="_on_play_pause_pressed"]

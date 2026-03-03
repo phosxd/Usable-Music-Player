@@ -8,7 +8,7 @@ const clis:Array[String] = [
 ]
 ## CLI versions.
 const cli_versions:Dictionary[String,int] = {
-	'interface': 6,
+	'interface': 7,
 }
 ## Runtime absolute paths to the executable binary.
 var cli_executable_paths:Dictionary[String,String] = {
@@ -54,4 +54,5 @@ func execute(cli:String, arguments:Array[String], output:Array=[]) -> int:
 	var path:String = cli_executable_paths.get(cli,'')
 	if path.is_empty(): return -1
 
-	return OS.execute(path, arguments, output)
+	var err = OS.execute(path, arguments, output)
+	return err

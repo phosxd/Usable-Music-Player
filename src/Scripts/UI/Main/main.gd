@@ -9,6 +9,7 @@ extends Control
 	'album_page': [null, SessionManager.get_layout_theme_scene('album_page')],
 	'tracks': [%'Tab Button Tracks', SessionManager.get_layout_theme_scene('tracks')],
 	'genres': [%'Tab Button Genres', SessionManager.get_layout_theme_scene('genres')],
+	'genre_page': [null, SessionManager.get_layout_theme_scene('genre_page')],
 	'.immersive_player': [%'Tab Button Immersive Player', SessionManager.get_layout_theme_scene('immersive player')]
 }
 @onready var indexing_label_template:String = %'Indexing Label'.text
