@@ -1,5 +1,7 @@
 extends Node
 
+const minilog_importance := MiniLog.Importance.None
+
 ## Emitted when the queue has been updated via queue control functions.
 ## Does not emit when queue is changed manually.
 signal queue_updated()
@@ -135,6 +137,7 @@ func skip_backward() -> void:
 
 
 func set_queue(new_queue:Array[DBTrack]) -> void:
+	MiniLog.pro('Set queue.', PlayerManager)
 	is_shuffled = false
 	queue = new_queue
 	queue_updated.emit()
@@ -156,13 +159,13 @@ func insert_to_queue(position:int, track:DBTrack, emit:bool=true) -> void:
 	else:
 		queue.insert(position, track)
 		if position < PlayerManager.queue_position:
-			print(position)
 			PlayerManager.queue_position += 1
 	if emit: queue_updated.emit()
 
 
 ## Shuffles the queue. If [param anchor] track is used, will shuffle the queue & move anchor track to the beginning.
 func shuffle_queue(anchor:DBTrack=null, emit:bool=true) -> void:
+	MiniLog.pro('Shuffling queue.', PlayerManager)
 	is_shuffled = true
 	queue.shuffle()
 	if anchor:
@@ -175,6 +178,7 @@ func shuffle_queue(anchor:DBTrack=null, emit:bool=true) -> void:
 
 
 func _current_track_finished() -> void:
+	MiniLog.pro('Track finished.', PlayerManager)
 	if queue_position+1 >= queue.size(): is_playing = false
 	if loop_mode == LoopMode.TRACK: set_playing(true)
 	else: skip_forward()

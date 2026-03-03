@@ -1,6 +1,8 @@
 ## Static class for managing an audio library.
 class_name LibraryManager extends RefCounted
 
+const minilog_importance := MiniLog.Importance.High
+
 enum ArtistSortMode {
 	## Sort by title in alphabetical order.
 	TITLE,
@@ -212,6 +214,7 @@ static func save_database() -> void:
 
 
 static func load_library_from_cache() -> void:
+	MiniLog.info('Loading library from cache.', LibraryManager)
 	var file := FileAccess.open(db_cache_path, FileAccess.READ)
 	if file == null: return
 	var bytes:PackedByteArray = file.get_buffer(file.get_length())
@@ -352,7 +355,7 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, _disc_numb
 	database.artists[artist].albums.set(album, db_album)
 	database.track_count += 1
 	database.library_size += FileAccess.get_size(path)
-	#print('Indexed into DB: '+path)
+	MiniLog.pro('Indexed: "$~%s~$".' % path, LibraryManager)
 
 
 static func reload_library(_callback:Callable) -> void:
@@ -388,7 +391,7 @@ static func load_audio(path:String) -> AudioStream:
 			if audio_stream:
 				audio_stream.data = file.get_buffer(file.get_length())
 
-	print('Loaded stream from: '+path)
+	MiniLog.pro('Loaded audio stream from "$~%s~$".' % path, LibraryManager)
 	return audio_stream
 
 

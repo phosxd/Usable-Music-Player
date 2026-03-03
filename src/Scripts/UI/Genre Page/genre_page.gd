@@ -83,5 +83,6 @@ func _on_album_button_pressed() -> void:
 func _on_play_pressed() -> void:
 	if loaded_albums.is_empty(): return
 	for album:DBAlbum in loaded_albums:
-		var tracks:Array[DBTrack] = album.get_all_tracks()
+		pass
+		#var tracks:Array[DBTrack] = album.get_all_tracks()
 		

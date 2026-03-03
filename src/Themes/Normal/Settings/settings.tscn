@@ -234,7 +234,7 @@ label_settings = ExtResource("3_vbj3s")
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Theme Section/VBox/Layout Theme" unique_id=855275219]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-theme_override_constants/separation = 34
+theme_override_constants/separation = 33
 
 [node name="Layout Theme" type="OptionButton" parent="MarginContainer/Scroll/VBox/Theme Section/VBox/Layout Theme" unique_id=752043]
 unique_name_in_owner = true
@@ -267,7 +267,7 @@ label_settings = ExtResource("3_vbj3s")
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Theme Section/VBox/Landing Page" unique_id=722401135]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-theme_override_constants/separation = 38
+theme_override_constants/separation = 39
 
 [node name="Landing Page" type="OptionButton" parent="MarginContainer/Scroll/VBox/Theme Section/VBox/Landing Page" unique_id=916314514]
 unique_name_in_owner = true

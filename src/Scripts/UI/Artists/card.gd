@@ -35,14 +35,13 @@ func update() -> void:
 
 	# Fetch from API if not in DB.
 	if not stored_cover && SessionManager.fetch_artist_cover:
-		var url = 'https://theaudiodb.com/api/v1/json/123/search.php?s=%s' % [
+		var url = AppInfo.audio_db_api_url % [
 			artist.name.uri_encode(),
 		]
-		RequestManager.request(RequestManager.RequestType.Web, 'artist_cover_%s' % name, url, {}, _on_http_request_request_completed, 2.5, true)
+		RequestManager.request(RequestManager.RequestType.Web, 'artist_cover', url, {}, _on_http_request_request_completed, 2.5, true)
 
 	elif stored_cover && stored_cover.get_size().x != 1:
 		%Image.texture = stored_cover
-		#set_gradient(stored_cover)
 
 
 func _on_http_request_request_completed(result:int, data:Dictionary) -> void:
@@ -87,8 +86,11 @@ func _on_http_request_image_request_completed(result:int, data:Dictionary) -> vo
 	%Image.texture = ImageTexture.create_from_image(image)
 	%Image.show()
 	%'Quad Image'.queue_free()
-	#set_gradient(%Image.texture)
 	artist.save_cover(image)
+
+
+func _exit_tree() -> void:
+	RequestManager.cancel_request('artist_cover')
 
 
 func _on_button_pressed() -> void:

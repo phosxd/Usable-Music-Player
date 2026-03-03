@@ -1,11 +1,14 @@
 extends Node
 
+const minilog_importance := MiniLog.Importance.Low
+
 enum RequestType {
 	Local,
 	Web,
 }
 
 var queued_requests:Dictionary[String,APIRequest] = {}
+var request_dump:Dictionary[String,Array] = {}
 var local_APIs:Dictionary[String,Object] = {}
 
 
@@ -14,12 +17,6 @@ class APIRequest extends RefCounted:
 	signal canceled
 	var is_completed:bool = false
 	var is_canceled:bool = false
-	var url: String
-	var options: Dictionary
-	
-	func _init(url_:String, options_:Dictionary) -> void: 
-		url = url_
-		options = options_
 
 	func complete() -> void:
 		if is_canceled: return
@@ -43,7 +40,7 @@ func _ready() -> void:
 ## Can be queued after the previous request of the same [param id] when [param queue] is set to true.
 func request(type:RequestType, id:String, url:String, options:Dictionary={}, callback:=Callable(), delay:float=0, queue:bool=false) -> void:
 	# Create request & cancel any previous request with the same ID.
-	var req := APIRequest.new(url, options)
+	var req := APIRequest.new()
 	var prev_req = queued_requests.get(id)
 	var binded_request_func = _request.bind(req,type,id,url,options,callback,delay)
 
@@ -55,9 +52,13 @@ func request(type:RequestType, id:String, url:String, options:Dictionary={}, cal
 		queued_requests.set(id, req)
 		binded_request_func.call()
 
+	request_dump.get_or_add(id, [])
+	request_dump[id].append(req)
+
 
 func _request(req:APIRequest, type:RequestType, id:String, url:String, options:Dictionary={}, callback:=Callable(), delay:float=0) -> void:
-	print('MAKING REQUEST: %s' % url)
+	if req.is_canceled: return
+	MiniLog.pro('ID "$~%s~$" making request to "$~%s~$".' % [id,url], RequestManager)
 	match type:
 		# Make local API request.
 		RequestType.Local:
@@ -96,6 +97,17 @@ func _request(req:APIRequest, type:RequestType, id:String, url:String, options:D
 				timer.start.call_deferred(delay)
 			)
 			add_child.call_deferred(http_request)
+
+
+func cancel_request(id:String) -> void:
+	var reqs = request_dump.get(id)
+	if reqs is not Array: return
+	for req in reqs:
+		if req is not APIRequest: continue
+		req.cancel()
+	request_dump.erase(id)
+	queued_requests.erase(id)
+	MiniLog.pro('Canceled request "$~%s~$".' % id, RequestManager)
 
 
 func call_local(id:String, options:Dictionary, callback:Callable) -> void:

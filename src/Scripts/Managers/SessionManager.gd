@@ -1,6 +1,8 @@
 ## Manage the current session.
 extends Node
 
+const minilog_importance := MiniLog.Importance.High
+
 enum VisualizerMode {
 	OFF,
 	GLOW,
@@ -123,7 +125,7 @@ var layout_theme := LayoutTheme.Normal:
 	set(value):
 		layout_theme = value
 		var tree:SceneTree = get_tree()
-		get_tree().change_scene_to_packed(get_layout_theme_scene('main'))
+		get_tree().change_scene_to_packed.call_deferred(get_layout_theme_scene('main'))
 		main_scene = tree.current_scene
 		var init = Node.new()
 		init.set_script(load('res://Themes/%s/init.gd' % layout_theme_name[value]))
@@ -192,6 +194,7 @@ func get_layout_theme_scene(scene_name:String) -> PackedScene:
 ## Load session from disk.
 ## May override current playing track in PlayerManager.
 func load_session() -> void:
+	MiniLog.info('Loading session.', SessionManager)
 	var file := FileAccess.open(session_file_path, FileAccess.READ)
 	if file == null: return
 	var stored_data = JSON.parse_string(file.get_as_text())
@@ -238,6 +241,7 @@ func load_session() -> void:
 		PlayerManager.auto_queue_start_index = int(raw_auto_queue_start_index)
 
 	session_loaded.emit()
+	MiniLog.info('Session loaded', SessionManager)
 
 
 ## Save the current session to disk.

@@ -1,8 +1,11 @@
 extends Control
 
-@export var overlay_color := Color(0.25, 0.25, 0.25, 0.5)
+const overlay_color := Color(0.25, 0.25, 0.25, 0.5)
+const console_scene := preload('res://Scenes/Console/Console.tscn')
+
+@onready var general_options_popup:PopupMenu = %'General Options'.get_popup()
 @onready var tabs:Dictionary[String,Array] = {
-	'settings': [%'Tab Button Settings', SessionManager.get_layout_theme_scene('settings')],
+	'settings': [null, SessionManager.get_layout_theme_scene('settings')],
 	'artists': [%'Tab Button Artists', SessionManager.get_layout_theme_scene('artists')],
 	'artist_page': [null, SessionManager.get_layout_theme_scene('artist_page')],
 	'albums': [%'Tab Button Albums', SessionManager.get_layout_theme_scene('albums')],
@@ -32,6 +35,8 @@ func _ready() -> void:
 			%Player.update_visualizer(album_dominant_color)
 	)
 	update_current_track(0, PlayerManager.get_current_track())
+
+	general_options_popup.id_pressed.connect(_on_general_options_id_pressed)
 
 
 func update_accents() -> void:
@@ -174,6 +179,15 @@ func go_back() -> void:
 		set_tab('')
 		return
 	set_tab(last_tab[0], last_tab[1])
+
+
+func _on_general_options_id_pressed(id:int) -> void:
+	match id:
+		0: set_tab('settings')
+		1:
+			var popup:Window = console_scene.instantiate()
+			add_child(popup)
+			popup.show()
 
 
 func _on_tab_button_pressed(tab:String) -> void:

@@ -1,5 +1,7 @@
 extends Node
 
+const minilog_importance := MiniLog.Importance.Core
+
 ## Path to the directory hosting CLI binaries.
 const cli_path:String = 'CLIs'
 ## Name of expected CLI binaries.
@@ -51,6 +53,7 @@ func _ready() -> void:
 ## Executes the given [param cli] & returns an error code or [code]-1[/code] if failed to execute.
 ## [param output] will be linked to the text ouput of the executable.
 func execute(cli:String, arguments:Array[String], output:Array=[]) -> int:
+	MiniLog.info('Exeuting CLI "$~%s~$".' % cli, CLI)
 	var path:String = cli_executable_paths.get(cli,'')
 	if path.is_empty(): return -1
 

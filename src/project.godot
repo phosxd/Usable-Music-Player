@@ -41,6 +41,7 @@ RequestManager="*uid://cgsfn5sukipn3"
 [display]
 
 window/size/viewport_width=1185
+window/vsync/vsync_mode=0
 
 [dotnet]
 

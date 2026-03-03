@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://cge686edm45an"]
+
+[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="1_w6jb2"]
+[ext_resource type="Script" uid="uid://de84nhaha1jcq" path="res://Scenes/Console/console.gd" id="1_x5cir"]
+[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="2_x5cir"]
+
+[sub_resource type="Resource" id="Resource_ecldj"]
+script = ExtResource("2_x5cir")
+rebound_strength = 14.0
+
+[sub_resource type="Resource" id="Resource_mcx5f"]
+script = ExtResource("2_x5cir")
+rebound_strength = 14.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ecldj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mcx5f"]
+
+[node name="Console" type="Window" unique_id=1584683995]
+oversampling_override = 1.0
+title = "Console"
+initial_position = 2
+size = Vector2i(300, 500)
+visible = false
+wrap_controls = true
+always_on_top = true
+maximize_disabled = true
+force_native = true
+script = ExtResource("1_x5cir")
+
+[node name="Background" type="Panel" parent="." unique_id=1329260803]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1040054382]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scroll" type="ScrollContainer" parent="VBox" unique_id=1580724904]
+layout_mode = 2
+size_flags_vertical = 3
+vertical_scroll_mode = 0
+script = ExtResource("1_w6jb2")
+speed = 150.0
+wheel_scroll_damper = SubResource("Resource_ecldj")
+dragging_scroll_damper = SubResource("Resource_mcx5f")
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="Label" type="RichTextLabel" parent="VBox/Scroll" unique_id=1511097181]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ecldj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mcx5f")
+bbcode_enabled = true
+fit_content = true
+scroll_following = true
+autowrap_mode = 0
+
+[node name="Command" type="LineEdit" parent="VBox" unique_id=1751709615]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Enter command..."
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="text_submitted" from="VBox/Command" to="." method="_on_command_text_submitted"]

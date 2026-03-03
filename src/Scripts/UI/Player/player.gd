@@ -184,8 +184,10 @@ func _on_mute_button_toggled(toggled_on:bool) -> void:
 
 
 func _on_track_name_pressed() -> void:
-	SessionManager.main_scene.set_tab('album_page', PlayerManager.get_current_track().album)
+	if not current_track: return
+	SessionManager.main_scene.set_tab('album_page', current_track.album)
 
 
 func _on_artist_name_pressed() -> void:
-	SessionManager.main_scene.set_tab('artist_page', PlayerManager.get_current_track().artist)
+	if not current_track: return
+	SessionManager.main_scene.set_tab('artist_page', current_track.artist)
