@@ -24,6 +24,8 @@ const property_data:Array[Array] = [
 	['fetch_lyrics',[TYPE_BOOL]],
 	['fetch_artist_cover',[TYPE_BOOL]],
 	['fetch_album_cover',[TYPE_BOOL]],
+	# Shortcut data.
+	#['play_pause_key',[TYPE_INT]],
 	# Tab data.
 	['last_tab',[TYPE_STRING]],
 	['artists_tab_scroll_value',[TYPE_FLOAT]],

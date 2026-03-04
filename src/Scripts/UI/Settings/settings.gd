@@ -126,3 +126,19 @@ func _on_fetch_artist_cover_toggled(toggled_on:bool) -> void:
 
 func _on_fetch_album_cover_toggled(_toggled_on:bool) -> void:
 	pass
+
+
+func _on_play_pause_key_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_skip_backward_key_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_skip_forward_key_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_page_back_key_pressed() -> void:
+	pass # Replace with function body.

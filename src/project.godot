@@ -33,10 +33,11 @@ driver/output_latency=30
 
 [autoload]
 
-PlayerManager="*uid://bsri8hvvykwnh"
-SessionManager="*uid://caowd7sywd5u3"
+INIT="*uid://due46eoqitfqi"
 CLI="*uid://cht4oe1otvdde"
+PlayerManager="*uid://bsri8hvvykwnh"
 RequestManager="*uid://cgsfn5sukipn3"
+SessionManager="*uid://caowd7sywd5u3"
 
 [display]
 
@@ -71,6 +72,22 @@ right_click={
 "deadzone": 0.2,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(258, 15),"global_position":Vector2(267, 63),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
+}
+play_pause={
+"deadzone": 0.2,
+"events": []
+}
+skip_backward={
+"deadzone": 0.2,
+"events": []
+}
+skip_forward={
+"deadzone": 0.2,
+"events": []
+}
+page_back={
+"deadzone": 0.2,
+"events": []
 }
 
 [rendering]
