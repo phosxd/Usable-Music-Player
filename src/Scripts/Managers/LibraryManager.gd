@@ -15,8 +15,6 @@ enum AlbumSortMode {
 	ARTIST,
 	## Sort by year released.
 	YEAR,
-	## Sort by genre.
-	GENRE,
 }
 
 enum TrackSortMode {
@@ -28,8 +26,6 @@ enum TrackSortMode {
 	ARTIST,
 	## Sort by year released.
 	YEAR,
-	## Sort by genre.
-	GENRE,
 	## Sort by track number.
 	NUMBER,
 	## Sort by track length.
@@ -92,10 +88,6 @@ static func get_albums_sorted(sort_mode:=AlbumSortMode.TITLE) -> Array[DBAlbum]:
 			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
 				return a.year.to_int() < b.year.to_int()
 			)
-		AlbumSortMode.GENRE:
-			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
-				return a.genre < b.genre
-			)
 
 	return result
 
@@ -105,8 +97,12 @@ static func get_albums_sorted(sort_mode:=AlbumSortMode.TITLE) -> Array[DBAlbum]:
 static func get_genres_sorted() -> Dictionary[String,Array]:
 	var result:Dictionary[String,Array] = {}
 	for album:DBAlbum in get_albums_sorted():
-		result.get_or_add(album.genre, [])
-		result[album.genre].append(album)
+		for genre in album.genres:
+			result.get_or_add(genre, [])
+			result[genre].append(album)
+		if album.genres.is_empty():
+			result.get_or_add('No genre', [])
+			result['No genre'].append(album)
 
 	return result
 
@@ -136,10 +132,6 @@ static func get_tracks_sorted(sort_mode:=TrackSortMode.TITLE) -> Array[DBTrack]:
 			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
 				return a.album.year.to_int() < b.album.year.to_int()
 			)
-		TrackSortMode.GENRE:
-			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
-				return a.album.genre < b.album.genre
-			)
 		TrackSortMode.NUMBER:
 			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
 				return a.number < b.number
@@ -162,8 +154,12 @@ static func rescan_track(track:DBTrack, custom_data:Dictionary={}) -> DBTrack:
 	_index(track.raw, track.number, -1, custom_data)
 	save_database()
 
-	DBTrack.update(track.artist, track.album, track.number, track.disc)
-	return DBTrack.new_or_reuse(track.artist, track.album, track.number, track.disc)
+	track.artist._invalidate()
+	track.album._invalidate()
+	track._invalidate()
+	var db_artist := DBArtist.new_or_reuse(track.artist.name)
+	var db_album := DBAlbum.new_or_reuse(db_artist, track.album.name)
+	return DBTrack.new_or_reuse(db_artist, db_album, track.number, track.disc)
 
 
 static func wipe_database() -> void:

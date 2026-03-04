@@ -7,7 +7,6 @@ extends VBoxContainer
 			'Sort by: Title', 
 			'Sort by: Artist',
 			'Sort by: Year',
-			'Sort by: Genre',
 			'Sort by: Number',
 			'Sort by: Length'
 		],
@@ -118,9 +117,8 @@ func _on_sort_mode_item_selected(index:int) -> void:
 		0: sort_mode = LibraryManager.TrackSortMode.TITLE
 		1: sort_mode = LibraryManager.TrackSortMode.ARTIST
 		2: sort_mode = LibraryManager.TrackSortMode.YEAR
-		3: sort_mode = LibraryManager.TrackSortMode.GENRE
-		4: sort_mode = LibraryManager.TrackSortMode.NUMBER
-		5: sort_mode = LibraryManager.TrackSortMode.LENGTH
+		3: sort_mode = LibraryManager.TrackSortMode.NUMBER
+		4: sort_mode = LibraryManager.TrackSortMode.LENGTH
 	if prev_sort_mode != sort_mode:
 		sort()
 

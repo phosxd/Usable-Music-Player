@@ -7,7 +7,6 @@ extends VBoxContainer
 			'Sort by: Title', 
 			'Sort by: Artist',
 			'Sort by: Year',
-			'Sort by: Genre',
 		],
 		'default': 'album_sort_mode',
 		'callback': _on_sort_mode_item_selected,
@@ -51,7 +50,6 @@ func sort() -> void:
 			var display_data:String = ''
 			match sort_mode:
 				LibraryManager.AlbumSortMode.YEAR: display_data = album.year
-				LibraryManager.AlbumSortMode.GENRE: display_data = album.genre
 			# Filter with search term.
 			if not SessionManager.search_term.is_empty():
 				var search_term:String = SessionManager.search_term.to_lower()
@@ -87,7 +85,6 @@ func _on_sort_mode_item_selected(index:int) -> void:
 		0: sort_mode = LibraryManager.AlbumSortMode.TITLE
 		1: sort_mode = LibraryManager.AlbumSortMode.ARTIST
 		2: sort_mode = LibraryManager.AlbumSortMode.YEAR
-		3: sort_mode = LibraryManager.AlbumSortMode.GENRE
 	if prev_sort_mode != sort_mode:
 		sort()
 

@@ -80,7 +80,7 @@ def save_audio_meta(tag, meta, output_path):
 
 def save_audio_cover(tag, output_path):
 	cover_image = tag.images.any
-	if cover_image is not None:
+	if cover_image is not None and not os.path.isfile(output_path):
 		file = open(output_path, 'wb')
 		file.write(cover_image.data)
 		file.close()

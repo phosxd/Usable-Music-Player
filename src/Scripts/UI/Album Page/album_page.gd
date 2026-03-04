@@ -59,7 +59,7 @@ func init(album_:DBAlbum) -> void:
 
 	%'Track Count'.text = '%s Tracks' % loaded_tracks.size()
 	%'Runtime'.text = '%s Minutes' % int(runtime/60.0)
-	%'Genre'.text = album.genre
+	%'Genre'.text = ', '.join(album.genres) if not album.genres.is_empty() else 'No genre'
 	%'Copyright'.text = album.copyright
 
 

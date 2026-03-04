@@ -33,13 +33,20 @@ var valid := true
 ## Same as [param new] method, except if this track has already been created before, just reuse an existing object.
 static func new_or_reuse(db_artist:DBArtist, db_album:DBAlbum, track_number:int, disc_number:int=1, raw_info=null) -> DBTrack:
 	var old_object = _objects.get('%s:%s:%s:%s' % [db_artist.name, db_album.name, disc_number, track_number], null)
-	if old_object is DBTrack:
+	if old_object is DBTrack && old_object.valid:
 		return old_object
 	else:
 		return DBTrack.new(db_artist, db_album, track_number, disc_number, raw_info)
 
 
-static func update(db_artist:DBArtist, db_album:DBAlbum, track_number:int, disc_number:int=1, raw_info=null) -> void:
+## Construct new DBTrack.
+## Do not use [param raw_info].
+func _init(db_artist:DBArtist, db_album:DBAlbum, track_number:int, disc_number:int=1, raw_info=null) -> void:
+	_objects.set('%s:%s:%s:%s' % [db_artist.name, db_album.name, disc_number, track_number], self)
+	artist = db_artist
+	album = db_album
+	number = track_number
+	disc = disc_number
 	var object = _objects.get('%s:%s:%s:%s' % [db_artist.name, db_album.name, disc_number, track_number], null)
 	if not object: return
 	object = object as DBTrack
@@ -75,17 +82,6 @@ static func update(db_artist:DBArtist, db_album:DBAlbum, track_number:int, disc_
 
 	var raw_lyrics = raw_info.get('lyrics')
 	if raw_lyrics is String && not raw_lyrics.is_empty(): object.internal_lyrics = raw_lyrics
-
-
-## Construct new DBTrack.
-## Do not use [param raw_info].
-func _init(db_artist:DBArtist, db_album:DBAlbum, track_number:int, disc_number:int=1, raw_info=null) -> void:
-	_objects.set('%s:%s:%s:%s' % [db_artist.name, db_album.name, disc_number, track_number], self)
-	artist = db_artist
-	album = db_album
-	number = track_number
-	disc = disc_number
-	update(artist, album, number, disc_number, raw_info)
 
 
 func _invalidate() -> void:

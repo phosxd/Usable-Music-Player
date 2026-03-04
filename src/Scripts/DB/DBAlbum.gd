@@ -24,8 +24,9 @@ var discs:Dictionary[String,int] = {
 var cover_path: String
 ## Album release year. Not guaranteed to be formatted or be a valid year.
 var year: String
-## Album genre. No guaranteed to be formatted or be a valid genre.
-var genre: String
+## Album genres. Not guaranteed to be formatted or be a valid genre.
+var genres: PackedStringArray
+## Album copyright. Not Not guaranteed to be formatted.
 var copyright: String
 ## Cached color palette for the album cover image.
 var palette:Dictionary[String,Color] = {}
@@ -81,8 +82,23 @@ func _init(db_artist:DBArtist, album_name:String, raw_info=null) -> void:
 	else: year = 'None found'
 
 	var raw_genre = raw_info.get('genre')
-	if raw_genre is String && not raw_genre.is_empty(): genre = raw_genre
-	else: genre = 'None found'
+	genres = []
+	if raw_genre is String && not raw_genre.is_empty():
+		raw_genre = raw_genre \
+			.replace(' / ','&&') \
+			.replace('/ ','&&') \
+			.replace('/','&&') \
+			.replace(' ; ','&&') \
+			.replace('; ','&&') \
+			.replace(';','&&') \
+			.replace(' , ','&&') \
+			.replace(', ','&&') \
+			.replace(',','&&')
+		var raw_genres:PackedStringArray = raw_genre.split('&&')
+		for genre in raw_genres:
+			if genre is not String: continue
+			genres.append(genre)
+		genres = raw_genres
 
 	var raw_copyright = raw_info.get('copyright')
 	if raw_copyright is String && not raw_copyright.is_empty(): copyright = raw_copyright
