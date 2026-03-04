@@ -17,7 +17,7 @@ enum Importance {
 }
 const pro_template:String = '[color=white][lb]Process[rb][/color] %s [color=linen]%s[/color]'
 const info_template:String = '[color=yellow_green][lb]Info[rb][/color] %s [color=linen]%s[/color]'
-const warn_template:String = '[color=golld][lb]Warn[rb][/color] %s [color=linen]%s[/color]'
+const warn_template:String = '[color=gold][lb]Warn[rb][/color] %s [color=linen]%s[/color]'
 
 const _format_map:Dictionary[String,Array] = {
 	'~': ['[color=gray]', '[/color]'],

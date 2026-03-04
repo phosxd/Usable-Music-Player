@@ -256,8 +256,23 @@ expand_mode = 2
 stretch_mode = 5
 flip_h = true
 
+[node name="General Options" type="MenuButton" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 1/MarginContainer/TopbarContent/HBox" unique_id=757458282]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"AccentButton"
+icon = ExtResource("2_uho53")
+flat = false
+icon_alignment = 1
+item_count = 2
+popup/item_0/text = "Settings"
+popup/item_0/id = 0
+popup/item_1/text = "Console"
+popup/item_1/id = 1
+
 [node name="Tab Button Settings" type="Button" parent="Scene Margin/VBox/MarginContainer/Topbar/Island 1/MarginContainer/TopbarContent/HBox" unique_id=2144540982]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Settings"

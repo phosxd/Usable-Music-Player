@@ -25,6 +25,7 @@ static func new_or_reuse(artist_name:String) -> DBArtist:
 
 func _init(artist_name:String) -> void:
 	_objects.set(artist_name, self)
+	_cover = null
 	name = artist_name
 	var raw_artist:Dictionary = LibraryManager.database.artists.get(name,{'albums':{}})
 	album_names = Array(raw_artist.albums.keys(), TYPE_STRING, '', null)
@@ -50,7 +51,7 @@ func get_album(album_name:String) -> DBAlbum:
 		_invalidate()
 		return null
 
-	return DBAlbum.new(self, album_name, raw_album)
+	return DBAlbum.new_or_reuse(self, album_name, raw_album)
 
 
 ## Returns the path to the artist's cover image.

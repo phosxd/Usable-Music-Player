@@ -33,7 +33,7 @@ var palette:Dictionary[String,Color] = {}
 ## This may become false when the raw entry can no longer be found.
 var valid := true
 
-var _cover: ImageTexture
+var _cover
 
 
 ## Same as [param new] method, except if this album has already been created before, just reuse an existing object.
@@ -48,6 +48,7 @@ static func new_or_reuse(db_artist:DBArtist, album_name:String, raw_info=null) -
 ## Construct new DBAlbum.
 func _init(db_artist:DBArtist, album_name:String, raw_info=null) -> void:
 	_objects.set('%s:%s' % [db_artist.name, album_name], self)
+	_cover = null
 	artist = db_artist
 	name = album_name
 	if raw_info is not Dictionary:
