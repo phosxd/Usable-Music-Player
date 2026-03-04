@@ -243,7 +243,7 @@ func load_session() -> void:
 		PlayerManager.auto_queue_start_index = int(raw_auto_queue_start_index)
 
 	session_loaded.emit()
-	MiniLog.info('Session loaded', SessionManager)
+	MiniLog.info('Session loaded.', SessionManager)
 
 
 ## Save the current session to disk.

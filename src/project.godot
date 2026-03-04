@@ -22,6 +22,7 @@ config/use_custom_user_dir=true
 config/custom_user_dir_name="SOHP/Usable Music Player"
 config/auto_accept_quit=false
 config/features=PackedStringArray("4.6", "GL Compatibility")
+run/max_fps=48
 run/low_processor_mode=true
 boot_splash/show_image=false
 config/icon="uid://dvf313eolgmy2"
@@ -42,6 +43,7 @@ SessionManager="*uid://caowd7sywd5u3"
 [display]
 
 window/size/viewport_width=1185
+display_server/driver.linuxbsd="wayland"
 window/vsync/vsync_mode=0
 
 [dotnet]
@@ -96,3 +98,5 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 shader_compiler/shader_cache/enabled=false
+anti_aliasing/screen_space_roughness_limiter/enabled=false
+anti_aliasing/quality/use_debanding=true
