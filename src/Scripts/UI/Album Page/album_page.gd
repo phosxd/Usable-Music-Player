@@ -13,16 +13,18 @@ extends Control
 }
 var card_scene:PackedScene = SessionManager.get_layout_theme_scene('tracks_card')
 const overlay_color := Color(0.25, 0.25, 0.25, 0.5)
+@onready var options_popup:PopupMenu = %Options.get_popup()
 var loaded_tracks:Array[DBTrack] = []
 var album: DBAlbum
 
 
 func _ready() -> void:
+	options_popup.id_pressed.connect(_on_option_id_pressed)
 	if not album:
 		SessionManager.main_scene.set_tab('albums')
 
 
-func init(album_:DBAlbum) -> void:
+func init(album_:DBAlbum=null) -> void:
 	if not album_: return
 	album = album_
 	%Title.text = album.name
@@ -103,3 +105,12 @@ func _on_play_pressed() -> void:
 
 func _on_artist_pressed() -> void:
 	SessionManager.main_scene.set_tab('artist_page', album.artist)
+
+
+func _on_option_id_pressed(id:int) -> void:
+	match id:
+		0: pass
+		1: pass
+		2:
+			LibraryManager.rescan_album(album)
+			SessionManager.main_scene.refresh_tab()

@@ -3,9 +3,9 @@
 # # # get_audio_meta:
 #
 # Gets the input audio file metadata using TinyTag.
-# Outputs "out.txt" & "out.jpg" in the given output directory.
+# Returns an organized dictionary of metadata & saves album cover image into the given directory.
 #
-# SCHEMA: <input_path> <output_path>
+# SCHEMA: <input_path> <image_output_dir>
 #
 #
 # # # dump_audio_meta:
@@ -89,19 +89,21 @@ def save_audio_cover(tag, output_path):
 
 if sys.argv[1] == 'get_audio_meta':
 	input_path = sys.argv[2]
-	output_path = sys.argv[3]
+	image_output_dir = sys.argv[3]
 	tag:TinyTag = TinyTag.get(input_path, image=True)
 	meta = get_audio_meta(tag, input_path)
 
-	cover_path = output_path+'/out.%s' % meta['image_extension']
-	save_audio_cover(tag, meta, cover_path)
+	cover_path = image_output_dir+'/'+meta_as_file_name(meta, 1)+'.'+meta['image_extension']
 	meta['cover_path'] = cover_path
-	save_audio_meta(tag, meta, output_path+'/out.txt')
+	save_audio_cover(tag, cover_path)
+	print(json.dumps(meta))
 
 
 if sys.argv[1] == 'dump_audio_meta':
+	input_dir = sys.argv[2]
+	image_output_dir = sys.argv[3]
 	dump = []
-	for subdir, dirs, files in os.walk(sys.argv[2]):
+	for subdir, dirs, files in os.walk(input_dir):
 		for file in files:
 			path = os.path.join(subdir, file)
 			# Check file type.
@@ -113,7 +115,7 @@ if sys.argv[1] == 'dump_audio_meta':
 			meta = get_audio_meta(tag, path)
 			meta['cover_path'] = ''
 			if meta['image_extension'] != '':
-				cover_path = sys.argv[3]+'/'+meta_as_file_name(meta, 1)+'.'+meta['image_extension']
+				cover_path = image_output_dir+'/'+meta_as_file_name(meta, 1)+'.'+meta['image_extension']
 				meta['cover_path'] = cover_path
 				save_audio_cover(tag, cover_path)
 			dump.append(meta)

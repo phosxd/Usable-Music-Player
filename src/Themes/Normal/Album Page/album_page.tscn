@@ -223,6 +223,11 @@ icon_alignment = 1
 unique_name_in_owner = true
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
+tooltip_text = "- Play next: queues album to play after current track.
+
+- Add to queue: adds album to end of queue.
+
+- Rescan: use if you have changed metadata for any of the tracks."
 theme_type_variation = &"AccentButton"
 icon = ExtResource("9_cvxl0")
 flat = false

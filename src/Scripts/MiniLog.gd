@@ -15,14 +15,15 @@ enum Importance {
 	High,
 	Core,
 }
-const pro_template:String = '[color=white][lb]Process[rb][/color] %s [color=linen]%s[/color]'
-const info_template:String = '[color=yellow_green][lb]Info[rb][/color] %s [color=linen]%s[/color]'
-const warn_template:String = '[color=gold][lb]Warn[rb][/color] %s [color=linen]%s[/color]'
+const pro_template:String = '[color=linen][lb]Process[rb][/color] %s [color=white]%s[/color]'
+const info_template:String = '[color=yellow_green][lb]Info[rb][/color] %s [color=white]%s[/color]'
+const warn_template:String = '[color=gold][lb]Warn[rb][/color] %s [color=white]%s[/color]'
+const err_template:String = '[color=red][lb]Error[rb][/color] %s [color=white]%s[/color]'
 
 const _format_map:Dictionary[String,Array] = {
 	'~': ['[color=gray]', '[/color]'],
-	'!': ['[color=gold]', '[/color]'],
 	'!!': ['[color=red]', '[/color]'],
+	'!': ['[color=gold]', '[/color]'],
 	'i': ['[color=cornflower_blue][code]', '[/code][/color]'],
 }
 const _importance_format_map:Array[Array] = [
@@ -72,6 +73,12 @@ static func info(text:String, source:Object) -> void:
 ## Prints a warning text. Use this to communicate important information.
 static func warn(text:String, source:Object) -> void:
 	var l:String = _format_text(warn_template % [_source_as_text(source), text])
+	_log(l)
+
+
+## Prints an error text. Use this for error reporting.
+static func err(text:String, source:Object) -> void:
+	var l:String = _format_text(err_template % [_source_as_text(source), text])
 	_log(l)
 
 

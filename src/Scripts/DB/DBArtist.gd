@@ -42,13 +42,26 @@ func as_filename() -> String:
 	return '%s' % [name.replace('/','_')]
 
 
+func get_all_albums() -> Array[DBAlbum]:
+	var result:Array[DBAlbum] = []
+	for album_name:String in album_names:
+		var album = get_album(album_name)
+		if album == null: continue
+		result.append(album)
+
+	return result
+
+
 ## Get specific album.
 ## Can return null if album cannot be found.
 func get_album(album_name:String) -> DBAlbum:
-	var raw_artist:Dictionary = LibraryManager.database.artists.get(name,{})
+	var raw_artist = LibraryManager.database.artists.get(name)
+	if raw_artist is not Dictionary:
+		_invalidate()
+		return null
 	var raw_album = raw_artist.get('albums',{}).get(album_name)
 	if raw_album is not Dictionary:
-		_invalidate()
+		album_names.erase(album_name)
 		return null
 
 	return DBAlbum.new_or_reuse(self, album_name, raw_album)

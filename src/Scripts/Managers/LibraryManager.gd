@@ -144,22 +144,76 @@ static func get_tracks_sorted(sort_mode:=TrackSortMode.TITLE) -> Array[DBTrack]:
 	return result
 
 
+static func rescan_artist(artist:DBArtist, update_db:bool=true) -> void:
+	var all_albums:Array[DBAlbum] = artist.get_all_albums()
+	var all_tracks:Dictionary[String,Array] = {}
+	for album:DBAlbum in all_albums:
+		all_tracks.set(album.name, album.get_all_tracks())
+
+	if update_db:
+		database.artists.erase(artist.name)
+		artist._invalidate()
+
+	for album:DBAlbum in all_albums:
+		album._invalidate()
+		LibraryManager.rescan_album(album, false, all_tracks[album.name])
+
+	if update_db:
+		save_database()
+
+
+static func rescan_album(album:DBAlbum, update_db:bool=true, all_tracks:Array[DBTrack]=[]) -> void:
+	if all_tracks.size() == 0: all_tracks = album.get_all_tracks()
+	if update_db:
+		database.artists[album.artist.name].albums.erase(album.name)
+		database.track_count -= all_tracks.size()
+		album.artist._invalidate()
+		album._invalidate()
+
+	# Rescan all tracks.
+	for track:DBTrack in all_tracks:
+		track._invalidate()
+		LibraryManager.rescan_track(track, false)
+
+	if update_db:
+		save_database()
+
+
 ## Rescans the track & updates the database accordingly.
-## Returns the updated DBTrack.
-static func rescan_track(track:DBTrack, custom_data:Dictionary={}) -> DBTrack:
-	database.artists[track.artist.name].albums[track.album.name].discs[str(track.disc)].tracks.set(track.number, null)
-	database.track_count -= 1
+## Does not update the database file only the database in memory.
+static func rescan_track(track:DBTrack, update_db:bool=true) -> void:
+	if update_db:
+		database.artists[track.artist.name].albums[track.album.name].discs[str(track.disc)].tracks.erase(track.number)
+		database.track_count -= 1
+		track.artist._invalidate()
+		track.album._invalidate()
+		track._invalidate()
+
+	if not FileAccess.file_exists(track.path):
+		return
 	var track_size = FileAccess.get_size(track.path)
 	if track_size > 0: database.library_size -= track_size
-	_index(track.raw, track.number, -1, custom_data)
-	save_database()
 
-	track.artist._invalidate()
-	track.album._invalidate()
-	track._invalidate()
-	var db_artist := DBArtist.new_or_reuse(track.artist.name)
-	var db_album := DBAlbum.new_or_reuse(db_artist, track.album.name)
-	return DBTrack.new_or_reuse(db_artist, db_album, track.number, track.disc)
+	# Get metadata from track at "track.path" & index it.
+	var output:Array = []
+	var err:int = CLI.execute('interface', ['get_audio_meta', track.path, image_cache_path], output)
+	if err != Error.OK:
+		MiniLog.err('Could not rescan track at "$~%s~$" with error "$!!%s!!$".' % [track.path, output[0]], LibraryManager)
+		return
+	if output.size() > 0 && output[0] is String:
+		var meta = JSON.parse_string(output[0])
+		if meta is not Dictionary: return
+		LibraryManager._index(meta)
+
+	if update_db:
+		save_database()
+
+
+static func scan_for_changes() -> void:
+	return
+	FileUtils.walk_dir(SessionManager.library_location, func(file_path:String) -> void:
+		pass
+	,func(_dir_path:String) -> void: pass)
 
 
 static func wipe_database() -> void:

@@ -68,7 +68,9 @@ func _on_option_id_pressed(id:int) -> void:
 			else:
 				PlayerManager.add_to_queue(track)
 		3: OS.shell_show_in_file_manager(track.path)
-		4: init(LibraryManager.rescan_track(track))
+		4:
+			LibraryManager.rescan_track(track)
+			SessionManager.main_scene.refresh_tab()
 
 
 func _on_button_mouse_entered() -> void:

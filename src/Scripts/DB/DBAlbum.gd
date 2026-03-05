@@ -132,6 +132,7 @@ func get_track(track_number:int, disc_number:int=1) -> DBTrack:
 
 	var raw_discs:Dictionary = raw_album.get('discs',{})
 	var raw_disc:Dictionary = raw_discs.get(str(disc_number),{'tracks':[]})
+	if track_number >= raw_disc.tracks.size(): return null
 	var raw_track = raw_disc.tracks.get(track_number)
 	if raw_track == null: return null
 

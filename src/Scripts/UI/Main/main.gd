@@ -107,7 +107,8 @@ func set_tab(tab:String, data=null) -> void:
 			if tab_scene is PackedScene:
 				var scene = tab_scene.instantiate()
 				if scene.has_method('init'):
-					scene.call('init', data)
+					if data != null: scene.call('init', data)
+					else: scene.call('init')
 				_parse_tab_config(scene)
 				%'Tab Content'.add_child(scene)
 				
@@ -130,6 +131,12 @@ func _parse_tab_config(scene:Node) -> void:
 		# Sort mode config.
 		if sort_mode_config is Dictionary:
 			%'Sort Mode'.disabled = not sort_mode_config.get('enabled', false)
+			# Add options.
+			%'Sort Mode'.clear()
+			for item:String in sort_mode_config.get('options',[]):
+				%'Sort Mode'.add_item(item)
+			if %'Sort Mode'.item_count == 0:
+				%'Sort Mode'.add_item('Sort by: Title')
 			# Set default.
 			var sort_mode_default = sort_mode_config.get('default')
 			if sort_mode_default is String:
@@ -139,12 +146,6 @@ func _parse_tab_config(scene:Node) -> void:
 			var sort_mode_callback = sort_mode_config.get('callback')
 			if sort_mode_callback is Callable:
 				%'Sort Mode'.item_selected.connect(sort_mode_callback)
-			# Add options.
-			%'Sort Mode'.clear()
-			for item:String in sort_mode_config.get('options',[]):
-				%'Sort Mode'.add_item(item)
-			if %'Sort Mode'.item_count == 0:
-				%'Sort Mode'.add_item('Sort by: Title')
 
 		# Ascend mode config.
 		if ascend_mode_config is Dictionary:
@@ -170,6 +171,11 @@ func _parse_tab_config(scene:Node) -> void:
 			var search_callback = search_config.get('callback')
 			if search_callback is Callable:
 				%'Search'.text_submitted.connect(search_callback)
+
+
+func refresh_tab() -> void:
+	var last_tab = tab_history.get(tab_history.size()-1)
+	set_tab(last_tab[0], last_tab[1])
 
 
 func go_back() -> void:
