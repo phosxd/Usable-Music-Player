@@ -7,6 +7,9 @@ enum DominantColorMethod {
 	ACCURATE,
 	ACCURATE_BLEND,
 }
+const album_cover_size_1 := Vector2i(250,250)
+const album_cover_size_2 := Vector2i(500,500)
+const album_cover_size_3 := Vector2i(1000,1000)
 
 ## Keeps track of unique [DBAlbum] objects. Will use existing object when instantiating when possible.
 static var _objects:Dictionary[String,DBAlbum] = {}
@@ -148,8 +151,16 @@ func get_cover() -> ImageTexture:
 	if FileAccess.file_exists(cover_path):
 		var image = Image.load_from_file(cover_path)
 		if image is Image:
+			var album_cover_size: Vector2i
+			match SessionManager.image_detail:
+				0: album_cover_size = album_cover_size_1
+				1: album_cover_size = album_cover_size_2
+				2: album_cover_size = album_cover_size_3
+			ImageUtils.limit_size(image, album_cover_size)
 			cover = ImageTexture.create_from_image(image)
 	if not cover: return null
+
+	# Save cover in memory for faster reloading.
 	_cover = cover
 	return cover
 

@@ -353,6 +353,7 @@ layout_mode = 2
 [node name="Back Button" type="Button" parent="VBox/HBox/Tab VBox/Topbar/Island 1/Topbar Content" unique_id=317194944]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_type_variation = &"AccentButton"
 icon = ExtResource("16_eeh6y")
 flat = true

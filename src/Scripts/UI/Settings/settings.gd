@@ -22,28 +22,23 @@ const dir_open_popup := preload('res://Scenes/Dir Open/dir_open.tscn')
 const info_popup := preload('res://Scenes/Info Popup/info_popup.tscn')
 const credits_popup := preload('res://Scenes/Credits/credits.tscn')
 @onready var info_text_template:String = %Info.text
-@onready var settings:Array[Node] = [%Info, %'Library Path', %'Dynamic Accents', %'Visualizer Mode', %'Layout Theme', %'Landing Page', %'Fetch Lyrics', %'Fetch Artist Cover']
 
 
 func _ready() -> void:
-	update(settings)
-
-
-func update(nodes:Array[Node]) -> void:
 	@warning_ignore('integer_division')
-	nodes[0].text = String(info_text_template) % [
+	%Info.text = info_text_template % [
 		LibraryManager.get_cache_size()/1000/1000,
 		LibraryManager.database.get('timestamp', 'Never'),
 		LibraryManager.get_library_size()/1000/1000,
 		LibraryManager.database.track_count,
 	]
-	nodes[1].text = SessionManager.library_location
-	nodes[2].button_pressed = SessionManager.dynamic_accents
-	nodes[3].selected = SessionManager.visualizer_mode
-	nodes[4].selected = SessionManager.layout_theme
-	nodes[5].selected = landing_page_options.find(SessionManager.landing_page)
-	nodes[6].button_pressed = SessionManager.fetch_lyrics
-	nodes[7].button_pressed = SessionManager.fetch_artist_cover
+	%'Dynamic Accents'.button_pressed = SessionManager.dynamic_accents
+	%'Visualizer Mode'.selected = SessionManager.visualizer_mode
+	%'Layout Theme'.selected = SessionManager.layout_theme
+	%'Landing Page'.selected = landing_page_options.find(SessionManager.landing_page)
+	%'Fetch Lyrics'.button_pressed = SessionManager.fetch_lyrics
+	%'Fetch Artist Cover'.button_pressed = SessionManager.fetch_artist_cover
+	%'Image Detail'.value = SessionManager.image_detail
 
 
 func _on_select_library_pressed() -> void:
@@ -67,14 +62,7 @@ func _on_library_path_text_submitted(new_text:String) -> void:
 	%'Library Path'.editable = false
 	%'Rescan Library'.disabled = true
 
-	LibraryManager.load_library(new_text, (func(scene:Node, library_path:LineEdit, rescan_library:Button, nodes:Array[Node]) -> void:
-		if not scene: return
-		library_path.editable = true
-		library_path.text = new_text
-		rescan_library.disabled = false
-		update(nodes)
-		if popup: popup.queue_free()
-	).bind(self, %'Library Path', %'Rescan Library', settings))
+	LibraryManager.load_library(new_text, func()->void:pass)
 
 
 func _on_rescan_library_pressed() -> void:
@@ -142,3 +130,7 @@ func _on_skip_forward_key_pressed() -> void:
 
 func _on_page_back_key_pressed() -> void:
 	pass # Replace with function body.
+
+
+func _on_image_detail_value_changed(value:float) -> void:
+	SessionManager.image_detail = int(value)

@@ -269,6 +269,10 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Theme/VBox/Dynamic Accents" unique_id=737435311]
 layout_mode = 2
+tooltip_text = "When enabled, UI elements will change color to match the current playing track.
+
+This may cause minor skips when changing colors."
+mouse_filter = 1
 text = "Dynamic Accents"
 label_settings = ExtResource("3_vbj3s")
 
@@ -386,6 +390,48 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.0
 theme_override_constants/separation = 0
 
+[node name="Sep 5" type="HSeparator" parent="MarginContainer/Scroll/VBox" unique_id=755115195]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_rhe31")
+
+[node name="Performance" type="PanelContainer" parent="MarginContainer/Scroll/VBox" unique_id=1773475779]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_tajnh")
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Performance" unique_id=956604619]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/Scroll/VBox/Performance/VBox" unique_id=959181844]
+layout_mode = 2
+text = "Performance"
+label_settings = ExtResource("5_m3t6d")
+
+[node name="Image Detail" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Performance/VBox" unique_id=292793555]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Performance/VBox/Image Detail" unique_id=1875902368]
+layout_mode = 2
+tooltip_text = "Image detail level. Higher values will use more memory but look sharper."
+mouse_filter = 1
+text = "Image Detail"
+label_settings = ExtResource("3_vbj3s")
+
+[node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Performance/VBox/Image Detail" unique_id=603747556]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Image Detail" type="HSlider" parent="MarginContainer/Scroll/VBox/Performance/VBox/Image Detail" unique_id=761271597]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 2.0
+rounded = true
+tick_count = 3
+ticks_position = 3
+
 [node name="Sep 3" type="HSeparator" parent="MarginContainer/Scroll/VBox" unique_id=583878255]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -472,6 +518,7 @@ disabled = true
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Theme/VBox/Visualizer Mode/Visualizer Mode" to="." method="_on_visualizer_mode_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Theme/VBox/Layout Theme/Layout Theme" to="." method="_on_layout_theme_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Theme/VBox/Landing Page/Landing Page" to="." method="_on_landing_page_item_selected"]
+[connection signal="value_changed" from="MarginContainer/Scroll/VBox/Performance/VBox/Image Detail/Image Detail" to="." method="_on_image_detail_value_changed"]
 [connection signal="toggled" from="MarginContainer/Scroll/VBox/APIs/VBox/Fetch Lyrics/Fetch Lyrics" to="." method="_on_fetch_lyrics_toggled"]
 [connection signal="toggled" from="MarginContainer/Scroll/VBox/APIs/VBox/Fetch Artist Cover/Fetch Artist Cover" to="." method="_on_fetch_artist_cover_toggled"]
 [connection signal="toggled" from="MarginContainer/Scroll/VBox/APIs/VBox/Fetch Album Cover/Fetch Album Cover" to="." method="_on_fetch_album_cover_toggled"]

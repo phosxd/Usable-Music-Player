@@ -22,8 +22,8 @@ config/use_custom_user_dir=true
 config/custom_user_dir_name="SOHP/Usable Music Player"
 config/auto_accept_quit=false
 config/features=PackedStringArray("4.6", "GL Compatibility")
-run/max_fps=48
 run/low_processor_mode=true
+run/low_processor_mode_sleep_usec=10000
 boot_splash/show_image=false
 config/icon="uid://dvf313eolgmy2"
 

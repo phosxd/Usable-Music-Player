@@ -14,6 +14,12 @@ enum LayoutTheme {
 	Rounded,
 }
 
+enum ImageDetail {
+	Low,
+	Normal,
+	High,
+}
+
 const layout_theme_name:Array[String] = [
 	'Normal',
 	'Rounded',
@@ -24,6 +30,8 @@ const property_data:Array[Array] = [
 	['fetch_lyrics',[TYPE_BOOL]],
 	['fetch_artist_cover',[TYPE_BOOL]],
 	['fetch_album_cover',[TYPE_BOOL]],
+	# Performance data.
+	['image_detail',[TYPE_INT]],
 	# Shortcut data.
 	#['play_pause_key',[TYPE_INT]],
 	# Tab data.
@@ -82,6 +90,16 @@ var fetch_lyrics:bool = true
 var fetch_artist_cover:bool = false
 var fetch_album_cover:bool = false
 
+## Image detail for album & artist covers.
+## Resets cached album cover images when set.
+var image_detail := ImageDetail.Normal:
+	set(value):
+		image_detail = value
+		for album:DBAlbum in DBAlbum._objects.values():
+			album._cover = null
+		value_changed.emit('image_detail')
+
+## Global search term.
 var search_term:String = '':
 	set(value):
 		search_term = value

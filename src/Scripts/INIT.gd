@@ -21,6 +21,9 @@ func _ready() -> void:
 	# Set up desktop file.
 	if OS.get_name() == 'Linux': generate_desktop_file()
 
+	# Load library database.
+	LibraryManager.load_library_from_cache()
+
 
 ## Generates & saves a Linux desktop file for this app.
 func generate_desktop_file() -> void:

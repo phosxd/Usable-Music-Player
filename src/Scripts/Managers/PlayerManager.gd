@@ -38,7 +38,6 @@ var is_shuffled:bool = false
 
 
 func _ready() -> void:
-	LibraryManager.load_library_from_cache()
 	audio_stream_player = AudioStreamPlayer.new()
 	audio_stream_player.bus = &'Master'
 	audio_stream_player.mix_target = AudioStreamPlayer.MIX_TARGET_SURROUND

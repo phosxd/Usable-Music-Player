@@ -1,4 +1,4 @@
-class_name FileUtils extends Node
+class_name FileUtils extends RefCounted
 
 
 ## Iterates on every file & direcotry in the tree, starting from [param root_path].
