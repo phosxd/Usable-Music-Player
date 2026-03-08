@@ -140,6 +140,15 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "No directory selected..."
 
+[node name="Scan For Changes" type="Button" parent="MarginContainer/Scroll/VBox/Library/VBox/Library" unique_id=2109067686]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Delete all cached data & rescan the library.
+
+Session data & preferences will be kept.
+Lyrics, cover art, & other data will all be permanently deleted."
+text = "Scan For Changes"
+
 [node name="Rescan Library" type="Button" parent="MarginContainer/Scroll/VBox/Library/VBox/Library" unique_id=1633868751]
 unique_name_in_owner = true
 layout_mode = 2
@@ -508,6 +517,7 @@ disabled = true
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Links/Report Issue" to="." method="_on_report_issue_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Links/Credits" to="." method="_on_credits_pressed"]
 [connection signal="text_submitted" from="MarginContainer/Scroll/VBox/Library/VBox/Library/Library Path" to="." method="_on_library_path_text_submitted"]
+[connection signal="pressed" from="MarginContainer/Scroll/VBox/Library/VBox/Library/Scan For Changes" to="." method="_on_scan_for_changes_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Library/VBox/Library/Rescan Library" to="." method="_on_rescan_library_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Library/VBox/Library/Select Library" to="." method="_on_select_library_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Shortcuts/VBox/Play Pause/Play Pause Key" to="." method="_on_play_pause_key_pressed"]

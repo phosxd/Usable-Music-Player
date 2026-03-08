@@ -21,9 +21,7 @@ func from_artist(artist:DBArtist) -> void:
 	_reset_images()
 	_add_images()
 	var index:int = -1
-	for album_name:String in artist.album_names:
-		var album = artist.get_album(album_name)
-		if album is not DBAlbum: continue
+	for album:DBAlbum in artist.albums.values():
 		index += 1
 		if index > 3: break
 		if index >= self.get_child_count(): continue

@@ -23,7 +23,7 @@ static func create_thread(run:Callable, callback=null) -> Thread:
 	timer.timeout.connect(func() -> void:
 		if thread.is_started() && not thread.is_alive():
 			if not timer: return
-			var result = thread.wait_to_finish()
+			var result = await thread.wait_to_finish()
 			if is_callable_valid(callback): callback.call(result)
 			timer.stop()
 			timer.queue_free()

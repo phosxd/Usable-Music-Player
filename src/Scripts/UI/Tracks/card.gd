@@ -22,10 +22,11 @@ func init(db_track:DBTrack) -> void:
 	track = db_track
 	if not track.valid: _invalidate()
 	%Name.text = track.name
-	%'Track Number'.text = '%s' % (track.number+1)
+	if track.number == 0: %'Track Number'.hide()
+	else: %'Track Number'.text = '%s' % (track.number)
 	%Length.text = DBTrack.get_track_position_formatted(track.length)
 	%Format.text = '.%s' % track.path.split('.')[-1].to_lower()
-	%Image.texture = track.album.get_cover()
+	%Image.texture = track.album.get_cover() if track.album else DBAlbum.default_cover
 	set_mode(selected_mode)
 
 

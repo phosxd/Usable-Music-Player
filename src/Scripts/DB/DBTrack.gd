@@ -2,15 +2,10 @@
 ## Use [param new_or_reuse] when instantiating.
 class_name DBTrack extends RefCounted
 
-## Keeps track of unique [DBTrack] objects. Will use existing object when instantiating when possible.
-static var _objects:Dictionary[String,DBTrack] = {}
-
-## Raw track data.
-var raw: Dictionary
-## Parent artist.
-var artist: DBArtist
 ## Parent album.
 var album: DBAlbum
+## Track absolute file path.
+var path: String
 ## Track name.
 var name: String
 ## Track actual artist name.
@@ -21,71 +16,51 @@ var number: int
 var disc: int
 ## Track length.
 var length: float
-## Track absolute file path.
-var path: String
-## Track built-in lyrics.
-var internal_lyrics: String
+## Number of track channels.
+var channels: int
+## Track sample rate.
+var sample_rate: float
+## Track bit rate.
+var bit_rate: float
+## Track beats per minute.
+var bpm: float
+## Track comment.
+var comment: String
 ## Whether or not the DB entry is valid.
-## This may become false when the raw entry can no longer be found.
 var valid := true
-
-
-## Same as [param new] method, except if this track has already been created before, just reuse an existing object.
-static func new_or_reuse(db_artist:DBArtist, db_album:DBAlbum, track_number:int, disc_number:int=1, raw_info=null) -> DBTrack:
-	var old_object = _objects.get('%s:%s:%s:%s' % [db_artist.name, db_album.name, disc_number, track_number], null)
-	if old_object is DBTrack && old_object.valid:
-		return old_object
-	else:
-		return DBTrack.new(db_artist, db_album, track_number, disc_number, raw_info)
 
 
 ## Construct new DBTrack.
 ## Do not use [param raw_info].
-func _init(db_artist:DBArtist, db_album:DBAlbum, track_number:int, disc_number:int=1, raw_info=null) -> void:
-	_objects.set('%s:%s:%s:%s' % [db_artist.name, db_album.name, disc_number, track_number], self)
-	artist = db_artist
-	album = db_album
-	number = track_number
-	disc = disc_number
-	var object = _objects.get('%s:%s:%s:%s' % [db_artist.name, db_album.name, disc_number, track_number], null)
-	if not object: return
-	object = object as DBTrack
+func _init(album_:DBAlbum, path_:String, data:Dictionary) -> void:
+	if path_ == '.dummy': return # Don't do any processing if is a dummy.
+	if path_.is_empty() or not album_: remove()
+	album = album_
+	path = path_
 
-	if raw_info is not Dictionary:
-		var raw_artist:Dictionary = LibraryManager.database.artists.get(db_artist.name,{'albums':{}})
-		var raw_album:Dictionary = raw_artist.albums.get(db_album.name,{'discs':{}})
-		var raw_disc:Dictionary = raw_album.discs.get(str(disc_number),{'tracks':[]})
-		if track_number < raw_disc.tracks.size():
-			raw_info = raw_disc.tracks.get(track_number)
-		if raw_info is not Dictionary: return
+	var raw_length = data.get('length')
+	if raw_length is float: length = raw_length
+	else: length = 0
 
-	object.raw = raw_info
+	var raw_title = data.get('title')
+	if raw_title is String && not raw_title.is_empty(): name = raw_title
+	else: name = 'No title found'
 
-	var raw_path = raw_info.get('path')
-	if raw_path is String && not raw_path.is_empty(): object.path = raw_path
-	else: object.path = ''
+	var raw_aa = data.get('actual_artist')
+	if raw_aa is String && not raw_aa.is_empty(): actual_artist = raw_aa
+	else: actual_artist = album.artist.name if album else ''
 
-	if object.path.is_empty() or object.length < 0:
-		object._invalidate()
+	var raw_disc = data.get('disc')
+	if raw_disc is int: disc = raw_disc
+	else: disc = 0
 
-	var raw_length = raw_info.get('length')
-	if raw_length is float: object.length = raw_length
-	else: object.length = 0
-
-	var raw_title = raw_info.get('title')
-	if raw_title is String && not raw_title.is_empty(): object.name = raw_title
-	else: object.name = 'No title found'
-
-	var raw_aa = raw_info.get('actual_artist')
-	if raw_aa is String && not raw_aa.is_empty(): object.actual_artist = raw_aa
-	else: object.actual_artist = db_artist.name
-
-	var raw_lyrics = raw_info.get('lyrics')
-	if raw_lyrics is String && not raw_lyrics.is_empty(): object.internal_lyrics = raw_lyrics
+	var raw_number = data.get('number')
+	if raw_number is int: number = raw_number
+	else: number = 0
 
 
-func _invalidate() -> void:
-	valid = false
+func remove() -> void:
+	LibraryManager.remove_track(path)
 
 
 func get_stream() -> AudioStream:
@@ -94,12 +69,11 @@ func get_stream() -> AudioStream:
 
 ## Returns file system firendly name of the track.
 func as_filename() -> String:
-	return '%s__%s__%s__%s' % [artist.name.replace('/','_'), album.name.replace('/','_'), disc, number]
+	return '%s__%s__%s__%s' % [album.artist.name.replace('/','_'), album.name.replace('/','_'), disc, number]
 
 
 ## Returns any stored lyrics for this track, or an empty string if none found.
 func get_lyrics() -> String:
-	if internal_lyrics && not internal_lyrics.is_empty(): return internal_lyrics
 	var text = FileAccess.get_file_as_string(get_lyrics_path())
 	return text
 

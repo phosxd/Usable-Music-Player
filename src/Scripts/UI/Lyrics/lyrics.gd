@@ -29,7 +29,7 @@ func update(_queue_position:int, track:DBTrack) -> void:
 	# Fetch from API if not in DB.
 	if stored_lyrics.is_empty() && SessionManager.fetch_lyrics:
 		var url = 'https://lrclib.net/api/get?artist_name=%s&track_name=%s&album_name=%s&duration=%s' % [
-			track.artist.name.uri_encode(),
+			track.album.artist.name.uri_encode(),
 			track.name.uri_encode(),
 			track.album.name.uri_encode(),
 			str(int(track.length)),

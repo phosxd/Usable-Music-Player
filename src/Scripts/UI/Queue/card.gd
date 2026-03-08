@@ -9,7 +9,7 @@ func _ready() -> void:
 
 func init(track:DBTrack) -> void:
 	%Name.text = track.name
-	%Artist.text = track.artist.name
+	%Artist.text = track.album.artist.name
 	%Length.text = DBTrack.get_track_position_formatted(track.length)
 	track.album.get_cover_threaded(func(cover) -> void:
 		%Image.texture = cover

@@ -44,11 +44,9 @@ func init(artist_:DBArtist=null) -> void:
 
 	var runtime:float = 0
 	var track_count:int = 0
-	for album_name in artist.album_names:
-		var album = artist.get_album(album_name)
-		if not album: continue
+	for album:DBAlbum in artist.albums.values():
 		loaded_albums.append(album)
-		for track:DBTrack in album.get_all_tracks():
+		for track:DBTrack in album.tracks.values():
 			track_count += 1
 			runtime += track.length
 		add_card(album)
@@ -102,6 +100,17 @@ func _on_album_button_pressed() -> void:
 
 func _on_play_pressed() -> void:
 	if loaded_albums.is_empty(): return
+	var all_tracks:Array[DBTrack] = []
+	PlayerManager.queue.clear()
+	for album:DBAlbum in loaded_albums:
+		for track:DBTrack in album.get_all_tracks():
+			PlayerManager.add_to_queue(track, false)
+
+	PlayerManager.set_current_track(0)
+	if PlayerManager.is_shuffled:
+		PlayerManager.shuffle_queue(all_tracks[0])
+	PlayerManager.queue_updated.emit()
+	PlayerManager.set_playing(true)
 
 
 func _on_option_id_pressed(id:int) -> void:

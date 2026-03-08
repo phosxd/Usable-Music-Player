@@ -30,15 +30,16 @@ func _ready() -> void:
 		LibraryManager.get_cache_size()/1000/1000,
 		LibraryManager.database.get('timestamp', 'Never'),
 		LibraryManager.get_library_size()/1000/1000,
-		LibraryManager.database.track_count,
+		LibraryManager.database.tracks.size(),
 	]
-	%'Dynamic Accents'.button_pressed = SessionManager.dynamic_accents
+	%'Library Path'.text = SessionManager.library_location
+	%'Dynamic Accents'.set_pressed_no_signal(SessionManager.dynamic_accents)
 	%'Visualizer Mode'.selected = SessionManager.visualizer_mode
 	%'Layout Theme'.selected = SessionManager.layout_theme
 	%'Landing Page'.selected = landing_page_options.find(SessionManager.landing_page)
-	%'Fetch Lyrics'.button_pressed = SessionManager.fetch_lyrics
-	%'Fetch Artist Cover'.button_pressed = SessionManager.fetch_artist_cover
-	%'Image Detail'.value = SessionManager.image_detail
+	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.fetch_lyrics)
+	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.fetch_artist_cover)
+	%'Image Detail'.set_value_no_signal(SessionManager.image_detail)
 
 
 func _on_select_library_pressed() -> void:
@@ -133,4 +134,8 @@ func _on_page_back_key_pressed() -> void:
 
 
 func _on_image_detail_value_changed(value:float) -> void:
-	SessionManager.image_detail = int(value)
+	SessionManager.image_detail = int(value) as SessionManager.ImageDetail
+
+
+func _on_scan_for_changes_pressed() -> void:
+	LibraryManager.scan_for_changes()

@@ -29,7 +29,7 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 	if not track: return
 	current_track = track
 	%'Track Name'.text = current_track.name
-	%'Artist Name'.text = '%s' % [current_track.artist.name]
+	%'Artist Name'.text = '%s' % [current_track.album.artist.name]
 	if %'Toggle Shuffle'.button_pressed:
 		original_queue.clear()
 		%'Toggle Shuffle'.button_pressed = false
@@ -190,4 +190,4 @@ func _on_track_name_pressed() -> void:
 
 func _on_artist_name_pressed() -> void:
 	if not current_track: return
-	SessionManager.main_scene.set_tab('artist_page', current_track.artist)
+	SessionManager.main_scene.set_tab('artist_page', current_track.album.artist)

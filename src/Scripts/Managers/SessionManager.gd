@@ -95,7 +95,7 @@ var fetch_album_cover:bool = false
 var image_detail := ImageDetail.Normal:
 	set(value):
 		image_detail = value
-		for album:DBAlbum in DBAlbum._objects.values():
+		for album:DBAlbum in LibraryManager.get_albums_sorted():
 			album._cover = null
 		value_changed.emit('image_detail')
 
@@ -231,19 +231,12 @@ func load_session() -> void:
 	PlayerManager.queue.clear()
 	var raw_queue = data.get('queue')
 	if raw_queue is Array:
-		for item in raw_queue:
-			if item is not Dictionary: continue
-			var artist_name = item.get('artist')
-			if artist_name is String && not artist_name.is_empty():
-				var artist := DBArtist.new_or_reuse(artist_name)
-				var album_name = item.get('album')
-				if album_name is String && not album_name.is_empty():
-					var album := DBAlbum.new_or_reuse(artist, album_name)
-					var track_number = item.get('number')
-					if (track_number is int or track_number is float) && track_number != -1:
-						track_number = int(track_number)
-						PlayerManager.add_to_queue(DBTrack.new_or_reuse(artist, album, track_number))
+		for path in raw_queue:
+			if path is not String: continue
+			var track = LibraryManager.get_track(path)
+			PlayerManager.add_to_queue(track, false)
 
+	PlayerManager.queue_updated.emit()
 	var raw_queue_position = data.get('queue_position')
 	if (raw_queue_position is int or raw_queue_position is float) && raw_queue_position != -1:
 		PlayerManager.set_current_track(int(raw_queue_position), false)
@@ -278,11 +271,7 @@ func save_session() -> void:
 		data.set(i[0], self.get(i[0]))
 
 	for track:DBTrack in PlayerManager.queue:
-		data.queue.append({
-			'artist': track.artist.name,
-			'album': track.album.name,
-			'number': track.number,
-		})
+		data.queue.append(track.path)
 
 	var file := FileAccess.open(session_file_path, FileAccess.WRITE)
 	var json = JSON.stringify(data, '\t', true, true)

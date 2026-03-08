@@ -11,18 +11,14 @@ const album_cover_size_1 := Vector2i(250,250)
 const album_cover_size_2 := Vector2i(500,500)
 const album_cover_size_3 := Vector2i(1000,1000)
 
-## Keeps track of unique [DBAlbum] objects. Will use existing object when instantiating when possible.
-static var _objects:Dictionary[String,DBAlbum] = {}
 static var default_cover := ImageTexture.create_from_image(preload('res://Assets/Icons/texture.svg').get_image())
 
 ## Parent artist.
 var artist: DBArtist
 ## Album name.
 var name: String
-## Discs & the number of tracks in those discs.
-var discs:Dictionary[String,int] = {
-	'1': 0,
-}
+## Tracks in this album with their path being the key.
+var tracks: Dictionary[String,DBTrack]
 ## Album cover image path. Use [param get_cover] to get a usable texture.
 var cover_path: String
 ## Album release year. Not guaranteed to be formatted or be a valid year.
@@ -34,57 +30,37 @@ var copyright: String
 ## Cached color palette for the album cover image.
 var palette:Dictionary[String,Color] = {}
 ## Whether or not the DB entry is valid.
-## This may become false when the raw entry can no longer be found.
 var valid := true
 
 var _cover
 
 
-## Same as [param new] method, except if this album has already been created before, just reuse an existing object.
-static func new_or_reuse(db_artist:DBArtist, album_name:String, raw_info=null) -> DBAlbum:
-	var old_object = _objects.get('%s:%s' % [db_artist.name, album_name], null)
-	if old_object is DBAlbum:
-		return old_object
-	else:
-		return DBAlbum.new(db_artist, album_name, raw_info)
-
-
 ## Construct new DBAlbum.
-func _init(db_artist:DBArtist, album_name:String, raw_info=null) -> void:
-	_objects.set('%s:%s' % [db_artist.name, album_name], self)
-	_cover = null
-	artist = db_artist
-	name = album_name
-	if raw_info is not Dictionary:
-		var raw_artist:Dictionary = LibraryManager.database.artists.get(artist.name,{})
-		raw_info = raw_artist.get('albums',{}).get(album_name)
-		if raw_info is not Dictionary:
-			_invalidate()
-			return
+func _init(artist_:DBArtist, name_:String, data:Dictionary) -> void:
+	if name_ == '.dummy': return # Don't do any processing if is a dummy.
+	if not artist_: remove()
+	artist = artist_
+	name = name_
 
-	var raw_discs = raw_info.get('discs',{})
-	for disc in raw_discs:
-		if disc is not String: continue
-		var raw_disc = raw_discs[disc]
-		if raw_disc is not Dictionary: continue
-		var raw_tracks:Array = raw_disc.get('tracks',[])
-		discs.set(disc, raw_tracks.size())
+	var tracks_ = data.get('tracks',{})
+	for track_path:String in tracks_:
+		tracks.set(track_path, tracks_[track_path])
 
-	var raw_cover_path = raw_info.get('cover')
+	var raw_cover_path = data.get('cover_path')
 	if raw_cover_path is String: cover_path = raw_cover_path
 
-	var raw_palette = raw_info.get('palette')
+	var raw_palette = data.get('palette')
 	if raw_palette is Dictionary:
 		palette = Dictionary(raw_palette, TYPE_STRING, '', null, TYPE_COLOR, '', null)
 	else: palette = {}
 
-	var raw_year = raw_info.get('year')
+	var raw_year = data.get('year')
 	if raw_year is String && not raw_year.is_empty():
 		var raw_year_split:PackedStringArray = raw_year.split('T')
 		year = raw_year_split[0]
 	else: year = 'None found'
 
-	var raw_genre = raw_info.get('genre')
+	var raw_genre = data.get('genre')
 	genres = []
 	if raw_genre is String && not raw_genre.is_empty():
 		raw_genre = raw_genre \
@@ -103,44 +79,31 @@ func _init(db_artist:DBArtist, album_name:String, raw_info=null) -> void:
 			genres.append(genre)
 		genres = raw_genres
 
-	var raw_copyright = raw_info.get('copyright')
+	var raw_copyright = data.get('copyright')
 	if raw_copyright is String && not raw_copyright.is_empty(): copyright = raw_copyright
 	else: copyright = 'None found'
 
 
-func _invalidate() -> void:
-	valid = false
+func remove() -> void:
+	LibraryManager.remove_album(artist, name)
 
 
-## Returns an array of all tracks in order.
-func get_all_tracks() -> Array[DBTrack]:
-	var tracks:Array[DBTrack] = []
-	for disc in discs:
-		for i in discs[disc]:
-			var track = get_track(i, int(disc))
-			if track is not DBTrack: continue
-			tracks.append(track)
+## Get all tracks in order of their disc number & track number.
+func get_tracks_in_order() -> Dictionary[String,Array]:
+	var result:Dictionary[String,Array] = {
+		'1': [],
+	}
 
-	return tracks
+	var track_list = tracks.values()
+	track_list.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+		return a.number < b.number
+	)
 
+	for track:DBTrack in track_list:
+		var disc:String = str(track.disc)
+		result.get_or_add(disc, [])
+		result[disc].append(track)
 
-## Get specific track from the [param track_number] & [param disc_number].
-## Can return null if track cannot be found.
-func get_track(track_number:int, disc_number:int=1) -> DBTrack:
-	var raw_artist:Dictionary = LibraryManager.database.artists.get(artist.name,{})
-	var raw_album:Dictionary = raw_artist.get('albums',{}).get(name,{})
-	if raw_album is not Dictionary:
-		_invalidate()
-		return null
-
-	var raw_discs:Dictionary = raw_album.get('discs',{})
-	var raw_disc:Dictionary = raw_discs.get(str(disc_number),{'tracks':[]})
-	if track_number >= raw_disc.tracks.size(): return null
-	var raw_track = raw_disc.tracks.get(track_number)
-	if raw_track == null: return null
-
-	var result = DBTrack.new_or_reuse(artist, self, track_number, disc_number, raw_track)
-	if not result.valid: return null
 	return result
 
 

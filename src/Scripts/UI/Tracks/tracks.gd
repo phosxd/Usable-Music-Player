@@ -64,7 +64,7 @@ func sort(callback=null) -> void:
 			if not SessionManager.search_term.is_empty():
 				var search_term:String = SessionManager.search_term
 				if not StringUtils.fuzzy_match(search_term, track.name) \
-				&& not StringUtils.fuzzy_match(search_term, track.artist.name) \
+				&& not StringUtils.fuzzy_match(search_term, track.album.artist.name) \
 				&& not StringUtils.fuzzy_match(search_term, track.album.name):
 					continue
 			# Add card.

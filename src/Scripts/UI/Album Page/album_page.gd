@@ -29,10 +29,10 @@ func init(album_:DBAlbum=null) -> void:
 	album = album_
 	%Title.text = album.name
 	%Title.tooltip_text = album.name
-	%Artist.text = album.artist.name
+	%Artist.text = album.artist.name if album.artist else 'None found'
 	%Year.text = album.year
 	album.get_cover_threaded(func(cover) -> void:
-		%Icon.texture = cover
+		%Icon.texture = cover if cover else DBAlbum.default_cover
 	)
 	var dominant_color = album.get_album_dominant_color()
 	var dominant_colors = [
@@ -49,12 +49,11 @@ func init(album_:DBAlbum=null) -> void:
 		mat.set_shader_parameter(i, dominant_colors[index].blend(overlay_color))
 
 	var runtime:float = 0
-	for disc in album.discs:
-		if album.discs.size() > 1:
+	var discs = album.get_tracks_in_order()
+	for disc in discs:
+		if discs.size() > 1:
 			add_disc_sep(disc)
-		for i in album.discs[disc]:
-			var track = album.get_track(i, int(disc))
-			if track is not DBTrack: continue
+		for track:DBTrack in discs[disc]:
 			loaded_tracks.append(track)
 			runtime += track.length
 			add_card(track)

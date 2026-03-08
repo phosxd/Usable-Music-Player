@@ -44,22 +44,6 @@ func _ready() -> void:
 	audio_stream_player.finished.connect(_current_track_finished)
 	self.add_child(audio_stream_player)
 
-	var raw_open_track = LibraryManager.database.get('open_track')
-	if raw_open_track is Dictionary:
-		var artist_name:String = raw_open_track.get('artist')
-		if not artist_name.is_empty():
-			var artist := DBArtist.new_or_reuse(artist_name)
-			var album_name:String = raw_open_track.get('album')
-			if not album_name.is_empty():
-				var album := DBAlbum.new_or_reuse(artist, album_name)
-				var track_number = raw_open_track.get('track_number',null)
-				if track_number is int:
-					var track := DBTrack.new_or_reuse(artist, album, track_number)
-					add_to_queue(track)
-					set_current_track(0)
-					var raw_track_progress = raw_open_track.get('track_progress',0)
-					set_track_progress(raw_track_progress)
-
 
 func _process(_delta:float) -> void:
 	var peak_volume:float = MathUtils.transfer_range_of_value(Vector2(-200,0), Vector2(-100,0), AudioServer.get_bus_peak_volume_left_db(0,0)+AudioServer.get_bus_peak_volume_right_db(0,0))

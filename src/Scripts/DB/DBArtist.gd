@@ -2,39 +2,30 @@
 ## Use [param new_or_reuse] when instantiating.
 class_name DBArtist extends RefCounted
 
-## Keeps track of unique [DBArtist] objects. Will use existing object when instantiating when possible.
-static var _objects:Dictionary[String,DBArtist] = {}
-
 ## Artist name.
 var name: String
-var album_names: Array[String]
+## All albums in this artist.
+var albums: Dictionary[String,DBAlbum]
 ## Whether or not the DB entry is valid.
-## This may become false when the raw entry can no longer be found.
 var valid := true
 var _cover
 
 
-## Same as [param new] method, except if this artist has already been created before, just reuse an existing object.
-static func new_or_reuse(artist_name:String) -> DBArtist:
-	var old_object = _objects.get(artist_name, null)
-	if old_object is DBArtist:
-		return old_object
-	else:
-		return DBArtist.new(artist_name)
+func _init(name_:String, data:Dictionary) -> void:
+	if name_ == '.dummy': return # Don't do any processing if is a dummy.
+	name = name_
+	var albums_ = data.get('albums',{})
+	for album_name:String in albums_:
+		albums.set(album_name, albums_[album_name])
+	if albums.is_empty():
+		remove()
+
+	LibraryManager.database.artists.set(name, self)
 
 
-func _init(artist_name:String) -> void:
-	_objects.set(artist_name, self)
-	_cover = null
-	name = artist_name
-	var raw_artist:Dictionary = LibraryManager.database.artists.get(name,{'albums':{}})
-	album_names = Array(raw_artist.albums.keys(), TYPE_STRING, '', null)
-	if album_names.is_empty():
-		_invalidate()
-
-
-func _invalidate() -> void:
-	valid = false
+## Remove this artist & all tracks & albums under this artist.
+func remove() -> void:
+	LibraryManager.remove_artist(name)
 
 
 ## Returns file system firendly name of the track.
@@ -42,29 +33,12 @@ func as_filename() -> String:
 	return '%s' % [name.replace('/','_')]
 
 
-func get_all_albums() -> Array[DBAlbum]:
-	var result:Array[DBAlbum] = []
-	for album_name:String in album_names:
-		var album = get_album(album_name)
-		if album == null: continue
-		result.append(album)
+func get_all_tracks() -> Array[DBTrack]:
+	var result:Array[DBTrack] = []
+	for album:DBAlbum in albums.values():
+		result.append_array(album.get_all_tracks())
 
 	return result
-
-
-## Get specific album.
-## Can return null if album cannot be found.
-func get_album(album_name:String) -> DBAlbum:
-	var raw_artist = LibraryManager.database.artists.get(name)
-	if raw_artist is not Dictionary:
-		_invalidate()
-		return null
-	var raw_album = raw_artist.get('albums',{}).get(album_name)
-	if raw_album is not Dictionary:
-		album_names.erase(album_name)
-		return null
-
-	return DBAlbum.new_or_reuse(self, album_name, raw_album)
 
 
 ## Returns the path to the artist's cover image.

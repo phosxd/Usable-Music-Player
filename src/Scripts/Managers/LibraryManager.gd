@@ -32,8 +32,21 @@ enum TrackSortMode {
 	LENGTH,
 }
 
+static var a2j_ruleset:Dictionary[String,Dictionary] = {
+	'@global': {
+		'exclude_private_properties': true,
+		'exclude_default_values': true,
+		'automatic_resource_references': true,
+		'instantiator_arguments': {
+			'DBTrack': [null, '.dummy', {}],
+			'DBAlbum': [null, '.dummy', {}],
+			'DBArtist': ['.dummy', {}],
+		},
+		'class_exclusions': ['GDScript'],
+	},
+}
 const valid_audio_extensions:Array[String] = ['wav','ogg','mp3','flac']
-const db_cache_path:String = 'user://database.txt'
+const db_cache_path:String = 'user://database.json'
 const placeholder_meta:String = 'None found'
 static var lyrics_path:String = OS.get_user_data_dir()+'/lyrics'
 static var image_cache_path:String = OS.get_user_data_dir()+'/image_cache'
@@ -42,9 +55,8 @@ static var out_path:String = OS.get_user_data_dir()+'/out'
 
 
 static var database:Dictionary = {
-	'track_count': 0,
-	'library_size': 0,
 	'artists': {},
+	'tracks': {},
 }
 static var db_cache_size:int = 0
 ## If true, the database is currently updating.
@@ -53,12 +65,100 @@ static var currently_updating:bool = false
 static var updated_images:Array[String] = []
 
 
+## Returns an existing artist or a new one if it doesn't exist.
+static func add_artist(artist_name:String, data:Dictionary) -> DBArtist:
+	var old_artist = database.artists.get(artist_name)
+	if old_artist is DBArtist: return old_artist
+	else:
+		var artist := DBArtist.new(artist_name, data)
+		database.artists.set(artist_name, artist)
+		return artist
+
+
+## Can return [code]null[/code] if not found.
+static func get_artist(artist_name:String) -> DBArtist:
+	var artist = database.artists.get(artist_name)
+	if artist is DBArtist: return artist
+	else: return null
+
+
+## Removes the artist & all albums & tracks under the artist.
+static func remove_artist(artist_name:String) -> void:
+	var artist = database.artists.get(artist_name)
+	if artist is DBArtist:
+		artist.valid = false
+		# Remove all albums under artist.
+		for album in artist.albums.values():
+			album.remove()
+	database.artists.erase(artist_name)
+
+
+## Returns an existing album or a new one if it doesn't exist.
+## Can return [code]null[/code] if failed.
+static func add_album(artist:DBArtist, album_name:String, data:Dictionary) -> DBAlbum:
+	if not artist: return null
+	var old_album = artist.albums.get(album_name)
+	if old_album is DBAlbum: return old_album
+	else:
+		var album := DBAlbum.new(artist, album_name, data)
+		artist.albums.set(album_name, album)
+		return album
+
+
+## Can return [code]null[/code] if not found.
+static func get_album(artist:DBArtist, album_name:String) -> DBAlbum:
+	if not artist: return null
+	var album = artist.albums.get(album_name)
+	if album is DBAlbum: return album
+	else: return null
+
+
+## Removes the album & all tracks under the album.
+static func remove_album(artist:DBArtist, album_name:String) -> void:
+	if not artist: return
+	var album = artist.albums.get(album_name)
+	if album is DBAlbum:
+		album.valid = false
+		# Remove all tracks under album.
+		for track in album.tracks.values():
+			track.remove()
+
+
+## Returns an existing track or a new one if it doesn't exist.
+## Can return [code]null[/code] if failed.
+static func add_track(album:DBAlbum, track_path:String, data:Dictionary) -> DBTrack:
+	if not album: return null
+	var old_track = album.tracks.get(track_path)
+	if old_track is DBTrack: return old_track
+	else:
+		var track := DBTrack.new(album, track_path, data)
+		album.tracks.set(track_path, track)
+		database.tracks.set(track_path, track)
+		return track
+
+
+## Can return [code]null[/code] if not found.
+static func get_track(track_path:String) -> DBTrack:
+	var track = database.tracks.get(track_path)
+	if track is not DBTrack: return null
+	return track
+
+
+## Removes the track.
+static func remove_track(track_path:String) -> void:
+	var track = database.tracks.get(track_path)
+	if track is DBTrack:
+		track.valid = false
+	track.album.tracks.erase(track_path)
+	database.tracks.erase(track_path)
+
+
 ## Returns a sorted array of [DBArtist] objects.
 ## Will always sort ascending. Use [code]Array.reverse[/code] method to make the array descending.
 static func get_artists_sorted(sort_mode:=ArtistSortMode.TITLE) -> Array[DBArtist]:
 	var result:Array[DBArtist] = []
-	for artist_name:String in database.get('artists',{}):
-		result.append(DBArtist.new_or_reuse(artist_name))
+	for artist_name:String in database.artists:
+		result.append(get_artist(artist_name))
 
 	match sort_mode:
 		ArtistSortMode.TITLE:
@@ -72,8 +172,8 @@ static func get_artists_sorted(sort_mode:=ArtistSortMode.TITLE) -> Array[DBArtis
 static func get_albums_sorted(sort_mode:=AlbumSortMode.TITLE) -> Array[DBAlbum]:
 	var result:Array[DBAlbum] = []
 	for artist:DBArtist in get_artists_sorted():
-		for album_name:String in artist.album_names:
-			result.append(DBAlbum.new_or_reuse(artist, album_name))
+		for album:DBAlbum in artist.albums.values():
+			result.append(album)
 
 	match sort_mode:
 		AlbumSortMode.TITLE:
@@ -109,11 +209,8 @@ static func get_genres_sorted() -> Dictionary[String,Array]:
 
 static func get_tracks_sorted(sort_mode:=TrackSortMode.TITLE) -> Array[DBTrack]:
 	var result:Array[DBTrack] = []
-	for album:DBAlbum in get_albums_sorted():
-		for disc in album.discs:
-			for i in album.discs[disc]:
-				var track:DBTrack = album.get_track(i, int(disc))
-				if track: result.append(track)
+	for track:DBTrack in database.tracks.values():
+		result.append(track)
 
 	match sort_mode:
 		TrackSortMode.TITLE:
@@ -182,15 +279,15 @@ static func rescan_album(album:DBAlbum, update_db:bool=true, all_tracks:Array[DB
 ## Rescans the track & updates the database accordingly.
 ## Does not update the database file only the database in memory.
 static func rescan_track(track:DBTrack, update_db:bool=true) -> void:
+	if not track: return
 	if update_db:
-		database.artists[track.artist.name].albums[track.album.name].discs[str(track.disc)].tracks.erase(track.number)
+		database.artists[track.album.artist.name].albums[track.album.name].discs[str(track.disc)].tracks.erase(track.number)
 		database.track_count -= 1
-		track.artist._invalidate()
+		track.album.artist._invalidate()
 		track.album._invalidate()
 		track._invalidate()
 
-	if not FileAccess.file_exists(track.path):
-		return
+	if not FileAccess.file_exists(track.path): return
 	var track_size = FileAccess.get_size(track.path)
 	if track_size > 0: database.library_size -= track_size
 
@@ -209,18 +306,56 @@ static func rescan_track(track:DBTrack, update_db:bool=true) -> void:
 		save_database()
 
 
+## Rescans the track & updates the database accordingly.
+## Does not update the database file only the database in memory.
+static func rescan_track_from_path(path:String, update_db:bool=true) -> void:
+	if not FileAccess.file_exists(path): return
+	var track_size = FileAccess.get_size(path)
+	if track_size > 0: database.library_size -= track_size
+
+	# Get metadata from track at path & index it.
+	var output:Array = []
+	var err:int = CLI.execute('interface', ['get_audio_meta', path, image_cache_path], output)
+	if err != Error.OK:
+		MiniLog.err('Could not rescan track at "$~%s~$" with error "$!!%s!!$".' % [path, output[0]], LibraryManager)
+		return
+	if output.size() > 0 && output[0] is String:
+		var meta = JSON.parse_string(output[0])
+		if meta is not Dictionary: return
+		LibraryManager._index(meta)
+
+	if update_db:
+		save_database()
+
+
 static func scan_for_changes() -> void:
 	return
-	FileUtils.walk_dir(SessionManager.library_location, func(file_path:String) -> void:
-		pass
-	,func(_dir_path:String) -> void: pass)
+	#var found_paths:Array[String] = []
+	#FileUtils.walk_dir(SessionManager.library_location, func(file_path:String) -> void:
+		#var ext:String = file_path.split('.')[-1].to_lower()
+		#if ext not in valid_audio_extensions: return
+		#found_paths.append(file_path)
+		## Compare last modified time.
+		#var old_last_modified_time = database.paths_last_modified.get(file_path)
+		#var last_modified_time:int = FileAccess.get_modified_time(file_path)
+		## Rescan if modified.
+		#if old_last_modified_time != last_modified_time:
+			#rescan_track_from_path(file_path)
+	#,func(_dir_path:String) -> void: pass)
+#
+	#var scanned_artists:Array[String] = []
+	#var scanned_albums:Array[String] = []
+	#for path:String in database.paths_last_modified:
+		#if path not in found_paths:
+			#database.paths_last_modified.erase(path)
+			#var track = DBTrack.from_path(path)
+			#if track: rescan_artist(track.album.artist)
 
 
 static func wipe_database() -> void:
 	db_cache_size = 0
 	database.set('artists', {})
-	database.set('track_count', 0)
-	database.set('library_size', 0)
+	database.set('tracks', {})
 	database.erase('timestamp')
 
 
@@ -231,7 +366,9 @@ static func wipe_image_cache() -> void:
 
 
 static func wipe_lyrics() -> void:
-	DirAccess.remove_absolute(lyrics_path)
+	FileUtils.walk_dir(lyrics_path, func(path:String) -> void:
+		DirAccess.remove_absolute(path)
+	,Callable())
 
 
 ## Returns the total bytes of the database & image cache.
@@ -250,7 +387,7 @@ static func get_cache_size() -> int:
 
 ## Returns the total bytes of the library.
 static func get_library_size() -> int:
-	return database.library_size
+	return database.get('library_size',0)
 
 
 static func save_database() -> void:
@@ -258,21 +395,19 @@ static func save_database() -> void:
 	if file == null:
 		printerr('Failed to save database.')
 		return
-	var bytes:PackedByteArray = var_to_bytes(database)
-	file.store_buffer(bytes)
+	var json = A2J.to_json(database, a2j_ruleset)
+	file.store_string(JSON.stringify(json, '\t', true, true))
 	file.close()
 
 
 static func load_library_from_cache() -> void:
 	MiniLog.info('Loading library from cache.', LibraryManager)
-	var file := FileAccess.open(db_cache_path, FileAccess.READ)
-	if file == null: return
-	var bytes:PackedByteArray = file.get_buffer(file.get_length())
-	file.close()
+	var text:String = FileAccess.get_file_as_string(db_cache_path)
+	if text.is_empty(): return
 
-	var result = bytes_to_var(bytes)
-	if result is Dictionary:
-		database = result
+	var json = JSON.parse_string(text)
+	if json is Dictionary:
+		database = A2J.from_json(json, a2j_ruleset)
 
 
 static func load_library(root_path:String, callback:Callable) -> void:
@@ -280,6 +415,7 @@ static func load_library(root_path:String, callback:Callable) -> void:
 	SessionManager.library_location = root_path
 	LibraryManager.wipe_database()
 	LibraryManager.wipe_image_cache()
+	LibraryManager.wipe_lyrics()
 	database.set('timestamp', Time.get_datetime_string_from_system(true, true))
 	# Load library threaded.
 	_load_library(root_path, func(_result) -> void:
@@ -296,7 +432,7 @@ static func load_library(root_path:String, callback:Callable) -> void:
 		var indexing_label = SessionManager.main_scene.get_node('%Indexing Label')
 		if indexing_label is not Label: return
 		indexing_label.show()
-		indexing_label.text = SessionManager.main_scene.indexing_label_template % LibraryManager.database.track_count
+		indexing_label.text = SessionManager.main_scene.indexing_label_template % LibraryManager.database.tracks.size()
 		if LibraryManager.currently_updating == false:
 			indexing_label.hide()
 			timer.stop()
@@ -314,6 +450,7 @@ static func _load_library(root_path:String, callback:Callable) -> void:
 
 	updated_images.clear()
 	DirAccess.make_dir_recursive_absolute(image_cache_path)
+	DirAccess.make_dir_recursive_absolute(lyrics_path)
 	ThreadHelper.create_thread((func() -> void:
 		# Batch grab metadata from all audio files in the "root_path".
 		var output:Array = []
@@ -324,6 +461,7 @@ static func _load_library(root_path:String, callback:Callable) -> void:
 			for item in meta_dump:
 				if item is not Dictionary: continue
 				LibraryManager._index(item)
+		print(database)
 	),callback)
 
 
@@ -331,14 +469,14 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, _disc_numb
 	var path:String = metadata.get('path','')
 	if path.is_empty(): return
 	var duration:float = metadata.get('duration',0)
-	var artist:String = metadata.get('artist','').replace('\n','')
-	var actual_artist:String = artist
-	var album:String = metadata.get('album','').replace('\n','')
+	var artist_name:String = metadata.get('artist','').replace('\n','')
+	var actual_artist:String = artist_name
+	var album_name:String = metadata.get('album','').replace('\n','')
 	var album_artist:String = metadata.get('albumartist','').replace('\n','')
-	if not album_artist.is_empty(): artist = album_artist
-	if artist.is_empty():
-		artist = placeholder_meta
-	if album.is_empty(): album = placeholder_meta
+	if not album_artist.is_empty(): artist_name = album_artist
+	if artist_name.is_empty():
+		artist_name = placeholder_meta
+	if album_name.is_empty(): album_name = placeholder_meta
 
 	var palette = {}
 	var cover_path:String = metadata.get('cover_path','')
@@ -360,65 +498,36 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, _disc_numb
 	if year.is_empty(): year = placeholder_meta
 
 	# Add to database.
-	var db_artist:Dictionary = database.artists.get_or_add(artist, {
-		'albums': {},
-	})
+	var artist_data:Dictionary = {
+		'albums': Dictionary({}, TYPE_STRING, '', null, TYPE_OBJECT, 'DBAlbum', DBAlbum),
+	}
 	@warning_ignore('incompatible_ternary')
-	var db_album:Dictionary = db_artist.albums.get_or_add(album, {
+	var album_data:Dictionary = {
 		'year': metadata.get('year',placeholder_meta),
 		'genre': metadata.get('genre',placeholder_meta),
-		'cover': cover_path,
-		'discs': {
-			'1': {'tracks': []},
-		},
+		'cover_path': cover_path,
+		'tracks': Array([], TYPE_OBJECT, 'DBTrack', DBTrack),
 		'palette': palette,
 		'copyright': metadata.get('copyright'),
-	})
-	if db_album.discs.get(str(disc_number)) == null:
-		db_album.discs.set(str(disc_number), {
-			'tracks':[]},
-		)
-	var disc_size:int = db_album.discs[str(disc_number)].tracks.size()
-	if track_number > disc_size:
-		for _i:int in track_number-disc_size:
-			db_album.discs[str(disc_number)].tracks.append(null)
+	}
 	var track_data = {
 		'title': track_title,
 		'actual_artist': actual_artist,
+		'number': track_number,
+		'disc': disc_number,
 		'length': duration,
-		'lyrics': internal_lyrics,
 		'channels': str(metadata.get('channels',-1)),
 		'bit_rate': str(metadata.get('bitrate',-1)),
 		'sample_rate': str(metadata.get('samplerate',-1)),
 		'bpm': metadata.get('bpm'),
-		'urls': metadata.get('urls'),
 		'comment': metadata.get('comment'),
-		'path': path,
-		'last_modified': FileAccess.get_modified_time(path),
 	}
 	track_data.merge(custom_data, true)
-	if track_number > 0:
-		db_album.discs[str(disc_number)].tracks.set(track_number-1, track_data)
-	else:
-		db_album.discs[str(disc_number)].tracks.append(track_data)
-
-	database.artists[artist].albums.set(album, db_album)
-	database.track_count += 1
-	database.library_size += FileAccess.get_size(path)
+	var artist_entry := LibraryManager.add_artist(artist_name, artist_data)
+	var album_entry := LibraryManager.add_album(artist_entry, album_name, album_data)
+	var track_entry := LibraryManager.add_track(album_entry, path, track_data)
+	track_entry.save_lyrics(internal_lyrics)
 	MiniLog.pro('Indexed: "$~%s~$".' % path, LibraryManager)
-
-
-static func reload_library(_callback:Callable) -> void:
-	return
-	#var root_dir := DirAccess.open(SessionManager.library_location)
-	#if root_dir == null:
-		#if callback && callback.is_valid(): callback.call(null)
-		#return
-	#ThreadHelper.create_thread((func() -> void:
-		#FileUtils.walk_dir(SessionManager.library_location, func(path:String) -> void:
-			#LibraryManager.rescan_track()
-		#,Callable())
-	#),callback)
 
 
 static func load_audio(path:String) -> AudioStream:
@@ -443,8 +552,3 @@ static func load_audio(path:String) -> AudioStream:
 
 	MiniLog.pro('Loaded audio stream from "$~%s~$".' % path, LibraryManager)
 	return audio_stream
-
-
-#static func fetch_artist_cover(artist_name:String) -> ImageTexture:
-	#'https://webservice.fanart.tv/{version}/{resource}/{id}?api_key='
-	#'7e7651b46fca21ce80d7ac1863093b69'
