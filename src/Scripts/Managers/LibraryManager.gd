@@ -149,7 +149,7 @@ static func remove_track(track_path:String) -> void:
 	var track = database.tracks.get(track_path)
 	if track is DBTrack:
 		track.valid = false
-	track.album.tracks.erase(track_path)
+		track.album.tracks.erase(track_path)
 	database.tracks.erase(track_path)
 
 
@@ -242,35 +242,30 @@ static func get_tracks_sorted(sort_mode:=TrackSortMode.TITLE) -> Array[DBTrack]:
 
 
 static func rescan_artist(artist:DBArtist, update_db:bool=true) -> void:
-	var all_albums:Array[DBAlbum] = artist.get_all_albums()
+	var all_albums = artist.albums.values()
 	var all_tracks:Dictionary[String,Array] = {}
 	for album:DBAlbum in all_albums:
-		all_tracks.set(album.name, album.get_all_tracks())
+		all_tracks.set(album.name, album.tracks.values())
 
-	if update_db:
-		database.artists.erase(artist.name)
-		artist._invalidate()
+	artist.remove()
 
 	for album:DBAlbum in all_albums:
-		album._invalidate()
-		LibraryManager.rescan_album(album, false, all_tracks[album.name])
+		rescan_album(album, false, all_tracks[album.name])
 
 	if update_db:
 		save_database()
 
 
 static func rescan_album(album:DBAlbum, update_db:bool=true, all_tracks:Array[DBTrack]=[]) -> void:
-	if all_tracks.size() == 0: all_tracks = album.get_all_tracks()
-	if update_db:
-		database.artists[album.artist.name].albums.erase(album.name)
-		database.track_count -= all_tracks.size()
-		album.artist._invalidate()
-		album._invalidate()
+	if all_tracks.size() == 0:
+		for track:DBTrack in album.tracks.values():
+			all_tracks.append(track)
+
+	album.remove()
 
 	# Rescan all tracks.
 	for track:DBTrack in all_tracks:
-		track._invalidate()
-		LibraryManager.rescan_track(track, false)
+		LibraryManager.rescan_track(track, '', false)
 
 	if update_db:
 		save_database()
@@ -278,40 +273,13 @@ static func rescan_album(album:DBAlbum, update_db:bool=true, all_tracks:Array[DB
 
 ## Rescans the track & updates the database accordingly.
 ## Does not update the database file only the database in memory.
-static func rescan_track(track:DBTrack, update_db:bool=true) -> void:
-	if not track: return
-	if update_db:
-		database.artists[track.album.artist.name].albums[track.album.name].discs[str(track.disc)].tracks.erase(track.number)
-		database.track_count -= 1
-		track.album.artist._invalidate()
-		track.album._invalidate()
-		track._invalidate()
+static func rescan_track(track:DBTrack, path:String='', update_db:bool=true) -> void:
+	if not track && path.is_empty(): return
+	if track:
+		path = track.path
+		track.remove()
 
-	if not FileAccess.file_exists(track.path): return
-	var track_size = FileAccess.get_size(track.path)
-	if track_size > 0: database.library_size -= track_size
-
-	# Get metadata from track at "track.path" & index it.
-	var output:Array = []
-	var err:int = CLI.execute('interface', ['get_audio_meta', track.path, image_cache_path], output)
-	if err != Error.OK:
-		MiniLog.err('Could not rescan track at "$~%s~$" with error "$!!%s!!$".' % [track.path, output[0]], LibraryManager)
-		return
-	if output.size() > 0 && output[0] is String:
-		var meta = JSON.parse_string(output[0])
-		if meta is not Dictionary: return
-		LibraryManager._index(meta)
-
-	if update_db:
-		save_database()
-
-
-## Rescans the track & updates the database accordingly.
-## Does not update the database file only the database in memory.
-static func rescan_track_from_path(path:String, update_db:bool=true) -> void:
 	if not FileAccess.file_exists(path): return
-	var track_size = FileAccess.get_size(path)
-	if track_size > 0: database.library_size -= track_size
 
 	# Get metadata from track at path & index it.
 	var output:Array = []
@@ -329,27 +297,25 @@ static func rescan_track_from_path(path:String, update_db:bool=true) -> void:
 
 
 static func scan_for_changes() -> void:
-	return
-	#var found_paths:Array[String] = []
-	#FileUtils.walk_dir(SessionManager.library_location, func(file_path:String) -> void:
-		#var ext:String = file_path.split('.')[-1].to_lower()
-		#if ext not in valid_audio_extensions: return
-		#found_paths.append(file_path)
-		## Compare last modified time.
-		#var old_last_modified_time = database.paths_last_modified.get(file_path)
-		#var last_modified_time:int = FileAccess.get_modified_time(file_path)
-		## Rescan if modified.
-		#if old_last_modified_time != last_modified_time:
-			#rescan_track_from_path(file_path)
-	#,func(_dir_path:String) -> void: pass)
-#
-	#var scanned_artists:Array[String] = []
-	#var scanned_albums:Array[String] = []
-	#for path:String in database.paths_last_modified:
-		#if path not in found_paths:
-			#database.paths_last_modified.erase(path)
-			#var track = DBTrack.from_path(path)
-			#if track: rescan_artist(track.album.artist)
+	var found_paths:Array[String] = []
+	FileUtils.walk_dir(SessionManager.library_location, func(file_path:String) -> void:
+		var ext:String = file_path.split('.')[-1].to_lower()
+		if ext not in valid_audio_extensions: return
+		found_paths.append(file_path)
+		# Get track.
+		var track = database.tracks.get(file_path)
+		# Compare last modified time.
+		var old_last_modified_time:int = -1
+		if track is DBTrack: old_last_modified_time = track.last_modified_time
+		var last_modified_time:int = FileAccess.get_modified_time(file_path)
+		# Rescan if modified.
+		if old_last_modified_time != last_modified_time:
+			rescan_track(null, file_path)
+	,func(_dir_path:String) -> void: pass)
+
+	for path:String in database.tracks:
+		if path not in found_paths:
+			remove_track(path)
 
 
 static func wipe_database() -> void:
@@ -521,6 +487,7 @@ static func _index(metadata:Dictionary, track_number_override:int=-1, _disc_numb
 		'sample_rate': str(metadata.get('samplerate',-1)),
 		'bpm': metadata.get('bpm'),
 		'comment': metadata.get('comment'),
+		'last_modified_time': FileAccess.get_modified_time(path)
 	}
 	track_data.merge(custom_data, true)
 	var artist_entry := LibraryManager.add_artist(artist_name, artist_data)

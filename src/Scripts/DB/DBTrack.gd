@@ -26,6 +26,8 @@ var bit_rate: float
 var bpm: float
 ## Track comment.
 var comment: String
+## Last time the file was modified.
+var last_modified_time: int
 ## Whether or not the DB entry is valid.
 var valid := true
 
@@ -57,6 +59,10 @@ func _init(album_:DBAlbum, path_:String, data:Dictionary) -> void:
 	var raw_number = data.get('number')
 	if raw_number is int: number = raw_number
 	else: number = 0
+
+	var raw_lmt = data.get('last_modified_time')
+	if raw_lmt is int: last_modified_time = raw_lmt
+	else: last_modified_time = -1
 
 
 func remove() -> void:

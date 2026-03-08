@@ -234,7 +234,7 @@ func load_session() -> void:
 		for path in raw_queue:
 			if path is not String: continue
 			var track = LibraryManager.get_track(path)
-			PlayerManager.add_to_queue(track, false)
+			if track: PlayerManager.add_to_queue(track, false)
 
 	PlayerManager.queue_updated.emit()
 	var raw_queue_position = data.get('queue_position')
