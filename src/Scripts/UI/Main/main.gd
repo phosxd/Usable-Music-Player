@@ -35,6 +35,7 @@ func _ready() -> void:
 			%Player.update_visualizer(album_dominant_color)
 	)
 	update_current_track(0, PlayerManager.get_current_track())
+	update_accents()
 
 	general_options_popup.id_pressed.connect(_on_general_options_id_pressed)
 
@@ -175,6 +176,7 @@ func _parse_tab_config(scene:Node) -> void:
 
 func refresh_tab() -> void:
 	var last_tab = tab_history.get(tab_history.size()-1)
+	tab_history.pop_back()
 	set_tab(last_tab[0], last_tab[1])
 
 

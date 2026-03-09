@@ -1,8 +1,3 @@
-- Fix rescan track breaking metadata.
 - Add playlists.
 - Add auto scan for changes in library.
-- Add artist/genre page.
-- Fix sort options not staying selected.
-- Fix title a-z sorting backwards.
 - Fix queue not being updated properly after being reordered.
-- Fix in-memory DB not resetting after library reset.
