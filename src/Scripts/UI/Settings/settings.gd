@@ -39,6 +39,8 @@ func _ready() -> void:
 	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.fetch_lyrics)
 	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.fetch_artist_cover)
 	%'Image Detail'.set_value_no_signal(SessionManager.image_detail)
+	%'Track Finished Notif'.set_pressed_no_signal(SessionManager.send_track_finished_notif)
+	%'Library Scan Finished Notif'.set_pressed_no_signal(SessionManager.send_library_scan_finished_notif)
 
 
 func _on_select_library_pressed() -> void:
@@ -54,16 +56,11 @@ func _on_select_library_pressed() -> void:
 
 func _on_library_path_text_submitted(new_text:String) -> void:
 	if LibraryManager.currently_updating: return
-	%'Library Path'.editable = false
-	%'Rescan Library'.disabled = true
-
-	LibraryManager.load_library(new_text, func()->void:
-		%'Rescan Library'.disabled = false
-		%'Library Path'.editable = true
-	)
+	LibraryManager.load_library(new_text, func()->void:pass)
 
 
 func _on_rescan_library_pressed() -> void:
+	if LibraryManager.currently_updating: return
 	_on_library_path_text_submitted(%'Library Path'.text)
 
 
@@ -136,3 +133,11 @@ func _on_image_detail_value_changed(value:float) -> void:
 
 func _on_scan_for_changes_pressed() -> void:
 	LibraryManager.scan_for_changes()
+
+
+func _on_track_finished_notif_toggled(toggled_on:bool) -> void:
+	SessionManager.send_track_finished_notif = toggled_on
+
+
+func _on_library_scan_finished_notif_toggled(toggled_on:bool) -> void:
+	SessionManager.send_library_scan_finished_notif = toggled_on

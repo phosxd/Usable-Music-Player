@@ -36,6 +36,7 @@ func _ready() -> void:
 	)
 	update_current_track(0, PlayerManager.get_current_track())
 	update_accents()
+	%Player.update_visualizer(album_dominant_color)
 
 	general_options_popup.id_pressed.connect(_on_general_options_id_pressed)
 

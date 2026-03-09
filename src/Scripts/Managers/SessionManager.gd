@@ -26,14 +26,18 @@ const layout_theme_name:Array[String] = [
 ]
 
 const property_data:Array[Array] = [
+	# Library / API settings.
 	['library_location',[TYPE_STRING]],
 	['fetch_lyrics',[TYPE_BOOL]],
 	['fetch_artist_cover',[TYPE_BOOL]],
 	['fetch_album_cover',[TYPE_BOOL]],
-	# Performance data.
+	# Performance settings.
 	['image_detail',[TYPE_INT]],
-	# Shortcut data.
+	# Shortcut settings.
 	#['play_pause_key',[TYPE_INT]],
+	# Notification settings.
+	['send_track_finished_notif',[TYPE_BOOL]],
+	['send_library_scan_finished_notif',[TYPE_BOOL]],
 	# Tab data.
 	['last_tab',[TYPE_STRING]],
 	['artists_tab_scroll_value',[TYPE_FLOAT]],
@@ -89,6 +93,9 @@ var library_location:String = OS.get_system_dir(OS.SYSTEM_DIR_MUSIC)
 var fetch_lyrics:bool = true
 var fetch_artist_cover:bool = false
 var fetch_album_cover:bool = false
+
+var send_track_finished_notif:bool = true
+var send_library_scan_finished_notif:bool = true
 
 ## Image detail for album & artist covers.
 ## Resets cached album cover images when set.

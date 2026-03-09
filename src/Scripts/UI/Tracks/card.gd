@@ -5,8 +5,8 @@ enum CardMode {
 	detailed,
 	minimal,
 }
-const default_button_color := Color(1,1,1, 0.1)
-const hover_button_color := Color(1,1,1, 0.2)
+const default_button_color := Color(1,1,1, 0.3)
+const hover_button_color := Color(1,1,1, 0.5)
 
 @onready var options_popup:PopupMenu = %Options.get_popup()
 var track: DBTrack

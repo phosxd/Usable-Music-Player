@@ -297,6 +297,8 @@ static func rescan_track(track:DBTrack, path:String='', update_db:bool=true) -> 
 
 
 static func scan_for_changes() -> void:
+	LibraryManager.currently_updating = true
+
 	var found_paths:Array[String] = []
 	FileUtils.walk_dir(SessionManager.library_location, func(file_path:String) -> void:
 		var ext:String = file_path.split('.')[-1].to_lower()
@@ -316,6 +318,9 @@ static func scan_for_changes() -> void:
 	for path:String in database.tracks:
 		if path not in found_paths:
 			remove_track(path)
+
+	LibraryManager.currently_updating = false
+	if SessionManager.send_library_scan_finished_notif: SystemNotif.send('', 'Finished scanning for changes.')
 
 
 static func wipe_database() -> void:
@@ -377,7 +382,7 @@ static func load_library_from_cache() -> void:
 
 
 static func load_library(root_path:String, callback:Callable) -> void:
-	currently_updating = true
+	LibraryManager.currently_updating = true
 	SessionManager.library_location = root_path
 	LibraryManager.wipe_database()
 	LibraryManager.wipe_image_cache()
@@ -385,9 +390,10 @@ static func load_library(root_path:String, callback:Callable) -> void:
 	database.set('timestamp', Time.get_datetime_string_from_system(true, true))
 	# Load library threaded.
 	_load_library(root_path, func(_result) -> void:
-		currently_updating = false
+		LibraryManager.currently_updating = false
 		save_database()
 		load_library_from_cache()
+		if SessionManager.send_library_scan_finished_notif: SystemNotif.send('', 'Finished scanning library.')
 		if callback && callback.is_valid() && callback.get_object():
 			callback.call()
 	)

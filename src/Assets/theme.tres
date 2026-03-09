@@ -377,6 +377,128 @@ corner_detail = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4by78"]
 
+[sub_resource type="DPITexture" id="DPITexture_fyvmx"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M8 14A6 6 0 0 0 8 2a6 6 0 0 0 0 12zM5.293 8.707a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L7.414 8l2.293 2.293a1 1 0 0 1-1.414 1.414z\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
+[sub_resource type="DPITexture" id="DPITexture_0dftj"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" fill-opacity=\".8\" d=\"M8 14A6 6 0 0 0 8 2a6 6 0 0 0 0 12zM5.293 8.707a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L7.414 8l2.293 2.293a1 1 0 0 1-1.414 1.414z\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
+[sub_resource type="DPITexture" id="DPITexture_h5t51"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"32\"><path fill=\"#fff\" d=\"m5 2h6v30h-6z\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
+[sub_resource type="DPITexture" id="DPITexture_10rey"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" fill-opacity=\".8\" d=\"M8 2a6 6 0 0 0 0 12A6 6 0 0 0 8 2zm2.707 5.293a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L8.586 8 6.293 5.707a1 1 0 0 1 1.414-1.414z\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
+[sub_resource type="DPITexture" id="DPITexture_7yyeo"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M8 2a6 6 0 0 0 0 12A6 6 0 0 0 8 2zm2.707 5.293a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L8.586 8 6.293 5.707a1 1 0 0 1 1.414-1.414z\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
+[sub_resource type="DPITexture" id="DPITexture_w53sr"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" fill-opacity=\".4\" d=\"M8 0a2 2 0 0 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 0 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 0 0 0 4 2 2 0 0 0 0-4z\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
+[sub_resource type="DPITexture" id="DPITexture_f5r8q"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M8 0a2 2 0 0 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 0 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 0 0 0 4 2 2 0 0 0 0-4z\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4goj0"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.16, 0.16, 0.16, 1)
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crnkq"]
+content_margin_left = 16.0
+content_margin_top = 8.4
+content_margin_right = 16.0
+content_margin_bottom = 8.4
+bg_color = Color(0.132, 0.132, 0.132, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_detail = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fyvmx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0y7oa"]
+content_margin_left = 16.0
+content_margin_top = 8.4
+content_margin_right = 16.0
+content_margin_bottom = 8.4
+bg_color = Color(0.2, 0.2, 0.2, 0.6)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_detail = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aygfs"]
+content_margin_left = 16.0
+content_margin_top = 8.4
+content_margin_right = 16.0
+content_margin_bottom = 8.4
+bg_color = Color(0.2509804, 0.2509804, 0.2509804, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_detail = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p5cll"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 1.0
+content_margin_bottom = 0.0
+bg_color = Color(0.132, 0.132, 0.132, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_detail = 4
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fyvmx"]
 content_margin_left = 4.0
 content_margin_top = 4.0
@@ -587,6 +709,32 @@ ScrollContainer/colors/scroll_hint_horizontal_color = Color(0, 0, 0, 1)
 ScrollContainer/colors/scroll_hint_vertical_color = Color(0, 0, 0, 1)
 ScrollContainer/styles/focus = SubResource("StyleBoxFlat_g11mq")
 ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_4by78")
+TabContainer/colors/drop_mark_color = Color(0.25275, 0.465, 0.75, 0.825)
+TabContainer/colors/font_disabled_color = Color(1, 1, 1, 0.1925)
+TabContainer/colors/font_hovered_color = Color(1, 1, 1, 0.85)
+TabContainer/colors/font_outline_color = Color(1, 1, 1, 0)
+TabContainer/colors/font_selected_color = Color(1, 1, 1, 0.75)
+TabContainer/colors/font_unselected_color = Color(1, 1, 1, 0.55)
+TabContainer/colors/icon_disabled_color = Color(1, 1, 1, 0.1925)
+TabContainer/colors/icon_hovered_color = Color(1, 1, 1, 1)
+TabContainer/colors/icon_selected_color = Color(1, 1, 1, 0.85)
+TabContainer/colors/icon_unselected_color = Color(1, 1, 1, 0.6)
+TabContainer/constants/outline_size = 0
+TabContainer/constants/side_margin = 0
+TabContainer/icons/decrement = SubResource("DPITexture_fyvmx")
+TabContainer/icons/decrement_highlight = SubResource("DPITexture_0dftj")
+TabContainer/icons/drop_mark = SubResource("DPITexture_h5t51")
+TabContainer/icons/increment = SubResource("DPITexture_10rey")
+TabContainer/icons/increment_highlight = SubResource("DPITexture_7yyeo")
+TabContainer/icons/menu = SubResource("DPITexture_w53sr")
+TabContainer/icons/menu_highlight = SubResource("DPITexture_f5r8q")
+TabContainer/styles/panel = SubResource("StyleBoxFlat_4goj0")
+TabContainer/styles/tab_disabled = SubResource("StyleBoxFlat_crnkq")
+TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_fyvmx")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_0y7oa")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_aygfs")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_crnkq")
+TabContainer/styles/tabbar_background = SubResource("StyleBoxFlat_p5cll")
 TooltipPanel/styles/panel = SubResource("StyleBoxFlat_fyvmx")
 VScrollBar/constants/padding_left = 4
 VScrollBar/constants/padding_right = 4

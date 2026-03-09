@@ -165,3 +165,12 @@ func _current_track_finished() -> void:
 	if queue_position+1 >= queue.size(): is_playing = false
 	if loop_mode == LoopMode.TRACK: set_playing(true)
 	else: skip_forward()
+
+	if SessionManager.send_track_finished_notif:
+		var track:DBTrack = get_current_track()
+		SystemNotif.send(
+			'Now playing...',
+			'%s - by %s' % [track.name, track.album.artist.name],
+			SystemNotif.Urgency.Low,
+			track.album.cover_path,
+		)
