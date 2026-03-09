@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="3_hfg1r"]
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="3_y3v7k"]
 [ext_resource type="Texture2D" uid="uid://ifuhlvhg7w82" path="res://Assets/Icons/change_sort_mode.svg" id="5_vk4q2"]
+[ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Assets/Icons/options_horizontal.svg" id="5_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://mljcfripi4u1" path="res://Assets/Icons/add.svg" id="6_imbg2"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="9_2ok46"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="9_6t3k2"]
@@ -16,9 +17,11 @@
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="11_ahhj6"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="12_eeh6y"]
 [ext_resource type="Script" uid="uid://dtel3yhuvbpap" path="res://Elements/Top Bar/top_bar.gd" id="13_2ok46"]
-[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="13_lj0cr"]
+[ext_resource type="Script" uid="uid://k1n47i1vyqjo" path="res://Scripts/UI/Main/indexing_status.gd" id="13_hto8k"]
 [ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Assets/Icons/search.svg" id="14_koken"]
+[ext_resource type="Texture2D" uid="uid://dod6uhmhu0tw3" path="res://Assets/Icons/reload.svg" id="14_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://clvub0o51v8eh" path="res://Assets/Icons/scale_x2/change_sort_mode.svg" id="15_0fk8q"]
+[ext_resource type="LabelSettings" uid="uid://c4v5jc530rpeg" path="res://Assets/mini_label.tres" id="15_jo7x3"]
 [ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Assets/Icons/tree_arrow_left.svg" id="16_eeh6y"]
 [ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Themes/Normal/Queue/queue.tscn" id="19_eqlsm"]
 [ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Themes/Normal/Lyrics/lyrics.tscn" id="20_lj0cr"]
@@ -76,7 +79,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lj0cr"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bb5d1"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -105,7 +108,7 @@ shadow_color = Color(0, 0, 0, 0.005)
 shadow_size = 8
 shadow_offset = Vector2(0, 4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3go0"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uwgfw"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -167,24 +170,8 @@ size_flags_vertical = 3
 [node name="Tools" type="HBoxContainer" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1840235616]
 layout_mode = 2
 
-[node name="General Options" type="MenuButton" parent="VBox/HBox/Sidebar/Margin/VBox/Tools" unique_id=167496477]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"AccentButton"
-text = " "
-icon = ExtResource("2_hryqi")
-flat = false
-icon_alignment = 1
-item_count = 2
-popup/item_0/text = "Settings"
-popup/item_0/id = 0
-popup/item_1/text = "Console"
-popup/item_1/id = 1
-
 [node name="Tab Button Settings" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox/Tools" unique_id=2144540982]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Settings"
@@ -213,6 +200,21 @@ theme_type_variation = &"AccentButton"
 disabled = true
 icon = ExtResource("5_vk4q2")
 icon_alignment = 1
+
+[node name="General Options" type="MenuButton" parent="VBox/HBox/Sidebar/Margin/VBox/Tools" unique_id=167496477]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"AccentButton"
+text = " "
+icon = ExtResource("5_wbs4r")
+flat = false
+icon_alignment = 1
+item_count = 2
+popup/item_0/text = "Settings"
+popup/item_0/id = 0
+popup/item_1/text = "Console"
+popup/item_1/id = 1
 
 [node name="Tab Button Artists" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1763016178 groups=["Tab Button"]]
 unique_name_in_owner = true
@@ -296,12 +298,47 @@ metadata/_smooth_scroll_default_mouse_filter_set = true
 [node name="Sep 2" type="HSeparator" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1375742465]
 layout_mode = 2
 
-[node name="Indexing Label" type="Label" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=544104366]
+[node name="Indexing Status" type="HBoxContainer" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1161764509]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-text = "Indexing... (%s)"
-label_settings = ExtResource("13_lj0cr")
+script = ExtResource("13_hto8k")
+
+[node name="Sep 1" type="VSeparator" parent="VBox/HBox/Sidebar/Margin/VBox/Indexing Status" unique_id=1841056331]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Icon Contrainer" type="Control" parent="VBox/HBox/Sidebar/Margin/VBox/Indexing Status" unique_id=1025760383]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="VBox/HBox/Sidebar/Margin/VBox/Indexing Status/Icon Contrainer" unique_id=1507882268]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("14_wbs4r")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Sep 2" type="VSeparator" parent="VBox/HBox/Sidebar/Margin/VBox/Indexing Status" unique_id=1090551411]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Indexing Label" type="Label" parent="VBox/HBox/Sidebar/Margin/VBox/Indexing Status" unique_id=550201511]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Indexing (%s)..."
+label_settings = ExtResource("15_jo7x3")
+clip_text = true
+text_overrun_behavior = 5
 
 [node name="Current Track Cover Container" type="CenterContainer" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1146409671]
 unique_name_in_owner = true
@@ -316,7 +353,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_lj0cr")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bb5d1")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
@@ -474,7 +511,7 @@ offset_bottom = 150.0
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_b3go0")
+theme_override_styles/panel = SubResource("StyleBoxFlat_uwgfw")
 script = ExtResource("9_6t3k2")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"

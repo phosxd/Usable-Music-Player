@@ -396,14 +396,17 @@ static func load_library(root_path:String, callback:Callable) -> void:
 	timer.one_shot = false
 	timer.timeout.connect(func() -> void:
 		var indexing_label = SessionManager.main_scene.get_node('%Indexing Label')
+		var indexing_status = SessionManager.main_scene.get_node('%Indexing Status')
 		if indexing_label is not Label: return
-		indexing_label.show()
+		if indexing_status is not Control: return
+		indexing_status.show()
 		indexing_label.text = SessionManager.main_scene.indexing_label_template % LibraryManager.database.tracks.size()
 		if LibraryManager.currently_updating == false:
-			indexing_label.hide()
+			indexing_status.hide()
 			timer.stop()
 			timer.queue_free()
 	)
+	timer.timeout.emit()
 	SessionManager.add_child(timer)
 	timer.start(1.0)
 
@@ -427,7 +430,6 @@ static func _load_library(root_path:String, callback:Callable) -> void:
 			for item in meta_dump:
 				if item is not Dictionary: continue
 				LibraryManager._index(item)
-		print(database)
 	),callback)
 
 

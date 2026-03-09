@@ -19,7 +19,6 @@ const landing_page_options:Array[String] = [
 	'genres',
 ]
 const dir_open_popup := preload('res://Scenes/Dir Open/dir_open.tscn')
-const info_popup := preload('res://Scenes/Info Popup/info_popup.tscn')
 const credits_popup := preload('res://Scenes/Credits/credits.tscn')
 @onready var info_text_template:String = %Info.text
 
@@ -55,15 +54,13 @@ func _on_select_library_pressed() -> void:
 
 func _on_library_path_text_submitted(new_text:String) -> void:
 	if LibraryManager.currently_updating: return
-	@warning_ignore('shadowed_variable_base_class')
-	var popup:AcceptDialog = info_popup.instantiate()
-	popup.get_ok_button().hide()
-	popup.dialog_text = 'Running a full rescan/reset of the database & cache. This may take some time.\n\nYou can browse & play songs during indexing however you may need to restart the app after indexing to see the full library.'
-	self.add_child(popup)
 	%'Library Path'.editable = false
 	%'Rescan Library'.disabled = true
 
-	LibraryManager.load_library(new_text, func()->void:pass)
+	LibraryManager.load_library(new_text, func()->void:
+		%'Rescan Library'.disabled = false
+		%'Library Path'.editable = true
+	)
 
 
 func _on_rescan_library_pressed() -> void:

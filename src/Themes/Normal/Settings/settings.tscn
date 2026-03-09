@@ -143,10 +143,9 @@ placeholder_text = "No directory selected..."
 [node name="Scan For Changes" type="Button" parent="MarginContainer/Scroll/VBox/Library/VBox/Library" unique_id=2109067686]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Delete all cached data & rescan the library.
+tooltip_text = "Scan library for new, missing, or modified files & update the database accordingly.
 
-Session data & preferences will be kept.
-Lyrics, cover art, & other data will all be permanently deleted."
+This is automatically run on startup."
 text = "Scan For Changes"
 
 [node name="Rescan Library" type="Button" parent="MarginContainer/Scroll/VBox/Library/VBox/Library" unique_id=1633868751]
@@ -156,7 +155,8 @@ tooltip_text = "Delete all cached data & rescan the library.
 
 Session data & preferences will be kept.
 Lyrics, cover art, & other data will all be permanently deleted."
-text = "Reset Database"
+theme_override_colors/icon_normal_color = Color(1, 0.3, 0.3, 0.8980392)
+text = "Reset DB"
 icon = ExtResource("4_vbj3s")
 
 [node name="Select Library" type="Button" parent="MarginContainer/Scroll/VBox/Library/VBox/Library" unique_id=956764194]

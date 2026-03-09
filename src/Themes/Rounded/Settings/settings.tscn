@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bufk41o60g01x" path="res://Scripts/UI/Settings/settings.gd" id="1_d3rbk"]
 [ext_resource type="StyleBox" uid="uid://cct1wgvig42n2" path="res://Themes/Rounded/Assets/settings_section.tres" id="2_rhe31"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="3_v5vgm"]
+[ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Assets/Icons/remove.svg" id="4_fb8vy"]
 [ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="4_yg7oy"]
 [ext_resource type="LabelSettings" uid="uid://cdw532kd3kld3" path="res://Assets/header_label.tres" id="5_fb8vy"]
 
@@ -92,7 +93,7 @@ layout_mode = 2
 tooltip_text = "Open source code repository issues page"
 text = "Credits"
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/Settings/VBox" unique_id=2012825676]
+[node name="Sep 1" type="HSeparator" parent="MarginContainer/Settings/VBox" unique_id=2012825676]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_rhe31")
@@ -140,13 +141,24 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "No directory selected..."
 
+[node name="Scan For Changes" type="Button" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library" unique_id=821006699]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Scan library for new, missing, or modified files & update the database accordingly.
+
+This is automatically run on startup."
+text = "Scan For Changes"
+
 [node name="Rescan Library" type="Button" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library" unique_id=1633868751]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Scan the entire library for changes & update accordingly.
+tooltip_text = "Delete all cached data & rescan the library.
 
-You should do this everytime you add new tracks to your library."
-text = "Rescan Library"
+Session data & preferences will be kept.
+Lyrics, cover art, & other data will all be permanently deleted."
+theme_override_colors/icon_normal_color = Color(1, 0.3019608, 0.3019608, 0.8980392)
+text = "Reset DB"
+icon = ExtResource("4_fb8vy")
 
 [node name="Select Library" type="Button" parent="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library" unique_id=956764194]
 unique_name_in_owner = true
@@ -154,7 +166,7 @@ layout_mode = 2
 tooltip_text = "Select directory"
 icon = ExtResource("3_v5vgm")
 
-[node name="HSeparator2" type="HSeparator" parent="MarginContainer/Settings/VBox" unique_id=1396201131]
+[node name="Sep 2" type="HSeparator" parent="MarginContainer/Settings/VBox" unique_id=1396201131]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_rhe31")
@@ -293,7 +305,49 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.0
 theme_override_constants/separation = 0
 
-[node name="HSeparator3" type="HSeparator" parent="MarginContainer/Settings/VBox" unique_id=583878255]
+[node name="Sep 4" type="HSeparator" parent="MarginContainer/Settings/VBox" unique_id=12882147]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_rhe31")
+
+[node name="Performance" type="PanelContainer" parent="MarginContainer/Settings/VBox" unique_id=929996837]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_rhe31")
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/Settings/VBox/Performance" unique_id=1035756813]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/Settings/VBox/Performance/VBox" unique_id=1699916190]
+layout_mode = 2
+text = "Performance"
+label_settings = ExtResource("5_fb8vy")
+
+[node name="Image Detail" type="HBoxContainer" parent="MarginContainer/Settings/VBox/Performance/VBox" unique_id=764374629]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Settings/VBox/Performance/VBox/Image Detail" unique_id=1709868534]
+layout_mode = 2
+tooltip_text = "Image detail level. Higher values will use more memory but look sharper."
+mouse_filter = 1
+text = "Image Detail"
+label_settings = ExtResource("4_yg7oy")
+
+[node name="Sep 1" type="VSeparator" parent="MarginContainer/Settings/VBox/Performance/VBox/Image Detail" unique_id=2076037394]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Image Detail" type="HSlider" parent="MarginContainer/Settings/VBox/Performance/VBox/Image Detail" unique_id=1896559323]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 2.0
+rounded = true
+tick_count = 3
+ticks_position = 3
+
+[node name="Sep 3" type="HSeparator" parent="MarginContainer/Settings/VBox" unique_id=583878255]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_rhe31")
@@ -366,11 +420,13 @@ layout_mode = 2
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Links/Report Issue" to="MarginContainer/Settings" method="_on_report_issue_pressed"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Links/Credits" to="MarginContainer/Settings" method="_on_credits_pressed"]
 [connection signal="text_changed" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library/Library Path" to="MarginContainer/Settings" method="_on_library_path_text_changed"]
+[connection signal="pressed" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library/Scan For Changes" to="MarginContainer/Settings" method="_on_scan_for_changes_pressed"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library/Rescan Library" to="MarginContainer/Settings" method="_on_rescan_library_pressed"]
 [connection signal="pressed" from="MarginContainer/Settings/VBox/Library Section/VBoxContainer/Library/Select Library" to="MarginContainer/Settings" method="_on_select_library_pressed"]
 [connection signal="toggled" from="MarginContainer/Settings/VBox/Customization/VBoxContainer/Dynamic Accents/Dynamic Accents" to="MarginContainer/Settings" method="_on_dynamic_accents_toggled"]
 [connection signal="item_selected" from="MarginContainer/Settings/VBox/Customization/VBoxContainer/Visualizer Mode/Visualizer Mode" to="MarginContainer/Settings" method="_on_visualizer_mode_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Settings/VBox/Customization/VBoxContainer/Layout Theme/Layout Theme" to="MarginContainer/Settings" method="_on_layout_theme_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Settings/VBox/Customization/VBoxContainer/Landing Page/Landing Page" to="MarginContainer/Settings" method="_on_landing_page_item_selected"]
+[connection signal="value_changed" from="MarginContainer/Settings/VBox/Performance/VBox/Image Detail/Image Detail" to="MarginContainer/Settings" method="_on_image_detail_value_changed"]
 [connection signal="toggled" from="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Lyrics/Fetch Lyrics" to="MarginContainer/Settings" method="_on_fetch_lyrics_toggled"]
 [connection signal="toggled" from="MarginContainer/Settings/VBox/APIs/VBoxContainer/Fetch Artist Cover/Fetch Artist Cover" to="MarginContainer/Settings" method="_on_fetch_artist_cover_toggled"]

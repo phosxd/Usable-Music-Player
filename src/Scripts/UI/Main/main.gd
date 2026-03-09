@@ -5,7 +5,7 @@ const console_scene := preload('res://Scenes/Console/Console.tscn')
 
 @onready var general_options_popup:PopupMenu = %'General Options'.get_popup()
 @onready var tabs:Dictionary[String,Array] = {
-	'settings': [null, SessionManager.get_layout_theme_scene('settings')],
+	'settings': [%'Tab Button Settings', SessionManager.get_layout_theme_scene('settings')],
 	'artists': [%'Tab Button Artists', SessionManager.get_layout_theme_scene('artists')],
 	'artist_page': [null, SessionManager.get_layout_theme_scene('artist_page')],
 	'albums': [%'Tab Button Albums', SessionManager.get_layout_theme_scene('albums')],
