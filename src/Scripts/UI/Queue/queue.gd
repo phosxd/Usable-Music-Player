@@ -1,6 +1,6 @@
 extends PanelContainer
 
-var card_scene = SessionManager.get_layout_theme_scene('queue_card')
+var card_scene = SessionManager.get_layout_theme_scene('Queue/card')
 var last_node: Node
 var update_count:int = 0
 var queue_update_blocked:bool = false
@@ -53,6 +53,7 @@ func track_updated(queue_position:int, _track:DBTrack) -> void:
 
 
 func add_card(list:Control, track:DBTrack) -> void:
+	if not card_scene: return
 	var card = card_scene.instantiate()
 	card.init(track)
 	list.add_child.call_deferred(card)

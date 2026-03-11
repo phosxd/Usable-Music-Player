@@ -20,11 +20,6 @@ enum ImageDetail {
 	High,
 }
 
-const layout_theme_name:Array[String] = [
-	'Normal',
-	'Rounded',
-]
-
 const property_data:Array[Array] = [
 	# Library / API settings.
 	['library_location',[TYPE_STRING]],
@@ -51,7 +46,7 @@ const property_data:Array[Array] = [
 	['track_sort_mode',[TYPE_INT]],
 	['track_ascend_mode',[TYPE_BOOL]],
 	# UI settings.
-	['layout_theme',[TYPE_INT]],
+	['layout_theme',[TYPE_STRING]],
 	['visualizer_mode',[TYPE_INT]],
 	['dynamic_accents',[TYPE_BOOL]],
 	['landing_page',[TYPE_STRING]],
@@ -72,7 +67,7 @@ var data:Dictionary = {
 	'hd_album_covers': false,
 	'visualizer_mode': 0,
 	'dynamic_accents': true,
-	'layout_theme': 0,
+	'layout_theme': 'Normal',
 }
 
 var main_scene: Node
@@ -148,14 +143,14 @@ var track_ascend_mode:bool = true:
 		track_ascend_mode = value
 		value_changed.emit('track_ascend_mode')
 
-var layout_theme := LayoutTheme.Normal:
+var layout_theme:String = 'Normal':
 	set(value):
 		layout_theme = value
 		var tree:SceneTree = get_tree()
-		get_tree().change_scene_to_packed.call_deferred(get_layout_theme_scene('main'))
+		get_tree().change_scene_to_packed.call_deferred(get_layout_theme_scene('Main/main'))
 		main_scene = tree.current_scene
 		var init = Node.new()
-		init.set_script(load('res://Themes/%s/init.gd' % layout_theme_name[value]))
+		init.set_script(load('res://Themes/%s/init.gd' % value))
 		init.call('init')
 		value_changed.emit('layout_theme')
 
@@ -183,39 +178,28 @@ var artists_tab_scroll_value:float = 0
 var albums_tab_scroll_value:float = 0
 var tracks_tab_scroll_value:float = 0
 
+var valid_layout_themes:Array[String] = []
+
 
 func _ready() -> void:
 	default_window_size = get_window().size
 	current_window_size = default_window_size
+	for dir_name:String in DirAccess.get_directories_at('res://Themes'):
+		valid_layout_themes.append(dir_name)
 	load_session()
 
 
-func get_layout_theme_scene(scene_name:String) -> PackedScene:
-	var path:String = layout_theme_name[layout_theme]
-	match scene_name.to_lower():
-		'main': return load('res://Themes/%s/Main/main.tscn' % path)
-		'settings': return load('res://Themes/%s/Settings/settings.tscn' % path)
-		'immersive player': return load('res://Themes/%s/Immersive Player/immersive_player.tscn' % path)
-		'queue': return load('res://Themes/%s/Queue/queue.tscn' % path)
-		'queue_card': return load('res://Themes/%s/Queue/card.tscn' % path)
+func get_layout_theme_scene(scene_name:String, theme_override:String='', recurse:int=0) -> PackedScene:
+	if recurse > 1: return null
+	var theme_: String
+	if theme_override.is_empty(): theme_ = layout_theme
+	else: theme_ = theme_override
 
-		'artists': return load('res://Themes/%s/Artists/artists.tscn' % path)
-		'artists_card': return load('res://Themes/%s/Artists/card.tscn' % path)
-		'artist_page': return load('res://Themes/%s/Artist Page/artist_page.tscn' % path)
-
-		'albums': return load('res://Themes/%s/Albums/albums.tscn' % path)
-		'albums_card': return load('res://Themes/%s/Albums/card.tscn' % path)
-		'album_page': return load('res://Themes/%s/Album Page/album_page.tscn' % path)
-
-		'tracks': return load('res://Themes/%s/Tracks/tracks.tscn' % path)
-		'tracks_card': return load('res://Themes/%s/Tracks/card.tscn' % path)
-		'tracks_placeholder_card': return load('res://Themes/%s/Tracks/placeholder_card.tscn' % path)
-
-		'genres': return load('res://Themes/%s/Genres/genres.tscn' % path)
-		'genres_card': return load('res://Themes/%s/Genres/card.tscn' % path)
-		'genre_page': return load('res://Themes/%s/Genre Page/genre_page.tscn' % path)
-
-	return null
+	var scene
+	var scene_path:String = 'res://Themes/%s/%s.tscn' % [theme_, scene_name]
+	if ResourceLoader.exists(scene_path): scene = load(scene_path)
+	if not scene: return SessionManager.get_layout_theme_scene(scene_name, 'Normal', recurse+1)
+	return scene
 
 
 ## Load session from disk.

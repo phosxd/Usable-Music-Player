@@ -5,3 +5,6 @@
 - Add ability to go to album from track card.
 - Add ability to upload custom artist & album covers.
 - Add simple mini-player to replace immersive player.
+- Revamp library "scan for changes" implementation to only call CLI, not for every file.
+- Add status info for "scan for changes" function.
+- Revamp "interface.py" CLI to return raw image bytes as a string instead of storing as a file.

@@ -11,7 +11,7 @@ friction = 2.0
 [sub_resource type="Resource" id="Resource_30eoj"]
 script = ExtResource("3_68o6a")
 
-[node name="Tracks" type="VBoxContainer" unique_id=213465202]
+[node name="Tracks Tab" type="VBoxContainer" unique_id=213465202]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

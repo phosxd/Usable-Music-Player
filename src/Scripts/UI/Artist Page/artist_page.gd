@@ -11,7 +11,7 @@ extends Control
 		'enabled': false,
 	}
 }
-var card_scene:PackedScene = SessionManager.get_layout_theme_scene('albums_card')
+var card_scene:PackedScene = SessionManager.get_layout_theme_scene('Albums/card')
 const overlay_color := Color(0.25, 0.25, 0.25, 0.5)
 @onready var options_popup:PopupMenu = %Options.get_popup()
 var loaded_albums:Array[DBAlbum] = []
@@ -84,6 +84,7 @@ func set_gradient(image:ImageTexture) -> void:
 
 
 func add_card(album:DBAlbum) -> void:
+	if not card_scene: return
 	var card:Control = card_scene.instantiate()
 	card.selected.connect(_on_album_selected.bind(album))
 	card.init(album)

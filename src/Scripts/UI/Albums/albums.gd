@@ -21,7 +21,7 @@ extends VBoxContainer
 		'callback': _on_search_updated,
 	}
 }
-var card_scene := SessionManager.get_layout_theme_scene('albums_card')
+var card_scene := SessionManager.get_layout_theme_scene('Albums/card')
 var sort_mode: LibraryManager.AlbumSortMode
 var ascend_mode = null
 var update_count:int = 0
@@ -67,7 +67,7 @@ func sort() -> void:
 
 
 func add_card(scene:Node, grid:Control, album:DBAlbum, display_data:String) -> void:
-	if not scene: return
+	if not scene or not card_scene: return
 	var card:Control = card_scene.instantiate()
 	card.init(album, display_data)
 	card.selected.connect(_on_card_selected.bind(album))

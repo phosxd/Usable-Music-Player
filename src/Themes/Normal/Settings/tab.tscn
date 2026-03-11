@@ -1,30 +1,30 @@
 [gd_scene format=3 uid="uid://bd6m2i8lkqver"]
 
-[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="1_m3t6d"]
-[ext_resource type="Script" uid="uid://bufk41o60g01x" path="res://Scripts/UI/Settings/settings.gd" id="1_tajnh"]
-[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="2_m3t6d"]
-[ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="3_swu2f"]
-[ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="3_vbj3s"]
-[ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Assets/Icons/remove.svg" id="4_vbj3s"]
-[ext_resource type="Texture2D" uid="uid://qo42hyjmudbd" path="res://Assets/Icons/copy.svg" id="5_twpp0"]
-[ext_resource type="Texture2D" uid="uid://cr62t880itebb" path="res://Assets/Icons/queue.svg" id="6_kvr0b"]
-[ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Assets/Icons/search.svg" id="7_4m0ci"]
-[ext_resource type="Texture2D" uid="uid://utn627e88d32" path="res://Assets/Icons/artist.svg" id="8_kvr0b"]
-[ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="9_a6lvd"]
+[ext_resource type="Script" uid="uid://bufk41o60g01x" path="res://Scripts/UI/Settings/settings.gd" id="1_7d2l6"]
+[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_3fctb"]
+[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_1b3q6"]
+[ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="4_dymlv"]
+[ext_resource type="Texture2D" uid="uid://cr62t880itebb" path="res://Assets/Icons/queue.svg" id="5_ynjxd"]
+[ext_resource type="Texture2D" uid="uid://qo42hyjmudbd" path="res://Assets/Icons/copy.svg" id="6_yp2qw"]
+[ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Assets/Icons/search.svg" id="7_0qta7"]
+[ext_resource type="Texture2D" uid="uid://utn627e88d32" path="res://Assets/Icons/artist.svg" id="8_q288h"]
+[ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="9_yf2f5"]
+[ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Assets/Icons/remove.svg" id="10_6tlhg"]
+[ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="11_yw38e"]
 
 [sub_resource type="Resource" id="Resource_75g7q"]
-script = ExtResource("2_m3t6d")
+script = ExtResource("3_1b3q6")
 rebound_strength = 14.0
 
 [sub_resource type="Resource" id="Resource_a6lvd"]
-script = ExtResource("2_m3t6d")
+script = ExtResource("3_1b3q6")
 rebound_strength = 14.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vu07l"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpqc"]
 
-[node name="Settings" type="MarginContainer" unique_id=1468312923]
+[node name="Settings Tab" type="MarginContainer" unique_id=1468312923]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -32,7 +32,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_tajnh")
+script = ExtResource("1_7d2l6")
 
 [node name="Panel" type="Panel" parent="." unique_id=1760880125]
 layout_mode = 2
@@ -50,7 +50,7 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 horizontal_scroll_mode = 0
-script = ExtResource("1_m3t6d")
+script = ExtResource("2_3fctb")
 speed = 200.0
 wheel_scroll_damper = SubResource("Resource_75g7q")
 dragging_scroll_damper = SubResource("Resource_a6lvd")
@@ -90,14 +90,14 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 5
-tab_0/icon = ExtResource("9_a6lvd")
-tab_1/icon = ExtResource("6_kvr0b")
-tab_2/icon = ExtResource("5_twpp0")
+current_tab = 1
+tab_0/icon = ExtResource("4_dymlv")
+tab_1/icon = ExtResource("5_ynjxd")
+tab_2/icon = ExtResource("6_yp2qw")
 tab_3/disabled = true
 tab_3/hidden = true
-tab_4/icon = ExtResource("7_4m0ci")
-tab_5/icon = ExtResource("8_kvr0b")
+tab_4/icon = ExtResource("7_0qta7")
+tab_5/icon = ExtResource("8_q288h")
 
 [node name="Library" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=1260831358]
 visible = false
@@ -131,7 +131,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/Library/Library" unique_id=709594005]
 layout_mode = 2
 text = "Library"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/Library/Library" unique_id=1003039447]
 self_modulate = Color(1, 1, 1, 0)
@@ -161,16 +161,15 @@ Session data & preferences will be kept.
 Lyrics, cover art, & other data will all be permanently deleted."
 theme_override_colors/icon_normal_color = Color(1, 0.3, 0.3, 0.8980392)
 text = "Reset DB"
-icon = ExtResource("4_vbj3s")
+icon = ExtResource("10_6tlhg")
 
 [node name="Select Library" type="Button" parent="MarginContainer/Scroll/VBox/Tabs/Library/Library" unique_id=956764194]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Select directory"
-icon = ExtResource("3_swu2f")
+icon = ExtResource("11_yw38e")
 
 [node name="UI" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=1265648481]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 metadata/_tab_name = ""
@@ -185,7 +184,7 @@ tooltip_text = "When enabled, UI elements will change color to match the current
 This may cause minor skips when changing colors."
 mouse_filter = 1
 text = "Dynamic Accents"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/Dynamic Accents" unique_id=832723907]
 self_modulate = Color(1, 1, 1, 0)
@@ -202,7 +201,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/UI/Visualizer Mode" unique_id=691839164]
 layout_mode = 2
 text = "Visualizer Mode"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/Visualizer Mode" unique_id=1497137780]
 self_modulate = Color(1, 1, 1, 0)
@@ -236,7 +235,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/UI/Layout Theme" unique_id=1782414603]
 layout_mode = 2
 text = "Layout Theme"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/Layout Theme" unique_id=855275219]
 self_modulate = Color(1, 1, 1, 0)
@@ -248,12 +247,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-selected = 0
-item_count = 2
-popup/item_0/text = "Normal"
-popup/item_0/id = 0
-popup/item_1/text = "Rounded"
-popup/item_1/id = 1
 
 [node name="Sep 2" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/Layout Theme" unique_id=1225742955]
 self_modulate = Color(1, 1, 1, 0)
@@ -268,7 +261,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/UI/Landing Page" unique_id=861454972]
 layout_mode = 2
 text = "Landing Page"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/Landing Page" unique_id=722401135]
 self_modulate = Color(1, 1, 1, 0)
@@ -307,7 +300,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/UI/UI Scale" unique_id=141327545]
 layout_mode = 2
 text = "UI Scale"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/UI Scale" unique_id=1652810996]
 self_modulate = Color(1, 1, 1, 0)
@@ -351,7 +344,7 @@ layout_mode = 2
 tooltip_text = "Image detail level. Higher values will use more memory but look sharper."
 mouse_filter = 1
 text = "Image Detail"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/Process/Image Detail" unique_id=603747556]
 self_modulate = Color(1, 1, 1, 0)
@@ -379,7 +372,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Play Pause" unique_id=1615511433]
 layout_mode = 2
 text = "Play / Pause"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Play Pause" unique_id=696054307]
 self_modulate = Color(1, 1, 1, 0)
@@ -397,7 +390,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Skip Backward" unique_id=1974193347]
 layout_mode = 2
 text = "Skip Backward"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Skip Backward" unique_id=1311690479]
 self_modulate = Color(1, 1, 1, 0)
@@ -415,7 +408,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Skip Forward" unique_id=1116914384]
 layout_mode = 2
 text = "Skip Forward"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Skip Forward" unique_id=1098078269]
 self_modulate = Color(1, 1, 1, 0)
@@ -433,7 +426,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Page Back" unique_id=418645861]
 layout_mode = 2
 text = "Page Back"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Page Back" unique_id=1378621877]
 self_modulate = Color(1, 1, 1, 0)
@@ -458,7 +451,7 @@ layout_mode = 2
 layout_mode = 2
 tooltip_text = "Automatically fetch lyrics from an API & save to user data upon playing a track."
 text = "Fetch Lyrics"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/APIs/Fetch Lyrics" unique_id=417476389]
 self_modulate = Color(1, 1, 1, 0)
@@ -476,7 +469,7 @@ layout_mode = 2
 layout_mode = 2
 tooltip_text = "Automatically fetch lyrics from an API & save to user data upon playing a track."
 text = "Fetch Artist Cover"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/APIs/Fetch Artist Cover" unique_id=2058428292]
 self_modulate = Color(1, 1, 1, 0)
@@ -494,7 +487,7 @@ layout_mode = 2
 layout_mode = 2
 tooltip_text = "Automatically fetch lyrics from an API & save to user data upon playing a track."
 text = "Fetch Album Cover"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/APIs/Fetch Album Cover" unique_id=856387363]
 self_modulate = Color(1, 1, 1, 0)
@@ -516,7 +509,7 @@ layout_mode = 2
 tooltip_text = "Send system notification whenever a track has finished."
 mouse_filter = 1
 text = "Track Finished Notification"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Track Finished Notif" type="CheckButton" parent="MarginContainer/Scroll/VBox/Tabs/APIs/Track Finished Notif" unique_id=236368470]
 unique_name_in_owner = true
@@ -530,13 +523,14 @@ layout_mode = 2
 tooltip_text = "Send system notification whenever a track has finished."
 mouse_filter = 1
 text = "Lib. Scan Finished Notification"
-label_settings = ExtResource("3_vbj3s")
+label_settings = ExtResource("9_yf2f5")
 
 [node name="Library Scan Finished Notif" type="CheckButton" parent="MarginContainer/Scroll/VBox/Tabs/APIs/Library Scan Finished Notif" unique_id=619323010]
 unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Credits" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=1803004833]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 5
 metadata/_tab_name = ""

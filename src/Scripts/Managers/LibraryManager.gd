@@ -58,7 +58,6 @@ static var database:Dictionary = {
 	'artists': {},
 	'tracks': {},
 }
-static var db_cache_size:int = 0
 ## If true, the database is currently updating.
 static var currently_updating:bool = false
 ## Array of image paths already calculated & processed.
@@ -324,7 +323,6 @@ static func scan_for_changes() -> void:
 
 
 static func wipe_database() -> void:
-	db_cache_size = 0
 	database.set('artists', {})
 	database.set('tracks', {})
 	database.erase('timestamp')
@@ -342,36 +340,40 @@ static func wipe_lyrics() -> void:
 	,Callable())
 
 
-## Returns the total bytes of the database & image cache.
-static func get_cache_size() -> int:
+## Returns & recalculates the total bytes of the user data folder.
+static func get_user_data_size() -> int:
 	var total:Array[int] = [0]
-	# Database cache.
-	total[0] += FileAccess.get_file_as_bytes(db_cache_path).size()
-	# Image cache.
-	FileUtils.walk_dir(image_cache_path, func(path:String) -> void:
-		total[0] += FileAccess.get_file_as_bytes(path).size()
-	,Callable())
 
-	db_cache_size = total[0]
+	FileUtils.walk_dir(OS.get_user_data_dir(), func(file_path:String) -> void:
+		total[0] += FileAccess.get_size(file_path)
+	,func(_dir_path)->void:pass)
+
 	return total[0]
 
 
 ## Returns the total bytes of the library.
 static func get_library_size() -> int:
-	return database.get('library_size',0)
+	var total:int = 0
+
+	for track:DBTrack in database.tracks.values():
+		total += track.file_size
+
+	return total
 
 
+## Save the [code]database[/code] as AJSON to the [code]db_cache_path[/code].
 static func save_database() -> void:
 	var file := FileAccess.open(db_cache_path, FileAccess.WRITE)
 	if file == null:
-		printerr('Failed to save database.')
+		MiniLog.err('Failed to open DB Cache Path to write database.', LibraryManager)
 		return
 	var json = A2J.to_json(database, a2j_ruleset)
 	file.store_string(JSON.stringify(json, '\t', true, true))
 	file.close()
 
 
-static func load_library_from_cache() -> void:
+## Loads the saved database from [code]db_cache_path[/code].
+static func load_database() -> void:
 	MiniLog.info('Loading library from cache.', LibraryManager)
 	var text:String = FileAccess.get_file_as_string(db_cache_path)
 	if text.is_empty(): return
@@ -381,23 +383,26 @@ static func load_library_from_cache() -> void:
 		database = A2J.from_json(json, a2j_ruleset)
 
 
-static func load_library(root_path:String, callback:Callable) -> void:
+## Generates the database from audio files in the [param root_path].
+## Calls [param callback] with no arguments when finished.
+static func generate_database(root_path:String, callback:Callable) -> void:
 	LibraryManager.currently_updating = true
 	SessionManager.library_location = root_path
 	LibraryManager.wipe_database()
 	LibraryManager.wipe_image_cache()
 	LibraryManager.wipe_lyrics()
 	database.set('timestamp', Time.get_datetime_string_from_system(true, true))
-	# Load library threaded.
-	_load_library(root_path, func(_result) -> void:
+	# Generate database threaded.
+	_generate_database(root_path, func(_result) -> void:
 		LibraryManager.currently_updating = false
 		save_database()
-		load_library_from_cache()
+		load_database()
 		if SessionManager.send_library_scan_finished_notif: SystemNotif.send('', 'Finished scanning library.')
 		if callback && callback.is_valid() && callback.get_object():
 			callback.call()
 	)
 
+	# Update status.
 	var timer := Timer.new()
 	timer.one_shot = false
 	timer.timeout.connect(func() -> void:
@@ -417,7 +422,7 @@ static func load_library(root_path:String, callback:Callable) -> void:
 	timer.start(1.0)
 
 
-static func _load_library(root_path:String, callback:Callable) -> void:
+static func _generate_database(root_path:String, callback:Callable) -> void:
 	var root_dir := DirAccess.open(root_path)
 	if root_dir == null:
 		if callback && callback.is_valid(): callback.call(null)
@@ -437,6 +442,7 @@ static func _load_library(root_path:String, callback:Callable) -> void:
 				if item is not Dictionary: continue
 				LibraryManager._index(item)
 	),callback)
+	updated_images.clear()
 
 
 static func _index(metadata:Dictionary, track_number_override:int=-1, _disc_number_override:int=-1, custom_data:Dictionary={}) -> void:

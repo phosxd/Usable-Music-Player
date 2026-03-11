@@ -13,7 +13,7 @@ rebound_strength = 14.0
 script = ExtResource("3_0e6mk")
 rebound_strength = 14.0
 
-[node name="Tracks" type="VBoxContainer" unique_id=213465202]
+[node name="Tracks Tab" type="VBoxContainer" unique_id=213465202]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

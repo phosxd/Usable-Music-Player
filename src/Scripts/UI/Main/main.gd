@@ -5,15 +5,15 @@ const console_scene := preload('res://Scenes/Console/Console.tscn')
 
 @onready var general_options_popup:PopupMenu = %'General Options'.get_popup()
 @onready var tabs:Dictionary[String,Array] = {
-	'settings': [%'Tab Button Settings', SessionManager.get_layout_theme_scene('settings')],
-	'artists': [%'Tab Button Artists', SessionManager.get_layout_theme_scene('artists')],
-	'artist_page': [null, SessionManager.get_layout_theme_scene('artist_page')],
-	'albums': [%'Tab Button Albums', SessionManager.get_layout_theme_scene('albums')],
-	'album_page': [null, SessionManager.get_layout_theme_scene('album_page')],
-	'tracks': [%'Tab Button Tracks', SessionManager.get_layout_theme_scene('tracks')],
-	'genres': [%'Tab Button Genres', SessionManager.get_layout_theme_scene('genres')],
-	'genre_page': [null, SessionManager.get_layout_theme_scene('genre_page')],
-	'.immersive_player': [%'Tab Button Immersive Player', SessionManager.get_layout_theme_scene('immersive player')]
+	'settings': [%'Tab Button Settings', SessionManager.get_layout_theme_scene('Settings/tab')],
+	'artists': [%'Tab Button Artists', SessionManager.get_layout_theme_scene('Artists/tab')],
+	'artist_page': [null, SessionManager.get_layout_theme_scene('Artist Page/page')],
+	'albums': [%'Tab Button Albums', SessionManager.get_layout_theme_scene('Albums/tab')],
+	'album_page': [null, SessionManager.get_layout_theme_scene('Album Page/page')],
+	'tracks': [%'Tab Button Tracks', SessionManager.get_layout_theme_scene('Tracks/tab')],
+	'genres': [%'Tab Button Genres', SessionManager.get_layout_theme_scene('Genres/tab')],
+	'genre_page': [null, SessionManager.get_layout_theme_scene('Genre Page/page')],
+	'.immersive_player': [%'Tab Button Immersive Player', SessionManager.get_layout_theme_scene('Immersive Player/tab')]
 }
 @onready var indexing_label_template:String = %'Indexing Label'.text
 var tab_history:Array[Array] = []

@@ -23,7 +23,7 @@ extends VBoxContainer
 		'callback': _on_search_updated,
 	},
 }
-var card_scene := SessionManager.get_layout_theme_scene('tracks_card')
+var card_scene := SessionManager.get_layout_theme_scene('Tracks/card')
 var placeholder_card_scene := SessionManager.get_layout_theme_scene('tracks_placeholder_card')
 const page_size:int = 50
 
@@ -78,7 +78,7 @@ func sort(callback=null) -> void:
 
 
 func add_card(scene:Node, grid:Control, track:DBTrack, callback:Callable) -> void:
-	if not scene: return
+	if not scene or not card_scene: return
 	var card:Control = card_scene.instantiate()
 	card.init(track)
 	card.selected.connect(callback)

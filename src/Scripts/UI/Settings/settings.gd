@@ -25,7 +25,7 @@ const dir_open_popup := preload('res://Scenes/Dir Open/dir_open.tscn')
 func _ready() -> void:
 	@warning_ignore('integer_division')
 	%Info.text = info_text_template % [
-		LibraryManager.get_cache_size()/1000/1000,
+		LibraryManager.get_user_data_size()/1000/1000,
 		LibraryManager.database.get('timestamp', 'Never'),
 		LibraryManager.get_library_size()/1000/1000,
 		LibraryManager.database.tracks.size(),
@@ -33,7 +33,9 @@ func _ready() -> void:
 	%'Library Path'.text = SessionManager.library_location
 	%'Dynamic Accents'.set_pressed_no_signal(SessionManager.dynamic_accents)
 	%'Visualizer Mode'.selected = SessionManager.visualizer_mode
-	%'Layout Theme'.selected = SessionManager.layout_theme
+	for item in SessionManager.valid_layout_themes:
+		%'Layout Theme'.add_item(item)
+	%'Layout Theme'.selected = SessionManager.valid_layout_themes.find(SessionManager.layout_theme)
 	%'Landing Page'.selected = landing_page_options.find(SessionManager.landing_page)
 	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.fetch_lyrics)
 	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.fetch_artist_cover)
@@ -55,7 +57,7 @@ func _on_select_library_pressed() -> void:
 
 func _on_library_path_text_submitted(new_text:String) -> void:
 	if LibraryManager.currently_updating: return
-	LibraryManager.load_library(new_text, func()->void:pass)
+	LibraryManager.generate_database(new_text, func()->void:pass)
 
 
 func _on_rescan_library_pressed() -> void:
@@ -84,9 +86,7 @@ func _on_visualizer_mode_item_selected(index:int) -> void:
 
 
 func _on_layout_theme_item_selected(index:int) -> void:
-	match index:
-		0: SessionManager.layout_theme = SessionManager.LayoutTheme.Normal
-		1: SessionManager.layout_theme = SessionManager.LayoutTheme.Rounded
+	SessionManager.layout_theme = SessionManager.valid_layout_themes[index]
 
 
 func _on_landing_page_item_selected(index:int) -> void:

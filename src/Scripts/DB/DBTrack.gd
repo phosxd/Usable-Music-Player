@@ -6,6 +6,8 @@ class_name DBTrack extends RefCounted
 var album: DBAlbum
 ## Track absolute file path.
 var path: String
+## Number of bytes of file at [param path].
+var file_size: int
 ## Track name.
 var name: String
 ## Track actual artist name.
@@ -39,6 +41,10 @@ func _init(album_:DBAlbum, path_:String, data:Dictionary) -> void:
 	if path_.is_empty() or not album_: remove()
 	album = album_
 	path = path_
+
+	var raw_file_size = data.get('file_size')
+	if raw_file_size is int: file_size = raw_file_size
+	else: file_size = FileAccess.get_size(path)
 
 	var raw_length = data.get('length')
 	if raw_length is float: length = raw_length

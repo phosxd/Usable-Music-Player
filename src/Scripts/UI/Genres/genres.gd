@@ -12,7 +12,7 @@ extends VBoxContainer
 		'enabled': false,
 	}
 }
-var card_scene := SessionManager.get_layout_theme_scene('genres_card')
+var card_scene := SessionManager.get_layout_theme_scene('Genres/card')
 
 
 func _ready() -> void:
@@ -23,6 +23,7 @@ func _ready() -> void:
 
 
 func add_card(genre_name:String, albums:Array) -> void:
+	if not card_scene: return
 	var card:Control = card_scene.instantiate()
 	card.init(genre_name, albums)
 	card.selected.connect(_on_card_selected.bind(genre_name, albums))

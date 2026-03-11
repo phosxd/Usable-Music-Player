@@ -11,7 +11,7 @@ extends Control
 		'enabled': false,
 	}
 }
-var card_scene:PackedScene = SessionManager.get_layout_theme_scene('tracks_card')
+var card_scene:PackedScene = SessionManager.get_layout_theme_scene('Tracks/card')
 const overlay_color := Color(0.25, 0.25, 0.25, 0.5)
 @onready var options_popup:PopupMenu = %Options.get_popup()
 var loaded_tracks:Array[DBTrack] = []
@@ -74,6 +74,7 @@ func add_disc_sep(disc:String) -> void:
 
 
 func add_card(track:DBTrack) -> void:
+	if not card_scene: return
 	var card:Control = card_scene.instantiate()
 	card.selected.connect(_on_track_selected.bind(track))
 	card.init(track)

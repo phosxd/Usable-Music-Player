@@ -19,7 +19,7 @@ extends VBoxContainer
 		'callback': _on_search_updated,
 	}
 }
-var card_scene := SessionManager.get_layout_theme_scene('artists_card')
+var card_scene := SessionManager.get_layout_theme_scene('Artists/card')
 var sort_mode: LibraryManager.ArtistSortMode
 var ascend_mode = null
 var update_count:int = 0
@@ -59,7 +59,7 @@ func sort() -> void:
 
 
 func add_card(scene:Node, grid:Control, artist:DBArtist) -> void:
-	if not scene: return
+	if not scene or not card_scene: return
 	var card:Control = card_scene.instantiate()
 	card.init(artist)
 	card.selected.connect(scene._on_card_selected.bind(artist))

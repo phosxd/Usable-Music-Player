@@ -22,7 +22,7 @@ func _ready() -> void:
 	if OS.get_name() == 'Linux': generate_desktop_file()
 
 	# Load library database.
-	LibraryManager.load_library_from_cache()
+	LibraryManager.load_database()
 
 
 ## Generates & saves a Linux desktop file for this app.
