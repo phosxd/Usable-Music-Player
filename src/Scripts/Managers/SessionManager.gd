@@ -9,11 +9,6 @@ enum VisualizerMode {
 	BAR,
 }
 
-enum LayoutTheme {
-	Normal,
-	Rounded,
-}
-
 enum ImageDetail {
 	Low,
 	Normal,
@@ -107,6 +102,9 @@ var search_term:String = '':
 		search_term = value
 		value_changed.emit('search_term')
 
+
+#region sorting
+
 ## Artists tab sort mode.
 var artist_sort_mode := LibraryManager.ArtistSortMode.TITLE:
 	set(value):
@@ -143,17 +141,6 @@ var track_ascend_mode:bool = true:
 		track_ascend_mode = value
 		value_changed.emit('track_ascend_mode')
 
-var layout_theme:String = 'Normal':
-	set(value):
-		layout_theme = value
-		var tree:SceneTree = get_tree()
-		get_tree().change_scene_to_packed.call_deferred(get_layout_theme_scene('Main/main'))
-		main_scene = tree.current_scene
-		var init = Node.new()
-		init.set_script(load('res://Themes/%s/init.gd' % value))
-		init.call('init')
-		value_changed.emit('layout_theme')
-
 var dynamic_accents:bool = true:
 	set(value):
 		dynamic_accents = value
@@ -177,6 +164,34 @@ var last_tab:String = 'albums':
 var artists_tab_scroll_value:float = 0
 var albums_tab_scroll_value:float = 0
 var tracks_tab_scroll_value:float = 0
+
+#endregion
+
+
+var layout_theme:String = 'Normal':
+	set(value):
+		layout_theme = value
+
+		# Set main scene.
+		var tree:SceneTree = get_tree()
+		get_tree().change_scene_to_packed.call_deferred(get_layout_theme_scene('Main/main'))
+		main_scene = tree.current_scene
+
+		# Call init script.
+		var init = Node.new()
+		var init_script_path:String = 'res://Themes/%s/init.gd' % value
+		if ResourceLoader.exists(init_script_path):
+			init.set_script(load(init_script_path))
+			init.call('init')
+
+		# Set theme.
+		var theme_path:String = 'res://Themes/%s/theme.tres' % value
+		if ResourceLoader.exists(theme_path):
+			get_window().theme = load(theme_path)
+			MiniLog.info('Set theme to "$~%s~$".' % theme_path, SessionManager)
+
+		value_changed.emit('layout_theme')
+
 
 var valid_layout_themes:Array[String] = []
 

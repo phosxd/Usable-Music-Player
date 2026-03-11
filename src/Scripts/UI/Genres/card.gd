@@ -2,25 +2,31 @@ extends PanelContainer
 
 signal selected
 const image_size := Vector2(100,100)
-@onready var default_style:StyleBox = %Shadow.get_theme_stylebox('panel')
+var default_style: StyleBox
 @onready var default_label_settings:LabelSettings = %Name.label_settings
 var albums: Array
+
+
+func _ready() -> void:
+	if has_node('%Shadow'):
+		default_style = %Shadow.get_theme_stylebox('panel')
 
 
 func init(genre_name:String, albums_:Array) -> void:
 	albums = albums_
 	%Name.text = genre_name
 
-	var covers:Array[ImageTexture] = []
-	var count:int = 0
-	for album:DBAlbum in albums:
-		if album is not DBAlbum: continue
-		count += 1
-		if count > 4: break
-		var cover = album.get_cover()
-		if cover is not ImageTexture: continue
-		covers.append(cover)
-	%'Quad Image'.from_array(covers)
+	if has_node("%'Quad Image'"):
+		var covers:Array[ImageTexture] = []
+		var count:int = 0
+		for album:DBAlbum in albums:
+			if album is not DBAlbum: continue
+			count += 1
+			if count > 4: break
+			var cover = album.get_cover()
+			if cover is not ImageTexture: continue
+			covers.append(cover)
+		%'Quad Image'.from_array(covers)
 
 
 func _on_button_pressed() -> void:
@@ -28,17 +34,20 @@ func _on_button_pressed() -> void:
 
 
 func _on_button_mouse_entered() -> void:
-	%Animation.play('Hover')
+	if has_node('%Animation'):
+		%Animation.play('Hover')
 
 
 func _on_button_mouse_exited() -> void:
-	%Animation.play_backwards('Hover')
+	if has_node('%Animation'):
+		%Animation.play_backwards('Hover')
 
 
 func hover(value:float=0) -> void:
 	if value == 0:
-		%Shadow.remove_theme_stylebox_override('panel')
-		%Shadow.add_theme_stylebox_override('panel', default_style)
+		if has_node('%Shadow'):
+			%Shadow.remove_theme_stylebox_override('panel')
+			%Shadow.add_theme_stylebox_override('panel', default_style)
 		%Name.label_settings = default_label_settings
 
 	else:
@@ -50,8 +59,9 @@ func hover(value:float=0) -> void:
 		image.crop(1,1)
 		var dominant_color := image.get_pixel(0,0)
 
-		var style = default_style.duplicate()
-		style.shadow_color = (default_style.shadow_color as Color).lerp(Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.45), value)
-		style.shadow_size = lerpf(default_style.shadow_size, 14, value)
-		%Shadow.remove_theme_stylebox_override('panel')
-		%Shadow.add_theme_stylebox_override('panel', style)
+		if has_node('%Shadow'):
+			var style = default_style.duplicate()
+			style.shadow_color = (default_style.shadow_color as Color).lerp(Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.45), value)
+			style.shadow_size = lerpf(default_style.shadow_size, 14, value)
+			%Shadow.remove_theme_stylebox_override('panel')
+			%Shadow.add_theme_stylebox_override('panel', style)

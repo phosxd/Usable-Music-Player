@@ -1,24 +1,31 @@
 extends PanelContainer
 
 signal selected
-@onready var default_style:StyleBox = %Shadow.get_theme_stylebox('panel')
+var default_style: StyleBox
 @onready var default_label_settings:LabelSettings = %Name.label_settings
 var artist: DBArtist
 var attempts_left:int = 4
+
+
+func _ready() -> void:
+	if has_node('%Shadow'):
+		default_style = %Shadow.get_theme_stylebox('panel')
 
 
 func init(artist_:DBArtist) -> void:
 	if not artist_: return
 	artist = artist_
 	%Name.text = artist.name
-	%'Quad Image'.from_artist(artist)
-	artist.get_cover_threaded(func(cover) -> void:
-		if not cover: return
-		if cover.get_size().x == 1: return
-		%Image.texture = cover
-		%Image.show()
-		%'Quad Image'.queue_free()
-	)
+
+	if %'Quad Image': # "has_node" does not work here for some reason, so gonna have to deal with an error everytime it is not found.
+		%'Quad Image'.from_artist(artist)
+		artist.get_cover_threaded(func(cover) -> void:
+			if not cover: return
+			if cover.get_size().x == 1: return
+			%Image.texture = cover
+			%Image.show()
+			%'Quad Image'.queue_free()
+		)
 
 	update()
 
@@ -85,7 +92,7 @@ func _on_http_request_image_request_completed(result:int, data:Dictionary) -> vo
 	image.call('load_%s_from_buffer' % img_ext, body)
 	%Image.texture = ImageTexture.create_from_image(image)
 	%Image.show()
-	%'Quad Image'.queue_free()
+	if has_node("%'Quad Image'"): %'Quad Image'.queue_free()
 	artist.save_cover(image)
 
 
@@ -98,19 +105,20 @@ func _on_button_pressed() -> void:
 
 
 func _on_button_mouse_entered() -> void:
-	if not %Animation: return
+	if not has_node('%Animation'): return
 	%Animation.play('Hover')
 
 
 func _on_button_mouse_exited() -> void:
-	if not %Animation: return
+	if not has_node('%Animation'): return
 	%Animation.play_backwards('Hover')
 
 
 func hover(value:float=0) -> void:
 	if value == 0:
-		%Shadow.remove_theme_stylebox_override('panel')
-		%Shadow.add_theme_stylebox_override('panel', default_style)
+		if has_node('%Shadow'):
+			%Shadow.remove_theme_stylebox_override('panel')
+			%Shadow.add_theme_stylebox_override('panel', default_style)
 		%Name.label_settings = default_label_settings
 
 	else:
@@ -122,8 +130,9 @@ func hover(value:float=0) -> void:
 		image.crop(1,1)
 		var dominant_color := image.get_pixel(0,0)
 
-		var style = default_style.duplicate()
-		style.shadow_color = (default_style.shadow_color as Color).lerp(Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.45), value)
-		style.shadow_size = lerpf(default_style.shadow_size, 14, value)
-		%Shadow.remove_theme_stylebox_override('panel')
-		%Shadow.add_theme_stylebox_override('panel', style)
+		if has_node('%Shadow'):
+			var style = default_style.duplicate()
+			style.shadow_color = (default_style.shadow_color as Color).lerp(Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.45), value)
+			style.shadow_size = lerpf(default_style.shadow_size, 14, value)
+			%Shadow.remove_theme_stylebox_override('panel')
+			%Shadow.add_theme_stylebox_override('panel', style)

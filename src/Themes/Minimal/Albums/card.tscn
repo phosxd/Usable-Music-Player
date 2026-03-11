@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://cvxgiv4v4dyke"]
+
+[ext_resource type="Script" uid="uid://dq72v1xlxhdva" path="res://Scripts/UI/Albums/card.gd" id="1_lv6m0"]
+[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="2_6mjlv"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="5_1wie7"]
+[ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Assets/Icons/options_horizontal.svg" id="5_6g8j8"]
+[ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="7_bsnyt"]
+[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="8_iv6po"]
+
+[node name="Card" type="PanelContainer" unique_id=927718466]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 83.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_lv6m0")
+
+[node name="Button" type="Button" parent="." unique_id=1347912673]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="." unique_id=1693924824]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Image Sep" type="VSeparator" parent="HBox" unique_id=951211198]
+unique_name_in_owner = true
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(10, 75)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Image" type="TextureRect" parent="HBox" unique_id=2072131750]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 2
+mouse_filter = 2
+mouse_behavior_recursive = 1
+texture = ExtResource("5_1wie7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Sep 1" type="VSeparator" parent="HBox" unique_id=1197225368]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="HBox" unique_id=824305555]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Album name..."
+label_settings = ExtResource("7_bsnyt")
+
+[node name="Sep 2" type="VSeparator" parent="HBox" unique_id=1622521575]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Artist" type="Label" parent="HBox" unique_id=965784348]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Artist name..."
+label_settings = ExtResource("8_iv6po")
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Sep 3" type="VSeparator" parent="HBox" unique_id=941094652]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Options" type="MenuButton" parent="HBox" unique_id=984699097]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_icons/icon = ExtResource("5_6g8j8")
+flat = false
+item_count = 1
+popup/item_0/text = "Play (clear queue)"
+popup/item_0/icon = ExtResource("2_6mjlv")
+popup/item_0/id = 0
+
+[node name="Sep 4" type="VSeparator" parent="HBox" unique_id=2079001952]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

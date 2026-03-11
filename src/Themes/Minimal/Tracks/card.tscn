@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://4sesewt7dv7u"]
+
+[ext_resource type="Script" uid="uid://crd0eykqnn4b0" path="res://Scripts/UI/Tracks/card.gd" id="1_3buyl"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="3_vcmix"]
+[ext_resource type="LabelSettings" uid="uid://wadklneh8tg0" path="res://Assets/primary_label_dark.tres" id="4_r3dfs"]
+[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="5_vcbxh"]
+[ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Assets/Icons/options_horizontal.svg" id="6_qnc7n"]
+[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="7_xd48n"]
+[ext_resource type="Texture2D" uid="uid://d3xi2hlyuvtic" path="res://Assets/Icons/queue_play_next.svg" id="8_o2a8q"]
+[ext_resource type="Texture2D" uid="uid://dgf4br6i5tdbe" path="res://Assets/Icons/queue_add_to_queue.svg" id="9_jhcxw"]
+[ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="10_22fty"]
+[ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Assets/Icons/modifiers.svg" id="11_xvx0t"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pbwpk"]
+font_size = 12
+
+[node name="Card" type="PanelContainer" unique_id=927718466]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+script = ExtResource("1_3buyl")
+
+[node name="Button" type="Button" parent="." unique_id=481831511]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="." unique_id=387191703]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBox" type="HBoxContainer" parent="HBox" unique_id=1963608250]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Image Sep" type="VSeparator" parent="HBox/HBox" unique_id=1826124697]
+unique_name_in_owner = true
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(10, 75)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Image" type="TextureRect" parent="HBox/HBox" unique_id=501122672]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 2
+mouse_filter = 2
+mouse_behavior_recursive = 1
+texture = ExtResource("3_vcmix")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Sep 3" type="VSeparator" parent="HBox/HBox" unique_id=1268986430]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Track Number" type="Label" parent="HBox/HBox" unique_id=2042461310]
+unique_name_in_owner = true
+self_modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+text = "1"
+
+[node name="Sep 1" type="VSeparator" parent="HBox/HBox" unique_id=1768593009]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Name" type="Label" parent="HBox/HBox" unique_id=824305555]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Track name..."
+label_settings = ExtResource("4_r3dfs")
+
+[node name="Sep 2" type="VSeparator" parent="HBox/HBox" unique_id=168385932]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Artist" type="Label" parent="HBox/HBox" unique_id=965784348]
+unique_name_in_owner = true
+self_modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Album name... - by artist name..."
+label_settings = ExtResource("5_vcbxh")
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Format" type="Label" parent="HBox" unique_id=1648349056]
+unique_name_in_owner = true
+self_modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+text = ".wav"
+label_settings = SubResource("LabelSettings_pbwpk")
+
+[node name="Sep 1" type="VSeparator" parent="HBox" unique_id=1248280519]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Length" type="Label" parent="HBox" unique_id=369639375]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0:00"
+
+[node name="Sep 2" type="VSeparator" parent="HBox" unique_id=1825734486]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Options" type="MenuButton" parent="HBox" unique_id=1883268878]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"AccentButton"
+icon = ExtResource("6_qnc7n")
+flat = false
+item_count = 5
+popup/item_0/text = "Play (clear queue)"
+popup/item_0/icon = ExtResource("7_xd48n")
+popup/item_0/id = 0
+popup/item_1/text = "Play next"
+popup/item_1/icon = ExtResource("8_o2a8q")
+popup/item_1/id = 1
+popup/item_2/text = "Add to queue"
+popup/item_2/icon = ExtResource("9_jhcxw")
+popup/item_2/id = 2
+popup/item_3/text = "Show in files"
+popup/item_3/icon = ExtResource("10_22fty")
+popup/item_3/id = 3
+popup/item_4/text = "Rescan"
+popup/item_4/icon = ExtResource("11_xvx0t")
+popup/item_4/id = 4
+
+[node name="Sep 3" type="VSeparator" parent="HBox" unique_id=415426799]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
