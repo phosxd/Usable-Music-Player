@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://qo42hyjmudbd" path="res://Assets/Icons/copy.svg" id="5_twpp0"]
 [ext_resource type="Texture2D" uid="uid://cr62t880itebb" path="res://Assets/Icons/queue.svg" id="6_kvr0b"]
 [ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Assets/Icons/search.svg" id="7_4m0ci"]
+[ext_resource type="Texture2D" uid="uid://utn627e88d32" path="res://Assets/Icons/artist.svg" id="8_kvr0b"]
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="9_a6lvd"]
 
 [sub_resource type="Resource" id="Resource_75g7q"]
@@ -59,7 +60,6 @@ metadata/_custom_type_script = "uid://bgqglerkcylxx"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 8
 
 [node name="Links" type="HBoxContainer" parent="MarginContainer/Scroll/VBox" unique_id=480455043]
 layout_mode = 2
@@ -83,25 +83,24 @@ layout_mode = 2
 tooltip_text = "Open source code repository issues page"
 text = "Report an Issue"
 
-[node name="Credits" type="Button" parent="MarginContainer/Scroll/VBox/Links" unique_id=1585602774]
-unique_name_in_owner = true
+[node name="Sep 1" type="HSeparator" parent="MarginContainer/Scroll/VBox" unique_id=1846903488]
 layout_mode = 2
-tooltip_text = "Open source code repository issues page"
-text = "Credits"
 
 [node name="Tabs" type="TabContainer" parent="MarginContainer/Scroll/VBox" unique_id=1519877971]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 5
 tab_0/icon = ExtResource("9_a6lvd")
 tab_1/icon = ExtResource("6_kvr0b")
 tab_2/icon = ExtResource("5_twpp0")
 tab_3/disabled = true
 tab_3/hidden = true
 tab_4/icon = ExtResource("7_4m0ci")
+tab_5/icon = ExtResource("8_kvr0b")
 
 [node name="Library" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=1260831358]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 metadata/_tab_name = ""
@@ -274,7 +273,7 @@ label_settings = ExtResource("3_vbj3s")
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/Landing Page" unique_id=722401135]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-theme_override_constants/separation = 39
+theme_override_constants/separation = 37
 
 [node name="Landing Page" type="OptionButton" parent="MarginContainer/Scroll/VBox/Tabs/UI/Landing Page" unique_id=916314514]
 unique_name_in_owner = true
@@ -300,6 +299,43 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.0
 theme_override_constants/separation = 0
+
+[node name="UI Scale" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs/UI" unique_id=1022861259]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/UI/UI Scale" unique_id=141327545]
+layout_mode = 2
+text = "UI Scale"
+label_settings = ExtResource("3_vbj3s")
+
+[node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/UI Scale" unique_id=1652810996]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 84
+
+[node name="UI Scale" type="HSlider" parent="MarginContainer/Scroll/VBox/Tabs/UI/UI Scale" unique_id=313711375]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(175, 0)
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 25.0
+max_value = 125.0
+step = 25.0
+value = 100.0
+rounded = true
+tick_count = 5
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="Sep 2" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/UI Scale" unique_id=1295646907]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="UI Scale Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/UI/UI Scale" unique_id=1667657668]
+unique_name_in_owner = true
+layout_mode = 2
+text = "100%"
 
 [node name="Process" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=956604619]
 visible = false
@@ -500,10 +536,28 @@ label_settings = ExtResource("3_vbj3s")
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="Credits" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=1803004833]
+layout_mode = 2
+metadata/_tab_index = 5
+metadata/_tab_name = ""
+
+[node name="Label" type="RichTextLabel" parent="MarginContainer/Scroll/VBox/Tabs/Credits" unique_id=451929107]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Made with the Godot engine.
+
+[color=sky_blue][url=https://github.com/tinytag/tinytag]TinyTag[/url][/color]: Audio metadata extractor.
+[color=sky_blue][url=https://github.com/V-Sekai/V-Sekai.flac]V-Sekai.flac[/url][/color]: Native FLAC playback.
+
+[color=sky_blue][url=https://github.com/kuruk-mm/texture-rect-rounded]TextureRectRounded[/url][/color]: Rounded image rendering.
+[color=sky_blue][url=https://github.com/SpyrexDE/SmoothScroll]SmoothScroll[/url][/color]: Smooth scrolling containers.
+"
+fit_content = true
+
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Links/User Data" to="." method="_on_user_data_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Links/Source Code" to="." method="_on_source_code_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Links/Report Issue" to="." method="_on_report_issue_pressed"]
-[connection signal="pressed" from="MarginContainer/Scroll/VBox/Links/Credits" to="." method="_on_credits_pressed"]
 [connection signal="text_submitted" from="MarginContainer/Scroll/VBox/Tabs/Library/Library/Library Path" to="." method="_on_library_path_text_submitted"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Tabs/Library/Library/Scan For Changes" to="." method="_on_scan_for_changes_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Tabs/Library/Library/Rescan Library" to="." method="_on_rescan_library_pressed"]
@@ -512,6 +566,7 @@ layout_mode = 2
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Tabs/UI/Visualizer Mode/Visualizer Mode" to="." method="_on_visualizer_mode_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Tabs/UI/Layout Theme/Layout Theme" to="." method="_on_layout_theme_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Tabs/UI/Landing Page/Landing Page" to="." method="_on_landing_page_item_selected"]
+[connection signal="value_changed" from="MarginContainer/Scroll/VBox/Tabs/UI/UI Scale/UI Scale" to="." method="_on_ui_scale_value_changed"]
 [connection signal="value_changed" from="MarginContainer/Scroll/VBox/Tabs/Process/Image Detail/Image Detail" to="." method="_on_image_detail_value_changed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Play Pause/Play Pause Key" to="." method="_on_play_pause_key_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Skip Backward/Skip Backward Key" to="." method="_on_skip_backward_key_pressed"]
@@ -522,3 +577,4 @@ layout_mode = 2
 [connection signal="toggled" from="MarginContainer/Scroll/VBox/Tabs/APIs/Fetch Album Cover/Fetch Album Cover" to="." method="_on_fetch_album_cover_toggled"]
 [connection signal="toggled" from="MarginContainer/Scroll/VBox/Tabs/APIs/Track Finished Notif/Track Finished Notif" to="." method="_on_track_finished_notif_toggled"]
 [connection signal="toggled" from="MarginContainer/Scroll/VBox/Tabs/APIs/Library Scan Finished Notif/Library Scan Finished Notif" to="." method="_on_library_scan_finished_notif_toggled"]
+[connection signal="meta_clicked" from="MarginContainer/Scroll/VBox/Tabs/Credits/Label" to="." method="_on_label_meta_clicked"]

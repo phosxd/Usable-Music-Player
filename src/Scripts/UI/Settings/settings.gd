@@ -19,7 +19,6 @@ const landing_page_options:Array[String] = [
 	'genres',
 ]
 const dir_open_popup := preload('res://Scenes/Dir Open/dir_open.tscn')
-const credits_popup := preload('res://Scenes/Credits/credits.tscn')
 @onready var info_text_template:String = %Info.text
 
 
@@ -74,11 +73,6 @@ func _on_source_code_pressed() -> void:
 
 func _on_report_issue_pressed() -> void:
 	OS.shell_open(AppInfo.issues_page)
-
-
-func _on_credits_pressed() -> void:
-	var popup = credits_popup.instantiate()
-	self.add_child(popup)
 
 
 func _on_dynamic_accents_toggled(toggled_on:bool) -> void:
@@ -141,3 +135,11 @@ func _on_track_finished_notif_toggled(toggled_on:bool) -> void:
 
 func _on_library_scan_finished_notif_toggled(toggled_on:bool) -> void:
 	SessionManager.send_library_scan_finished_notif = toggled_on
+
+
+func _on_ui_scale_value_changed(_value:float) -> void:
+	pass
+
+
+func _on_label_meta_clicked(meta:Variant) -> void:
+	OS.shell_open(meta)

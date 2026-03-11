@@ -3,8 +3,8 @@ extends Node
 var global_theme:Theme = ThemeDB.get_project_theme()
 const list_1:Array[Array] = [
 	['PanelContainer', 0, ['panel']],
-	['Button', 4, ['disabled', 'focus', 'hover', 'hover_pressed', 'normal', 'pressed']],
-	['AccentButton', 4, ['disabled', 'focus', 'hover', 'hover_pressed', 'normal', 'pressed']],
+	['Button', 4, ['disabled', 'hover', 'hover_pressed', 'normal', 'pressed']],
+	['AccentButton', 4, ['disabled', 'hover', 'hover_pressed', 'normal', 'pressed']],
 ]
 
 

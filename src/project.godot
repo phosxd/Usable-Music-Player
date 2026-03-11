@@ -22,6 +22,7 @@ config/use_custom_user_dir=true
 config/custom_user_dir_name="SOHP/Usable Music Player"
 config/auto_accept_quit=false
 config/features=PackedStringArray("4.6", "GL Compatibility")
+run/max_fps=80
 run/low_processor_mode=true
 run/low_processor_mode_sleep_usec=10000
 boot_splash/show_image=false
@@ -67,6 +68,7 @@ folder_colors={
 [gui]
 
 theme/custom="uid://tmqwrbivk7ve"
+theme/custom_font="uid://d0w10u7xh0q0"
 
 [input]
 
@@ -91,6 +93,11 @@ page_back={
 "deadzone": 0.2,
 "events": []
 }
+
+[physics]
+
+2d/physics_engine="Dummy"
+3d/physics_engine="Dummy"
 
 [rendering]
 

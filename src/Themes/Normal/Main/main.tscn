@@ -19,9 +19,9 @@
 [ext_resource type="Script" uid="uid://dtel3yhuvbpap" path="res://Elements/Top Bar/top_bar.gd" id="13_2ok46"]
 [ext_resource type="Script" uid="uid://k1n47i1vyqjo" path="res://Scripts/UI/Main/indexing_status.gd" id="13_hto8k"]
 [ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Assets/Icons/search.svg" id="14_koken"]
-[ext_resource type="Texture2D" uid="uid://dod6uhmhu0tw3" path="res://Assets/Icons/reload.svg" id="14_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://clvub0o51v8eh" path="res://Assets/Icons/scale_x2/change_sort_mode.svg" id="15_0fk8q"]
 [ext_resource type="LabelSettings" uid="uid://c4v5jc530rpeg" path="res://Assets/mini_label.tres" id="15_jo7x3"]
+[ext_resource type="Texture2D" uid="uid://c5rcofwxyp58s" path="res://Assets/Icons/scale_x2/loading.svg" id="15_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Assets/Icons/tree_arrow_left.svg" id="16_eeh6y"]
 [ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Themes/Normal/Queue/queue.tscn" id="19_eqlsm"]
 [ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Themes/Normal/Lyrics/lyrics.tscn" id="20_lj0cr"]
@@ -63,14 +63,6 @@ _data = {
 &"RESET": SubResource("Animation_wliom")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ok46"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.13682577, 0.13682574, 0.13682571, 1)
-anti_aliasing = false
-
 [sub_resource type="Resource" id="Resource_eqlsm"]
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
@@ -79,7 +71,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bb5d1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wbs4r"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -108,7 +100,7 @@ shadow_color = Color(0, 0, 0, 0.005)
 shadow_size = 8
 shadow_offset = Vector2(0, 4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uwgfw"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jo7x3"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -157,7 +149,6 @@ theme_override_constants/separation = 0
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_2ok46")
 
 [node name="Margin" type="MarginContainer" parent="VBox/HBox/Sidebar" unique_id=1800367145]
 layout_mode = 2
@@ -321,7 +312,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("14_wbs4r")
+texture = ExtResource("15_wbs4r")
 expand_mode = 1
 stretch_mode = 5
 
@@ -353,7 +344,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_bb5d1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wbs4r")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
@@ -511,7 +502,7 @@ offset_bottom = 150.0
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_uwgfw")
+theme_override_styles/panel = SubResource("StyleBoxFlat_jo7x3")
 script = ExtResource("9_6t3k2")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"

@@ -1,3 +1,7 @@
 - Add playlists.
 - Add auto scan for changes in library.
 - Fix queue not being updated properly after being reordered.
+- Add right-click options for artist, album, & genre cards.
+- Add ability to go to album from track card.
+- Add ability to upload custom artist & album covers.
+- Add simple mini-player to replace immersive player.
