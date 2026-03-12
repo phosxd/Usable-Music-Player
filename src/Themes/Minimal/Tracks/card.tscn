@@ -47,7 +47,7 @@ theme_override_constants/separation = 0
 
 [node name="Image" type="TextureRect" parent="HBox/HBox" unique_id=501122672]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(75, 75)
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
