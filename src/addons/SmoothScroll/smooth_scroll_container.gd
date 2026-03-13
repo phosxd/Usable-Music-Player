@@ -46,7 +46,7 @@ enum SCROLL_TYPE {
 @export var auto_allow_scroll: bool = true
 ## Whether the content of this container should be allowed to overshoot at the ends
 ## before interpolating back to its bounds
-@export var allow_overdragging: bool = true
+@export var allow_overdragging: bool = false
 
 @export_group("Scroll Bar")
 ## Hides scrollbar as long as not hovered or interacted with

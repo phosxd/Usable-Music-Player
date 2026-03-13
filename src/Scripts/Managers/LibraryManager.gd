@@ -431,7 +431,7 @@ static func _generate_database(root_path:String, callback:Callable) -> void:
 	updated_images.clear()
 	DirAccess.make_dir_recursive_absolute(image_cache_path)
 	DirAccess.make_dir_recursive_absolute(lyrics_path)
-	ThreadHelper.create_thread((func() -> void:
+	Async.create_thread((func() -> void:
 		# Batch grab metadata from all audio files in the "root_path".
 		var output:Array = []
 		CLI.execute('interface', ['dump_audio_meta', root_path, image_cache_path], output)

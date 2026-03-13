@@ -71,6 +71,7 @@ extends PanelContainer
 var stylebox = StyleBoxFlat.new()
 var texture_rect = TextureRect.new()
 
+
 func _ready():
 	clip_children = CanvasItem.CLIP_CHILDREN_ONLY
 	

@@ -44,7 +44,8 @@ func sort() -> void:
 	if ascend_mode == false: albums.reverse()
 
 	var current_count:Array[int] = [update_count]
-	ThreadHelper.create_thread((func(scene:Node, grid:Control) -> void:
+	Async.create_thread((func(scene:Node, grid:Control) -> void:
+		var iter:int = 0
 		for album:DBAlbum in albums:
 			if update_count != current_count[0]: return
 			var display_data:String = ''
@@ -57,20 +58,24 @@ func sort() -> void:
 				&& not album.name.to_lower().contains(search_term) \
 				&& not album.artist.name.to_lower().contains(search_term):
 					continue
+			iter += 1
 			# Add card.
 			if not scene: return
 			add_card(scene, grid, album, display_data)
-			# Add artificial delay so that there is time for the new card to be added to the tree.
-			# Without this, the app would skip frames & stutter.
-			await get_tree().create_timer(0.01).timeout
+			# Add one frame delay to give time to add child.
+			if iter % 4 == 0: await get_tree().create_timer(0).timeout
 	).bind(self, %Grid))
 
 
 func add_card(scene:Node, grid:Control, album:DBAlbum, display_data:String) -> void:
 	if not scene or not card_scene: return
+	# Create card.
 	var card:Control = card_scene.instantiate()
 	card.init(album, display_data)
-	card.selected.connect(_on_card_selected.bind(album))
+	# Connect signal to card.
+	card.selected.connect(scene._on_card_selected.bind(album))
+
+	# Add to grid.
 	if not grid: return
 	grid.add_child.call_deferred(card)
 	

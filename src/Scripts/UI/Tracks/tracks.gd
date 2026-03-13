@@ -45,6 +45,12 @@ func _process(_delta:float) -> void:
 	SessionManager.tracks_tab_scroll_value = %Scroll.scroll_vertical
 
 
+func unload() -> void:
+	Async.unload(%Grid.get_children(), (func(scene:Node) -> void:
+		scene.queue_free()
+	).bind(self))
+
+
 func sort(callback=null) -> void:
 	update_count += 1
 	SessionManager.track_sort_mode = sort_mode
@@ -57,7 +63,8 @@ func sort(callback=null) -> void:
 	loaded_tracks.clear()
 
 	var current_count:Array[int] = [update_count]
-	ThreadHelper.create_thread((func(scene:Node, grid:Control) -> void:
+	Async.create_thread((func(scene:Node, grid:Control) -> void:
+		var iter:int = 0
 		for track:DBTrack in tracks:
 			if update_count != current_count[0]: return
 			# Filter with search term.
@@ -67,13 +74,13 @@ func sort(callback=null) -> void:
 				&& not StringUtils.fuzzy_match(search_term, track.album.artist.name) \
 				&& not StringUtils.fuzzy_match(search_term, track.album.name):
 					continue
+			iter += 1
 			# Add card.
 			if not scene: return
 			loaded_tracks.append(track)
 			add_card(scene, grid, track, _on_track_selected.bind(track))
-			# Add artificial delay so that there is time for the new card to be added to the tree.
-			# Without this, the app would skip frames & stutter.
-			await get_tree().create_timer(0.01).timeout
+			# Add one frame delay every 2nd iteration to give time to add child.
+			if iter % 4 == 0: await get_tree().create_timer(0).timeout
 	).bind(self, %Grid), callback)
 
 

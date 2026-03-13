@@ -24,7 +24,7 @@ func from_artist(artist:DBArtist) -> void:
 	for album:DBAlbum in artist.albums.values():
 		index += 1
 		if index > 3: break
-		if index >= self.get_child_count(): continue
+		if index >= get_child_count(): continue
 
 		# Get album cover.
 		var cover = album.get_cover()
@@ -37,7 +37,7 @@ func from_artist(artist:DBArtist) -> void:
 
 
 func _reset_images() -> void:
-	for child in self.get_children():
+	for child in get_children():
 		if child.name != 'Template':
 			child.queue_free()
 
@@ -46,4 +46,4 @@ func _add_images() -> void:
 	for i in 3:
 		var clone = $Template.duplicate()
 		clone.custom_minimum_size = image_size
-		self.add_child(clone)
+		add_child(clone)

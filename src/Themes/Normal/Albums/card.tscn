@@ -74,6 +74,7 @@ script = ExtResource("1_8d45q")
 
 [node name="Options" type="MenuButton" parent="." unique_id=984699097]
 unique_name_in_owner = true
+visible = false
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 item_count = 1
@@ -123,10 +124,7 @@ layout_mode = 2
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="HBox" type="HBoxContainer" parent="VBox" unique_id=1275566713]
-layout_mode = 2
-
-[node name="Name" type="Label" parent="VBox/HBox" unique_id=824305555]
+[node name="Name" type="Label" parent="VBox" unique_id=824305555]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -140,6 +138,7 @@ text_overrun_behavior = 5
 [node name="Artist" type="Label" parent="VBox" unique_id=965784348]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 8
 text = "Artist name..."
 label_settings = ExtResource("5_ly4ts")

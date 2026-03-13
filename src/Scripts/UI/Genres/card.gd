@@ -16,7 +16,7 @@ func init(genre_name:String, albums_:Array) -> void:
 	albums = albums_
 	%Name.text = genre_name
 
-	if has_node("%'Quad Image'"):
+	if %'Quad Image': # "has_node" does not work here for some reason, so gonna have to deal with an error everytime it is not found.
 		var covers:Array[ImageTexture] = []
 		var count:int = 0
 		for album:DBAlbum in albums:

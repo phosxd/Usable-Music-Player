@@ -54,6 +54,9 @@ script = ExtResource("2_3fctb")
 speed = 200.0
 wheel_scroll_damper = SubResource("Resource_75g7q")
 dragging_scroll_damper = SubResource("Resource_a6lvd")
+drag_with_mouse = false
+allow_horizontal_scroll = false
+allow_overdragging = false
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
 [node name="VBox" type="VBoxContainer" parent="MarginContainer/Scroll" unique_id=2035422234]

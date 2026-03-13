@@ -1,4 +1,4 @@
-class_name ThreadHelper extends RefCounted
+class_name Async extends RefCounted
 
 
 static var threads:Array[Thread]
@@ -23,15 +23,31 @@ static func create_thread(run:Callable, callback=null) -> Thread:
 	timer.timeout.connect(func() -> void:
 		if thread.is_started() && not thread.is_alive():
 			if not timer: return
+			print('WAITING')
 			var result = await thread.wait_to_finish()
 			if is_callable_valid(callback): callback.call(result)
 			timer.stop()
+			print('Timer freed')
 			timer.queue_free()
 	)
 	SessionManager.add_child.call_deferred(timer)
 	timer.start.call_deferred(0.02)
 
 	return thread
+
+
+## Progressively frees all nodes in [param nodes].
+## Calls [param callback] when finished.
+static func unload(nodes:Array[Node], callback=null) -> void:
+	create_thread(func() -> void:
+		if not nodes: return
+		for node:Node in nodes:
+			if not node or not is_instance_valid(node): continue
+			node.queue_free.call_deferred()
+			await SessionManager.get_tree().create_timer(0).timeout
+	,func(_result) -> void:
+		if is_callable_valid(callback): callback.call()
+	)
 
 
 static func is_callable_valid(callable) -> bool:

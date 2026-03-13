@@ -97,7 +97,13 @@ func set_tab(tab:String, data=null) -> void:
 	%'Tab Content/_label'.hide()
 	for child in %'Tab Content'.get_children():
 		if child.name.begins_with('_'): continue
-		child.queue_free()
+		if child.process_mode == Node.PROCESS_MODE_DISABLED: continue
+		if child.has_method('unload'):
+			child.process_mode = Node.PROCESS_MODE_DISABLED
+			child.hide()
+			child.call('unload')
+		else:
+			child.queue_free()
 
 	# Find matching tab.
 	for tab_:String in tabs:

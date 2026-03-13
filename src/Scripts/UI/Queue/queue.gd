@@ -23,7 +23,7 @@ func update() -> void:
 
 	var queue = PlayerManager.queue
 	var current_count:Array[int] = [update_count]
-	ThreadHelper.create_thread((func(list:Control) -> void:
+	Async.create_thread((func(list:Control) -> void:
 		for track:DBTrack in queue:
 			if update_count != current_count[0]: return
 			add_card(list, track)

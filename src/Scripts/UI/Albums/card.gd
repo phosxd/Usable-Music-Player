@@ -21,6 +21,12 @@ func _ready() -> void:
 		default_style = %Shadow.get_theme_stylebox('panel')
 
 
+func unload() -> void:
+	Async.unload(%Grid.get_children(), (func(scene:Node) -> void:
+		scene.queue_free()
+	).bind(self))
+
+
 func _on_button_pressed() -> void:
 	selected.emit()
 

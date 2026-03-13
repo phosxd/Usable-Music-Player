@@ -133,7 +133,7 @@ func get_cover_threaded(callback:Callable) -> void:
 	if _cover:
 		callback.call(_cover)
 		return
-	ThreadHelper.create_thread(get_cover, callback)
+	Async.create_thread(get_cover, callback)
 
 
 ## Grabs the album dominant colors from cache.

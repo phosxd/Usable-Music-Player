@@ -32,6 +32,8 @@ script = ExtResource("2_lho61")
 speed = 500.0
 wheel_scroll_damper = SubResource("Resource_smcnf")
 dragging_scroll_damper = SubResource("Resource_2druu")
+drag_with_mouse = false
+allow_horizontal_scroll = false
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
 [node name="Margin" type="MarginContainer" parent="Scroll" unique_id=671575669]
