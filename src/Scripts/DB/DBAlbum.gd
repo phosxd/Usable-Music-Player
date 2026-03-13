@@ -29,9 +29,9 @@ var genres: PackedStringArray
 var copyright: String
 ## Cached color palette for the album cover image.
 var palette:Dictionary[String,Color] = {}
+
 ## Whether or not the DB entry is valid.
 var valid := true
-
 var _cover
 
 

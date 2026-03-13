@@ -44,6 +44,15 @@ static var a2j_ruleset:Dictionary[String,Dictionary] = {
 		},
 		'class_exclusions': ['GDScript'],
 	},
+	'DBArtist': {
+		'property_exclusions': ['valid'],
+	},
+	'DBAlbum': {
+		'property_exclusions': ['valid'],
+	},
+	'DBTrack': {
+		'property_exclusions': ['valid'],
+	},
 }
 const valid_audio_extensions:Array[String] = ['wav','ogg','mp3','flac']
 const db_cache_path:String = 'user://database.json'
@@ -368,7 +377,7 @@ static func save_database() -> void:
 		MiniLog.err('Failed to open DB Cache Path to write database.', LibraryManager)
 		return
 	var json = A2J.to_json(database, a2j_ruleset)
-	file.store_string(JSON.stringify(json, '\t', true, true))
+	file.store_string(JSON.stringify(json, '', true, true))
 	file.close()
 
 

@@ -6,6 +6,7 @@ class_name DBArtist extends RefCounted
 var name: String
 ## All albums in this artist.
 var albums: Dictionary[String,DBAlbum]
+
 ## Whether or not the DB entry is valid.
 var valid := true
 var _cover

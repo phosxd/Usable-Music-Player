@@ -299,7 +299,8 @@ static func _get_runtime_ruleset(variant:Variant, ruleset:Dictionary[String,Dict
 			else:
 				if current_depth == expected_depth: valid = true
 		elif variant is RefCounted:
-			if variant.is_class(key): valid = true
+			var object_class_name:StringName = A2JUtil.get_class_name(variant)
+			valid = object_class_name == key or variant.is_class(key)
 		# Skip group if invalid.
 		if not valid: continue
 
