@@ -63,47 +63,31 @@ func sort(callback=null) -> void:
 	loaded_tracks.clear()
 
 	var current_count:Array[int] = [update_count]
-	Async.create_thread((func(scene:Node, grid:Control) -> void:
-		var iter:int = 0
-		for track:DBTrack in tracks:
-			if update_count != current_count[0]: return
-			# Filter with search term.
-			if not SessionManager.search_term.is_empty():
-				var search_term:String = SessionManager.search_term
-				if not StringUtils.fuzzy_match(search_term, track.name) \
-				&& not StringUtils.fuzzy_match(search_term, track.album.artist.name) \
-				&& not StringUtils.fuzzy_match(search_term, track.album.name):
-					continue
-			iter += 1
-			# Add card.
-			if not scene: return
-			loaded_tracks.append(track)
-			add_card(scene, grid, track, _on_track_selected.bind(track))
-			# Add one frame delay every 2nd iteration to give time to add child.
-			if iter % 4 == 0: await get_tree().create_timer(0).timeout
-	).bind(self, %Grid), callback)
+	var iter:int = 0
+	for track:DBTrack in tracks:
+		if update_count != current_count[0]: return
+		# Filter with search term.
+		if not SessionManager.search_term.is_empty():
+			var search_term:String = SessionManager.search_term
+			if not StringUtils.fuzzy_match(search_term, track.name) \
+			&& not StringUtils.fuzzy_match(search_term, track.album.artist.name) \
+			&& not StringUtils.fuzzy_match(search_term, track.album.name):
+				continue
+		iter += 1
+		# Add card.
+		loaded_tracks.append(track)
+		add_card(track, _on_track_selected.bind(track))
+		# Add one frame delay every 2nd iteration to give time to add child.
+		if iter % 4 == 0: await get_tree().create_timer(0).timeout
+
+	if Async.is_callable_valid(callback): callback.call()
 
 
-func add_card(scene:Node, grid:Control, track:DBTrack, callback:Callable) -> void:
-	if not scene or not card_scene: return
+func add_card(track:DBTrack, callback:Callable) -> void:
 	var card:Control = card_scene.instantiate()
 	card.init(track)
 	card.selected.connect(callback)
-	if not grid: return
-	grid.add_child.call_deferred(card)
-	#var placeholder_card:Control = placeholder_card_scene.instantiate()
-	#placeholder_card.init(%Scroll)
-	#placeholder_card.activated.connect(func()->void:
-		#print('added')
-		#placeholder_card.queue_free()
-		#var function = func()->void:
-			#var card:Control = card_scene.instantiate()
-			#card.init(track)
-			#card.selected.connect(callback)
-			#%Grid.add_child(card)
-		#function.call_deferred()
-	#)
-	#%Grid.add_child(placeholder_card)
+	%Grid.add_child(card)
 
 
 func _on_track_selected(track:DBTrack) -> void:

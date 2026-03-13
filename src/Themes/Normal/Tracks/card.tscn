@@ -12,6 +12,12 @@
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="10_506cd"]
 [ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Assets/Icons/modifiers.svg" id="11_vhira"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j4uv8"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j4uv8"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
@@ -26,8 +32,9 @@ font_size = 12
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 60.0
+offset_bottom = 69.0
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_j4uv8")
 script = ExtResource("1_pbwpk")
 
 [node name="Button" type="Button" parent="." unique_id=481831511]
@@ -48,7 +55,7 @@ theme_override_constants/separation = 4
 unique_name_in_owner = true
 visible = false
 self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(10, 75)
+custom_minimum_size = Vector2(10, 70)
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 0
@@ -56,7 +63,7 @@ theme_override_constants/separation = 0
 [node name="Image" type="PanelContainer" parent="HBox/HBox" unique_id=1182272309]
 unique_name_in_owner = true
 clip_children = 1
-custom_minimum_size = Vector2(75, 75)
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1

@@ -61,7 +61,7 @@ func hover(value:float=0) -> void:
 
 		if has_node('%Shadow'):
 			var style = default_style.duplicate()
-			style.shadow_color = (default_style.shadow_color as Color).lerp(Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.45), value)
-			style.shadow_size = lerpf(default_style.shadow_size, 14, value)
+			style.shadow_color = (default_style.shadow_color as Color).lerp(Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.5), value)
+			style.shadow_size = lerpf(default_style.shadow_size, default_style.shadow_size+2, value)
 			%Shadow.remove_theme_stylebox_override('panel')
 			%Shadow.add_theme_stylebox_override('panel', style)

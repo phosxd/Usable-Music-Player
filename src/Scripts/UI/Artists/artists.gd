@@ -47,36 +47,29 @@ func sort() -> void:
 	var artists := LibraryManager.get_artists_sorted(sort_mode)
 	if ascend_mode == false: artists.reverse()
 	var current_count:Array[int] = [update_count]
-	Async.create_thread((func(scene:Node, grid:Control) -> void:
-		var iter:int = 0
-		for artist:DBArtist in artists:
-			if update_count != current_count[0]: return
-			# Filter with search term.
-			if not SessionManager.search_term.is_empty():
-				var search_term:String = SessionManager.search_term.to_lower()
-				if not artist.name.to_lower().contains(search_term):
-					continue
-			iter += 1
-			# Add card.
-			if not is_instance_valid(self): return
-			if not scene: return
-			add_card(scene, grid, artist)
-			# Add one frame delay to give time to add child.
-			if iter % 4 == 0: await get_tree().create_timer(0).timeout
-	).bind(self, %Grid))
+	var iter:int = 0
+	for artist:DBArtist in artists:
+		if update_count != current_count[0]: return
+		# Filter with search term.
+		if not SessionManager.search_term.is_empty():
+			var search_term:String = SessionManager.search_term.to_lower()
+			if not artist.name.to_lower().contains(search_term):
+				continue
+		iter += 1
+		# Add card.n
+		add_card(artist)
+		# Add one frame delay to give time to add child.
+		if iter % 4 == 0: await get_tree().create_timer(0).timeout
 
 
-func add_card(scene:Node, grid:Control, artist:DBArtist) -> void:
-	if not scene or not card_scene: return
+func add_card(artist:DBArtist) -> void:
 	# Create card.
 	var card:Control = card_scene.instantiate()
 	card.init(artist)
 	# Connect signal to card.
-	card.selected.connect(scene._on_card_selected.bind(artist))
-
+	card.selected.connect(_on_card_selected.bind(artist))
 	# Add to grid.
-	if not grid: return
-	grid.add_child.call_deferred(card)
+	%Grid.add_child(card)
 
 
 func _on_sort_mode_item_selected(_index:int) -> void:

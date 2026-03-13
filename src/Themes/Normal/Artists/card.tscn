@@ -91,7 +91,7 @@ mouse_filter = 2
 
 [node name="Shadow" type="Panel" parent="VBox/Center" unique_id=2098105743]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(225, 225)
+custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("2_dgsdd")
@@ -100,7 +100,7 @@ theme_override_styles/panel = ExtResource("2_dgsdd")
 unique_name_in_owner = true
 visible = false
 clip_children = 1
-custom_minimum_size = Vector2(225, 225)
+custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
@@ -117,9 +117,10 @@ metadata/_custom_type_script = "uid://b4ukv3a8is182"
 [node name="Quad Image" parent="VBox/Center" unique_id=704082384 instance=ExtResource("5_gjy6b")]
 unique_name_in_owner = true
 layout_mode = 2
+image_size = Vector2(75, 75)
 
 [node name="Button" parent="VBox/Center" unique_id=519598093 instance=ExtResource("6_2atuy")]
-custom_minimum_size = Vector2(225, 225)
+custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
 
 [node name="Sep 1" type="HSeparator" parent="VBox" unique_id=651886000]

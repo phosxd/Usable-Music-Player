@@ -31,7 +31,6 @@ wheel_scroll_damper = SubResource("Resource_ce7rq")
 dragging_scroll_damper = SubResource("Resource_d2qx0")
 drag_with_mouse = false
 allow_horizontal_scroll = false
-allow_overdragging = false
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
 [node name="Margin" type="MarginContainer" parent="Scroll" unique_id=79693074]
@@ -47,5 +46,5 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 8
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 6

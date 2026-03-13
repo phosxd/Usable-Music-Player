@@ -12,7 +12,7 @@ func init(album_:DBAlbum, display_data:String='') -> void:
 	%Name.text = album.name
 	%Artist.text = album.artist.name
 	if not display_data.is_empty():
-		%Artist.text += ' - ' + display_data
+		%Artist.text = display_data
 	%Image.texture = album.get_cover()
 
 
@@ -57,8 +57,8 @@ func hover(value:float=0) -> void:
 
 		if default_style:
 			var style = default_style.duplicate()
-			style.shadow_color = (default_style.shadow_color as Color).lerp(Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.45), value)
-			style.shadow_size = lerpf(default_style.shadow_size, 14, value)
+			style.shadow_color = (default_style.shadow_color as Color).lerp(Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.5), value)
+			style.shadow_size = lerpf(default_style.shadow_size, default_style.shadow_size+2, value)
 			if has_node('%Shadow'):
 				%Shadow.remove_theme_stylebox_override('panel')
 				%Shadow.add_theme_stylebox_override('panel', style)

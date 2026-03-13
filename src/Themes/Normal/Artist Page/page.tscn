@@ -43,7 +43,7 @@ height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_746xu"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ef45b"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -134,7 +134,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_746xu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ef45b")
 script = ExtResource("4_wckwj")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -264,7 +264,7 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/h_separation = 12
+theme_override_constants/h_separation = 8
 
 [node name="Extra Details" type="HBoxContainer" parent="VBox/Scroll/Content/VBox" unique_id=1065747098]
 unique_name_in_owner = true
@@ -310,13 +310,5 @@ text_overrun_behavior = 5
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1805945518]
-unique_name_in_owner = true
-
-[node name="HTTPRequest Image" type="HTTPRequest" parent="." unique_id=1655192230]
-unique_name_in_owner = true
-
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Icon Margin/Album Button" to="." method="_on_album_button_pressed"]
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Play" to="." method="_on_play_pressed"]
-[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
-[connection signal="request_completed" from="HTTPRequest Image" to="." method="_on_http_request_image_request_completed"]
