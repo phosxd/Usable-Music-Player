@@ -53,18 +53,6 @@ signal value_changed(property_name:String)
 ## Path to the session file.
 const session_file_path:String = 'user://session.json'
 
-## Do not touch this.
-var data:Dictionary = {
-	'queue': [],
-	'queue_position': -1,
-	'auto_queue_start_index': -1,
-	'track_progress': 0,
-	'hd_album_covers': false,
-	'visualizer_mode': 0,
-	'dynamic_accents': true,
-	'layout_theme': 'Normal',
-}
-
 var main_scene: Node
 
 ## The default window size.
@@ -168,7 +156,7 @@ var tracks_tab_scroll_value:float = 0
 #endregion
 
 
-var layout_theme:String = 'Normal':
+var layout_theme: String:
 	set(value):
 		layout_theme = value
 
@@ -202,6 +190,7 @@ func _ready() -> void:
 	for dir_name:String in DirAccess.get_directories_at('res://Themes'):
 		valid_layout_themes.append(dir_name)
 	load_session()
+	if layout_theme.is_empty(): layout_theme = 'Normal' # Set default layout theme if none set by session file.
 
 
 func get_layout_theme_scene(scene_name:String, theme_override:String='', recurse:int=0) -> PackedScene:
@@ -223,16 +212,15 @@ func load_session() -> void:
 	MiniLog.info('Loading session.', SessionManager)
 	var file := FileAccess.open(session_file_path, FileAccess.READ)
 	if file == null: return
-	var stored_data = JSON.parse_string(file.get_as_text())
-	if stored_data == null: return
-	data = stored_data
+	var data = JSON.parse_string(file.get_as_text())
+	if data == null: return
 
 	for i in property_data:
 		var data_entry = data.get(i[0])
 		if typeof(data_entry) == TYPE_FLOAT && TYPE_INT in i[1] && TYPE_FLOAT not in i[1]:
 			data_entry = int(data_entry)
 		if typeof(data_entry) in i[1]:
-			self.set(i[0], data_entry)
+			set(i[0], data_entry)
 
 	PlayerManager.queue.clear()
 	var raw_queue = data.get('queue')
@@ -265,7 +253,7 @@ func load_session() -> void:
 
 ## Save the current session to disk.
 func save_session() -> void:
-	data = {
+	var data = {
 		'queue': [],
 		'queue_position': PlayerManager.queue_position,
 		'auto_queue_start_index': PlayerManager.auto_queue_start_index,
