@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dtrs3vfap1m5b"]
 
-[ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Assets/Icons/search.svg" id="1_rdnah"]
+[ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Themes/Normal/Assets/Icons/search.svg" id="1_rdnah"]
 [ext_resource type="Script" uid="uid://dtel3yhuvbpap" path="res://Elements/Top Bar/top_bar.gd" id="1_t5bxd"]
 
 [node name="Topbar" type="PanelContainer" unique_id=403812495]

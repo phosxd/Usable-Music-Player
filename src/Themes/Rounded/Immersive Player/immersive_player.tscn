@@ -6,7 +6,7 @@
 [ext_resource type="Shader" uid="uid://dvoc7ypde1coe" path="res://Assets/gradient.gdshader" id="2_kuk2b"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_kuk2b"]
 [ext_resource type="Material" uid="uid://b62hwhyefqusc" path="res://Assets/blur_material.tres" id="4_euhoj"]
-[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="4_mi67m"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_mi67m"]
 [ext_resource type="Script" uid="uid://b8luuj3yfd61c" path="res://Scripts/UI/Immersive Player/lyrics_container.gd" id="5_euhoj"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_olwlc"]
 

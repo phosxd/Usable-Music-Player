@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cvxgiv4v4dyke"]
 
 [ext_resource type="Script" uid="uid://dq72v1xlxhdva" path="res://Scripts/UI/Albums/card.gd" id="1_lv6m0"]
-[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="2_6mjlv"]
-[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="5_1wie7"]
-[ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Assets/Icons/options_horizontal.svg" id="5_6g8j8"]
+[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="2_6mjlv"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="5_1wie7"]
+[ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="5_6g8j8"]
 [ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="7_bsnyt"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="8_iv6po"]
 

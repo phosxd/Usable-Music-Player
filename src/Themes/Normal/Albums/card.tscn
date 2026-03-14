@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://b5r5emcd6cooh"]
 
 [ext_resource type="Script" uid="uid://dq72v1xlxhdva" path="res://Scripts/UI/Albums/card.gd" id="1_8d45q"]
-[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="2_4itx7"]
-[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="2_5uw8l"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="2_4itx7"]
 [ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_dvx8d"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_h18sm"]
 [ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="4_eamsa"]
@@ -72,16 +71,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8d45q")
 
-[node name="Options" type="MenuButton" parent="." unique_id=984699097]
-unique_name_in_owner = true
-visible = false
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-item_count = 1
-popup/item_0/text = "Play (clear queue)"
-popup/item_0/icon = ExtResource("2_5uw8l")
-popup/item_0/id = 0
-
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1832504744]
 layout_mode = 2
 mouse_filter = 2
@@ -150,6 +139,7 @@ text_overrun_behavior = 5
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_eamsa")
 
+[connection signal="gui_input" from="VBox/Center/Button" to="." method="_on_button_gui_input"]
 [connection signal="mouse_entered" from="VBox/Center/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="VBox/Center/Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="VBox/Center/Button" to="." method="_on_button_pressed"]

@@ -62,3 +62,8 @@ func hover(value:float=0) -> void:
 			if has_node('%Shadow'):
 				%Shadow.remove_theme_stylebox_override('panel')
 				%Shadow.add_theme_stylebox_override('panel', style)
+
+
+func _on_button_gui_input(event:InputEvent) -> void:
+	if event.is_action_pressed('right_click'):
+		pass

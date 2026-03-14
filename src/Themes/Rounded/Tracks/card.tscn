@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" uid="uid://crd0eykqnn4b0" path="res://Scripts/UI/Tracks/card.gd" id="1_gbhih"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_ceawj"]
-[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="3_oqde1"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="3_oqde1"]
 [ext_resource type="LabelSettings" uid="uid://wadklneh8tg0" path="res://Assets/primary_label_dark.tres" id="4_1nb6v"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="5_in2kp"]
-[ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Assets/Icons/options_horizontal.svg" id="6_nbvw0"]
-[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Assets/Icons/play.svg" id="7_jrx7h"]
-[ext_resource type="Texture2D" uid="uid://d3xi2hlyuvtic" path="res://Assets/Icons/queue_play_next.svg" id="8_7j1bt"]
-[ext_resource type="Texture2D" uid="uid://dgf4br6i5tdbe" path="res://Assets/Icons/queue_add_to_queue.svg" id="9_3gixa"]
-[ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Assets/Icons/folder.svg" id="10_eeeba"]
-[ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Assets/Icons/modifiers.svg" id="11_hc27y"]
+[ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="6_nbvw0"]
+[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="7_jrx7h"]
+[ext_resource type="Texture2D" uid="uid://d3xi2hlyuvtic" path="res://Themes/Normal/Assets/Icons/queue_play_next.svg" id="8_7j1bt"]
+[ext_resource type="Texture2D" uid="uid://dgf4br6i5tdbe" path="res://Themes/Normal/Assets/Icons/queue_add_to_queue.svg" id="9_3gixa"]
+[ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Themes/Normal/Assets/Icons/folder.svg" id="10_eeeba"]
+[ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Themes/Normal/Assets/Icons/modifiers.svg" id="11_hc27y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gbhih"]
 corner_radius_top_left = 8

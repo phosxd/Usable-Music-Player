@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cb1wy6fwkb1sa"]
 
 [ext_resource type="Script" uid="uid://dmdvwun65151f" path="res://Scripts/UI/Genres/card.gd" id="1_huawx"]
-[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="4_b8ayk"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_b8ayk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h18sm"]
 font_color = Color(0.9, 0.9, 0.9, 1)

@@ -8,14 +8,43 @@ enum CardMode {
 const default_button_color := Color(1,1,1, 0.3)
 const hover_button_color := Color(1,1,1, 0.5)
 
-@onready var options_popup:PopupMenu = %Options.get_popup()
+@onready var context_menu := ContextMenu.new([
+	{
+		'type': 'button',
+		'text': 'Play (clear queue)',
+		'icon': SessionManager.get_icon('play'),
+	},
+	{
+		'type': 'button',
+		'text': 'Play Next',
+		'icon': SessionManager.get_icon('queue_play_next'),
+	},
+	{
+		'type': 'button',
+		'text': 'Add To Queue',
+		'icon': SessionManager.get_icon('queue_add_to_queue'),
+	},
+	{
+		'type': 'button',
+		'text': 'Show In Files',
+		'icon': SessionManager.get_icon('folder'),
+	},
+	{
+		'type': 'button',
+		'text': 'Rescan',
+		'icon': SessionManager.get_icon('modifiers'),
+	},
+])
 var track: DBTrack
 var selected_mode := CardMode.detailed
 
 
 func _ready() -> void:
 	%Button.self_modulate = default_button_color
-	options_popup.id_pressed.connect(_on_option_id_pressed)
+	context_menu.id_pressed.connect(_on_option_id_pressed)
+	context_menu.closed.connect(func() -> void:
+		%Options.button_pressed = false
+	)
 
 
 func init(db_track:DBTrack) -> void:
@@ -85,12 +114,9 @@ func _on_button_mouse_exited() -> void:
 
 
 func _on_button_gui_input(event:InputEvent) -> void:
-	if event.is_action_pressed('right_click'):
-		var mouse_position:Vector2i = get_global_mouse_position()
-		options_popup.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
-		options_popup.popup(Rect2(
-			mouse_position.x-50,
-			mouse_position.y+10,
-			0,
-			0,
-		))
+	if event.is_action_released('right_click'):
+		%Options.button_pressed = true
+
+
+func _on_options_toggled(toggled_on:bool) -> void:
+	if toggled_on: context_menu.show()

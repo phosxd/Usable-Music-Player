@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dmdvwun65151f" path="res://Scripts/UI/Genres/card.gd" id="1_6s5os"]
 [ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_t00ax"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_jrfrx"]
-[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Assets/Icons/texture.svg" id="4_33ekx"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_33ekx"]
 [ext_resource type="PackedScene" uid="uid://bkkqe2s88b15r" path="res://Elements/Quad Image/Quad Image.tscn" id="5_t00ax"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="5_x7fpi"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="6_u5sxd"]

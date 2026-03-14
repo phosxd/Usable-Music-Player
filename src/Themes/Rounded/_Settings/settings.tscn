@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bufk41o60g01x" path="res://Scripts/UI/Settings/settings.gd" id="1_d3rbk"]
 [ext_resource type="StyleBox" uid="uid://cct1wgvig42n2" path="res://Themes/Rounded/Assets/settings_section.tres" id="2_rhe31"]
-[ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Assets/Icons/load.svg" id="3_v5vgm"]
-[ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Assets/Icons/remove.svg" id="4_fb8vy"]
+[ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Themes/Normal/Assets/Icons/load.svg" id="3_v5vgm"]
+[ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Themes/Normal/Assets/Icons/remove.svg" id="4_fb8vy"]
 [ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="4_yg7oy"]
 [ext_resource type="LabelSettings" uid="uid://cdw532kd3kld3" path="res://Assets/header_label.tres" id="5_fb8vy"]
 

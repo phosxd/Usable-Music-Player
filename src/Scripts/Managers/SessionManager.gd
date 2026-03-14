@@ -193,6 +193,7 @@ func _ready() -> void:
 	if layout_theme.is_empty(): layout_theme = 'Normal' # Set default layout theme if none set by session file.
 
 
+## Get the scene at [param scene_name] for the current theme or [param theme_override].
 func get_layout_theme_scene(scene_name:String, theme_override:String='', recurse:int=0) -> PackedScene:
 	if recurse > 1: return null
 	var theme_: String
@@ -204,6 +205,20 @@ func get_layout_theme_scene(scene_name:String, theme_override:String='', recurse
 	if ResourceLoader.exists(scene_path): scene = load(scene_path)
 	if not scene: return SessionManager.get_layout_theme_scene(scene_name, 'Normal', recurse+1)
 	return scene
+
+
+## Returns the icon at [param icon_name] for the current theme or [param theme_override].
+func get_icon(icon_name:String, theme_override:String='', recurse:int=0) -> Texture2D:
+	if recurse > 1: return null
+	var theme_: String
+	if theme_override.is_empty(): theme_ = layout_theme
+	else: theme_ = theme_override
+
+	var icon
+	var icon_path:String = 'res://Themes/%s/Assets/Icons/%s.svg' % [theme_, icon_name]
+	if ResourceLoader.exists(icon_path): icon = load(icon_path)
+	if not icon: return SessionManager.get_icon(icon_name, 'Normal', recurse+1)
+	return icon
 
 
 ## Load session from disk.
