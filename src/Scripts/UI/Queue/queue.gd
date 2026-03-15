@@ -22,19 +22,13 @@ func update() -> void:
 		child.queue_free()
 
 	var queue = PlayerManager.queue
-	var current_count:Array[int] = [update_count]
-	Async.create_thread((func(list:Control) -> void:
-		for track:DBTrack in queue:
-			if update_count != current_count[0]: return
-			add_card(list, track)
-			# Add artificial delay so that there is time for the new card to be added to the tree.
-			# Without this, the app would skip frames & stutter.
-			await get_tree().create_timer(0.01).timeout
-	).bind(%List),
-	func(_result) -> void:
-		if update_count != current_count[0]: return
-		track_updated(PlayerManager.queue_position, PlayerManager.get_current_track())
-	)
+	var current_count:int = update_count
+	for track:DBTrack in queue:
+		if update_count != current_count: return
+		add_card(track)
+		await get_tree().create_timer(0).timeout
+	if update_count != current_count: return
+	track_updated(PlayerManager.queue_position, PlayerManager.get_current_track())
 
 
 func track_updated(queue_position:int, _track:DBTrack) -> void:
@@ -52,16 +46,16 @@ func track_updated(queue_position:int, _track:DBTrack) -> void:
 		#auto_queue_node.get_node('%Auto Queue Indicator').show()
 
 
-func add_card(list:Control, track:DBTrack) -> void:
+func add_card(track:DBTrack) -> void:
 	if not card_scene: return
 	var card = card_scene.instantiate()
 	card.init(track)
-	list.add_child.call_deferred(card)
+	%List.add_child(card)
 
 
 func _on_list_reordered(from:int, to:int) -> void:
 	var track = PlayerManager.queue[from]
 	PlayerManager.queue.remove_at(from)
 	queue_update_blocked = true
+	if from == PlayerManager.queue_position: PlayerManager.queue_position = to
 	PlayerManager.insert_to_queue(to, track)
-	track_updated(to, track)

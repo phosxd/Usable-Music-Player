@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://dh6g4vy4liksv" path="res://Themes/Normal/Elements/Grid Item/grid_item.gd" id="1_l7ro4"]
 [ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_c3rqa"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_elf6b"]
-[ext_resource type="Script" uid="uid://cdsrbapg60yo1" path="res://Elements/quad_image.gd" id="4_d642b"]
+[ext_resource type="Script" uid="uid://d043648wabjl3" path="res://Elements/GridTextureRect.gd" id="4_d642b"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="6_y8yeu"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y2ujv"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7ro4"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -58,7 +58,7 @@ custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_y2ujv")
+theme_override_styles/panel = SubResource("StyleBoxFlat_l7ro4")
 script = ExtResource("3_elf6b")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -73,7 +73,6 @@ layout_mode = 2
 columns = 2
 script = ExtResource("4_d642b")
 template = NodePath("../Image")
-metadata/_custom_type_script = "uid://cdsrbapg60yo1"
 
 [node name="Button" type="Button" parent="VBox/Center" unique_id=983529565]
 unique_name_in_owner = true

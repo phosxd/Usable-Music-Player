@@ -52,7 +52,6 @@ wheel_scroll_damper = SubResource("Resource_rqttv")
 dragging_scroll_damper = SubResource("Resource_y0htm")
 drag_with_mouse = false
 allow_horizontal_scroll = false
-allow_overdragging = false
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
 [node name="List" type="Container" parent="VBox/Margin/Scroll" unique_id=2011907827 node_paths=PackedStringArray("scroll_container")]
@@ -71,4 +70,5 @@ auto_scroll_range = 0.1
 scroll_threshold = 10
 metadata/_custom_type_script = "uid://cor5k07keywfa"
 
+[connection signal="reordered" from="VBox/Margin/Scroll/List" to="." method="_on_list_reordered"]
 [connection signal="sort_children" from="VBox/Margin/Scroll/List" to="VBox/Margin/Scroll/List" method="_on_sort_children"]
