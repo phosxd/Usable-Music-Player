@@ -39,8 +39,10 @@ theme_override_constants/margin_left = 14
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 14
 
-[node name="Grid" type="VBoxContainer" parent="Scroll/Margin" unique_id=1833406066]
+[node name="Grid" type="HFlowContainer" parent="Scroll/Margin" unique_id=648306335]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 6

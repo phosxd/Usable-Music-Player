@@ -368,6 +368,45 @@ corner_detail = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4by78"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xqqwk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3rvjd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dhjdp"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.09803922)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ihyyy"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.09803922)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d1ttw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_davr4"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.13725491)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
 [sub_resource type="DPITexture" id="DPITexture_fyvmx"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M8 14A6 6 0 0 0 8 2a6 6 0 0 0 0 12zM5.293 8.707a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L7.414 8l2.293 2.293a1 1 0 0 1-1.414 1.414z\"/></svg>
 "
@@ -695,6 +734,13 @@ ScrollContainer/colors/scroll_hint_horizontal_color = Color(0, 0, 0, 1)
 ScrollContainer/colors/scroll_hint_vertical_color = Color(0, 0, 0, 1)
 ScrollContainer/styles/focus = SubResource("StyleBoxFlat_g11mq")
 ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_4by78")
+SoftButton/base_type = &"Button"
+SoftButton/styles/disabled = SubResource("StyleBoxEmpty_xqqwk")
+SoftButton/styles/focus = SubResource("StyleBoxEmpty_3rvjd")
+SoftButton/styles/hover = SubResource("StyleBoxFlat_dhjdp")
+SoftButton/styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_ihyyy")
+SoftButton/styles/normal = SubResource("StyleBoxEmpty_d1ttw")
+SoftButton/styles/pressed = SubResource("StyleBoxFlat_davr4")
 TabContainer/colors/drop_mark_color = Color(0.25275, 0.465, 0.75, 0.825)
 TabContainer/colors/font_disabled_color = Color(1, 1, 1, 0.1925)
 TabContainer/colors/font_hovered_color = Color(1, 1, 1, 0.85)

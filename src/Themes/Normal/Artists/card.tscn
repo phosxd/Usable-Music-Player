@@ -1,14 +1,13 @@
-[gd_scene format=3 uid="uid://bp07vx84oe0vd"]
+[gd_scene format=3 uid="uid://cvvpxnx47wj2a"]
 
 [ext_resource type="Script" uid="uid://t84jpytcqenp" path="res://Scripts/UI/Artists/card.gd" id="1_jnl4f"]
 [ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_dgsdd"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_uvggc"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="3_rlp7w"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="4_84yul"]
-[ext_resource type="PackedScene" uid="uid://bkkqe2s88b15r" path="res://Elements/Quad Image/Quad Image.tscn" id="5_gjy6b"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_2atuy"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gjy6b"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1mb6u"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -104,7 +103,7 @@ custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_gjy6b")
+theme_override_styles/panel = SubResource("StyleBoxFlat_1mb6u")
 script = ExtResource("2_uvggc")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -114,7 +113,7 @@ texture = ExtResource("3_rlp7w")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
 
-[node name="Quad Image" parent="VBox/Center" unique_id=704082384 instance=ExtResource("5_gjy6b")]
+[node name="Quad Image" parent="VBox/Center" unique_id=704082384]
 unique_name_in_owner = true
 layout_mode = 2
 image_size = Vector2(75, 75)

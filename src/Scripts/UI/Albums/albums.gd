@@ -21,7 +21,7 @@ extends VBoxContainer
 		'callback': _on_search_updated,
 	}
 }
-var card_scene := SessionManager.get_layout_theme_scene('Albums/card')
+var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
 var sort_mode: LibraryManager.AlbumSortMode
 var ascend_mode = null
 var update_count:int = 0
@@ -47,34 +47,35 @@ func sort() -> void:
 	var iter:int = 0
 	for album:DBAlbum in albums:
 		if update_count != current_count[0]: return
-		var display_data:String = ''
+		var secondary_text:String = album.artist.name
 		match sort_mode:
-			LibraryManager.AlbumSortMode.YEAR: display_data = album.year
+			LibraryManager.AlbumSortMode.YEAR: secondary_text = album.year
 		# Filter with search term.
 		if not SessionManager.search_term.is_empty():
 			var search_term:String = SessionManager.search_term.to_lower()
-			if not display_data.to_lower().contains(search_term) \
-			&& not album.name.to_lower().contains(search_term) \
-			&& not album.artist.name.to_lower().contains(search_term):
+			if not secondary_text.to_lower().contains(search_term) \
+			&& not album.name.to_lower().contains(search_term):
 				continue
 		iter += 1
 		# Add card.
-		add_card(album, display_data)
+		add_card(album, secondary_text)
 		# Add one frame delay to give time to add child.
 		if iter % 4 == 0: await get_tree().create_timer(0).timeout
 
 
-func add_card(album:DBAlbum, display_data:String) -> void:
+func add_card(album:DBAlbum, secondary_text:String) -> void:
 	# Create card.
 	var card:Control = card_scene.instantiate()
-	card.init(album, display_data)
+	card.primary_text = album.name
+	card.secondary_text = secondary_text
+	card.images = Array([album.get_cover()], TYPE_OBJECT, 'Texture2D', Texture2D)
 	# Connect signal to card.
-	card.selected.connect(_on_card_selected.bind(album))
+	card.pressed.connect(_on_card_pressed.bind(album))
 	# Add to grid.
 	%Grid.add_child(card)
 	
 	
-func _on_card_selected(album:DBAlbum) -> void:
+func _on_card_pressed(album:DBAlbum) -> void:
 	SessionManager.main_scene.set_tab('album_page', album)
 
 

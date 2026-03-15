@@ -233,12 +233,14 @@ size_flags_vertical = 3
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Album List" type="VBoxContainer" parent="VBox/Scroll/Content/VBox" unique_id=280247327]
+[node name="Album List" type="HFlowContainer" parent="VBox/Scroll/Content/VBox" unique_id=883151314]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 6
 
 [node name="Sep 1" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=168058502]
 self_modulate = Color(1, 1, 1, 0)

@@ -67,7 +67,8 @@ folder_colors={
 "res://Elements/": "yellow",
 "res://Scenes/": "blue",
 "res://Scripts/": "red",
-"res://Themes/Normal/Assets/": "yellow"
+"res://Themes/Normal/Assets/": "yellow",
+"res://Themes/Normal/Elements/": "yellow"
 }
 
 [gui]

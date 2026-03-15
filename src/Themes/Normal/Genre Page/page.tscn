@@ -43,7 +43,7 @@ height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_51u71"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mot1"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -134,7 +134,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_51u71")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7mot1")
 script = ExtResource("4_5ku3p")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -259,7 +259,8 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/h_separation = 12
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 6
 
 [node name="Sep 1" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=168058502]
 self_modulate = Color(1, 1, 1, 0)

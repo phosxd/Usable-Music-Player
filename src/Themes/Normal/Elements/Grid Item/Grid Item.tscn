@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://c7hwlx4i6njlf"]
+
+[ext_resource type="Script" uid="uid://dh6g4vy4liksv" path="res://Themes/Normal/Elements/Grid Item/grid_item.gd" id="1_l7ro4"]
+[ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_c3rqa"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_elf6b"]
+[ext_resource type="Script" uid="uid://cdsrbapg60yo1" path="res://Elements/quad_image.gd" id="4_d642b"]
+[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="6_y8yeu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y2ujv"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_h18sm"]
+font_color = Color(0.9, 0.9, 0.9, 1)
+outline_size = 1
+outline_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
+shadow_size = 2
+shadow_color = Color(1, 1, 1, 0)
+shadow_offset = Vector2(0, 0)
+
+[node name="Grid Item" type="MarginContainer" unique_id=568370027]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+script = ExtResource("1_l7ro4")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1832504744]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Center" type="CenterContainer" parent="VBox" unique_id=1613175038]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Shadow" type="Panel" parent="VBox/Center" unique_id=2098105743]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("2_c3rqa")
+
+[node name="Image" type="PanelContainer" parent="VBox/Center" unique_id=606887220]
+unique_name_in_owner = true
+visible = false
+clip_children = 1
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_y2ujv")
+script = ExtResource("3_elf6b")
+radius_bottom_left = 16
+radius_bottom_right = 16
+radius_top_left = 16
+radius_top_right = 16
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[node name="Grid Image" type="GridContainer" parent="VBox/Center" unique_id=140110436 node_paths=PackedStringArray("template")]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 2
+script = ExtResource("4_d642b")
+template = NodePath("../Image")
+metadata/_custom_type_script = "uid://cdsrbapg60yo1"
+
+[node name="Button" type="Button" parent="VBox/Center" unique_id=983529565]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+theme_type_variation = &"SoftButton"
+
+[node name="Sep 1" type="HSeparator" parent="VBox" unique_id=651886000]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Label 1" type="Label" parent="VBox" unique_id=824305555]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 1
+label_settings = SubResource("LabelSettings_h18sm")
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Label 2" type="Label" parent="VBox" unique_id=1074414330]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 1
+label_settings = ExtResource("6_y8yeu")
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 5
+
+[connection signal="gui_input" from="VBox/Center/Button" to="." method="_on_button_gui_input"]
+[connection signal="mouse_entered" from="VBox/Center/Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="VBox/Center/Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="VBox/Center/Button" to="." method="_on_button_pressed"]

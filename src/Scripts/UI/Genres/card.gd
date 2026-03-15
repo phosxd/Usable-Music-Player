@@ -34,34 +34,11 @@ func _on_button_pressed() -> void:
 
 
 func _on_button_mouse_entered() -> void:
-	if has_node('%Animation'):
-		%Animation.play('Hover')
+	var new_label_settings:LabelSettings = %Name.label_settings.duplicate()
+	new_label_settings.shadow_size = 2
+	new_label_settings.shadow_color = Color.WHITE
+	%Name.label_settings = new_label_settings
 
 
 func _on_button_mouse_exited() -> void:
-	if has_node('%Animation'):
-		%Animation.play_backwards('Hover')
-
-
-func hover(value:float=0) -> void:
-	if value == 0:
-		if has_node('%Shadow'):
-			%Shadow.remove_theme_stylebox_override('panel')
-			%Shadow.add_theme_stylebox_override('panel', default_style)
-		%Name.label_settings = default_label_settings
-
-	else:
-		var new_label_settings:LabelSettings = %Name.label_settings.duplicate()
-		new_label_settings.shadow_color = Color.TRANSPARENT.lerp(Color.WHITE, value)
-		%Name.label_settings = new_label_settings
-
-		var image:Image = %Image.texture.get_image()
-		image.crop(1,1)
-		var dominant_color := image.get_pixel(0,0)
-
-		if has_node('%Shadow'):
-			var style = default_style.duplicate()
-			style.shadow_color = (default_style.shadow_color as Color).lerp(Color(dominant_color.r, dominant_color.g, dominant_color.b, 0.5), value)
-			style.shadow_size = lerpf(default_style.shadow_size, default_style.shadow_size+2, value)
-			%Shadow.remove_theme_stylebox_override('panel')
-			%Shadow.add_theme_stylebox_override('panel', style)
+	%Name.label_settings = default_label_settings

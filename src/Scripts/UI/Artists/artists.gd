@@ -19,7 +19,7 @@ extends VBoxContainer
 		'callback': _on_search_updated,
 	}
 }
-var card_scene := SessionManager.get_layout_theme_scene('Artists/card')
+var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
 var sort_mode: LibraryManager.ArtistSortMode
 var ascend_mode = null
 var update_count:int = 0
@@ -65,18 +65,84 @@ func sort() -> void:
 func add_card(artist:DBArtist) -> void:
 	# Create card.
 	var card:Control = card_scene.instantiate()
-	card.init(artist)
+	card.primary_text = artist.name
 	# Connect signal to card.
-	card.selected.connect(_on_card_selected.bind(artist))
+	card.pressed.connect(_on_card_pressed.bind(artist))
+
+	# Update image.
+	var stored_cover = artist.get_cover()
+	# Fetch from API if not in DB.
+	if not stored_cover && SessionManager.fetch_artist_cover:
+		var url = AppInfo.audio_db_api_url % [
+			artist.name.uri_encode(),
+		]
+		RequestManager.request(RequestManager.RequestType.Web, 'artist_cover', url, {}, _on_http_request_request_completed.bind(card, artist), 2.5, true)
+	elif stored_cover && stored_cover.get_size().x != 1:
+		card.images = [stored_cover]
+
 	# Add to grid.
 	%Grid.add_child(card)
+
+
+#region card_functions
+func _card_block_requests(artist:DBArtist) -> void:
+	artist.save_cover(null)
+
+
+func _on_http_request_request_completed(result:int, data:Dictionary, card, artist:DBArtist) -> void:
+	if result != HTTPRequest.RESULT_SUCCESS:
+		print('Failed: %s' % error_string(result))
+	var body:PackedByteArray = data.get('body',PackedByteArray([]))
+
+	var content = body.get_string_from_utf8()
+	var json = JSON.parse_string(content)
+	if json is not Dictionary:
+		_card_block_requests(artist)
+		return
+	var artists_json = json.get('artists',[])
+	if artists_json is not Array:
+		_card_block_requests(artist)
+		return
+	var artist_json = artists_json.get(0)
+	if artist_json is not Dictionary:
+		_card_block_requests(artist)
+		return
+	var img_url = artist_json.get('strArtistThumb','')
+	if not img_url or img_url.is_empty():
+		_card_block_requests(artist)
+		return
+	RequestManager.request(RequestManager.RequestType.Web, 'artist_cover_image_'+str(randf()), img_url, {}, _on_http_request_image_request_completed.bind(card,artist))
+
+
+func _on_http_request_image_request_completed(result:int, data:Dictionary, card, artist:DBArtist) -> void:
+	if result != HTTPRequest.RESULT_SUCCESS: return
+	var headers:PackedStringArray = data.get('headers',PackedStringArray([]))
+	var body:PackedByteArray = data.get('body',PackedByteArray([]))
+
+	var img_ext: String
+	for header:String in headers:
+		if not header.begins_with('Content-Type: '): continue
+		img_ext = header.split('/')[-1]
+	if img_ext.is_empty(): return
+	if img_ext == 'jpeg': img_ext = 'jpg'
+
+	var image = Image.new()
+	image.call('load_%s_from_buffer' % img_ext, body)
+	card.images = [ImageTexture.create_from_image(image)]
+	artist.save_cover(image)
+
+
+func _card_exit_tree() -> void:
+	RequestManager.cancel_request('artist_cover')
+
+#endregion
 
 
 func _on_sort_mode_item_selected(_index:int) -> void:
 	return
 
 
-func _on_card_selected(artist:DBArtist) -> void:
+func _on_card_pressed(artist:DBArtist) -> void:
 	SessionManager.main_scene.set_tab('artist_page', artist)
 
 

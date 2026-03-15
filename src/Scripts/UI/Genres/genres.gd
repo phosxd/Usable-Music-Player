@@ -12,7 +12,7 @@ extends VBoxContainer
 		'enabled': false,
 	}
 }
-var card_scene := SessionManager.get_layout_theme_scene('Genres/card')
+var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
 
 
 func _ready() -> void:
@@ -25,14 +25,22 @@ func _ready() -> void:
 
 
 func add_card(genre_name:String, albums:Array) -> void:
-	# Create card.
+	# Create card & images.
 	var card:Control = card_scene.instantiate()
-	card.init(genre_name, albums)
+	var images:Array[Texture2D] = []
+	for album:DBAlbum in albums:
+		var cover = album.get_cover()
+		if not cover: continue
+		images.append(cover)
+		if images.size() == 4: break
+	# Set images & text.
+	card.images = images
+	card.primary_text = genre_name
 	# Connect signal to card.
-	card.selected.connect(_on_card_selected.bind(genre_name, albums))
+	card.pressed.connect(_on_card_pressed.bind(genre_name, albums))
 	# Add to grid.
-	%Grid.add_child.call_deferred(card)
+	%Grid.add_child(card)
 
 
-func _on_card_selected(genre_name:String, albums:Array) -> void:
+func _on_card_pressed(genre_name:String, albums:Array) -> void:
 	SessionManager.main_scene.set_tab('genre_page', {'genre_name':genre_name, 'albums':albums})
