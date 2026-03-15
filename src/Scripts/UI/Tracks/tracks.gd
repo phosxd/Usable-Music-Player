@@ -77,7 +77,7 @@ func sort(callback=null) -> void:
 		# Add card.
 		loaded_tracks.append(track)
 		add_card(track, _on_track_selected.bind(track))
-		# Add one frame delay every 2nd iteration to give time to add child.
+		# Add one frame delay every 4th iteration to give time to add child.
 		if iter % 4 == 0: await get_tree().create_timer(0).timeout
 
 	if Async.is_callable_valid(callback): callback.call()

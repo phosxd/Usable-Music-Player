@@ -34,6 +34,7 @@ script = ExtResource("1_yikp6")
 [node name="Button" type="Button" parent="." unique_id=481831511]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"SoftButton"
 toggle_mode = true
 
 [node name="Image Margin" type="MarginContainer" parent="." unique_id=1899763293]

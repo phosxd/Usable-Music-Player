@@ -6,11 +6,11 @@
 [ext_resource type="Script" uid="uid://d043648wabjl3" path="res://Elements/GridTextureRect.gd" id="4_d642b"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="6_y8yeu"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7ro4"]
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d642b"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 anti_aliasing = false
 
 [sub_resource type="LabelSettings" id="LabelSettings_h18sm"]
@@ -58,12 +58,8 @@ custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_l7ro4")
+theme_override_styles/panel = SubResource("StyleBoxFlat_d642b")
 script = ExtResource("3_elf6b")
-radius_bottom_left = 16
-radius_bottom_right = 16
-radius_top_left = 16
-radius_top_right = 16
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
 

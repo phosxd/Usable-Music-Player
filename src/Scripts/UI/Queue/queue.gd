@@ -13,7 +13,7 @@ func _ready() -> void:
 	PlayerManager.current_track_updated.connect(track_updated)
 
 
-func update(code:PlayerManager.QueueUpdateCode=0, data:Variant=null) -> void:
+func update(code:=PlayerManager.QueueUpdateCode.Set, data:Variant=null) -> void:
 	if code in [0,1,3,4]: # Set, add, insert, or shuffle.
 		if queue_update_blocked:
 			queue_update_blocked = false
@@ -24,10 +24,13 @@ func update(code:PlayerManager.QueueUpdateCode=0, data:Variant=null) -> void:
 
 		var queue = PlayerManager.queue
 		var current_count:int = update_count
+		var iter:int = 0
 		for track:DBTrack in queue:
 			if update_count != current_count: return
+			iter += 1
 			add_card(track)
-			await get_tree().create_timer(0).timeout
+			# Add one frame delay every 4th iteration to give time to add child.
+			if iter % 4 == 0: await get_tree().create_timer(0).timeout
 		if update_count != current_count: return
 		track_updated(PlayerManager.queue_position, PlayerManager.get_current_track())
 
@@ -63,3 +66,14 @@ func _on_list_reordered(from:int, to:int) -> void:
 	queue_update_blocked = true
 	if from == PlayerManager.queue_position: PlayerManager.queue_position = to
 	PlayerManager.insert_to_queue(to, track)
+
+
+func _on_show_current_pressed() -> void:
+	var node = %List.get_child(PlayerManager.queue_position)
+	if not node: return
+	node.set_focus_mode(Control.FOCUS_ALL)
+	node.grab_focus()
+
+
+func _on_save_playlist_pressed() -> void:
+	pass

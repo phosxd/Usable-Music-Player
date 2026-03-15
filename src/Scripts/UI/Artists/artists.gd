@@ -58,7 +58,7 @@ func sort() -> void:
 		iter += 1
 		# Add card.n
 		add_card(artist)
-		# Add one frame delay to give time to add child.
+		# Add one frame delay every 4th iteration to give time to add child.
 		if iter % 4 == 0: await get_tree().create_timer(0).timeout
 
 
