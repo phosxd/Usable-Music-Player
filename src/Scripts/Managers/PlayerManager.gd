@@ -4,7 +4,7 @@ const minilog_importance := MiniLog.Importance.None
 
 ## Emitted when the queue has been updated via queue control functions.
 ## Does not emit when queue is changed manually.
-signal queue_updated()
+signal queue_updated(code:QueueUpdateCode, data:Variant)
 ## Emitted when play has been requested.
 signal play_requested()
 ## Emitted when pause has been requested.
@@ -16,6 +16,14 @@ signal track_progress_updated(track_progress:float)
 signal volume_updated(value:float)
 ## [param db] is a float with a minimum of -100.
 signal track_peak_volume_changed(db:float)
+
+enum QueueUpdateCode {
+	Set,
+	Add,
+	Remove,
+	Insert,
+	Shuffle,
+}
 
 enum LoopMode {
 	OFF,
@@ -123,17 +131,19 @@ func set_queue(new_queue:Array[DBTrack]) -> void:
 	MiniLog.pro('Set queue.', PlayerManager)
 	is_shuffled = false
 	queue = new_queue
-	queue_updated.emit()
+	queue_updated.emit(QueueUpdateCode.Set, null)
 
 
 func add_to_queue(track:DBTrack, emit:bool=true) -> void:
 	queue.append(track)
-	if emit: queue_updated.emit()
+	if emit: queue_updated.emit(QueueUpdateCode.Add, track)
 
 
 func remove_from_queue(track:DBTrack, emit:bool=true) -> void:
-	queue.erase(track)
-	queue_updated.emit()
+	var index:int = queue.find(track)
+	if index == -1: return
+	queue.remove_at(index)
+	queue_updated.emit(QueueUpdateCode.Remove, {'track':track,'index':index})
 
 
 func insert_to_queue(position:int, track:DBTrack, emit:bool=true) -> void:
@@ -143,7 +153,7 @@ func insert_to_queue(position:int, track:DBTrack, emit:bool=true) -> void:
 		queue.insert(position, track)
 		if position < PlayerManager.queue_position:
 			PlayerManager.queue_position += 1
-	if emit: queue_updated.emit()
+	if emit: queue_updated.emit(QueueUpdateCode.Insert, {'track':track,'index':position})
 
 
 ## Shuffles the queue. If [param anchor] track is used, will shuffle the queue & move anchor track to the beginning.
@@ -157,7 +167,7 @@ func shuffle_queue(anchor:DBTrack=null, emit:bool=true) -> void:
 		var track_progress_:float = track_progress
 		set_current_track(0)
 		set_track_progress(track_progress_)
-	if emit: queue_updated.emit()
+	if emit: queue_updated.emit(QueueUpdateCode.Shuffle, null)
 
 
 func _current_track_finished() -> void:

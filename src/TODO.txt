@@ -2,7 +2,6 @@
 - Add auto scan for changes in library.
 - Fix queue not being updated properly when reordering an item BEFORE the currently playing track.
 - Add right-click options for artist, album, & genre cards.
-- Add ability to go to album from track card.
 - Add ability to upload custom artist & album covers.
 - Add simple mini-player to replace immersive player.
 - Revamp library "scan for changes" implementation to only call CLI once, not for every file.

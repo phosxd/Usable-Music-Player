@@ -13,22 +13,26 @@ func _ready() -> void:
 	PlayerManager.current_track_updated.connect(track_updated)
 
 
-func update() -> void:
-	if queue_update_blocked:
-		queue_update_blocked = false
-		return
-	update_count += 1
-	for child:Node in %List.get_children():
-		child.queue_free()
+func update(code:PlayerManager.QueueUpdateCode=0, data:Variant=null) -> void:
+	if code in [0,1,3,4]: # Set, add, insert, or shuffle.
+		if queue_update_blocked:
+			queue_update_blocked = false
+			return
+		update_count += 1
+		for child:Node in %List.get_children():
+			child.queue_free()
 
-	var queue = PlayerManager.queue
-	var current_count:int = update_count
-	for track:DBTrack in queue:
+		var queue = PlayerManager.queue
+		var current_count:int = update_count
+		for track:DBTrack in queue:
+			if update_count != current_count: return
+			add_card(track)
+			await get_tree().create_timer(0).timeout
 		if update_count != current_count: return
-		add_card(track)
-		await get_tree().create_timer(0).timeout
-	if update_count != current_count: return
-	track_updated(PlayerManager.queue_position, PlayerManager.get_current_track())
+		track_updated(PlayerManager.queue_position, PlayerManager.get_current_track())
+
+	elif code == 2: # Remove.
+		%List.get_child(data.index).queue_free()
 
 
 func track_updated(queue_position:int, _track:DBTrack) -> void:

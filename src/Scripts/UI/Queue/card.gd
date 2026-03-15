@@ -1,9 +1,23 @@
 extends Control
 
+var context_menu := ContextMenu.new([
+	{
+		'type': 'button',
+		'text': 'Remove',
+		'icon': SessionManager.get_icon('remove'),
+	},
+	{
+		'type': 'button',
+		'text': 'Show Album',
+		'icon': SessionManager.get_icon('folder'),
+	},
+])
+
 var is_dragging:bool = false
 
 
 func _ready() -> void:
+	context_menu.id_pressed.connect(_context_menu_id_pressed)
 	highlight(false)
 
 
@@ -52,3 +66,17 @@ func _on_drag_button_button_up() -> void:
 	var list = self.get_parent()
 	if list is not ReorderableContainer: return
 	list._is_press = false
+
+
+func _on_button_gui_input(event:InputEvent) -> void:
+	if event.is_action_released('right_click'):
+		context_menu.show()
+
+
+func _context_menu_id_pressed(id:int):
+	var track:DBTrack = PlayerManager.queue[get_index()]
+	match id:
+		0: # Remove.
+			PlayerManager.remove_from_queue(track)
+		1: # Show in album.
+			SessionManager.main_scene.set_tab('album_page', track.album)

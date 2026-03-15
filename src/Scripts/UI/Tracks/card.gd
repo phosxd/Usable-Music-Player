@@ -8,7 +8,7 @@ enum CardMode {
 const default_button_color := Color(1,1,1, 0.3)
 const hover_button_color := Color(1,1,1, 0.5)
 
-@onready var context_menu := ContextMenu.new([
+var context_menu := ContextMenu.new([
 	{
 		'type': 'button',
 		'text': 'Play (clear queue)',
@@ -23,6 +23,11 @@ const hover_button_color := Color(1,1,1, 0.5)
 		'type': 'button',
 		'text': 'Add To Queue',
 		'icon': SessionManager.get_icon('queue_add_to_queue'),
+	},
+	{
+		'type': 'button',
+		'text': 'Show Album',
+		'icon': SessionManager.get_icon('folder'),
 	},
 	{
 		'type': 'button',
@@ -82,23 +87,26 @@ func _on_button_pressed() -> void:
 
 func _on_option_id_pressed(id:int) -> void:
 	match id:
-		0:
+		0: # Play.
 			PlayerManager.auto_queue_start_index = -1
 			selected.emit()
-		1:
+		1: # Play next.
 			PlayerManager.insert_to_queue(PlayerManager.queue_position+1, track)
 			if PlayerManager.auto_queue_start_index == -1:
 				PlayerManager.auto_queue_start_index = PlayerManager.queue_position+2
 			else:
 				PlayerManager.auto_queue_start_index += 1
-		2:
+		2: # Add to queue.
 			if PlayerManager.auto_queue_start_index > PlayerManager.queue_position:
 				PlayerManager.insert_to_queue(PlayerManager.auto_queue_start_index, track)
 				PlayerManager.auto_queue_start_index += 1
 			else:
 				PlayerManager.add_to_queue(track)
-		3: OS.shell_show_in_file_manager(track.path)
-		4:
+		3: # Show album.
+			SessionManager.main_scene.set_tab('album_page', track.album)
+		4: # Show in files.
+			OS.shell_show_in_file_manager(track.path)
+		5: # Rescan.
 			LibraryManager.rescan_track(track)
 			SessionManager.main_scene.refresh_tab()
 
