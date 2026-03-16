@@ -71,12 +71,17 @@ func add_card(album:DBAlbum, secondary_text:String) -> void:
 	card.images = Array([album.get_cover()], TYPE_OBJECT, 'Texture2D', Texture2D)
 	# Connect signal to card.
 	card.pressed.connect(_on_card_pressed.bind(album))
+	card.secondary_pressed.connect(_on_card_secondary_pressed.bind(album))
 	# Add to grid.
 	%Grid.add_child(card)
-	
-	
+
+
 func _on_card_pressed(album:DBAlbum) -> void:
 	SessionManager.main_scene.set_tab('album_page', album)
+
+
+func _on_card_secondary_pressed(album:DBAlbum) -> void:
+	SessionManager.main_scene.set_tab('artist_page', album.artist)
 
 
 func _on_sort_mode_item_selected(index:int) -> void:

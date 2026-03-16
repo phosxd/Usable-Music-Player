@@ -31,6 +31,11 @@ layout_mode = 2
 [node name="Controls" type="HBoxContainer" parent="VBox" unique_id=1929815790]
 layout_mode = 2
 
+[node name="Sep 1" type="VSeparator" parent="VBox/Controls" unique_id=856248903]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
 [node name="Label" type="Label" parent="VBox/Controls" unique_id=1803322427]
 layout_mode = 2
 size_flags_horizontal = 2

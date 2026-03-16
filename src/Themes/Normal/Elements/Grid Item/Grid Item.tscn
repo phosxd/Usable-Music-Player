@@ -4,22 +4,16 @@
 [ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_c3rqa"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_elf6b"]
 [ext_resource type="Script" uid="uid://d043648wabjl3" path="res://Elements/GridTextureRect.gd" id="4_d642b"]
+[ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="5_l7ro4"]
+[ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="6_c3rqa"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="6_y8yeu"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d642b"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eciro"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 anti_aliasing = false
-
-[sub_resource type="LabelSettings" id="LabelSettings_h18sm"]
-font_color = Color(0.9, 0.9, 0.9, 1)
-outline_size = 1
-outline_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
-shadow_size = 2
-shadow_color = Color(1, 1, 1, 0)
-shadow_offset = Vector2(0, 0)
 
 [node name="Grid Item" type="MarginContainer" unique_id=568370027]
 anchors_preset = 15
@@ -50,21 +44,19 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("2_c3rqa")
 
-[node name="Image" type="PanelContainer" parent="VBox/Center" unique_id=606887220]
+[node name="Image" type="PanelContainer" parent="VBox/Center" unique_id=143653234]
 unique_name_in_owner = true
-visible = false
 clip_children = 1
 custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
-mouse_filter = 2
-mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_d642b")
+theme_override_styles/panel = SubResource("StyleBoxFlat_eciro")
 script = ExtResource("3_elf6b")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
 
 [node name="Grid Image" type="GridContainer" parent="VBox/Center" unique_id=140110436 node_paths=PackedStringArray("template")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(167, 167)
 layout_mode = 2
 columns = 2
 script = ExtResource("4_d642b")
@@ -74,33 +66,36 @@ template = NodePath("../Image")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_type_variation = &"SoftButton"
 
 [node name="Sep 1" type="HSeparator" parent="VBox" unique_id=651886000]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Label 1" type="Label" parent="VBox" unique_id=824305555]
+[node name="Label 1" parent="VBox" unique_id=1086494808 instance=ExtResource("5_l7ro4")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 8
-mouse_filter = 1
-label_settings = SubResource("LabelSettings_h18sm")
+mouse_behavior_recursive = 1
+text = "Test"
+label_settings = ExtResource("6_c3rqa")
 horizontal_alignment = 1
 clip_text = true
 text_overrun_behavior = 5
 
-[node name="Label 2" type="Label" parent="VBox" unique_id=1074414330]
+[node name="Label 2" parent="VBox" unique_id=1569149691 instance=ExtResource("5_l7ro4")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 8
 mouse_filter = 1
 label_settings = ExtResource("6_y8yeu")
 horizontal_alignment = 1
 clip_text = true
 text_overrun_behavior = 5
+hover_font_color = Color(0.9, 0.9, 0.9, 1)
+hover_outline_color = Color(0.9, 0.9, 0.9, 1)
 
 [connection signal="gui_input" from="VBox/Center/Button" to="." method="_on_button_gui_input"]
 [connection signal="mouse_entered" from="VBox/Center/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="VBox/Center/Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="VBox/Center/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBox/Label 2" to="." method="_on_label_2_pressed"]

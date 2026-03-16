@@ -2,6 +2,8 @@
 extends Control
 
 signal pressed
+## Emitted when the secondary text is pressed.
+signal secondary_pressed
 ## Emitted when button is right clicked.
 signal alt_pressed
 
@@ -54,10 +56,12 @@ func _on_button_gui_input(event:InputEvent) -> void:
 
 
 func _on_button_mouse_entered() -> void:
-	%'Label 1'.add_theme_constant_override('outline_size', 2)
-	%'Label 1'.add_theme_color_override('font_outline_color', Color.WHITE)
+	%'Label 1'._on_button_mouse_entered()
 
 
 func _on_button_mouse_exited() -> void:
-	%'Label 1'.remove_theme_constant_override('outline_size')
-	%'Label 1'.remove_theme_color_override('font_outline_color')
+	%'Label 1'._on_button_mouse_exited()
+
+
+func _on_label_2_pressed() -> void:
+	secondary_pressed.emit()
