@@ -69,16 +69,23 @@ func add_card(artist:DBArtist) -> void:
 	# Connect signal to card.
 	card.pressed.connect(_on_card_pressed.bind(artist))
 
-	# Update image.
 	var stored_cover = artist.get_cover()
 	# Fetch from API if not in DB.
 	if not stored_cover && SessionManager.fetch_artist_cover:
-		var url = AppInfo.audio_db_api_url % [
-			artist.name.uri_encode(),
-		]
+		var url = AppInfo.audio_db_api_url % [artist.name.uri_encode()]
 		RequestManager.request(RequestManager.RequestType.Web, 'artist_cover', url, {}, _on_http_request_request_completed.bind(card, artist), 2.5, true)
+	# Use stored image if valid.
 	elif stored_cover && stored_cover.get_size().x != 1:
 		card.images = [stored_cover]
+	# Use album covers.
+	else:
+		var images:Array[Texture2D] = []
+		for album:DBAlbum in artist.albums.values():
+			var cover = album.get_cover()
+			if not cover: continue
+			images.append(cover)
+			if images.size() == 4: break
+		card.images = images
 
 	# Add to grid.
 	%Grid.add_child(card)

@@ -28,7 +28,7 @@ signal alt_pressed
 			%Image.texture = value[0]
 		elif image_count > 1:
 			for texture in value:
-				if texture is not Texture2D: return
+				if texture is not Texture2D && texture != null: return
 			%'Grid Image'.show()
 			%Image.hide()
 			%'Grid Image'.from_array(value)
