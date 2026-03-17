@@ -181,7 +181,7 @@ theme_override_constants/separation = 14
 
 [node name="Play" type="Button" parent="VBox/Controls/VBox/HBox/Controls" unique_id=245581158]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_type_variation = &"AccentButton"
 icon = ExtResource("9_qc06v")
@@ -189,7 +189,7 @@ icon_alignment = 1
 
 [node name="Shuffle" type="Button" parent="VBox/Controls/VBox/HBox/Controls" unique_id=524574300]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_type_variation = &"AccentButton"
 icon = ExtResource("10_k5jwi")
@@ -197,7 +197,7 @@ icon_alignment = 1
 
 [node name="Options" type="MenuButton" parent="VBox/Controls/VBox/HBox/Controls" unique_id=807633223]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 tooltip_text = "- Play next: queues artist to play after current track.
 

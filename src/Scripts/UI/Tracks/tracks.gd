@@ -1,6 +1,14 @@
 extends VBoxContainer
 
 @export var tab_config:Dictionary[String,Variant] = {
+	'play': {
+		'enabled': true,
+		'callback': _on_play_pressed,
+	},
+	'shuffle': {
+		'enabled': true,
+		'callback': _on_shuffle_pressed,
+	},
 	'sort_mode': {
 		'enabled': true,
 		'options': [
@@ -16,7 +24,7 @@ extends VBoxContainer
 	'ascend_mode': {
 		'enabled': true,
 		'default': 'track_ascend_mode',
-		'callback': _on_ascend_mode_item_selected,
+		'callback': _on_ascend_mode_pressed,
 	},
 	'search': {
 		'enabled': true,
@@ -106,14 +114,25 @@ func _on_sort_mode_item_selected(index:int) -> void:
 		sort()
 
 
-func _on_ascend_mode_item_selected(index:int) -> void:
+func _on_ascend_mode_pressed(value:bool) -> void:
 	var prev_ascend_mode = ascend_mode
-	match index:
-		0: ascend_mode = false
-		1: ascend_mode = true
+	ascend_mode = value
 	if prev_ascend_mode != ascend_mode:
 		sort()
 
 
 func _on_search_updated(_text:String) -> void:
 	sort()
+
+
+func _on_play_pressed() -> void:
+	if loaded_tracks.is_empty(): return
+	PlayerManager.set_queue_and_track(loaded_tracks, loaded_tracks[0])
+
+
+func _on_shuffle_pressed() -> void:
+	if loaded_tracks.is_empty(): return
+	var track:DBTrack = loaded_tracks.pick_random()
+	var shuffled_tracks = loaded_tracks.duplicate(); shuffled_tracks.shuffle()
+	PlayerManager.set_queue_and_track(shuffled_tracks, track)
+	PlayerManager.shuffle_queue(track)

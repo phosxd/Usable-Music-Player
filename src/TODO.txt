@@ -9,3 +9,8 @@
 - Revamp "interface.py" CLI to return raw image bytes as a string instead of storing as a file.
 - Add option for artist/album for uploading custom image.
 - Add option for artist for regrabbing artist image from API.
+
+- Fix *tiny* memory leak when refreshing albums tab.
+- Fix giant memory leak when refreshing tracks tab.
+
+Note: memory leaks may seem to correspond with how many items are in the tab.

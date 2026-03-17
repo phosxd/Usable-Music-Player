@@ -56,10 +56,12 @@ func _on_button_gui_input(event:InputEvent) -> void:
 
 
 func _on_button_mouse_entered() -> void:
+	if not %'Label 1': return
 	%'Label 1'._on_button_mouse_entered()
 
 
 func _on_button_mouse_exited() -> void:
+	if not %'Label 1': return
 	%'Label 1'._on_button_mouse_exited()
 
 

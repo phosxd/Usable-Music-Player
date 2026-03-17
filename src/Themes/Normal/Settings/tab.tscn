@@ -344,7 +344,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/Process/Queue Size Limit" unique_id=615573185]
 layout_mode = 2
-tooltip_text = "Image detail level. Higher values will use more memory but look sharper."
+tooltip_text = "Maximum number of items allowed in the queue at once."
 mouse_filter = 1
 text = "Queue Size Limit"
 label_settings = ExtResource("9_yf2f5")
@@ -376,7 +376,7 @@ label_settings = ExtResource("9_yf2f5")
 [node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/Process/Image Detail" unique_id=603747556]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-theme_override_constants/separation = 3
+theme_override_constants/separation = 33
 
 [node name="Image Detail" type="HSlider" parent="MarginContainer/Scroll/VBox/Tabs/Process/Image Detail" unique_id=761271597]
 unique_name_in_owner = true

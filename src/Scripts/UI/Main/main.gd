@@ -19,6 +19,7 @@ const console_scene := preload('res://Scenes/Console/Console.tscn')
 var tab_history:Array[Array] = []
 
 var album_dominant_color: Color
+var ascend_mode:bool = true
 
 
 func _ready() -> void:
@@ -132,9 +133,18 @@ func _parse_tab_config(scene:Node) -> void:
 	if not %Search or not %'Sort Mode' or not %'Ascend Mode': return
 	var tab_config = scene.get('tab_config')
 	if tab_config is Dictionary:
+		var play_config = tab_config.get('play',{})
+		var shuffle_config = tab_config.get('shuffle',{})
 		var sort_mode_config = tab_config.get('sort_mode',{})
 		var ascend_mode_config = tab_config.get('ascend_mode',{})
 		var search_config = tab_config.get('search',{})
+
+		# Play config.
+		if play_config is Dictionary:
+			%'Play All'.disabled = not play_config.get('enabled', false)
+			var play_callback = play_config.get('callback')
+			if play_callback is Callable:
+				%'Play All'.pressed.connect(play_callback)
 
 		# Sort mode config.
 		if sort_mode_config is Dictionary:
@@ -162,13 +172,17 @@ func _parse_tab_config(scene:Node) -> void:
 			var ascend_mode_default = ascend_mode_config.get('default')
 			if ascend_mode_default is String:
 				var default = SessionManager.get(ascend_mode_default)
-				if default is bool: %'Ascend Mode'.selected = int(default)
+				if default is bool: ascend_mode = not default
+			_on_ascend_mode_pressed() # Update state & text.
 			# Connect callback.
 			var ascend_mode_callback = ascend_mode_config.get('callback')
 			if ascend_mode_callback is Callable:
-				%'Ascend Mode'.item_selected.connect(ascend_mode_callback)
+				%'Ascend Mode'.pressed.connect(func() -> void:
+					if not ascend_mode_callback.get_object(): return
+					ascend_mode_callback.call(ascend_mode)
+				)
 
-		# Ascend mode config.
+		# Search config.
 		if search_config is Dictionary:
 			%'Search'.editable = search_config.get('enabled', false)
 			# Set default.
@@ -211,3 +225,16 @@ func _on_tab_button_pressed(tab:String) -> void:
 
 func _on_back_button_pressed() -> void:
 	go_back()
+
+
+func _on_play_all_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_shuffle_all_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_ascend_mode_pressed() -> void:
+	ascend_mode = not ascend_mode
+	%'Ascend Mode'.text = 'A-Z' if ascend_mode else 'Z-A'

@@ -90,13 +90,20 @@ func _on_album_button_pressed() -> void:
 	SessionManager.main_scene.go_back()
 
 
+func _on_artist_pressed() -> void:
+	SessionManager.main_scene.set_tab('artist_page', album.artist)
+
+
 func _on_play_pressed() -> void:
 	if loaded_tracks.is_empty(): return
 	_on_track_selected(loaded_tracks[0])
 
 
-func _on_artist_pressed() -> void:
-	SessionManager.main_scene.set_tab('artist_page', album.artist)
+func _on_shuffle_pressed() -> void:
+	if loaded_tracks.is_empty(): return
+	var track:DBTrack = loaded_tracks.pick_random()
+	PlayerManager.set_queue_and_track(loaded_tracks, track)
+	PlayerManager.shuffle_queue(track)
 
 
 func _on_option_id_pressed(id:int) -> void:

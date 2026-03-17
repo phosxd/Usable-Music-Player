@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Themes/Normal/Assets/Icons/tree_arrow_left.svg" id="16_eeh6y"]
 [ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Themes/Normal/Queue/queue.tscn" id="19_eqlsm"]
 [ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Themes/Normal/Lyrics/lyrics.tscn" id="20_lj0cr"]
+[ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="23_jo7x3"]
 
 [sub_resource type="Animation" id="Animation_vk4q2"]
 resource_name = "FSP Init"
@@ -71,7 +72,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wbs4r"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jo7x3"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -100,7 +101,7 @@ shadow_color = Color(0, 0, 0, 0.005)
 shadow_size = 8
 shadow_offset = Vector2(0, 4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jo7x3"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bb5d1"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -344,7 +345,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_wbs4r")
+theme_override_styles/panel = SubResource("StyleBoxFlat_jo7x3")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
@@ -437,18 +438,24 @@ item_count = 1
 popup/item_0/text = "Sort by: Title"
 popup/item_0/id = 0
 
-[node name="Ascend Mode" type="OptionButton" parent="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons" unique_id=1217841413]
+[node name="Ascend Mode" type="Button" parent="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons" unique_id=941825518]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
+text = "A-Z"
+
+[node name="Play All" type="Button" parent="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons" unique_id=1744348925]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Play all items in the tab."
 disabled = true
-selected = 0
-fit_to_longest_item = false
-item_count = 2
-popup/item_0/text = "Descending"
-popup/item_0/id = 0
-popup/item_1/text = "Ascending"
-popup/item_1/id = 1
+icon = ExtResource("9_2ok46")
+
+[node name="Shuffle All" type="Button" parent="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons" unique_id=1232088241]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Shuffle all items in the tab."
+disabled = true
+icon = ExtResource("23_jo7x3")
 
 [node name="HBox" type="HBoxContainer" parent="VBox/HBox/Tab VBox" unique_id=8467318]
 layout_mode = 2
@@ -502,7 +509,7 @@ offset_bottom = 150.0
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_jo7x3")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bb5d1")
 script = ExtResource("9_6t3k2")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
@@ -516,4 +523,7 @@ metadata/_custom_type_script = "uid://b4ukv3a8is182"
 [connection signal="pressed" from="VBox/HBox/Tab VBox/Topbar/Island 1/Topbar Content/Back Button" to="." method="_on_back_button_pressed"]
 [connection signal="text_changed" from="VBox/HBox/Tab VBox/Topbar/Island 2/Topbar Content/Search" to="VBox/HBox/Tab VBox/Topbar" method="_on_search_text_changed"]
 [connection signal="text_submitted" from="VBox/HBox/Tab VBox/Topbar/Island 2/Topbar Content/Search" to="VBox/HBox/Tab VBox/Topbar" method="_on_search_text_submitted"]
+[connection signal="pressed" from="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons/Ascend Mode" to="." method="_on_ascend_mode_pressed"]
+[connection signal="pressed" from="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons/Play All" to="." method="_on_play_all_pressed"]
+[connection signal="pressed" from="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons/Shuffle All" to="." method="_on_shuffle_all_pressed"]
 [connection signal="item_rect_changed" from="VBox/HBox/Tab VBox/Player Bar" to="." method="_on_player_bar_item_rect_changed"]

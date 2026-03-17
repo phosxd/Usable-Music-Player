@@ -1,6 +1,14 @@
 extends VBoxContainer
 
 @export var tab_config:Dictionary[String,Variant] = {
+	'play': {
+		'enabled': true,
+		'callback': _on_play_pressed,
+	},
+	'shuffle': {
+		'enabled': true,
+		'callback': _on_shuffle_pressed,
+	},
 	'sort_mode': {
 		'enabled': true,
 		'options': [
@@ -14,7 +22,7 @@ extends VBoxContainer
 	'ascend_mode': {
 		'enabled': true,
 		'default': 'album_ascend_mode',
-		'callback': _on_ascend_mode_item_selected,
+		'callback': _on_ascend_mode_pressed,
 	},
 	'search': {
 		'enabled': true,
@@ -24,6 +32,7 @@ extends VBoxContainer
 var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
 var sort_mode: LibraryManager.AlbumSortMode
 var ascend_mode = null
+var loaded_albums:Array[DBAlbum]
 var update_count:int = 0
 
 
@@ -43,6 +52,7 @@ func sort() -> void:
 	var albums := LibraryManager.get_albums_sorted(sort_mode)
 	if ascend_mode == false: albums.reverse()
 
+	loaded_albums.clear()
 	var current_count:Array[int] = [update_count]
 	var iter:int = 0
 	for album:DBAlbum in albums:
@@ -58,6 +68,7 @@ func sort() -> void:
 				continue
 		iter += 1
 		# Add card.
+		loaded_albums.append(album)
 		add_card(album, secondary_text)
 		# Add one frame delay to give time to add child.
 		if iter % 4 == 0: await get_tree().create_timer(0).timeout
@@ -94,14 +105,34 @@ func _on_sort_mode_item_selected(index:int) -> void:
 		sort()
 
 
-func _on_ascend_mode_item_selected(index:int) -> void:
+func _on_ascend_mode_pressed(value:bool) -> void:
 	var prev_ascend_mode = ascend_mode
-	match index:
-		0: ascend_mode = false
-		1: ascend_mode = true
+	ascend_mode = value
 	if prev_ascend_mode != ascend_mode:
 		sort()
 
 
 func _on_search_updated(_text:String) -> void:
 	sort()
+
+
+func _on_play_pressed() -> void:
+	if loaded_albums.is_empty(): return
+	var all_tracks:Array[DBTrack] = []
+	for album:DBAlbum in loaded_albums:
+		for disc:Array in album.get_tracks_in_order().values():
+			all_tracks.append_array(disc)
+
+	PlayerManager.set_queue_and_track(all_tracks, all_tracks[0])
+
+
+func _on_shuffle_pressed() -> void:
+	if loaded_albums.is_empty(): return
+	var all_tracks:Array[DBTrack] = []
+	for album:DBAlbum in loaded_albums:
+		for disc:Array in album.get_tracks_in_order().values():
+			all_tracks.append_array(disc)
+
+	var track:DBTrack = all_tracks.pick_random()
+	PlayerManager.set_queue_and_track(all_tracks, track)
+	PlayerManager.shuffle_queue(track)

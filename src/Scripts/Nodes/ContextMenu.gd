@@ -33,7 +33,6 @@ func _init(items:Array[Dictionary]) -> void:
 
 func show() -> void:
 	var mouse_position:Vector2i = SessionManager.main_scene.get_global_mouse_position()
-	print(mouse_position)
 	popup_menu.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
 	popup_menu.popup(Rect2(
 		mouse_position.x-50,
