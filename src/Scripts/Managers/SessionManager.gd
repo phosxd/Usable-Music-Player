@@ -183,7 +183,7 @@ var layout_theme: String:
 		# Set theme.
 		var theme_path:String = 'res://Themes/%s/theme.tres' % value
 		if ResourceLoader.exists(theme_path):
-			get_window().theme = load(theme_path)
+			get_tree().root.theme = load(theme_path)
 			MiniLog.info('Set theme to "$~%s~$".' % theme_path, SessionManager)
 
 		value_changed.emit('layout_theme')

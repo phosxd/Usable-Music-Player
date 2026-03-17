@@ -6,6 +6,7 @@
 export.cfg
 export_presets.cfg
 
+EX/
 src/EXPORT/
 
 # Imported translations (automatically generated from CSV files)
