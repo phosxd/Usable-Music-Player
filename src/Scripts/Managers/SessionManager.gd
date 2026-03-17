@@ -22,6 +22,7 @@ const property_data:Array[Array] = [
 	['fetch_artist_cover',[TYPE_BOOL]],
 	['fetch_album_cover',[TYPE_BOOL]],
 	# Performance settings.
+	['queue_size_limit',[TYPE_INT]],
 	['image_detail',[TYPE_INT]],
 	# Shortcut settings.
 	#['play_pause_key',[TYPE_INT]],
@@ -55,6 +56,8 @@ const session_file_path:String = 'user://session.json'
 
 var main_scene: Node
 
+#region window
+
 ## The default window size.
 var default_window_size: Vector2i:
 	set(value):
@@ -67,6 +70,8 @@ var current_window_size: Vector2i:
 		current_window_size = value
 		value_changed.emit('current_window_size')
 
+#endregion
+
 var library_location:String = OS.get_system_dir(OS.SYSTEM_DIR_MUSIC)
 var fetch_lyrics:bool = true
 var fetch_artist_cover:bool = false
@@ -74,6 +79,9 @@ var fetch_album_cover:bool = false
 
 var send_track_finished_notif:bool = true
 var send_library_scan_finished_notif:bool = true
+
+## The maximum number of items allowed in the queue at once.
+var queue_size_limit:int = 150
 
 ## Image detail for album & artist covers.
 ## Resets cached album cover images when set.
@@ -237,15 +245,15 @@ func load_session() -> void:
 		if typeof(data_entry) in i[1]:
 			set(i[0], data_entry)
 
-	PlayerManager.queue.clear()
 	var raw_queue = data.get('queue')
+	var tracks:Array[DBTrack] = []
 	if raw_queue is Array:
 		for path in raw_queue:
 			if path is not String: continue
 			var track = LibraryManager.get_track(path)
-			if track: PlayerManager.add_to_queue(track, false)
+			if track: tracks.append(track)
+	PlayerManager.set_queue(tracks)
 
-	PlayerManager.queue_updated.emit()
 	var raw_queue_position = data.get('queue_position')
 	if (raw_queue_position is int or raw_queue_position is float) && raw_queue_position != -1:
 		PlayerManager.set_current_track(int(raw_queue_position), false)

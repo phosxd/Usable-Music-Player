@@ -127,15 +127,35 @@ func skip_backward() -> void:
 			set_playing(true)
 
 
-func set_queue(new_queue:Array[DBTrack]) -> void:
+## Replaces queue with [param new_queue] & selects the [param track] & plays it.
+func set_queue_and_track(new_queue:Array[DBTrack], track:DBTrack) -> void:
+	set_queue(new_queue, track)
+	set_current_track(queue.find(track))
+	if is_shuffled: shuffle_queue(track)
+	set_playing(true)
+
+
+## Set the queue to [param new_queue]. If queue size is higher than the set limit, the necessary tracks will be removed from the end of the queue.
+##
+## Use [param anchor] to begin from a specific track when truncating.
+func set_queue(new_queue:Array[DBTrack], anchor:DBTrack=null) -> void:
 	MiniLog.pro('Set queue.', PlayerManager)
 	is_shuffled = false
-	queue = new_queue
+
+	var anchor_index:int = new_queue.find(anchor) if anchor else -1
+	if anchor && anchor_index != -1 && new_queue.size() >= SessionManager.queue_size_limit:
+		queue = new_queue.slice(anchor_index, SessionManager.queue_size_limit+anchor_index)
+	else:
+		queue = new_queue.slice(0, SessionManager.queue_size_limit)
+
 	queue_updated.emit(QueueUpdateCode.Set, null)
 
 
 func add_to_queue(track:DBTrack, emit:bool=true) -> void:
 	queue.append(track)
+	if queue.size() >= SessionManager.queue_size_limit:
+		remove_from_queue(queue[0 if queue_position != 0 else 1])
+
 	if emit: queue_updated.emit(QueueUpdateCode.Add, track)
 
 
@@ -153,6 +173,9 @@ func insert_to_queue(position:int, track:DBTrack, emit:bool=true) -> void:
 		queue.insert(position, track)
 		if position < PlayerManager.queue_position:
 			PlayerManager.queue_position += 1
+	if queue.size() >= SessionManager.queue_size_limit:
+		remove_from_queue(queue[0 if queue_position != 0 else 1])
+
 	if emit: queue_updated.emit(QueueUpdateCode.Insert, {'track':track,'index':position})
 
 

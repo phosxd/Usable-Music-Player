@@ -89,6 +89,8 @@ func remove() -> void:
 
 
 ## Get all tracks in order of their disc number & track number.
+##
+## Returns a dictionary containing the disc number & array of [DBTrack] objects from that disc, ordered by track number.
 func get_tracks_in_order() -> Dictionary[String,Array]:
 	var result:Dictionary[String,Array] = {
 		'1': [],

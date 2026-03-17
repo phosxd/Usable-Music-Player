@@ -8,6 +8,16 @@ var context_menu := ContextMenu.new([
 	},
 	{
 		'type': 'button',
+		'text': 'Remove This Album',
+		'icon': SessionManager.get_icon('remove'),
+	},
+	{
+		'type': 'button',
+		'text': 'Remove This Artist',
+		'icon': SessionManager.get_icon('remove'),
+	},
+	{
+		'type': 'button',
 		'text': 'Show Album',
 		'icon': SessionManager.get_icon('folder'),
 	},
@@ -78,5 +88,13 @@ func _context_menu_id_pressed(id:int):
 	match id:
 		0: # Remove.
 			PlayerManager.remove_from_queue(track)
-		1: # Show in album.
+		1: # Remove all in this album.
+			for queued_track:DBTrack in PlayerManager.queue:
+				if track.album == queued_track.album:
+					PlayerManager.remove_from_queue(queued_track)
+		2: # Remove all in this artist.
+			for queued_track:DBTrack in PlayerManager.queue:
+				if track.album.artist == queued_track.album.artist:
+					PlayerManager.remove_from_queue(queued_track)
+		3: # Show in album.
 			SessionManager.main_scene.set_tab('album_page', track.album)

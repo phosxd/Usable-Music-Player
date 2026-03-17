@@ -83,15 +83,7 @@ func add_card(track:DBTrack) -> void:
 
 
 func _on_track_selected(track:DBTrack) -> void:
-	PlayerManager.queue.clear()
-	for track_:DBTrack in loaded_tracks:
-		PlayerManager.add_to_queue(track_, false)
-
-	PlayerManager.set_current_track(PlayerManager.queue.find(track))
-	if PlayerManager.is_shuffled:
-		PlayerManager.shuffle_queue(track)
-	PlayerManager.queue_updated.emit()
-	PlayerManager.set_playing(true)
+	PlayerManager.set_queue_and_track(loaded_tracks, track)
 
 
 func _on_album_button_pressed() -> void:

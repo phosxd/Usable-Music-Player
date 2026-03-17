@@ -5,8 +5,6 @@ enum CardMode {
 	detailed,
 	minimal,
 }
-const default_button_color := Color(1,1,1, 0.3)
-const hover_button_color := Color(1,1,1, 0.5)
 
 var context_menu := ContextMenu.new([
 	{
@@ -45,7 +43,6 @@ var selected_mode := CardMode.detailed
 
 
 func _ready() -> void:
-	%Button.self_modulate = default_button_color
 	context_menu.id_pressed.connect(_on_option_id_pressed)
 	context_menu.closed.connect(func() -> void:
 		%Options.button_pressed = false
@@ -109,16 +106,6 @@ func _on_option_id_pressed(id:int) -> void:
 		5: # Rescan.
 			LibraryManager.rescan_track(track)
 			SessionManager.main_scene.refresh_tab()
-
-
-func _on_button_mouse_entered() -> void:
-	if not %Button: return
-	%Button.self_modulate = hover_button_color
-
-
-func _on_button_mouse_exited() -> void:
-	if not %Button: return
-	%Button.self_modulate = default_button_color
 
 
 func _on_button_gui_input(event:InputEvent) -> void:

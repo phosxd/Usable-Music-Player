@@ -35,7 +35,10 @@ func update(code:=PlayerManager.QueueUpdateCode.Set, data:Variant=null) -> void:
 		track_updated(PlayerManager.queue_position, PlayerManager.get_current_track())
 
 	elif code == 2: # Remove.
-		%List.get_child(data.index).queue_free()
+		if data.index >= %List.get_child_count(): return
+		var node = %List.get_child(data.index)
+		%List.remove_child(node)
+		node.queue_free()
 
 
 func track_updated(queue_position:int, _track:DBTrack) -> void:

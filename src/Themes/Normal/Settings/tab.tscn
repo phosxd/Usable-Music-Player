@@ -56,7 +56,6 @@ wheel_scroll_damper = SubResource("Resource_75g7q")
 dragging_scroll_damper = SubResource("Resource_a6lvd")
 drag_with_mouse = false
 allow_horizontal_scroll = false
-allow_overdragging = false
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
 [node name="VBox" type="VBoxContainer" parent="MarginContainer/Scroll" unique_id=2035422234]
@@ -93,7 +92,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 2
 tab_0/icon = ExtResource("4_dymlv")
 tab_1/icon = ExtResource("5_ynjxd")
 tab_2/icon = ExtResource("6_yp2qw")
@@ -103,6 +102,7 @@ tab_4/icon = ExtResource("7_0qta7")
 tab_5/icon = ExtResource("8_q288h")
 
 [node name="Library" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=1260831358]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 metadata/_tab_name = ""
@@ -335,10 +335,33 @@ layout_mode = 2
 text = "100%"
 
 [node name="Process" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=956604619]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 metadata/_tab_name = ""
+
+[node name="Queue Size Limit" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs/Process" unique_id=1208568361]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/Process/Queue Size Limit" unique_id=615573185]
+layout_mode = 2
+tooltip_text = "Image detail level. Higher values will use more memory but look sharper."
+mouse_filter = 1
+text = "Queue Size Limit"
+label_settings = ExtResource("9_yf2f5")
+
+[node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/Process/Queue Size Limit" unique_id=1601101917]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Queue Size Limit" type="SpinBox" parent="MarginContainer/Scroll/VBox/Tabs/Process/Queue Size Limit" unique_id=1897251501]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 10.0
+max_value = 5000.0
+step = 10.0
+value = 10.0
+rounded = true
 
 [node name="Image Detail" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs/Process" unique_id=292793555]
 layout_mode = 2
@@ -565,6 +588,7 @@ fit_content = true
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Tabs/UI/Layout Theme/Layout Theme" to="." method="_on_layout_theme_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Tabs/UI/Landing Page/Landing Page" to="." method="_on_landing_page_item_selected"]
 [connection signal="value_changed" from="MarginContainer/Scroll/VBox/Tabs/UI/UI Scale/UI Scale" to="." method="_on_ui_scale_value_changed"]
+[connection signal="value_changed" from="MarginContainer/Scroll/VBox/Tabs/Process/Queue Size Limit/Queue Size Limit" to="." method="_on_queue_size_limit_value_changed"]
 [connection signal="value_changed" from="MarginContainer/Scroll/VBox/Tabs/Process/Image Detail/Image Detail" to="." method="_on_image_detail_value_changed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Play Pause/Play Pause Key" to="." method="_on_play_pause_key_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Tabs/Shortcuts/Skip Backward/Skip Backward Key" to="." method="_on_skip_backward_key_pressed"]

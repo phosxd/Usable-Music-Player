@@ -39,6 +39,7 @@ func _ready() -> void:
 	%'Landing Page'.selected = landing_page_options.find(SessionManager.landing_page)
 	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.fetch_lyrics)
 	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.fetch_artist_cover)
+	%'Queue Size Limit'.set_value_no_signal(SessionManager.queue_size_limit)
 	%'Image Detail'.set_value_no_signal(SessionManager.image_detail)
 	%'Track Finished Notif'.set_pressed_no_signal(SessionManager.send_track_finished_notif)
 	%'Library Scan Finished Notif'.set_pressed_no_signal(SessionManager.send_library_scan_finished_notif)
@@ -143,3 +144,7 @@ func _on_ui_scale_value_changed(_value:float) -> void:
 
 func _on_label_meta_clicked(meta:Variant) -> void:
 	OS.shell_open(meta)
+
+
+func _on_queue_size_limit_value_changed(value:float) -> void:
+	SessionManager.queue_size_limit = int(value)

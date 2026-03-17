@@ -45,7 +45,7 @@ height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvxl0"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5chmx"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -136,7 +136,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_cvxl0")
+theme_override_styles/panel = SubResource("StyleBoxFlat_5chmx")
 script = ExtResource("4_5r8o4")
 radius_bottom_left = 16
 radius_bottom_right = 16
