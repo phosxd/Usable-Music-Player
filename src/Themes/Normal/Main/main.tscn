@@ -441,6 +441,7 @@ popup/item_0/id = 0
 [node name="Ascend Mode" type="Button" parent="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons" unique_id=941825518]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "A-Z"
 
 [node name="Play All" type="Button" parent="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons" unique_id=1744348925]
@@ -524,6 +525,4 @@ metadata/_custom_type_script = "uid://b4ukv3a8is182"
 [connection signal="text_changed" from="VBox/HBox/Tab VBox/Topbar/Island 2/Topbar Content/Search" to="VBox/HBox/Tab VBox/Topbar" method="_on_search_text_changed"]
 [connection signal="text_submitted" from="VBox/HBox/Tab VBox/Topbar/Island 2/Topbar Content/Search" to="VBox/HBox/Tab VBox/Topbar" method="_on_search_text_submitted"]
 [connection signal="pressed" from="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons/Ascend Mode" to="." method="_on_ascend_mode_pressed"]
-[connection signal="pressed" from="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons/Play All" to="." method="_on_play_all_pressed"]
-[connection signal="pressed" from="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons/Shuffle All" to="." method="_on_shuffle_all_pressed"]
 [connection signal="item_rect_changed" from="VBox/HBox/Tab VBox/Player Bar" to="." method="_on_player_bar_item_rect_changed"]

@@ -92,7 +92,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 2
+current_tab = 0
 tab_0/icon = ExtResource("4_dymlv")
 tab_1/icon = ExtResource("5_ynjxd")
 tab_2/icon = ExtResource("6_yp2qw")
@@ -102,7 +102,6 @@ tab_4/icon = ExtResource("7_0qta7")
 tab_5/icon = ExtResource("8_q288h")
 
 [node name="Library" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=1260831358]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 metadata/_tab_name = ""
@@ -335,6 +334,7 @@ layout_mode = 2
 text = "100%"
 
 [node name="Process" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=956604619]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 metadata/_tab_name = ""

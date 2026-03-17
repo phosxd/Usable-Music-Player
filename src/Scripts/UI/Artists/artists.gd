@@ -189,11 +189,10 @@ func _on_play_pressed() -> void:
 func _on_shuffle_pressed() -> void:
 	if loaded_artists.is_empty(): return
 	var all_tracks:Array[DBTrack] = []
-	for artist:DBArtist in loaded_artists:
+	var shuffled_artists:Array[DBArtist] = loaded_artists.duplicate(); shuffled_artists.shuffle()
+	for artist:DBArtist in shuffled_artists:
 		for album:DBAlbum in artist.albums.values():
 			for disc:Array in album.get_tracks_in_order().values():
 				all_tracks.append_array(disc)
 
-	var track:DBTrack = all_tracks.pick_random()
-	PlayerManager.set_queue_and_track(all_tracks, track)
-	PlayerManager.shuffle_queue(track)
+	PlayerManager.set_queue_and_track(all_tracks, all_tracks[0])

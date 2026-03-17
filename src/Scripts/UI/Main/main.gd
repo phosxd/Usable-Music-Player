@@ -146,6 +146,13 @@ func _parse_tab_config(scene:Node) -> void:
 			if play_callback is Callable:
 				%'Play All'.pressed.connect(play_callback)
 
+		# Shuffle config.
+		if shuffle_config is Dictionary:
+			%'Shuffle All'.disabled = not shuffle_config.get('enabled', false)
+			var shuffle_callback = shuffle_config.get('callback')
+			if shuffle_callback is Callable:
+				%'Shuffle All'.pressed.connect(shuffle_callback)
+
 		# Sort mode config.
 		if sort_mode_config is Dictionary:
 			%'Sort Mode'.disabled = not sort_mode_config.get('enabled', false)
@@ -225,14 +232,6 @@ func _on_tab_button_pressed(tab:String) -> void:
 
 func _on_back_button_pressed() -> void:
 	go_back()
-
-
-func _on_play_all_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_shuffle_all_pressed() -> void:
-	pass # Replace with function body.
 
 
 func _on_ascend_mode_pressed() -> void:
