@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dsftqlnga24af" path="res://Scripts/UI/Player/player.gd" id="1_8fvqj"]
 [ext_resource type="PackedScene" uid="uid://ctrjekyy7gs7r" path="res://Elements/Bar Visualizer/bar_visualizer.tscn" id="2_oikmp"]
 [ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Themes/Normal/Assets/Icons/skip_backward.svg" id="2_rmo75"]
+[ext_resource type="Script" uid="uid://bymkljeouoa2m" path="res://Themes/Normal/Player/h_box.gd" id="3_a3o2i"]
 [ext_resource type="Texture2D" uid="uid://doajyey54rgs2" path="res://Themes/Normal/Assets/Icons/scale_x2/non_favorite.svg" id="3_kemy3"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="3_on5bc"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="3_rmo75"]
@@ -16,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://n2y028woywe1" path="res://Themes/Normal/Assets/Icons/scale_x2/loop.svg" id="8_yqmis"]
 [ext_resource type="Texture2D" uid="uid://c38fmgiqibpti" path="res://Themes/Normal/Assets/Icons/scale_x2/lyrics.svg" id="10_qn1da"]
 [ext_resource type="Texture2D" uid="uid://ciqqntp7ixyuj" path="res://Themes/Normal/Assets/Icons/audio_mute.svg" id="13_ds2pc"]
+[ext_resource type="Texture2D" uid="uid://qo42hyjmudbd" path="res://Themes/Normal/Assets/Icons/copy.svg" id="18_k76c7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_74mp2"]
 
@@ -36,6 +38,14 @@ content_margin_right = 8.0
 content_margin_bottom = 8.0
 bg_color = Color(0, 0, 0, 0.19607843)
 anti_aliasing = false
+
+[sub_resource type="Gradient" id="Gradient_a3o2i"]
+colors = PackedColorArray(0.15, 0.15, 0.15, 0, 0.14901961, 0.14901961, 0.14901961, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k76c7"]
+gradient = SubResource("Gradient_a3o2i")
+width = 20
+height = 10
 
 [node name="Player" type="PanelContainer" unique_id=110111644]
 anchors_preset = 10
@@ -83,6 +93,7 @@ layout_mode = 2
 [node name="Track Info" type="HBoxContainer" parent="Panel/VBox/GridContainer" unique_id=1996931163]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.85
 
 [node name="Track Info" type="PanelContainer" parent="Panel/VBox/GridContainer/Track Info" unique_id=1261719850]
 self_modulate = Color(1, 1, 1, 0)
@@ -94,6 +105,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_8fvqj")
 [node name="HBox" type="HBoxContainer" parent="Panel/VBox/GridContainer/Track Info/Track Info" unique_id=1794297873]
 layout_mode = 2
 mouse_filter = 2
+script = ExtResource("3_a3o2i")
 
 [node name="Favorite" type="TextureButton" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=864543401]
 unique_name_in_owner = true
@@ -118,6 +130,18 @@ layout_mode = 2
 text = "No track"
 label_settings = ExtResource("4_saahk")
 
+[node name="Title Fade" type="TextureRect" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Track Name" unique_id=463663429]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_k76c7")
+
 [node name="Sep 3" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=175285363]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -140,18 +164,17 @@ layout_mode = 2
 size_flags_vertical = 8
 text = "0:00 / 0:00"
 
+[node name="Sep 1" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info" unique_id=458797593]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
 [node name="Controls" type="HBoxContainer" parent="Panel/VBox/GridContainer" unique_id=1069252317]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Sep 1" type="VSeparator" parent="Panel/VBox/GridContainer/Controls" unique_id=458797593]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-theme_override_constants/separation = 16
-
 [node name="Controls" type="HBoxContainer" parent="Panel/VBox/GridContainer/Controls" unique_id=286903142]
 layout_mode = 2
-size_flags_horizontal = 8
 
 [node name="Skip Backward" type="Button" parent="Panel/VBox/GridContainer/Controls/Controls" unique_id=887661311]
 unique_name_in_owner = true
@@ -181,9 +204,44 @@ text = " "
 icon = ExtResource("4_ucxa4")
 icon_alignment = 1
 
+[node name="Sep 5" type="VSeparator" parent="Panel/VBox/GridContainer/Controls" unique_id=1613490969]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+theme_override_constants/separation = 0
+
+[node name="Volume" type="HBoxContainer" parent="Panel/VBox/GridContainer/Controls" unique_id=1016359684]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Mute Button" type="TextureButton" parent="Panel/VBox/GridContainer/Controls/Volume" unique_id=589095583]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+toggle_mode = true
+texture_normal = ExtResource("6_5infn")
+texture_pressed = ExtResource("13_ds2pc")
+stretch_mode = 5
+
+[node name="Volume" type="HSlider" parent="Panel/VBox/GridContainer/Controls/Volume" unique_id=1459485244]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 100.0
+
+[node name="Sep 2" type="VSeparator" parent="Panel/VBox/GridContainer/Controls" unique_id=270971694]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+theme_override_constants/separation = 0
+
 [node name="Controls 2" type="HBoxContainer" parent="Panel/VBox/GridContainer/Controls" unique_id=189115080]
 layout_mode = 2
-size_flags_horizontal = 6
 
 [node name="Toggle Shuffle" type="Button" parent="Panel/VBox/GridContainer/Controls/Controls 2" unique_id=373971293]
 unique_name_in_owner = true
@@ -226,28 +284,22 @@ toggle_mode = true
 icon = ExtResource("10_qn1da")
 expand_icon = true
 
-[node name="Volume" type="HBoxContainer" parent="Panel/VBox/GridContainer" unique_id=1016359684]
+[node name="Sep 3" type="VSeparator" parent="Panel/VBox/GridContainer/Controls" unique_id=156156437]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
+theme_override_constants/separation = 16
 
-[node name="Mute Button" type="TextureButton" parent="Panel/VBox/GridContainer/Volume" unique_id=589095583]
+[node name="Miniplayer" type="Button" parent="Panel/VBox/GridContainer/Controls" unique_id=46311969]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(18, 18)
 layout_mode = 2
+size_flags_vertical = 4
 mouse_default_cursor_shape = 2
-toggle_mode = true
-texture_normal = ExtResource("6_5infn")
-texture_pressed = ExtResource("13_ds2pc")
-stretch_mode = 5
+theme_type_variation = &"AccentButton"
+icon = ExtResource("18_k76c7")
+flat = true
 
-[node name="Volume" type="HSlider" parent="Panel/VBox/GridContainer/Volume" unique_id=1459485244]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-size_flags_vertical = 4
-value = 100.0
-
-[node name="Sep 1" type="VSeparator" parent="Panel/VBox/GridContainer/Volume" unique_id=270971694]
+[node name="Sep 4" type="VSeparator" parent="Panel/VBox/GridContainer/Controls" unique_id=914598675]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
@@ -276,11 +328,11 @@ layout_mode = 2
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Skip Backward" to="." method="_on_skip_backward_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Play Pause" to="." method="_on_play_pause_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Skip Forward" to="." method="_on_skip_forward_pressed"]
+[connection signal="toggled" from="Panel/VBox/GridContainer/Controls/Volume/Mute Button" to="." method="_on_mute_button_toggled"]
+[connection signal="value_changed" from="Panel/VBox/GridContainer/Controls/Volume/Volume" to="." method="_on_volume_value_changed"]
 [connection signal="toggled" from="Panel/VBox/GridContainer/Controls/Controls 2/Toggle Shuffle" to="." method="_on_toggle_shuffle_toggled"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls 2/Swap Loop Mode" to="." method="_on_swap_loop_mode_pressed"]
 [connection signal="toggled" from="Panel/VBox/GridContainer/Controls/Controls 2/Toggle Queue" to="." method="_on_toggle_queue_toggled"]
 [connection signal="toggled" from="Panel/VBox/GridContainer/Controls/Controls 2/Toggle Lyrics" to="." method="_on_toggle_lyrics_toggled"]
-[connection signal="toggled" from="Panel/VBox/GridContainer/Volume/Mute Button" to="." method="_on_mute_button_toggled"]
-[connection signal="value_changed" from="Panel/VBox/GridContainer/Volume/Volume" to="." method="_on_volume_value_changed"]
 [connection signal="drag_ended" from="Panel/VBox/Progress/Play Progress" to="." method="_on_play_progress_drag_ended"]
 [connection signal="drag_started" from="Panel/VBox/Progress/Play Progress" to="." method="_on_play_progress_drag_started"]

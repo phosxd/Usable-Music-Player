@@ -3,12 +3,14 @@ extends Node
 
 const minilog_importance := MiniLog.Importance.High
 
+## Audio visualizer mode.
 enum VisualizerMode {
 	OFF,
 	GLOW,
 	BAR,
 }
 
+## Image detail levels.
 enum ImageDetail {
 	Low,
 	Normal,
@@ -45,6 +47,8 @@ const property_data:Array[Array] = [
 	['layout_theme',[TYPE_STRING]],
 	['visualizer_mode',[TYPE_INT]],
 	['dynamic_accents',[TYPE_BOOL]],
+	['custom_accent',[TYPE_COLOR]],
+	['custom_accent_enabled',[TYPE_BOOL]],
 	['landing_page',[TYPE_STRING]],
 ]
 
@@ -142,6 +146,16 @@ var dynamic_accents:bool = true:
 		dynamic_accents = value
 		value_changed.emit('dynamic_accents')
 
+var custom_accent_enabled:bool = false:
+	set(value):
+		custom_accent_enabled = value
+		value_changed.emit('custom_accent_enabled')
+
+var custom_accent := Color(0.9, 0.9, 0.9):
+	set(value):
+		custom_accent = value
+		value_changed.emit('custom_accent')
+
 var visualizer_mode:VisualizerMode = VisualizerMode.OFF:
 	set(value):
 		visualizer_mode = value
@@ -195,8 +209,6 @@ var valid_layout_themes:Array[String] = []
 func _ready() -> void:
 	default_window_size = get_window().size
 	current_window_size = default_window_size
-	for dir_name:String in DirAccess.get_directories_at('res://Themes'):
-		valid_layout_themes.append(dir_name)
 	load_session()
 	if layout_theme.is_empty(): layout_theme = 'Normal' # Set default layout theme if none set by session file.
 
@@ -235,7 +247,7 @@ func load_session() -> void:
 	MiniLog.info('Loading session.', SessionManager)
 	var file := FileAccess.open(session_file_path, FileAccess.READ)
 	if file == null: return
-	var data = JSON.parse_string(file.get_as_text())
+	var data = A2J.from_json(JSON.parse_string(file.get_as_text()))
 	if data == null: return
 
 	for i in property_data:
@@ -291,7 +303,7 @@ func save_session() -> void:
 		data.queue.append(track.path)
 
 	var file := FileAccess.open(session_file_path, FileAccess.WRITE)
-	var json = JSON.stringify(data, '\t', true, true)
+	var json = JSON.stringify(A2J.to_json(data), '\t', true, true)
 	file.store_string(json)
 	file.close()
 

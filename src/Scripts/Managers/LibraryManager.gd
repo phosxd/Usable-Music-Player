@@ -539,6 +539,9 @@ static func load_audio(path:String) -> AudioStream:
 			audio_stream = AudioStreamFLAC.new()
 			if audio_stream:
 				audio_stream.data = file.get_buffer(file.get_length())
+				if audio_stream.data.is_empty(): # Data didn't apply, an error occured.
+					MiniLog.err('Could not load FLAC stream "$~%s~$". Only 2 channel FLACs are supported.' % path, LibraryManager)
+					return null
 
 	MiniLog.pro('Loaded audio stream from "$~%s~$".' % path, LibraryManager)
 	return audio_stream

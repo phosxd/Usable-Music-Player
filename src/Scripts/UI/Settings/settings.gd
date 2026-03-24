@@ -32,6 +32,8 @@ func _ready() -> void:
 	]
 	%'Library Path'.text = SessionManager.library_location
 	%'Dynamic Accents'.set_pressed_no_signal(SessionManager.dynamic_accents)
+	%'Custom Accent Toggle'.set_pressed_no_signal(SessionManager.custom_accent_enabled)
+	%'Custom Accent'.color = SessionManager.custom_accent
 	%'Visualizer Mode'.selected = SessionManager.visualizer_mode
 	for item in SessionManager.valid_layout_themes:
 		%'Layout Theme'.add_item(item)
@@ -148,3 +150,11 @@ func _on_label_meta_clicked(meta:Variant) -> void:
 
 func _on_queue_size_limit_value_changed(value:float) -> void:
 	SessionManager.queue_size_limit = int(value)
+
+
+func _on_custom_accent_toggle_toggled(toggled_on:bool) -> void:
+	SessionManager.custom_accent_enabled = toggled_on
+
+
+func _on_custom_accent_popup_closed() -> void:
+	SessionManager.custom_accent = %'Custom Accent'.color

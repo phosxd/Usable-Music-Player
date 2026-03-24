@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://5llssbcnf4kg" path="res://Themes/Normal/Assets/Icons/instrument.svg" id="10_2ok46"]
 [ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Themes/Normal/Player/player.tscn" id="10_imbg2"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="11_ahhj6"]
+[ext_resource type="Texture2D" uid="uid://by3qxgtdgkogn" path="res://Themes/Normal/Assets/Icons/favorite.svg" id="11_bb5d1"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="12_eeh6y"]
 [ext_resource type="Script" uid="uid://dtel3yhuvbpap" path="res://Elements/Top Bar/top_bar.gd" id="13_2ok46"]
 [ext_resource type="Script" uid="uid://k1n47i1vyqjo" path="res://Scripts/UI/Main/indexing_status.gd" id="13_hto8k"]
@@ -72,7 +73,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jo7x3"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bb5d1"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -101,7 +102,7 @@ shadow_color = Color(0, 0, 0, 0.005)
 shadow_size = 8
 shadow_offset = Vector2(0, 4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bb5d1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uwgfw"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -254,6 +255,38 @@ text = "Genres"
 icon = ExtResource("10_2ok46")
 alignment = 0
 
+[node name="Favorites" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=1562961380]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+text = "Favorites"
+icon = ExtResource("11_bb5d1")
+alignment = 0
+
+[node name="Favorites Options" type="VBoxContainer" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=279614353]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox/Favorites Options" unique_id=1077204144]
+layout_mode = 2
+theme_type_variation = &"SoftButton"
+text = "Tracks"
+alignment = 0
+
+[node name="Button2" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox/Favorites Options" unique_id=148144439]
+layout_mode = 2
+theme_type_variation = &"SoftButton"
+text = "Albums"
+alignment = 0
+
+[node name="Button3" type="Button" parent="VBox/HBox/Sidebar/Margin/VBox/Favorites Options" unique_id=29669219]
+layout_mode = 2
+theme_type_variation = &"SoftButton"
+text = "Artists"
+alignment = 0
+
 [node name="Sep 1" type="HSeparator" parent="VBox/HBox/Sidebar/Margin/VBox" unique_id=894733907]
 layout_mode = 2
 
@@ -345,7 +378,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_jo7x3")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bb5d1")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
@@ -510,7 +543,7 @@ offset_bottom = 150.0
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_bb5d1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_uwgfw")
 script = ExtResource("9_6t3k2")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
@@ -520,6 +553,7 @@ metadata/_custom_type_script = "uid://b4ukv3a8is182"
 [connection signal="pressed" from="VBox/HBox/Sidebar/Margin/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
 [connection signal="pressed" from="VBox/HBox/Sidebar/Margin/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
 [connection signal="pressed" from="VBox/HBox/Sidebar/Margin/VBox/Tab Button Genres" to="." method="_on_tab_button_pressed" binds= ["genres"]]
+[connection signal="toggled" from="VBox/HBox/Sidebar/Margin/VBox/Favorites" to="." method="_on_favorites_toggled"]
 [connection signal="pressed" from="VBox/HBox/Sidebar/Margin/VBox/Current Track Cover Container/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= [".immersive_player"]]
 [connection signal="pressed" from="VBox/HBox/Tab VBox/Topbar/Island 1/Topbar Content/Back Button" to="." method="_on_back_button_pressed"]
 [connection signal="text_changed" from="VBox/HBox/Tab VBox/Topbar/Island 2/Topbar Content/Search" to="VBox/HBox/Tab VBox/Topbar" method="_on_search_text_changed"]

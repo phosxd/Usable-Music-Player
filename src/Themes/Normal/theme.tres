@@ -243,6 +243,8 @@ shadow_color = Color(0, 0, 0, 0.005)
 shadow_size = 8
 shadow_offset = Vector2(0, 4)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dhjdp"]
+
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_hiidj"]
 color = Color(0.18431373, 0.18431373, 0.18431373, 1)
 grow_begin = -4.0
@@ -680,6 +682,12 @@ CheckButton/styles/hover = SubResource("StyleBoxFlat_7t2es")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_ut2au")
 CheckButton/styles/normal = SubResource("StyleBoxFlat_52ns3")
 CheckButton/styles/pressed = SubResource("StyleBoxFlat_rwfge")
+FoldableContainer/colors/collapsed_font_color = Color(1, 1, 1, 0.7490196)
+FoldableContainer/colors/font_color = Color(1, 1, 1, 1)
+FoldableContainer/styles/panel = SubResource("StyleBoxEmpty_dhjdp")
+FoldableContainer/styles/title_collapsed_panel = SubResource("StyleBoxFlat_hne2s")
+FoldableContainer/styles/title_hover_panel = SubResource("StyleBoxFlat_hh4db")
+FoldableContainer/styles/title_panel = SubResource("StyleBoxFlat_ruv2r")
 HFlowContainer/constants/h_separation = 4
 HFlowContainer/constants/v_separation = 4
 HSeparator/constants/separation = 8

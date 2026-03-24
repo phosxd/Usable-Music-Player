@@ -31,7 +31,7 @@ func _ready() -> void:
 	SessionManager.value_changed.connect(func(property_name:String) -> void:
 		if property_name == 'visualizer_mode':
 			%Player.update_visualizer(album_dominant_color)
-		if property_name == 'dynamic_accents':
+		if property_name in ['dynamic_accents','custom_accent_enabled','custom_accent']:
 			update_accents()
 			%Player.update_visualizer(album_dominant_color)
 	)
@@ -47,8 +47,11 @@ func update_accents() -> void:
 	if SessionManager.dynamic_accents:
 		if not PlayerManager.queue.is_empty():
 			album_dominant_color = PlayerManager.queue[PlayerManager.queue_position].album.get_album_dominant_color()
+	elif SessionManager.custom_accent_enabled:
+		album_dominant_color = SessionManager.custom_accent
+	# If dynamic & custom accents are disabled, use OS accent color.
 	else:
-		album_dominant_color = Color(0.75,0.75,0.75)
+		album_dominant_color = DisplayServer.get_accent_color()
 	if prev_album_dominant_color == album_dominant_color: return
 
 	var tinted_dominant_color:Color = album_dominant_color.lerp(Color.WHITE, 0.75)
@@ -62,21 +65,6 @@ func update_accents() -> void:
 	new_slider_style.bg_color = dark_tinted_dominant_color
 	global_theme.set_stylebox('grabber_area', 'HSlider', new_slider_style)
 	global_theme.set_stylebox('grabber_area_highlight', 'HSlider', new_slider_style)
-	
-	#var track = PlayerManager.get_current_track()
-	#var dominant_color = track.album.get_album_dominant_color()
-	#var dominant_colors = [
-		#dominant_color,
-		#track.album.palette.get('secondary', Color.WHITE),
-		#track.album.palette.get('trinary', Color.WHITE),
-		#track.album.palette.get('blend_full', Color.WHITE),
-	#]
-	#dominant_colors.shuffle()
-	#var mat = %'Background'.material
-	#var index:int = -1
-	#for i in ['topright','topleft','bottomright','bottomleft']:
-		#index += 1
-		#mat.set_shader_parameter(i, dominant_colors[index].blend(overlay_color))
 
 
 func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
@@ -237,3 +225,7 @@ func _on_back_button_pressed() -> void:
 func _on_ascend_mode_pressed() -> void:
 	ascend_mode = not ascend_mode
 	%'Ascend Mode'.text = 'A-Z' if ascend_mode else 'Z-A'
+
+
+func _on_favorites_toggled(toggled_on:bool) -> void:
+	%'Favorites Options'.visible = toggled_on

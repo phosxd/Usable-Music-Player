@@ -29,6 +29,7 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 	if not track: return
 	current_track = track
 	%'Track Name'.text = current_track.name
+	%'Track Name'.button_tooltip_text = current_track.name
 	%'Artist Name'.text = '%s' % [current_track.album.artist.name]
 	if %'Toggle Shuffle'.button_pressed:
 		original_queue.clear()

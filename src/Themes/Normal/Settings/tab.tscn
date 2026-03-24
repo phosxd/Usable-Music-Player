@@ -92,7 +92,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 1
 tab_0/icon = ExtResource("4_dymlv")
 tab_1/icon = ExtResource("5_ynjxd")
 tab_2/icon = ExtResource("6_yp2qw")
@@ -102,6 +102,7 @@ tab_4/icon = ExtResource("7_0qta7")
 tab_5/icon = ExtResource("8_q288h")
 
 [node name="Library" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=1260831358]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 metadata/_tab_name = ""
@@ -172,31 +173,60 @@ tooltip_text = "Select directory"
 icon = ExtResource("11_yw38e")
 
 [node name="UI" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs" unique_id=1265648481]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 metadata/_tab_name = ""
 
-[node name="Dynamic Accents" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs/UI" unique_id=1655818264]
+[node name="Dynamic Accent" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs/UI" unique_id=1655818264]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/UI/Dynamic Accents" unique_id=737435311]
+[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/UI/Dynamic Accent" unique_id=737435311]
 layout_mode = 2
 tooltip_text = "When enabled, UI elements will change color to match the current playing track.
+When disabled, accents will use your OS accent color.
 
 This may cause minor skips when changing colors."
 mouse_filter = 1
-text = "Dynamic Accents"
+text = "Dynamic Accent"
 label_settings = ExtResource("9_yf2f5")
 
-[node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/Dynamic Accents" unique_id=832723907]
+[node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/Dynamic Accent" unique_id=832723907]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-theme_override_constants/separation = 3
+theme_override_constants/separation = 10
 
-[node name="Dynamic Accents" type="CheckButton" parent="MarginContainer/Scroll/VBox/Tabs/UI/Dynamic Accents" unique_id=235272779]
+[node name="Dynamic Accents" type="CheckButton" parent="MarginContainer/Scroll/VBox/Tabs/UI/Dynamic Accent" unique_id=235272779]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="Custom Accent" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs/UI" unique_id=187814530]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Tabs/UI/Custom Accent" unique_id=1290129941]
+layout_mode = 2
+tooltip_text = "When enabled, UI elements will change to the specified color.
+
+Will not work with dynamic accent enabled."
+mouse_filter = 1
+text = "Custom Accent"
+label_settings = ExtResource("9_yf2f5")
+
+[node name="Sep 1" type="VSeparator" parent="MarginContainer/Scroll/VBox/Tabs/UI/Custom Accent" unique_id=1228666101]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Custom Accent Toggle" type="CheckButton" parent="MarginContainer/Scroll/VBox/Tabs/UI/Custom Accent" unique_id=925533843]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Custom Accent" type="ColorPickerButton" parent="MarginContainer/Scroll/VBox/Tabs/UI/Custom Accent" unique_id=1229575694]
+unique_name_in_owner = true
+layout_mode = 2
+text = "        "
+color = Color(0.851769, 0.8517689, 0.85176885, 1)
+edit_alpha = false
+edit_intensity = false
 
 [node name="Visualizer Mode" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Tabs/UI" unique_id=699538138]
 layout_mode = 2
@@ -583,7 +613,9 @@ fit_content = true
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Tabs/Library/Library/Scan For Changes" to="." method="_on_scan_for_changes_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Tabs/Library/Library/Rescan Library" to="." method="_on_rescan_library_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Tabs/Library/Library/Select Library" to="." method="_on_select_library_pressed"]
-[connection signal="toggled" from="MarginContainer/Scroll/VBox/Tabs/UI/Dynamic Accents/Dynamic Accents" to="." method="_on_dynamic_accents_toggled"]
+[connection signal="toggled" from="MarginContainer/Scroll/VBox/Tabs/UI/Dynamic Accent/Dynamic Accents" to="." method="_on_dynamic_accents_toggled"]
+[connection signal="toggled" from="MarginContainer/Scroll/VBox/Tabs/UI/Custom Accent/Custom Accent Toggle" to="." method="_on_custom_accent_toggle_toggled"]
+[connection signal="popup_closed" from="MarginContainer/Scroll/VBox/Tabs/UI/Custom Accent/Custom Accent" to="." method="_on_custom_accent_popup_closed"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Tabs/UI/Visualizer Mode/Visualizer Mode" to="." method="_on_visualizer_mode_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Tabs/UI/Layout Theme/Layout Theme" to="." method="_on_layout_theme_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Tabs/UI/Landing Page/Landing Page" to="." method="_on_landing_page_item_selected"]

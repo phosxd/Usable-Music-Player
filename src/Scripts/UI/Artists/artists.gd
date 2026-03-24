@@ -133,6 +133,7 @@ func _on_http_request_request_completed(result:int, data:Dictionary, card, artis
 
 
 func _on_http_request_image_request_completed(result:int, data:Dictionary, card, artist:DBArtist) -> void:
+	if not self: return
 	if result != HTTPRequest.RESULT_SUCCESS: return
 	var headers:PackedStringArray = data.get('headers',PackedStringArray([]))
 	var body:PackedByteArray = data.get('body',PackedByteArray([]))

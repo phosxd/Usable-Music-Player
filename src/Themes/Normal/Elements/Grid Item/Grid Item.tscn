@@ -76,11 +76,11 @@ layout_mode = 2
 [node name="Label 1" parent="VBox" unique_id=1086494808 instance=ExtResource("5_l7ro4")]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_behavior_recursive = 1
 label_settings = ExtResource("6_c3rqa")
 horizontal_alignment = 1
 clip_text = true
 text_overrun_behavior = 5
+enabled = false
 
 [node name="Label 2" parent="VBox" unique_id=1569149691 instance=ExtResource("5_l7ro4")]
 unique_name_in_owner = true

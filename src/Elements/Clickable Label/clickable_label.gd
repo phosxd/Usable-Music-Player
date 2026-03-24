@@ -4,6 +4,17 @@ signal button_down
 signal button_up
 signal pressed
 
+@export var enabled:bool = true:
+	set(value):
+		_original_label_settings = label_settings
+		_on_button_mouse_exited()
+		$Button.mouse_default_cursor_shape = CursorShape.CURSOR_ARROW
+		enabled = value
+@export var button_tooltip_text:String = '':
+	set(value):
+		button_tooltip_text = value
+		$Button.tooltip_text = value
+
 @export_category('On Hover')
 ## Font color to set when hovering.
 @export var hover_font_color := Color.WHITE
@@ -16,8 +27,9 @@ var _original_label_settings: LabelSettings
 
 
 func _on_button_mouse_entered() -> void:
-	_original_label_settings = self.label_settings
-	var ls:LabelSettings = self.label_settings.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
+	if not enabled: return
+	_original_label_settings = label_settings
+	var ls:LabelSettings = label_settings.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
 	ls.font_color = hover_font_color
 	ls.outline_color = hover_outline_color
 	ls.outline_size += hover_outline_size
@@ -25,6 +37,7 @@ func _on_button_mouse_entered() -> void:
 
 
 func _on_button_mouse_exited() -> void:
+	if not enabled: return
 	self.label_settings = _original_label_settings
 
 

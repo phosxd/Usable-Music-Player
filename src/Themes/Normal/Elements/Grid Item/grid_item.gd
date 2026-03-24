@@ -37,13 +37,13 @@ signal alt_pressed
 	set(value):
 		primary_text = value
 		%'Label 1'.text = value
-		%'Label 1'.tooltip_text = value
+		%'Label 1'.button_tooltip_text = value
 
 @export var secondary_text:String = '':
 	set(value):
 		secondary_text = value
 		%'Label 2'.text = value
-		%'Label 2'.tooltip_text = value
+		%'Label 2'.button_tooltip_text = value
 
 
 func _on_button_pressed() -> void:

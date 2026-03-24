@@ -14,3 +14,7 @@
 - Fix giant memory leak when refreshing tracks tab.
 
 Note: memory leaks may seem to correspond with how many items are in the tab.
+
+
+- Build GDExtension for dedicated audio playback & metadata.
+  This is to address the problems of needing to use a bundled Python executable for metadata & FLACs not supporting multi-channel.

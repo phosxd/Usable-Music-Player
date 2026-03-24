@@ -19,7 +19,7 @@ func _ready() -> void:
 	# Save icon to user data.
 	icon.get_image().save_png(icon_file_path)
 	# Set up desktop file.
-	if OS.get_name() == 'Linux' && not Engine.is_editor_hint(): generate_desktop_file()
+	if OS.get_name() == 'Linux' && not OS.has_feature('editor'): generate_desktop_file()
 
 	# Load library database.
 	LibraryManager.load_database()
