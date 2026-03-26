@@ -27,8 +27,8 @@ extends VBoxContainer
 		'callback': _on_search_updated,
 	}
 }
-var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
-var sort_mode: LibraryManager.ArtistSortMode
+@onready var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
+@onready var sort_mode: LibraryManager.ArtistSortMode
 var ascend_mode = null
 var loaded_artists:Array[DBArtist] = []
 var update_count:int = 0

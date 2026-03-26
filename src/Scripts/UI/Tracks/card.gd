@@ -6,7 +6,7 @@ enum CardMode {
 	minimal,
 }
 
-var context_menu := ContextMenu.new([
+@onready var context_menu := ContextMenu.new([
 	{
 		'type': 'button',
 		'text': 'Play (clear queue)',

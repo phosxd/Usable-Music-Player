@@ -203,12 +203,20 @@ var layout_theme: String:
 		value_changed.emit('layout_theme')
 
 
-var valid_layout_themes:Array[String] = []
+var valid_layout_themes:Array[String] = ['Normal']
 
 
 func _ready() -> void:
 	default_window_size = get_window().size
 	current_window_size = default_window_size
+	
+	# Load themes.
+	for mod:TesseractMod in TesseractAPI.mod_instances.values():
+		if not mod.config.has_section('Theme'): continue
+		var theme_name = mod.config.get_value('Theme', 'name', '')
+		if theme_name is not String or theme_name.is_empty(): continue
+		valid_layout_themes.append(theme_name)
+
 	load_session()
 	if layout_theme.is_empty(): layout_theme = 'Normal' # Set default layout theme if none set by session file.
 

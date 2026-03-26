@@ -11,7 +11,7 @@ extends Control
 		'enabled': false,
 	}
 }
-var card_scene:PackedScene = SessionManager.get_layout_theme_scene('Tracks/card')
+@onready var card_scene:PackedScene = SessionManager.get_layout_theme_scene('Tracks/card')
 const overlay_color := Color(0.25, 0.25, 0.25, 0.5)
 @onready var options_popup:PopupMenu = %Options.get_popup()
 var loaded_tracks:Array[DBTrack] = []
@@ -27,6 +27,7 @@ func _ready() -> void:
 func init(album_:DBAlbum=null) -> void:
 	if not album_: return
 	album = album_
+	await ready
 	%Title.text = album.name
 	%Title.tooltip_text = album.name
 	%Artist.text = album.artist.name if album.artist else 'None found'

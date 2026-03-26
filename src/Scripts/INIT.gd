@@ -15,6 +15,28 @@ Categories=Application;Player;Media
 @onready var desktop_file_path:String = OS.get_user_data_dir()+'/'+desktop_file_name
 
 
+func _init() -> void:
+	TesseractErrorServer.info.connect(_on_tes_info)
+	TesseractErrorServer.warning.connect(_on_tes_warning)
+	TesseractErrorServer.error.connect(_on_tes_error)
+	
+	TesseractAPI.load_mods()
+	for mod:TesseractMod in TesseractAPI.mod_instances.values():
+		MiniLog.info('Loaded mod "$i%si$".' % mod.id, self)
+
+
+func _on_tes_info(code:int, translations:Array) -> void:
+	MiniLog.info(TesseractErrorServer.info_strings[code] % translations, self)
+
+
+func _on_tes_warning(code:int, translations:Array) -> void:
+	MiniLog.warn(TesseractErrorServer.warning_strings[code] % translations, self)
+
+
+func _on_tes_error(code:int, translations:Array) -> void:
+	MiniLog.err(TesseractErrorServer.error_strings[code] % translations, self)
+
+
 func _ready() -> void:
 	# Save icon to user data.
 	icon.get_image().save_png(icon_file_path)

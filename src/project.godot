@@ -35,6 +35,8 @@ driver/output_latency=30
 
 [autoload]
 
+TesseractAPI="*uid://dn4wiq2geesy6"
+TesseractErrorServer="*uid://dfsijm3jpbmlm"
 INIT="*uid://due46eoqitfqi"
 CLI="*uid://cht4oe1otvdde"
 PlayerManager="*uid://bsri8hvvykwnh"
@@ -57,7 +59,7 @@ export/convert_text_resources_to_binary=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/A2J/plugin.cfg", "res://addons/ReorderableContainer/plugin.cfg", "res://addons/SmoothScroll/plugin.cfg", "res://addons/TextureRectRounded/plugin.cfg")
+enabled=PackedStringArray("res://addons/A2J/plugin.cfg", "res://addons/ReorderableContainer/plugin.cfg", "res://addons/SmoothScroll/plugin.cfg", "res://addons/Tesseract/plugin.cfg", "res://addons/TextureRectRounded/plugin.cfg", "res://addons/tesseract/plugin.cfg")
 
 [file_customization]
 
@@ -65,6 +67,7 @@ folder_colors={
 "res://Assets/": "yellow",
 "res://EXPORT/": "gray",
 "res://Elements/": "yellow",
+"res://MODS/": "gray",
 "res://Scenes/": "blue",
 "res://Scripts/": "red",
 "res://Themes/Normal/Assets/": "yellow",

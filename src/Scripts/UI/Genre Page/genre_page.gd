@@ -11,7 +11,7 @@ extends Control
 		'enabled': false,
 	}
 }
-var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
+@onready var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
 const overlay_color := Color(0.25, 0.25, 0.25, 0.5)
 var loaded_albums:Array[DBAlbum] = []
 var albums: Array
@@ -28,6 +28,7 @@ func init(data:Dictionary={}) -> void:
 	if genre_name is not String: return
 	if albums_ is not Array: return
 	albums = albums_
+	await ready
 	%Title.text = genre_name
 	%Title.tooltip_text = genre_name
 	var dominant_colors = [

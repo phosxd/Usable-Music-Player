@@ -29,8 +29,8 @@ extends VBoxContainer
 		'callback': _on_search_updated,
 	}
 }
-var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
-var sort_mode: LibraryManager.AlbumSortMode
+@onready var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
+@onready var sort_mode: LibraryManager.AlbumSortMode
 var ascend_mode = null
 var loaded_albums:Array[DBAlbum]
 var update_count:int = 0
