@@ -1,6 +1,7 @@
 @tool
 extends Control
 
+## Emitted when the button or primary text is pressed.
 signal pressed
 ## Emitted when the secondary text is pressed.
 signal secondary_pressed
@@ -38,12 +39,14 @@ signal alt_pressed
 		primary_text = value
 		%'Label 1'.text = value
 		%'Label 1'.button_tooltip_text = value
+		%'Label 1'.enabled = not primary_text.is_empty()
 
 @export var secondary_text:String = '':
 	set(value):
 		secondary_text = value
 		%'Label 2'.text = value
 		%'Label 2'.button_tooltip_text = value
+		%'Label 2'.enabled = not secondary_text.is_empty()
 
 
 func _on_button_pressed() -> void:
@@ -63,6 +66,10 @@ func _on_button_mouse_entered() -> void:
 func _on_button_mouse_exited() -> void:
 	if not %'Label 1': return
 	%'Label 1'._on_button_mouse_exited()
+
+
+func _on_label_1_pressed() -> void:
+	pressed.emit()
 
 
 func _on_label_2_pressed() -> void:

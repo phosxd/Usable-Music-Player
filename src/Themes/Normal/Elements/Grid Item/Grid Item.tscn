@@ -90,6 +90,7 @@ label_settings = ExtResource("6_y8yeu")
 horizontal_alignment = 1
 clip_text = true
 text_overrun_behavior = 5
+enabled = false
 hover_font_color = Color(0.9, 0.9, 0.9, 1)
 hover_outline_color = Color(0.9, 0.9, 0.9, 1)
 
@@ -97,4 +98,5 @@ hover_outline_color = Color(0.9, 0.9, 0.9, 1)
 [connection signal="mouse_entered" from="VBox/Center/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="VBox/Center/Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="VBox/Center/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBox/Label 1" to="." method="_on_label_1_pressed"]
 [connection signal="pressed" from="VBox/Label 2" to="." method="_on_label_2_pressed"]

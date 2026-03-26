@@ -8,8 +8,9 @@ signal pressed
 	set(value):
 		_original_label_settings = label_settings
 		_on_button_mouse_exited()
-		$Button.mouse_default_cursor_shape = CursorShape.CURSOR_ARROW
 		enabled = value
+		$Button.disabled = not enabled
+		$Button.mouse_default_cursor_shape = CURSOR_POINTING_HAND if enabled else CURSOR_ARROW
 @export var button_tooltip_text:String = '':
 	set(value):
 		button_tooltip_text = value
