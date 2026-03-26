@@ -474,6 +474,7 @@ popup/item_0/id = 0
 [node name="Ascend Mode" type="Button" parent="VBox/HBox/Tab VBox/Topbar/Island 3/Tab Tool Buttons" unique_id=941825518]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"AccentButton"
 disabled = true
 text = "A-Z"
 
@@ -481,6 +482,7 @@ text = "A-Z"
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Play all items in the tab."
+theme_type_variation = &"AccentButton"
 disabled = true
 icon = ExtResource("9_2ok46")
 
@@ -488,6 +490,7 @@ icon = ExtResource("9_2ok46")
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Shuffle all items in the tab."
+theme_type_variation = &"AccentButton"
 disabled = true
 icon = ExtResource("23_jo7x3")
 
