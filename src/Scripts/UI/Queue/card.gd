@@ -31,6 +31,10 @@ func _ready() -> void:
 	highlight(false)
 
 
+func _exit_tree() -> void:
+	context_menu.queue_free()
+
+
 func init(track:DBTrack) -> void:
 	%Name.text = track.name
 	%Artist.text = track.album.artist.name

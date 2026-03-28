@@ -49,6 +49,10 @@ func _ready() -> void:
 	)
 
 
+func _exit_tree() -> void:
+	context_menu.queue_free()
+
+
 func init(db_track:DBTrack) -> void:
 	track = db_track
 	if not track.valid: _invalidate()

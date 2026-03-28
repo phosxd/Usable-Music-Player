@@ -42,6 +42,12 @@ func _ready() -> void:
 	sort()
 
 
+func unload() -> void:
+	Async.unload(%Grid.get_children(), (func(scene:Node) -> void:
+		scene.queue_free()
+	).bind(self))
+
+
 func sort() -> void:
 	update_count += 1
 	SessionManager.album_sort_mode = sort_mode

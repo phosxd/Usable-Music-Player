@@ -10,10 +10,7 @@
 - Add option for artist/album for uploading custom image.
 - Add option for artist for regrabbing artist image from API.
 
-- Fix *tiny* memory leak when refreshing albums tab.
-- Fix giant memory leak when refreshing tracks tab.
-
-Note: memory leaks may seem to correspond with how many items are in the tab.
+- Optimize context menu creation. Dont create new instance for EVERY track listed in queue & tabs. Use a singular global instance that takes data from the caller.
 
 
 - Build GDExtension for dedicated audio playback & metadata.

@@ -38,7 +38,7 @@ static func create_thread(run:Callable, callback=null) -> Thread:
 ## Progressively frees all nodes in [param nodes].
 ## Calls [param callback] when finished.
 static func unload(nodes:Array[Node], callback=null) -> void:
-	if not nodes: return
+	if nodes == null or nodes.is_empty(): return
 	var iter:int = 0
 	for node:Node in nodes:
 		if not node or not is_instance_valid(node): continue
