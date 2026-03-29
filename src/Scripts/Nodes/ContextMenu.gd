@@ -5,6 +5,7 @@ signal index_pressed(index:int)
 signal closed()
 
 var popup_menu := PopupMenu.new()
+var current_instance_id:String = ''
 
 
 func _init(items:Array[Dictionary]) -> void:
@@ -31,7 +32,9 @@ func _init(items:Array[Dictionary]) -> void:
 					else: popup_menu.add_item(text)
 
 
-func show() -> void:
+## Show the context menu with an instance ID.
+func show(id:String) -> void:
+	current_instance_id = id
 	var mouse_position:Vector2i = SessionManager.main_scene.get_global_mouse_position()
 	popup_menu.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
 	popup_menu.popup(Rect2(

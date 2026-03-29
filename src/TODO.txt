@@ -10,8 +10,6 @@
 - Add option for artist/album for uploading custom image.
 - Add option for artist for regrabbing artist image from API.
 
-- Optimize context menu creation. Dont create new instance for EVERY track listed in queue & tabs. Use a singular global instance that takes data from the caller.
-
 
 - Build GDExtension for dedicated audio playback & metadata.
   This is to address the problems of needing to use a bundled Python executable for metadata & FLACs not supporting multi-channel.

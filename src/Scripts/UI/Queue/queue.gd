@@ -1,6 +1,28 @@
 extends PanelContainer
 
-var card_scene = SessionManager.get_layout_theme_scene('Queue/card')
+@onready var card_context_menu := ContextMenu.new([
+	{
+		'type': 'button',
+		'text': 'Remove',
+		'icon': SessionManager.get_icon('remove'),
+	},
+	{
+		'type': 'button',
+		'text': 'Remove This Album',
+		'icon': SessionManager.get_icon('remove'),
+	},
+	{
+		'type': 'button',
+		'text': 'Remove This Artist',
+		'icon': SessionManager.get_icon('remove'),
+	},
+	{
+		'type': 'button',
+		'text': 'Show Album',
+		'icon': SessionManager.get_icon('folder'),
+	},
+])
+@onready var card_scene = SessionManager.get_layout_theme_scene('Queue/card')
 var last_node: Node
 var update_count:int = 0
 var queue_update_blocked:bool = false
@@ -11,6 +33,10 @@ func _ready() -> void:
 	update()
 	PlayerManager.queue_updated.connect(update)
 	PlayerManager.current_track_updated.connect(track_updated)
+
+
+func _exit_tree() -> void:
+	card_context_menu.queue_free()
 
 
 func update(code:=PlayerManager.QueueUpdateCode.Set, data:Variant=null) -> void:
@@ -59,7 +85,7 @@ func track_updated(queue_position:int, _track:DBTrack) -> void:
 func add_card(track:DBTrack) -> void:
 	if not card_scene: return
 	var card = card_scene.instantiate()
-	card.init(track)
+	card.init(track, card_context_menu)
 	%List.add_child(card)
 
 

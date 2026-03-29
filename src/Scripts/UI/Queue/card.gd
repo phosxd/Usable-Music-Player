@@ -1,41 +1,16 @@
 extends Control
 
-var context_menu := ContextMenu.new([
-	{
-		'type': 'button',
-		'text': 'Remove',
-		'icon': SessionManager.get_icon('remove'),
-	},
-	{
-		'type': 'button',
-		'text': 'Remove This Album',
-		'icon': SessionManager.get_icon('remove'),
-	},
-	{
-		'type': 'button',
-		'text': 'Remove This Artist',
-		'icon': SessionManager.get_icon('remove'),
-	},
-	{
-		'type': 'button',
-		'text': 'Show Album',
-		'icon': SessionManager.get_icon('folder'),
-	},
-])
-
+var context_menu: ContextMenu
 var is_dragging:bool = false
 
 
 func _ready() -> void:
-	context_menu.id_pressed.connect(_context_menu_id_pressed)
 	highlight(false)
 
 
-func _exit_tree() -> void:
-	context_menu.queue_free()
-
-
-func init(track:DBTrack) -> void:
+func init(track:DBTrack, context_menu_:ContextMenu) -> void:
+	context_menu = context_menu_
+	context_menu.id_pressed.connect(_context_menu_id_pressed)
 	%Name.text = track.name
 	%Artist.text = track.album.artist.name
 	%Length.text = DBTrack.get_track_position_formatted(track.length)
@@ -84,10 +59,11 @@ func _on_drag_button_button_up() -> void:
 
 func _on_button_gui_input(event:InputEvent) -> void:
 	if event.is_action_released('right_click'):
-		context_menu.show()
+		context_menu.show(name)
 
 
 func _context_menu_id_pressed(id:int):
+	if context_menu.current_instance_id != name: return
 	var track:DBTrack = PlayerManager.queue[get_index()]
 	match id:
 		0: # Remove.

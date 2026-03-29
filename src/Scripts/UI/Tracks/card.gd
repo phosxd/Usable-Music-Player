@@ -6,56 +6,22 @@ enum CardMode {
 	minimal,
 }
 
-@onready var context_menu := ContextMenu.new([
-	{
-		'type': 'button',
-		'text': 'Play (clear queue)',
-		'icon': SessionManager.get_icon('play'),
-	},
-	{
-		'type': 'button',
-		'text': 'Play Next',
-		'icon': SessionManager.get_icon('queue_play_next'),
-	},
-	{
-		'type': 'button',
-		'text': 'Add To Queue',
-		'icon': SessionManager.get_icon('queue_add_to_queue'),
-	},
-	{
-		'type': 'button',
-		'text': 'Show Album',
-		'icon': SessionManager.get_icon('folder'),
-	},
-	{
-		'type': 'button',
-		'text': 'Show In Files',
-		'icon': SessionManager.get_icon('folder'),
-	},
-	{
-		'type': 'button',
-		'text': 'Rescan',
-		'icon': SessionManager.get_icon('modifiers'),
-	},
-])
+var context_menu: ContextMenu
 var track: DBTrack
 var selected_mode := CardMode.detailed
 
 
-func _ready() -> void:
+func init(db_track:DBTrack, context_menu_:ContextMenu) -> void:
+	track = db_track
+	context_menu = context_menu_
+	if not track.valid: _invalidate()
+
 	context_menu.id_pressed.connect(_on_option_id_pressed)
 	context_menu.closed.connect(func() -> void:
+		if context_menu.current_instance_id != name: return
 		%Options.button_pressed = false
 	)
 
-
-func _exit_tree() -> void:
-	context_menu.queue_free()
-
-
-func init(db_track:DBTrack) -> void:
-	track = db_track
-	if not track.valid: _invalidate()
 	%Name.text = track.name
 	if track.number == 0: %'Track Number'.hide()
 	else: %'Track Number'.text = '%s' % (track.number)
@@ -87,6 +53,7 @@ func _on_button_pressed() -> void:
 
 
 func _on_option_id_pressed(id:int) -> void:
+	if context_menu.current_instance_id != name: return
 	match id:
 		0: # Play.
 			PlayerManager.auto_queue_start_index = -1
@@ -118,4 +85,4 @@ func _on_button_gui_input(event:InputEvent) -> void:
 
 
 func _on_options_toggled(toggled_on:bool) -> void:
-	if toggled_on: context_menu.show()
+	if toggled_on: context_menu.show(name)
