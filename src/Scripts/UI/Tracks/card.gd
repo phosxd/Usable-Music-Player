@@ -6,21 +6,22 @@ enum CardMode {
 	minimal,
 }
 
-var context_menu: ContextMenu
+@onready var context_menu:ContextMenu = SessionManager.context_menus.track_card
 var track: DBTrack
 var selected_mode := CardMode.detailed
 
 
-func init(db_track:DBTrack, context_menu_:ContextMenu) -> void:
-	track = db_track
-	context_menu = context_menu_
-	if not track.valid: _invalidate()
-
+func _ready() -> void:
 	context_menu.id_pressed.connect(_on_option_id_pressed)
 	context_menu.closed.connect(func() -> void:
 		if context_menu.current_instance_id != name: return
 		%Options.button_pressed = false
 	)
+
+
+func init(db_track:DBTrack) -> void:
+	track = db_track
+	if not track.valid: _invalidate()
 
 	%Name.text = track.name
 	if track.number == 0: %'Track Number'.hide()

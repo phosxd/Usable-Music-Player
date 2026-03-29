@@ -31,38 +31,6 @@ extends VBoxContainer
 		'callback': _on_search_updated,
 	},
 }
-@onready var card_context_menu := ContextMenu.new([
-	{
-		'type': 'button',
-		'text': 'Play (clear queue)',
-		'icon': SessionManager.get_icon('play'),
-	},
-	{
-		'type': 'button',
-		'text': 'Play Next',
-		'icon': SessionManager.get_icon('queue_play_next'),
-	},
-	{
-		'type': 'button',
-		'text': 'Add To Queue',
-		'icon': SessionManager.get_icon('queue_add_to_queue'),
-	},
-	{
-		'type': 'button',
-		'text': 'Show Album',
-		'icon': SessionManager.get_icon('folder'),
-	},
-	{
-		'type': 'button',
-		'text': 'Show In Files',
-		'icon': SessionManager.get_icon('folder'),
-	},
-	{
-		'type': 'button',
-		'text': 'Rescan',
-		'icon': SessionManager.get_icon('modifiers'),
-	},
-])
 @onready var card_scene := SessionManager.get_layout_theme_scene('Tracks/card')
 @onready var placeholder_card_scene := SessionManager.get_layout_theme_scene('tracks_placeholder_card')
 const page_size:int = 50
@@ -78,10 +46,6 @@ func _ready() -> void:
 	sort_mode = SessionManager.track_sort_mode
 	ascend_mode = SessionManager.track_ascend_mode
 	sort()
-
-
-func _exit_tree() -> void:
-	card_context_menu.queue_free()
 
 
 func _process(_delta:float) -> void:
@@ -128,7 +92,7 @@ func sort(callback=null) -> void:
 
 func add_card(track:DBTrack, callback:Callable) -> void:
 	var card:Control = card_scene.instantiate()
-	card.init(track, card_context_menu)
+	card.init(track)
 	card.selected.connect(callback)
 	%Grid.add_child(card)
 

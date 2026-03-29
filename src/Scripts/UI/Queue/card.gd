@@ -1,16 +1,15 @@
 extends Control
 
-var context_menu: ContextMenu
+@onready var context_menu:ContextMenu = SessionManager.context_menus.queue_card
 var is_dragging:bool = false
 
 
 func _ready() -> void:
+	context_menu.id_pressed.connect(_context_menu_id_pressed)
 	highlight(false)
 
 
-func init(track:DBTrack, context_menu_:ContextMenu) -> void:
-	context_menu = context_menu_
-	context_menu.id_pressed.connect(_context_menu_id_pressed)
+func init(track:DBTrack) -> void:
 	%Name.text = track.name
 	%Artist.text = track.album.artist.name
 	%Length.text = DBTrack.get_track_position_formatted(track.length)

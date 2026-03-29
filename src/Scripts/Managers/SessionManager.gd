@@ -205,6 +205,67 @@ var layout_theme: String:
 
 var valid_layout_themes:Array[String] = ['Normal']
 
+#region context menues
+
+@onready var context_menus:Dictionary[String,ContextMenu] = {
+	'track_card': ContextMenu.new([
+		{
+			'type': 'button',
+			'text': 'Play (clear queue)',
+			'icon': SessionManager.get_icon('play'),
+		},
+		{
+			'type': 'button',
+			'text': 'Play Next',
+			'icon': SessionManager.get_icon('queue_play_next'),
+		},
+		{
+			'type': 'button',
+			'text': 'Add To Queue',
+			'icon': SessionManager.get_icon('queue_add_to_queue'),
+		},
+		{
+			'type': 'button',
+			'text': 'Show Album',
+			'icon': SessionManager.get_icon('folder'),
+		},
+		{
+			'type': 'button',
+			'text': 'Show In Files',
+			'icon': SessionManager.get_icon('folder'),
+		},
+		{
+			'type': 'button',
+			'text': 'Rescan',
+			'icon': SessionManager.get_icon('modifiers'),
+		},
+	]),
+	'queue_card': ContextMenu.new([
+		{
+			'type': 'button',
+			'text': 'Remove',
+			'icon': SessionManager.get_icon('remove'),
+		},
+		{
+			'type': 'button',
+			'text': 'Remove This Album',
+			'icon': SessionManager.get_icon('remove'),
+		},
+		{
+			'type': 'button',
+			'text': 'Remove This Artist',
+			'icon': SessionManager.get_icon('remove'),
+		},
+		{
+			'type': 'button',
+			'text': 'Show Album',
+			'icon': SessionManager.get_icon('folder'),
+		},
+	]),
+}
+
+#endregion
+
 
 func _ready() -> void:
 	default_window_size = get_window().size
