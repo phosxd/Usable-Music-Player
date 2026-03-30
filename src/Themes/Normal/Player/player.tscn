@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://tnbma5uvjto1"]
 
 [ext_resource type="Script" uid="uid://dsftqlnga24af" path="res://Scripts/UI/Player/player.gd" id="1_8fvqj"]
-[ext_resource type="PackedScene" uid="uid://ctrjekyy7gs7r" path="res://Elements/Bar Visualizer/bar_visualizer.tscn" id="2_oikmp"]
+[ext_resource type="Script" uid="uid://ctl5olurx2x3b" path="res://Elements/AudioVisualizerBar.gd" id="2_k76c7"]
 [ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Themes/Normal/Assets/Icons/skip_backward.svg" id="2_rmo75"]
 [ext_resource type="Script" uid="uid://bymkljeouoa2m" path="res://Themes/Normal/Player/h_box.gd" id="3_a3o2i"]
 [ext_resource type="Texture2D" uid="uid://doajyey54rgs2" path="res://Themes/Normal/Assets/Icons/scale_x2/non_favorite.svg" id="3_kemy3"]
@@ -74,11 +74,13 @@ grow_vertical = 2
 texture = SubResource("GradientTexture2D_oikmp")
 expand_mode = 1
 
-[node name="Bar Visualizer" parent="." unique_id=416864971 instance=ExtResource("2_oikmp")]
+[node name="Bar Visualizer" type="Control" parent="." unique_id=1199885428]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-mouse_behavior_recursive = 1
+script = ExtResource("2_k76c7")
+align_top = true
+metadata/_custom_type_script = "uid://ctl5olurx2x3b"
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=1314853469]
 layout_mode = 2

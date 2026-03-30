@@ -59,7 +59,7 @@ export/convert_text_resources_to_binary=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/A2J/plugin.cfg", "res://addons/ReorderableContainer/plugin.cfg", "res://addons/SmoothScroll/plugin.cfg", "res://addons/Tesseract/plugin.cfg", "res://addons/TextureRectRounded/plugin.cfg", "res://addons/tesseract/plugin.cfg")
+enabled=PackedStringArray("res://addons/A2J/plugin.cfg", "res://addons/ReorderableContainer/plugin.cfg", "res://addons/SmoothScroll/plugin.cfg", "res://addons/Tesseract/plugin.cfg", "res://addons/TextureRectRounded/plugin.cfg")
 
 [file_customization]
 

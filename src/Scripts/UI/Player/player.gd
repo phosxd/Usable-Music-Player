@@ -56,7 +56,7 @@ func update_visualizer(color:Color, _db:float=0) -> void:
 		%'Bar Visualizer'.show()
 		%Glow.position.y = -50
 		glow_gradient.set_color(0, Color(0,0,0,0.5))
-		%'Bar Visualizer'.color_1 = color
+		%'Bar Visualizer'.color = color
 	%Glow.texture.gradient = glow_gradient
 	#var color_2:Color = glow_gradient.get_color(1)
 	glow_gradient.set_color(1, Color(0,0,0,0))
