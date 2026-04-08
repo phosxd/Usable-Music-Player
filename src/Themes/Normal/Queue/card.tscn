@@ -80,7 +80,6 @@ metadata/_custom_type_script = "uid://b4ukv3a8is182"
 [node name="Sep 1" type="VSeparator" parent="Image Margin/HBox" unique_id=1768593009]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="Track Info" type="VBoxContainer" parent="Image Margin/HBox" unique_id=46995429]
@@ -111,7 +110,6 @@ text_overrun_behavior = 5
 [node name="Sep 2" type="VSeparator" parent="Image Margin/HBox" unique_id=898225209]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="Length" type="Label" parent="Image Margin/HBox" unique_id=369639375]

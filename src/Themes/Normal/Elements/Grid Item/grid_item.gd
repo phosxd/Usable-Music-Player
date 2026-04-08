@@ -12,7 +12,7 @@ signal alt_pressed
 @export var item_size := Vector2(175,175):
 	set(value):
 		item_size = value
-		%Shadow.custom_minimum_size = value
+		%Panel.custom_minimum_size = value
 		%Image.custom_minimum_size = value
 		%'Grid Image'.custom_minimum_size = value-Vector2(8,8)
 		%Button.custom_minimum_size = value

@@ -85,7 +85,7 @@ func add_card(album:DBAlbum, secondary_text:String) -> void:
 	var card:Control = card_scene.instantiate()
 	card.primary_text = album.name
 	card.secondary_text = secondary_text
-	card.images = Array([album.get_cover()], TYPE_OBJECT, 'Texture2D', Texture2D)
+	card.images = [album.get_cover()]
 	# Connect signal to card.
 	card.pressed.connect(_on_card_pressed.bind(album))
 	card.secondary_pressed.connect(_on_card_secondary_pressed.bind(album))

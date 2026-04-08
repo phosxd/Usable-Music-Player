@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c7hwlx4i6njlf"]
 
 [ext_resource type="Script" uid="uid://dh6g4vy4liksv" path="res://Themes/Normal/Elements/Grid Item/grid_item.gd" id="1_l7ro4"]
-[ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_c3rqa"]
+[ext_resource type="StyleBox" uid="uid://bxka1tnkmbc4i" path="res://Assets/grid_item_panel.tres" id="2_c3rqa"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_elf6b"]
 [ext_resource type="Script" uid="uid://d043648wabjl3" path="res://Elements/GridTextureRect.gd" id="4_d642b"]
 [ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="5_l7ro4"]
@@ -37,7 +37,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Shadow" type="Panel" parent="VBox/Center" unique_id=2098105743]
+[node name="Panel" type="Panel" parent="VBox/Center" unique_id=2098105743]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
