@@ -316,7 +316,17 @@ bg_color = Color(0.15, 0.15, 0.15, 1)
 corner_detail = 4
 anti_aliasing = false
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8nnl6"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g78ul"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0, 0, 0.09803922)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2pana"]
 
@@ -627,7 +637,7 @@ LineEdit/styles/read_only = SubResource("StyleBoxFlat_vto6c")
 Panel/styles/panel = SubResource("StyleBoxFlat_36d8i")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_qi3qu")
 PanelContainer2/base_type = &"PanelContainer"
-PanelContainer2/styles/panel = SubResource("StyleBoxEmpty_8nnl6")
+PanelContainer2/styles/panel = SubResource("StyleBoxFlat_g78ul")
 RichTextLabel/colors/default_color = Color(1, 1, 1, 0.75)
 RichTextLabel/colors/font_outline_color = Color(1, 1, 1, 0)
 RichTextLabel/colors/font_shadow_color = Color(1, 1, 1, 0)

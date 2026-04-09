@@ -75,7 +75,6 @@ func _init_smoothing() -> void:
 ## Sets [param _smoothing] to a usable value based on [param smoothing].
 func _init_frame_rate() -> void:
 	_update_time = 1.0 / (ProjectSettings.get_setting('application/run/max_fps') if frame_rate == -1 else frame_rate)
-	print(_update_time)
 
 
 ## Initialize the data.

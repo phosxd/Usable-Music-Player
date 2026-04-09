@@ -188,9 +188,9 @@ var layout_theme: String:
 		main_scene = tree.current_scene
 
 		# Call init script.
-		var init = Node.new()
 		var init_script_path:String = 'res://Themes/%s/init.gd' % value
 		if ResourceLoader.exists(init_script_path):
+			var init := Node.new()
 			init.set_script(load(init_script_path))
 			init.call('init')
 
@@ -273,10 +273,8 @@ func _ready() -> void:
 	
 	# Load themes.
 	for mod:TesseractMod in TesseractAPI.mod_instances.values():
-		if not mod.config.has_section('Theme'): continue
-		var theme_name = mod.config.get_value('Theme', 'name', '')
-		if theme_name is not String or theme_name.is_empty(): continue
-		valid_layout_themes.append(theme_name)
+		if mod.config.get_value('TesseractMod', 'type', '') != 'theme': continue
+		valid_layout_themes.append(mod.id)
 
 	load_session()
 	if layout_theme.is_empty(): layout_theme = 'Normal' # Set default layout theme if none set by session file.
