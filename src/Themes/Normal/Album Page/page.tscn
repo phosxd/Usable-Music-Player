@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c7gq1h6e80h5w" path="res://Scripts/UI/Album Page/album_page.gd" id="1_wngf1"]
 [ext_resource type="Shader" uid="uid://dvoc7ypde1coe" path="res://Assets/gradient.gdshader" id="2_xl2db"]
-[ext_resource type="StyleBox" uid="uid://bxka1tnkmbc4i" path="res://Assets/grid_item_panel.tres" id="3_5chmx"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="4_5r8o4"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="5_d17rs"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_ljtex"]
@@ -45,7 +44,7 @@ height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0ing"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3wno"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -129,14 +128,14 @@ theme_override_constants/margin_right = 14
 
 [node name="Panel" type="Panel" parent="VBox/Controls/VBox/HBox/Icon Margin" unique_id=1007525857]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("3_5chmx")
+theme_type_variation = &"GridItemPanel"
 
 [node name="Icon" type="PanelContainer" parent="VBox/Controls/VBox/HBox/Icon Margin" unique_id=2014446729]
 unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_y0ing")
+theme_override_styles/panel = SubResource("StyleBoxFlat_v3wno")
 script = ExtResource("4_5r8o4")
 texture = ExtResource("5_d17rs")
 expand_mode = 2

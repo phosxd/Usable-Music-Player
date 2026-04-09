@@ -73,11 +73,19 @@ var texture_rect = TextureRect.new()
 
 
 func _ready():
+	# Set corner radius from SessionManager.
+	if not Engine.is_editor_hint():
+		var px = SessionManager.theme_image_corner_radius
+		radius_bottom_left = px
+		radius_bottom_right = px
+		radius_top_left = px
+		radius_top_right = px
+
 	clip_children = CanvasItem.CLIP_CHILDREN_ONLY
-	
+
 	add_theme_stylebox_override("panel", stylebox)
 	_update_panel_values()
-	
+
 	texture_rect.expand_mode = expand_mode
 	texture_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(texture_rect)

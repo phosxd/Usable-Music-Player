@@ -200,7 +200,19 @@ var layout_theme: String:
 			get_tree().root.theme = load(theme_path)
 			MiniLog.info('Set theme to "$~%s~$".' % theme_path, SessionManager)
 
+		var mod = TesseractAPI.mod_instances.get(value)
+		if mod is TesseractMod:
+			var cfg_image_corner_radius = mod.config.get_value('Theme', 'image_corner_radius', 8)
+			if cfg_image_corner_radius is int: theme_image_corner_radius = cfg_image_corner_radius
+		else:
+			theme_image_corner_radius = 8
+
 		value_changed.emit('layout_theme')
+
+
+#region Theme Variables
+
+var theme_image_corner_radius:int = 8
 
 
 var valid_layout_themes:Array[String] = ['Normal']

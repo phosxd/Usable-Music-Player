@@ -1,14 +1,13 @@
 [gd_scene format=3 uid="uid://c7hwlx4i6njlf"]
 
 [ext_resource type="Script" uid="uid://dh6g4vy4liksv" path="res://Themes/Normal/Elements/Grid Item/grid_item.gd" id="1_l7ro4"]
-[ext_resource type="StyleBox" uid="uid://bxka1tnkmbc4i" path="res://Assets/grid_item_panel.tres" id="2_c3rqa"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_elf6b"]
 [ext_resource type="Script" uid="uid://d043648wabjl3" path="res://Elements/GridTextureRect.gd" id="4_d642b"]
 [ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="5_l7ro4"]
 [ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="6_c3rqa"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="6_y8yeu"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c3rqa"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7ro4"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -42,14 +41,14 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
 mouse_filter = 2
-theme_override_styles/panel = ExtResource("2_c3rqa")
+theme_type_variation = &"GridItemPanel"
 
 [node name="Image" type="PanelContainer" parent="VBox/Center" unique_id=143653234]
 unique_name_in_owner = true
 clip_children = 1
 custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_c3rqa")
+theme_override_styles/panel = SubResource("StyleBoxFlat_l7ro4")
 script = ExtResource("3_elf6b")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
