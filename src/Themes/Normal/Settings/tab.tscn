@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bufk41o60g01x" path="res://Scripts/UI/Settings/settings.gd" id="1_7d2l6"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_3fctb"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_1b3q6"]
+[ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Themes/Normal/Assets/Icons/folder.svg" id="7_pn7em"]
 [ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="9_yf2f5"]
 [ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Themes/Normal/Assets/Icons/remove.svg" id="10_6tlhg"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Themes/Normal/Assets/Icons/load.svg" id="11_yw38e"]
@@ -238,20 +239,30 @@ popup/item_1/id = 1
 popup/item_2/text = "Bar"
 popup/item_2/id = 2
 
-[node name="Layout Theme" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox" unique_id=1894780978]
+[node name="Theme" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox" unique_id=1894780978]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/UI/VBox/Layout Theme" unique_id=1782414603]
+[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/UI/VBox/Theme" unique_id=1782414603]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Layout Theme"
+text = "Theme"
 label_settings = ExtResource("9_yf2f5")
 
-[node name="Layout Theme" type="OptionButton" parent="MarginContainer/Scroll/VBox/UI/VBox/Layout Theme" unique_id=752043]
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Theme" unique_id=1495886338]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Theme" type="OptionButton" parent="MarginContainer/Scroll/VBox/UI/VBox/Theme/HBox" unique_id=752043]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+
+[node name="Open Themes Folder" type="Button" parent="MarginContainer/Scroll/VBox/UI/VBox/Theme/HBox" unique_id=760158453]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Open themes directory"
+icon = ExtResource("7_pn7em")
 
 [node name="Landing Page" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox" unique_id=420927628]
 layout_mode = 2
@@ -555,7 +566,8 @@ fit_content = true
 [connection signal="toggled" from="MarginContainer/Scroll/VBox/UI/VBox/Custom Accent/HBox/Custom Accent Toggle" to="." method="_on_custom_accent_toggle_toggled"]
 [connection signal="popup_closed" from="MarginContainer/Scroll/VBox/UI/VBox/Custom Accent/HBox/Custom Accent" to="." method="_on_custom_accent_popup_closed"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/UI/VBox/Visualizer Mode/Visualizer Mode" to="." method="_on_visualizer_mode_item_selected"]
-[connection signal="item_selected" from="MarginContainer/Scroll/VBox/UI/VBox/Layout Theme/Layout Theme" to="." method="_on_layout_theme_item_selected"]
+[connection signal="item_selected" from="MarginContainer/Scroll/VBox/UI/VBox/Theme/HBox/Theme" to="." method="_on_theme_item_selected"]
+[connection signal="pressed" from="MarginContainer/Scroll/VBox/UI/VBox/Theme/HBox/Open Themes Folder" to="." method="_on_open_themes_folder_pressed"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/UI/VBox/Landing Page/Landing Page" to="." method="_on_landing_page_item_selected"]
 [connection signal="value_changed" from="MarginContainer/Scroll/VBox/UI/VBox/UI Scale/HBox/UI Scale" to="." method="_on_ui_scale_value_changed"]
 [connection signal="value_changed" from="MarginContainer/Scroll/VBox/Process/VBox/Queue Size Limit/Queue Size Limit" to="." method="_on_queue_size_limit_value_changed"]

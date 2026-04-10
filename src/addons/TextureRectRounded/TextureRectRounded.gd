@@ -75,7 +75,7 @@ var texture_rect = TextureRect.new()
 func _ready():
 	# Set corner radius from SessionManager.
 	if not Engine.is_editor_hint():
-		var px = SessionManager.theme_image_corner_radius
+		var px = ThemeManager.image_corner_radius
 		radius_bottom_left = px
 		radius_bottom_right = px
 		radius_top_left = px

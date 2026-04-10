@@ -35,9 +35,9 @@ func _ready() -> void:
 	%'Custom Accent Toggle'.set_pressed_no_signal(SessionManager.custom_accent_enabled)
 	%'Custom Accent'.color = SessionManager.custom_accent
 	%'Visualizer Mode'.selected = SessionManager.visualizer_mode
-	for item in SessionManager.valid_layout_themes:
-		%'Layout Theme'.add_item(item)
-	%'Layout Theme'.selected = SessionManager.valid_layout_themes.find(SessionManager.layout_theme)
+	for item in ThemeManager.registered_themes:
+		%'Theme'.add_item(item.get('name',''))
+	%'Theme'.selected = ThemeManager.get_theme_index(SessionManager.theme)
 	%'Landing Page'.selected = landing_page_options.find(SessionManager.landing_page)
 	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.fetch_lyrics)
 	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.fetch_artist_cover)
@@ -88,8 +88,8 @@ func _on_visualizer_mode_item_selected(index:int) -> void:
 	SessionManager.visualizer_mode = index as SessionManager.VisualizerMode
 
 
-func _on_layout_theme_item_selected(index:int) -> void:
-	SessionManager.layout_theme = SessionManager.valid_layout_themes[index]
+func _on_theme_item_selected(index:int) -> void:
+	SessionManager.theme = ThemeManager.registered_themes[index].get('id','')
 
 
 func _on_landing_page_item_selected(index:int) -> void:
@@ -158,3 +158,7 @@ func _on_custom_accent_toggle_toggled(toggled_on:bool) -> void:
 
 func _on_custom_accent_popup_closed() -> void:
 	SessionManager.custom_accent = %'Custom Accent'.color
+
+
+func _on_open_themes_folder_pressed() -> void:
+	OS.shell_show_in_file_manager(ProjectSettings.globalize_path('user://THEMES/'))

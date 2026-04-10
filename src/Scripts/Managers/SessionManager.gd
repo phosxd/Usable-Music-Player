@@ -44,7 +44,7 @@ const property_data:Array[Array] = [
 	['track_sort_mode',[TYPE_INT]],
 	['track_ascend_mode',[TYPE_BOOL]],
 	# UI settings.
-	['layout_theme',[TYPE_STRING]],
+	['theme',[TYPE_STRING]],
 	['visualizer_mode',[TYPE_INT]],
 	['dynamic_accents',[TYPE_BOOL]],
 	['custom_accent',[TYPE_COLOR]],
@@ -177,45 +177,10 @@ var tracks_tab_scroll_value:float = 0
 
 #endregion
 
-
-var layout_theme: String:
+var theme:String = '':
 	set(value):
-		layout_theme = value
-
-		# Set main scene.
-		var tree:SceneTree = get_tree()
-		get_tree().change_scene_to_packed.call_deferred(get_layout_theme_scene('Main/main'))
-		main_scene = tree.current_scene
-
-		# Call init script.
-		var init_script_path:String = 'res://Themes/%s/init.gd' % value
-		if ResourceLoader.exists(init_script_path):
-			var init := Node.new()
-			init.set_script(load(init_script_path))
-			init.call('init')
-
-		# Set theme.
-		var theme_path:String = 'res://Themes/%s/theme.tres' % value
-		if ResourceLoader.exists(theme_path):
-			get_tree().root.theme = load(theme_path)
-			MiniLog.info('Set theme to "$~%s~$".' % theme_path, SessionManager)
-
-		var mod = TesseractAPI.mod_instances.get(value)
-		if mod is TesseractMod:
-			var cfg_image_corner_radius = mod.config.get_value('Theme', 'image_corner_radius', 8)
-			if cfg_image_corner_radius is int: theme_image_corner_radius = cfg_image_corner_radius
-		else:
-			theme_image_corner_radius = 8
-
-		value_changed.emit('layout_theme')
-
-
-#region Theme Variables
-
-var theme_image_corner_radius:int = 8
-
-
-var valid_layout_themes:Array[String] = ['Normal']
+		theme = value
+		ThemeManager.set_theme(value)
 
 #region context menues
 
@@ -282,21 +247,16 @@ var valid_layout_themes:Array[String] = ['Normal']
 func _ready() -> void:
 	default_window_size = get_window().size
 	current_window_size = default_window_size
-	
-	# Load themes.
-	for mod:TesseractMod in TesseractAPI.mod_instances.values():
-		if mod.config.get_value('TesseractMod', 'type', '') != 'theme': continue
-		valid_layout_themes.append(mod.id)
 
 	load_session()
-	if layout_theme.is_empty(): layout_theme = 'Normal' # Set default layout theme if none set by session file.
+	if theme.is_empty(): theme = 'UMP_DEFAULT' # Set default layout theme if none set by session file.
 
 
 ## Get the scene at [param scene_name] for the current theme or [param theme_override].
 func get_layout_theme_scene(scene_name:String, theme_override:String='', recurse:int=0) -> PackedScene:
 	if recurse > 1: return null
 	var theme_: String
-	if theme_override.is_empty(): theme_ = layout_theme
+	if theme_override.is_empty(): theme_ = theme
 	else: theme_ = theme_override
 
 	var scene
@@ -310,7 +270,7 @@ func get_layout_theme_scene(scene_name:String, theme_override:String='', recurse
 func get_icon(icon_name:String, theme_override:String='', recurse:int=0) -> Texture2D:
 	if recurse > 1: return null
 	var theme_: String
-	if theme_override.is_empty(): theme_ = layout_theme
+	if theme_override.is_empty(): theme_ = theme
 	else: theme_ = theme_override
 
 	var icon
