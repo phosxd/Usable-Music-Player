@@ -35,10 +35,17 @@ func _ready() -> void:
 	%'Custom Accent Toggle'.set_pressed_no_signal(SessionManager.custom_accent_enabled)
 	%'Custom Accent'.color = SessionManager.custom_accent
 	%'Visualizer Mode'.selected = SessionManager.visualizer_mode
-	for item in ThemeManager.registered_themes:
+	for item:Dictionary in ThemeManager.registered_themes:
 		%'Theme'.add_item(item.get('name',''))
 	%'Theme'.selected = ThemeManager.get_theme_index(SessionManager.theme)
+	for item:Dictionary in ThemeManager.modes:
+		%'Theme Mode'.add_item(item.get('@mode_name',''))
+	%'Theme Mode'.selected = ThemeManager.mode
 	%'Landing Page'.selected = landing_page_options.find(SessionManager.landing_page)
+	%'Grid Item Size'.set_value_no_signal(SessionManager.grid_item_size)
+	%'Panel Tint'.color = SessionManager.panel_tint
+	%'Button Tint'.color = SessionManager.button_tint
+	# ---
 	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.fetch_lyrics)
 	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.fetch_artist_cover)
 	%'Queue Size Limit'.set_value_no_signal(SessionManager.queue_size_limit)
@@ -90,6 +97,10 @@ func _on_visualizer_mode_item_selected(index:int) -> void:
 
 func _on_theme_item_selected(index:int) -> void:
 	SessionManager.theme = ThemeManager.registered_themes[index].get('id','')
+
+
+func _on_theme_mode_item_selected(index:int) -> void:
+	SessionManager.theme_mode = index
 
 
 func _on_landing_page_item_selected(index:int) -> void:
@@ -162,3 +173,37 @@ func _on_custom_accent_popup_closed() -> void:
 
 func _on_open_themes_folder_pressed() -> void:
 	OS.shell_show_in_file_manager(ProjectSettings.globalize_path('user://THEMES/'))
+
+
+func _on_grid_item_size_value_changed(value:float) -> void:
+	SessionManager.grid_item_size = value
+
+
+func _on_grid_item_size_small_pressed() -> void:
+	%'Grid Item Size'.value = 125
+
+
+func _on_grid_item_size_normal_pressed() -> void:
+	%'Grid Item Size'.value = 175
+
+
+func _on_grid_item_size_large_pressed() -> void:
+	%'Grid Item Size'.value = 230
+
+
+func _on_panel_tint_popup_closed() -> void:
+	SessionManager.panel_tint = %'Panel Tint'.color
+
+
+func _on_panel_tint_preset_color_pressed(color:Color) -> void:
+	%'Panel Tint'.color = color
+	_on_panel_tint_popup_closed()
+
+
+func _on_button_tint_popup_closed() -> void:
+	SessionManager.button_tint = %'Button Tint'.color
+
+
+func _on_button_tint_preset_color_pressed(color:Color) -> void:
+	%'Button Tint'.color = color
+	_on_button_tint_popup_closed()

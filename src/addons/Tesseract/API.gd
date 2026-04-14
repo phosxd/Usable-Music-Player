@@ -295,6 +295,7 @@ func _is_script_compliant(mod_id:String, script:Script, blocked_keywords:Array, 
 
 func _load_into_mod(file_path:String, mod_path:String, mod_instance:TesseractMod, cfg:Dictionary, requested_by:String='') -> void:
 	var relative_path:String = file_path.trim_prefix(mod_path+'/')
+	print(relative_path)
 	if relative_path in ['INIT.gd','MOD.cfg']: return
 	if relative_path in mod_instance.resources: return
 	# Get path to put the resource.

@@ -1,18 +1,14 @@
-[gd_scene format=3 uid="uid://dk2dr0g8mm5n0"]
+[gd_scene format=3 uid="uid://4hlv0qpe30h8"]
 
-[ext_resource type="Script" uid="uid://buxni7m08ammp" path="res://Elements/Clickable Label/clickable_label.gd" id="1_4dgfr"]
+[ext_resource type="Script" uid="uid://covmlxkgk455s" path="res://Elements/Clickable Label/fit_clickable_label.gd" id="1_lh505"]
 
-[node name="Clickable Label" type="Label" unique_id=732696473]
+[node name="Clickable Label" type="Label" unique_id=1107486296]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 23.0
 grow_horizontal = 2
-script = ExtResource("1_4dgfr")
-clip_on_squish = true
-clip_indicator = 0
-automatic = true
-fade_out_color = Color(0, 0, 0, 1)
-fade_distance = 16
+script = ExtResource("1_lh505")
+metadata/_custom_type_script = "uid://csk6h7g61d0qh"
 
 [node name="Button" type="Button" parent="." unique_id=1604203953]
 layout_mode = 1

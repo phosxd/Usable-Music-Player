@@ -1,7 +1,11 @@
 extends Control
 
-const overlay_color := Color(0.25, 0.25, 0.25, 0.5)
 const console_scene := preload('res://Scenes/Console/Console.tscn')
+
+@export var bg_color := Color(0.18, 0.18, 0.18, 1.0):
+	set(value):
+		bg_color = value
+		%Background.color = value
 
 @onready var general_options_popup:PopupMenu = %'General Options'.get_popup()
 @onready var tabs:Dictionary[String,Array] = {
@@ -54,8 +58,8 @@ func update_accents() -> void:
 		album_dominant_color = DisplayServer.get_accent_color()
 	if prev_album_dominant_color == album_dominant_color: return
 
-	var tinted_dominant_color:Color = album_dominant_color.lerp(Color.WHITE, 0.75)
-	var dark_tinted_dominant_color:Color = album_dominant_color.lerp(Color.WHITE, 0.4)
+	var tinted_dominant_color:Color = album_dominant_color.lerp(Color.WHITE, 0.25)
+	var dark_tinted_dominant_color:Color = album_dominant_color.lerp(Color.WHITE, 0.1)
 	var global_theme := get_tree().root.theme
 	if not global_theme: return
 	global_theme.set_color('icon_normal_color', 'AccentButton', dark_tinted_dominant_color)

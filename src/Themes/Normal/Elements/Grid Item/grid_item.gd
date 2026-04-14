@@ -49,6 +49,10 @@ signal alt_pressed
 		%'Label 2'.enabled = not secondary_text.is_empty()
 
 
+func _ready() -> void:
+	item_size = Vector2.ONE*SessionManager.grid_item_size
+
+
 func _on_button_pressed() -> void:
 	pressed.emit()
 

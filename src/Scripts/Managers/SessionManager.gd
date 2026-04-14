@@ -45,11 +45,15 @@ const property_data:Array[Array] = [
 	['track_ascend_mode',[TYPE_BOOL]],
 	# UI settings.
 	['theme',[TYPE_STRING]],
+	['theme_mode',[TYPE_INT]],
 	['visualizer_mode',[TYPE_INT]],
 	['dynamic_accents',[TYPE_BOOL]],
 	['custom_accent',[TYPE_COLOR]],
 	['custom_accent_enabled',[TYPE_BOOL]],
 	['landing_page',[TYPE_STRING]],
+	['grid_item_size',[TYPE_FLOAT]],
+	['panel_tint',[TYPE_COLOR]],
+	['button_tint',[TYPE_COLOR]],
 ]
 
 ## Emitted when the session has been loaded.
@@ -181,6 +185,23 @@ var theme:String = '':
 	set(value):
 		theme = value
 		ThemeManager.set_theme(value)
+
+var theme_mode:int = 0:
+	set(value):
+		theme_mode = value
+		ThemeManager.set_theme_mode(value)
+
+var grid_item_size:float = 175
+
+var panel_tint := Color.TRANSPARENT:
+	set(value):
+		panel_tint = value
+		ThemeManager.panel_tint = value
+
+var button_tint := Color.TRANSPARENT:
+	set(value):
+		button_tint = value
+		ThemeManager.button_tint = value
 
 #region context menues
 

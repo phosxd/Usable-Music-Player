@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://dsibuplor3qi1"]
+
+[ext_resource type="Script" uid="uid://brt1eo1g55v" path="res://Themes/Normal/Elements/Preset Color Button/preset_color_button.gd" id="1_ikqpn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ikqpn"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 280
+corner_radius_top_right = 280
+corner_radius_bottom_right = 280
+corner_radius_bottom_left = 280
+
+[node name="Preset Color Button" type="Button" unique_id=1904055786]
+text = "   "
+script = ExtResource("1_ikqpn")
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=1684334381]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Center" type="CenterContainer" parent="Margin" unique_id=427505563]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="Margin/Center" unique_id=1493396981]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_ikqpn")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

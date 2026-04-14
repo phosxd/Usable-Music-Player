@@ -26,6 +26,8 @@ func init(db_track:DBTrack) -> void:
 	%Name.text = track.name
 	if track.number == 0: %'Track Number'.hide()
 	else: %'Track Number'.text = '%s' % (track.number)
+	%Artist.text = track.actual_artist
+	%Album.text = track.album.name
 	%Length.text = DBTrack.get_track_position_formatted(track.length)
 	%Format.text = '.%s' % track.path.split('.')[-1].to_lower()
 	%Image.texture = track.album.get_cover() if track.album else DBAlbum.default_cover
@@ -35,11 +37,11 @@ func init(db_track:DBTrack) -> void:
 func set_mode(mode:CardMode) -> void:
 	selected_mode = mode
 	if mode == CardMode.detailed:
-		%Artist.text = '%s - by %s' % [track.album.name, track.actual_artist]
+		%Album.show()
 		%Image.show()
 		%'Image Sep'.hide()
 	if mode == CardMode.minimal:
-		%Artist.text = '%s' % [track.actual_artist]
+		%Album.hide()
 		%Image.hide()
 		%'Image Sep'.show()
 
@@ -87,3 +89,11 @@ func _on_button_gui_input(event:InputEvent) -> void:
 
 func _on_options_toggled(toggled_on:bool) -> void:
 	if toggled_on: context_menu.show(name)
+
+
+func _on_artist_pressed() -> void:
+	SessionManager.main_scene.set_tab('artist_page', track.album.artist)
+
+
+func _on_album_pressed() -> void:
+	SessionManager.main_scene.set_tab('album_page', track.album)

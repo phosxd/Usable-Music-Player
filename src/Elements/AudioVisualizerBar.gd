@@ -64,7 +64,7 @@ func _draw() -> void:
 			bar_width-2,
 			-MathUtils.transfer_range_of_value(Vector2(0,1), Vector2(0,size.y), height),
 		)
-		draw_rect(rect, color)
+		if self.visible: draw_rect(rect, color)
 
 
 ## Sets [param _smoothing] to a usable value based on [param smoothing].
@@ -72,7 +72,7 @@ func _init_smoothing() -> void:
 	_smoothing = MathUtils.transfer_range_of_value(Vector2(0,1), Vector2(1,0), smoothing)
 
 
-## Sets [param _smoothing] to a usable value based on [param smoothing].
+## Sets [param _update_time] to a usable value based on [param frame_rate].
 func _init_frame_rate() -> void:
 	_update_time = 1.0 / (ProjectSettings.get_setting('application/run/max_fps') if frame_rate == -1 else frame_rate)
 

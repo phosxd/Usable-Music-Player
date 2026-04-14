@@ -3,15 +3,15 @@
 [ext_resource type="Script" uid="uid://dsftqlnga24af" path="res://Scripts/UI/Player/player.gd" id="1_8fvqj"]
 [ext_resource type="Script" uid="uid://ctl5olurx2x3b" path="res://Elements/AudioVisualizerBar.gd" id="2_k76c7"]
 [ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Themes/Normal/Assets/Icons/skip_backward.svg" id="2_rmo75"]
-[ext_resource type="Script" uid="uid://bymkljeouoa2m" path="res://Themes/Normal/Player/h_box.gd" id="3_a3o2i"]
+[ext_resource type="Script" uid="uid://bjisaiqko2bpt" path="res://Elements/FitLabel Nodes/FLMHBoxContainer.gd" id="3_k76c7"]
 [ext_resource type="Texture2D" uid="uid://doajyey54rgs2" path="res://Themes/Normal/Assets/Icons/scale_x2/non_favorite.svg" id="3_kemy3"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="3_on5bc"]
 [ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="3_rmo75"]
-[ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="3_saahk"]
 [ext_resource type="Texture2D" uid="uid://by3qxgtdgkogn" path="res://Themes/Normal/Assets/Icons/favorite.svg" id="4_a3o2i"]
 [ext_resource type="LabelSettings" uid="uid://6ya8wrmwclpp" path="res://Assets/header_label_small.tres" id="4_saahk"]
 [ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Themes/Normal/Assets/Icons/skip_forward.svg" id="4_ucxa4"]
 [ext_resource type="Texture2D" uid="uid://bkkmi7knca7st" path="res://Themes/Normal/Assets/Icons/audio.svg" id="6_5infn"]
+[ext_resource type="PackedScene" uid="uid://4hlv0qpe30h8" path="res://Elements/Clickable Label/Fit Clickable Label.tscn" id="6_836g3"]
 [ext_resource type="Texture2D" uid="uid://1atpjvnl4kp" path="res://Themes/Normal/Assets/Icons/scale_x2/shuffle.svg" id="7_5infn"]
 [ext_resource type="Texture2D" uid="uid://cxhba62sfdahy" path="res://Themes/Normal/Assets/Icons/scale_x2/queue.svg" id="7_on5bc"]
 [ext_resource type="Texture2D" uid="uid://n2y028woywe1" path="res://Themes/Normal/Assets/Icons/scale_x2/loop.svg" id="8_yqmis"]
@@ -39,14 +39,6 @@ content_margin_bottom = 8.0
 bg_color = Color(0, 0, 0, 0.19607843)
 anti_aliasing = false
 
-[sub_resource type="Gradient" id="Gradient_a3o2i"]
-colors = PackedColorArray(0.15, 0.15, 0.15, 0, 0.14901961, 0.14901961, 0.14901961, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_k76c7"]
-gradient = SubResource("Gradient_a3o2i")
-width = 20
-height = 10
-
 [node name="Player" type="PanelContainer" unique_id=110111644]
 anchors_preset = 10
 anchor_right = 1.0
@@ -56,6 +48,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_74mp2")
 script = ExtResource("1_8fvqj")
 
 [node name="Glow Container" type="Control" parent="." unique_id=1188943884]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
@@ -104,12 +97,20 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 theme_override_styles/panel = SubResource("StyleBoxFlat_8fvqj")
 
-[node name="HBox" type="HBoxContainer" parent="Panel/VBox/GridContainer/Track Info/Track Info" unique_id=1794297873]
+[node name="Details HBox" type="HBoxContainer" parent="Panel/VBox/GridContainer/Track Info/Track Info" unique_id=476663422]
+unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-script = ExtResource("3_a3o2i")
+script = ExtResource("3_k76c7")
+update_order = 1
+update_on_parent_resized = true
+update_on_parent_minimum_size_changed = false
+monitor_rate = 0.0
+update_on_text_changed = false
+update_on_label_settings_changed = false
+metadata/_custom_type_script = "uid://bjisaiqko2bpt"
 
-[node name="Favorite" type="TextureButton" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=864543401]
+[node name="Favorite" type="TextureButton" parent="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox" unique_id=864543401]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(18, 18)
 layout_mode = 2
@@ -121,48 +122,41 @@ texture_pressed = ExtResource("4_a3o2i")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Sep 4" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=731579475]
+[node name="Sep 4" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox" unique_id=731579475]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="Track Name" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1086494808 instance=ExtResource("3_saahk")]
+[node name="Track Name" parent="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox" unique_id=1107486296 instance=ExtResource("6_836g3")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(74, 0)
 layout_mode = 2
 text = "No track"
 label_settings = ExtResource("4_saahk")
+text_overrun_behavior = 1
 
-[node name="Title Fade" type="TextureRect" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Track Name" unique_id=463663429]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -10.0
-grow_horizontal = 0
-grow_vertical = 2
-texture = SubResource("GradientTexture2D_k76c7")
-
-[node name="Sep 3" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=175285363]
+[node name="Sep 3" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox" unique_id=175285363]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Artist Name" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=1455146447 instance=ExtResource("3_saahk")]
+[node name="Artist Name" parent="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox" unique_id=347549754 instance=ExtResource("6_836g3")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(67.625, 0)
 layout_mode = 2
 text = "No artist"
 label_settings = ExtResource("3_rmo75")
+text_overrun_behavior = 1
 
-[node name="Sep 2" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=495887998]
+[node name="Sep 2" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox" unique_id=495887998]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Track Length" type="Label" parent="Panel/VBox/GridContainer/Track Info/Track Info/HBox" unique_id=563463115]
+[node name="Track Length" type="Label" parent="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox" unique_id=1047623048]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 8
 text = "0:00 / 0:00"
 
@@ -325,8 +319,8 @@ step = 0.001
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[connection signal="pressed" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Track Name" to="." method="_on_track_name_pressed"]
-[connection signal="pressed" from="Panel/VBox/GridContainer/Track Info/Track Info/HBox/Artist Name" to="." method="_on_artist_name_pressed"]
+[connection signal="pressed" from="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox/Track Name" to="." method="_on_track_name_pressed"]
+[connection signal="pressed" from="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox/Artist Name" to="." method="_on_artist_name_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Skip Backward" to="." method="_on_skip_backward_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Play Pause" to="." method="_on_play_pause_pressed"]
 [connection signal="pressed" from="Panel/VBox/GridContainer/Controls/Controls/Skip Forward" to="." method="_on_skip_forward_pressed"]
