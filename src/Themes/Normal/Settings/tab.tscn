@@ -181,36 +181,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
 
-[node name="Custom Accent" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox" unique_id=187814530]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/UI/VBox/Custom Accent" unique_id=1290129941]
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "When enabled, UI elements will change to the specified color.
-
-Will not work with dynamic accent enabled."
-mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
-text = "Custom Accent"
-
-[node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Custom Accent" unique_id=2067191583]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Custom Accent Toggle" type="CheckButton" parent="MarginContainer/Scroll/VBox/UI/VBox/Custom Accent/HBox" unique_id=925533843]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Custom Accent" type="ColorPickerButton" parent="MarginContainer/Scroll/VBox/UI/VBox/Custom Accent/HBox" unique_id=1229575694]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "        "
-color = Color(0.851769, 0.8517689, 0.85176885, 1)
-edit_alpha = false
-edit_intensity = false
-
 [node name="Visualizer Mode" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox" unique_id=699538138]
 layout_mode = 2
 
@@ -314,11 +284,9 @@ text = "100%"
 
 [node name="Advanced Tweaks" type="FoldableContainer" parent="MarginContainer/Scroll/VBox/UI/VBox" unique_id=2109878329]
 layout_mode = 2
-folded = true
 title = "Advanced Tweaks"
 
 [node name="Margin" type="MarginContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks" unique_id=2079275433]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 8
 
@@ -360,6 +328,36 @@ text = "Medium"
 [node name="Grid Item Size Large" type="Button" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Grid Item Size/HBox" unique_id=150074770]
 layout_mode = 2
 text = "Large"
+
+[node name="Custom Accent" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox" unique_id=187814530]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Custom Accent" unique_id=1290129941]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "When enabled, UI elements will change to the specified color.
+
+Will not work with dynamic accent enabled."
+mouse_filter = 1
+theme_type_variation = &"PrimaryLabel"
+text = "Custom Accent"
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Custom Accent" unique_id=2067191583]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Custom Accent Toggle" type="CheckButton" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Custom Accent/HBox" unique_id=925533843]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Custom Accent" type="ColorPickerButton" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Custom Accent/HBox" unique_id=1229575694]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "        "
+color = Color(0.851769, 0.8517689, 0.85176885, 1)
+edit_alpha = false
+edit_intensity = false
 
 [node name="Panel Tint" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox" unique_id=914763435]
 layout_mode = 2
@@ -736,8 +734,6 @@ fit_content = true
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Library/VBox/Library/HBox/Rescan Library" to="." method="_on_rescan_library_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Library/VBox/Library/HBox/Select Library" to="." method="_on_select_library_pressed"]
 [connection signal="toggled" from="MarginContainer/Scroll/VBox/UI/VBox/Dynamic Accent/Dynamic Accents" to="." method="_on_dynamic_accents_toggled"]
-[connection signal="toggled" from="MarginContainer/Scroll/VBox/UI/VBox/Custom Accent/HBox/Custom Accent Toggle" to="." method="_on_custom_accent_toggle_toggled"]
-[connection signal="popup_closed" from="MarginContainer/Scroll/VBox/UI/VBox/Custom Accent/HBox/Custom Accent" to="." method="_on_custom_accent_popup_closed"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/UI/VBox/Visualizer Mode/Visualizer Mode" to="." method="_on_visualizer_mode_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/UI/VBox/Theme/HBox/Theme" to="." method="_on_theme_item_selected"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/UI/VBox/Theme/HBox/Open Themes Folder" to="." method="_on_open_themes_folder_pressed"]
@@ -747,6 +743,8 @@ fit_content = true
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Grid Item Size/HBox/Grid Item Size Small" to="." method="_on_grid_item_size_small_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Grid Item Size/HBox/Grid Item Size Normal" to="." method="_on_grid_item_size_normal_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Grid Item Size/HBox/Grid Item Size Large" to="." method="_on_grid_item_size_large_pressed"]
+[connection signal="toggled" from="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Custom Accent/HBox/Custom Accent Toggle" to="." method="_on_custom_accent_toggle_toggled"]
+[connection signal="popup_closed" from="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Custom Accent/HBox/Custom Accent" to="." method="_on_custom_accent_popup_closed"]
 [connection signal="popup_closed" from="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint/HBox/Panel Tint" to="." method="_on_panel_tint_popup_closed"]
 [connection signal="color_pressed" from="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint/HBox/Preset 0" to="." method="_on_panel_tint_preset_color_pressed"]
 [connection signal="color_pressed" from="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint/HBox/Preset 1" to="." method="_on_panel_tint_preset_color_pressed"]
