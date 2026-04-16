@@ -13,3 +13,16 @@
 
 - Build GDExtension for dedicated audio playback & metadata.
   This is to address the problems of needing to use a bundled Python executable for metadata & FLACs not supporting multi-channel.
+
+
+Color themes:
+
+Midnight Pulse:
+	Accent: ff5252
+	Panel Tint: 0043ff0d
+	Button Tint: 0031ff0a
+
+Midnight Clouds:
+	Accent: 7489b3
+	Panel Tint: 0043ff0d
+	Button Tint: 0031ff0a

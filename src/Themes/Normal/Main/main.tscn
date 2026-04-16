@@ -103,22 +103,23 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="Sidebar VBox" type="VBoxContainer" parent="Global Margin/VBox/HBox" unique_id=628331708]
+[node name="Sidebar" type="VBoxContainer" parent="Global Margin/VBox/HBox" unique_id=628331708]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Tools Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Sidebar VBox" unique_id=1550721455]
+[node name="Tools Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Sidebar" unique_id=1550721455]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Tools" type="PanelContainer" parent="Global Margin/VBox/HBox/Sidebar VBox/Tools Margin" unique_id=21195273]
+[node name="Tools" type="PanelContainer" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin" unique_id=21195273]
 layout_mode = 2
 theme_type_variation = &"ToolsIslandPanelContainer"
 
-[node name="HBox" type="HBoxContainer" parent="Global Margin/VBox/HBox/Sidebar VBox/Tools Margin/Tools" unique_id=1840235616]
+[node name="HBox" type="HBoxContainer" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools" unique_id=1840235616]
 layout_mode = 2
 
-[node name="Tab Button Settings" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Tools Margin/Tools/HBox" unique_id=2144540982]
+[node name="Tab Button Settings" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox" unique_id=2144540982]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -129,7 +130,7 @@ text = " "
 icon = ExtResource("2_hryqi")
 icon_alignment = 1
 
-[node name="Import" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Tools Margin/Tools/HBox" unique_id=216821876]
+[node name="Import" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox" unique_id=216821876]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -139,7 +140,7 @@ disabled = true
 icon = ExtResource("3_hfg1r")
 icon_alignment = 1
 
-[node name="Customize" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Tools Margin/Tools/HBox" unique_id=1381731172]
+[node name="Customize" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox" unique_id=1381731172]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -149,7 +150,7 @@ disabled = true
 icon = ExtResource("5_vk4q2")
 icon_alignment = 1
 
-[node name="General Options" type="MenuButton" parent="Global Margin/VBox/HBox/Sidebar VBox/Tools Margin/Tools/HBox" unique_id=167496477]
+[node name="General Options" type="MenuButton" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox" unique_id=167496477]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -164,21 +165,21 @@ popup/item_0/id = 0
 popup/item_1/text = "Console"
 popup/item_1/id = 1
 
-[node name="Sidebar Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Sidebar VBox" unique_id=66888657]
+[node name="Sidebar Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Sidebar" unique_id=66888657]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Sidebar" type="PanelContainer" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin" unique_id=1774174444]
+[node name="Sidebar Panel" type="PanelContainer" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin" unique_id=1774174444]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBox" type="VBoxContainer" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar" unique_id=1444570615]
+[node name="VBox" type="VBoxContainer" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel" unique_id=1444570615]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Tab Button Artists" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox" unique_id=1763016178 groups=["Tab Button"]]
+[node name="Tab Button Artists" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1763016178 groups=["Tab Button"]]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"AccentButton"
@@ -187,7 +188,7 @@ text = "Artists"
 icon = ExtResource("2_xlvfx")
 alignment = 0
 
-[node name="Tab Button Albums" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox" unique_id=1427389950 groups=["Tab Button"]]
+[node name="Tab Button Albums" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1427389950 groups=["Tab Button"]]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"AccentButton"
@@ -196,7 +197,7 @@ text = "Albums"
 icon = ExtResource("3_y3v7k")
 alignment = 0
 
-[node name="Tab Button Tracks" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox" unique_id=1047248625 groups=["Tab Button"]]
+[node name="Tab Button Tracks" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1047248625 groups=["Tab Button"]]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"AccentButton"
@@ -205,7 +206,7 @@ text = "Tracks"
 icon = ExtResource("1_1r6ip")
 alignment = 0
 
-[node name="Tab Button Music Videos" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox" unique_id=1915086436 groups=["Tab Button"]]
+[node name="Tab Button Music Videos" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1915086436 groups=["Tab Button"]]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -215,7 +216,7 @@ text = "Music Videos"
 icon = ExtResource("9_2ok46")
 alignment = 0
 
-[node name="Tab Button Genres" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox" unique_id=1082185498 groups=["Tab Button"]]
+[node name="Tab Button Genres" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1082185498 groups=["Tab Button"]]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"AccentButton"
@@ -224,7 +225,7 @@ text = "Genres"
 icon = ExtResource("10_2ok46")
 alignment = 0
 
-[node name="Favorites" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox" unique_id=1562961380]
+[node name="Favorites" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1562961380]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"AccentButton"
@@ -233,33 +234,33 @@ text = "Favorites"
 icon = ExtResource("11_bb5d1")
 alignment = 0
 
-[node name="Favorites Options" type="VBoxContainer" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox" unique_id=279614353]
+[node name="Favorites Options" type="VBoxContainer" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=279614353]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[node name="Button" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Favorites Options" unique_id=1077204144]
+[node name="Button" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Favorites Options" unique_id=1077204144]
 layout_mode = 2
 theme_type_variation = &"SoftButton"
 text = "Tracks"
 alignment = 0
 
-[node name="Button2" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Favorites Options" unique_id=148144439]
+[node name="Button2" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Favorites Options" unique_id=148144439]
 layout_mode = 2
 theme_type_variation = &"SoftButton"
 text = "Albums"
 alignment = 0
 
-[node name="Button3" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Favorites Options" unique_id=29669219]
+[node name="Button3" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Favorites Options" unique_id=29669219]
 layout_mode = 2
 theme_type_variation = &"SoftButton"
 text = "Artists"
 alignment = 0
 
-[node name="Sep 1" type="HSeparator" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox" unique_id=894733907]
+[node name="Sep 1" type="HSeparator" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=894733907]
 layout_mode = 2
 
-[node name="Add Playlist" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox" unique_id=163145109]
+[node name="Add Playlist" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=163145109]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Add playlist"
@@ -270,7 +271,7 @@ icon = ExtResource("6_imbg2")
 icon_alignment = 1
 metadata/_smooth_scroll_default_mouse_filter_set = true
 
-[node name="Playlists Scroll" type="ScrollContainer" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox" unique_id=1677478848]
+[node name="Playlists Scroll" type="ScrollContainer" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1677478848]
 layout_direction = 3
 layout_mode = 2
 size_flags_vertical = 3
@@ -281,7 +282,7 @@ wheel_scroll_damper = SubResource("Resource_eqlsm")
 dragging_scroll_damper = SubResource("Resource_lj0cr")
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="Playlists" type="VBoxContainer" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Playlists Scroll" unique_id=1774428216]
+[node name="Playlists" type="VBoxContainer" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Playlists Scroll" unique_id=1774428216]
 unique_name_in_owner = true
 layout_direction = 3
 layout_mode = 2
@@ -289,22 +290,22 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_smooth_scroll_default_mouse_filter_set = true
 
-[node name="Indexing Status" type="HBoxContainer" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox" unique_id=1161764509]
+[node name="Indexing Status" type="HBoxContainer" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1161764509]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 script = ExtResource("13_hto8k")
 
-[node name="Sep 1" type="VSeparator" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Indexing Status" unique_id=1841056331]
+[node name="Sep 1" type="VSeparator" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Indexing Status" unique_id=1841056331]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Icon Contrainer" type="Control" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Indexing Status" unique_id=1025760383]
+[node name="Icon Contrainer" type="Control" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Indexing Status" unique_id=1025760383]
 custom_minimum_size = Vector2(12, 12)
 layout_mode = 2
 
-[node name="Icon" type="TextureRect" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Indexing Status/Icon Contrainer" unique_id=1507882268]
+[node name="Icon" type="TextureRect" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Indexing Status/Icon Contrainer" unique_id=1507882268]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -316,12 +317,12 @@ texture = ExtResource("15_wbs4r")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Sep 2" type="VSeparator" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Indexing Status" unique_id=1090551411]
+[node name="Sep 2" type="VSeparator" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Indexing Status" unique_id=1090551411]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Indexing Label" type="Label" parent="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Indexing Status" unique_id=550201511]
+[node name="Indexing Label" type="Label" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Indexing Status" unique_id=550201511]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -331,19 +332,19 @@ label_settings = ExtResource("15_jo7x3")
 clip_text = true
 text_overrun_behavior = 5
 
-[node name="Cover Art Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Sidebar VBox" unique_id=21399878]
+[node name="Cover Art Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Sidebar" unique_id=21399878]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Panel" type="PanelContainer" parent="Global Margin/VBox/HBox/Sidebar VBox/Cover Art Margin" unique_id=849077960]
+[node name="Panel" type="PanelContainer" parent="Global Margin/VBox/HBox/Sidebar/Cover Art Margin" unique_id=849077960]
 layout_mode = 2
 
-[node name="Current Track Cover Container" type="CenterContainer" parent="Global Margin/VBox/HBox/Sidebar VBox/Cover Art Margin/Panel" unique_id=1146409671]
+[node name="Current Track Cover Container" type="CenterContainer" parent="Global Margin/VBox/HBox/Sidebar/Cover Art Margin/Panel" unique_id=1146409671]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="Current Track Cover" type="PanelContainer" parent="Global Margin/VBox/HBox/Sidebar VBox/Cover Art Margin/Panel/Current Track Cover Container" unique_id=828797786]
+[node name="Current Track Cover" type="PanelContainer" parent="Global Margin/VBox/HBox/Sidebar/Cover Art Margin/Panel/Current Track Cover Container" unique_id=828797786]
 unique_name_in_owner = true
 clip_children = 1
 custom_minimum_size = Vector2(150, 150)
@@ -357,7 +358,7 @@ texture = ExtResource("9_hfg1r")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
 
-[node name="Tab Button Immersive Player" type="Button" parent="Global Margin/VBox/HBox/Sidebar VBox/Cover Art Margin/Panel/Current Track Cover Container" unique_id=1246569638]
+[node name="Tab Button Immersive Player" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Cover Art Margin/Panel/Current Track Cover Container" unique_id=1246569638]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.19607843)
 custom_minimum_size = Vector2(150, 150)
@@ -511,13 +512,13 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
-[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar VBox/Tools Margin/Tools/HBox/Tab Button Settings" to="." method="_on_tab_button_pressed" binds= ["settings"]]
-[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Tab Button Artists" to="." method="_on_tab_button_pressed" binds= ["artists"]]
-[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
-[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
-[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Tab Button Genres" to="." method="_on_tab_button_pressed" binds= ["genres"]]
-[connection signal="toggled" from="Global Margin/VBox/HBox/Sidebar VBox/Sidebar Margin/Sidebar/VBox/Favorites" to="." method="_on_favorites_toggled"]
-[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar VBox/Cover Art Margin/Panel/Current Track Cover Container/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= [".immersive_player"]]
+[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox/Tab Button Settings" to="." method="_on_tab_button_pressed" binds= ["settings"]]
+[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Artists" to="." method="_on_tab_button_pressed" binds= ["artists"]]
+[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
+[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
+[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Genres" to="." method="_on_tab_button_pressed" binds= ["genres"]]
+[connection signal="toggled" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Favorites" to="." method="_on_favorites_toggled"]
+[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Cover Art Margin/Panel/Current Track Cover Container/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= [".immersive_player"]]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Back Button" to="." method="_on_back_button_pressed"]
 [connection signal="text_changed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_search_text_changed"]
 [connection signal="text_submitted" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_search_text_submitted"]

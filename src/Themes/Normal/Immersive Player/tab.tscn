@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_hbf8i"]
 [ext_resource type="Material" uid="uid://b62hwhyefqusc" path="res://Assets/blur_material.tres" id="3_i3gmp"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_i3gmp"]
-[ext_resource type="Script" uid="uid://b8luuj3yfd61c" path="res://Scripts/UI/Immersive Player/lyrics_container.gd" id="5_qplow"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_c8ttq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4m0va"]
@@ -16,14 +15,15 @@ shader_parameter/topright = Color(0, 0, 0, 1)
 shader_parameter/bottomleft = Color(0, 0, 0, 1)
 shader_parameter/bottomright = Color(0.12225223, 0.12225223, 0.12225223, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c8ttq"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fbra8"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 anti_aliasing = false
 
-[node name="Immersive Player" type="VBoxContainer" unique_id=1347349079]
+[node name="Immersive Player" type="Control" unique_id=1697711554]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -31,64 +31,65 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="Immersive Player" type="MarginContainer" parent="." unique_id=425870283]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 script = ExtResource("1_ulmvq")
 
-[node name="Background" type="ColorRect" parent="Immersive Player" unique_id=181722797]
+[node name="Background" type="ColorRect" parent="." unique_id=181722797]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_4m0va")
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Blur" type="ColorRect" parent="Immersive Player" unique_id=130213287]
+[node name="Blur" type="ColorRect" parent="." unique_id=130213287]
 material = ExtResource("3_i3gmp")
-layout_mode = 2
-
-[node name="Shadow Container" type="Control" parent="Immersive Player" unique_id=1306541130]
-layout_mode = 2
-
-[node name="Shadow" type="Panel" parent="Immersive Player/Shadow Container" unique_id=2125278853]
-unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 2
-mouse_behavior_recursive = 1
-theme_override_styles/panel = ExtResource("2_a3alx")
 
-[node name="Image Margin" type="MarginContainer" parent="Immersive Player" unique_id=1199381498]
-unique_name_in_owner = true
+[node name="Image Margin" type="VBoxContainer" parent="." unique_id=1624354911]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Sep 1" type="HSeparator" parent="Image Margin" unique_id=428725820]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 175
-theme_override_constants/margin_top = 175
-theme_override_constants/margin_right = 175
-theme_override_constants/margin_bottom = 175
+size_flags_stretch_ratio = 0.25
 
-[node name="HBox" type="HBoxContainer" parent="Immersive Player/Image Margin" unique_id=1218817030]
+[node name="Control" type="PanelContainer" parent="Image Margin" unique_id=1196254434]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
 
-[node name="Image" type="PanelContainer" parent="Immersive Player/Image Margin/HBox" unique_id=411174489]
+[node name="Shadow" type="Panel" parent="Image Margin/Control" unique_id=2125278853]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_a3alx")
+
+[node name="Image" type="PanelContainer" parent="Image Margin/Control" unique_id=411174489]
 unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 4
+size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_c8ttq")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fbra8")
 script = ExtResource("3_hbf8i")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -99,91 +100,16 @@ expand_mode = 2
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
 
-[node name="Lyrics Container" type="ScrollContainer" parent="Immersive Player/Image Margin/HBox" unique_id=1289380820]
-visible = false
-show_behind_parent = true
-layout_mode = 2
-size_flags_horizontal = 3
-script = ExtResource("5_qplow")
-
-[node name="Lyrics Label" type="Label" parent="Immersive Player/Image Margin/HBox/Lyrics Container" unique_id=194350132]
+[node name="Button" parent="Image Margin/Control" unique_id=519598093 instance=ExtResource("6_c8ttq")]
 unique_name_in_owner = true
-show_behind_parent = true
 layout_mode = 2
-size_flags_horizontal = 10
-text = "Hip-hip
-Hip-hip
-Hip-hip
-Hip-hip
+mouse_behavior_recursive = 2
 
-When you're on a holiday
-You can't find the words to say
-All the things that come to you
-And I wanna feel it too
-
-On an island in the sun
-We'll be playing and having fun
-And it makes me feel so fine
-I can't control my brain
-
-Hip-hip
-Hip-hip
-
-When you're on a golden sea
-You don't need no memory
-Just a place to call your own
-As we drift into the zone
-
-On an island in the sun
-We'll be playing and having fun
-And it makes me feel so fine
-I can't control my brain
-
-We'll run away together
-We'll spend some time forever
-We'll never feel bad anymore
-
-Hip-hip
-Hip-hip
-Hip-hip
-
-On an island in the sun
-We'll be playing and having fun
-And it makes me feel so fine
-I can't control my brain
-
-We'll run away together
-We'll spend some time forever
-We'll never feel bad anymore
-
-Hip-hip
-(Hip-hip) we'll never feel bad anymore
-Hip-hip
-No, no (hip-hip)
-(Hip-hip) we'll never feel bad anymore
-(Hip-hip)
-No, no (hip-hip)
-No, no (hip-hip)"
-
-[node name="Button Container" type="Control" parent="Immersive Player" unique_id=684032733]
+[node name="Sep 2" type="HSeparator" parent="Image Margin" unique_id=2089730294]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-mouse_filter = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
 
-[node name="Button" parent="Immersive Player/Button Container" unique_id=519598093 instance=ExtResource("6_c8ttq")]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -8.0
-offset_top = -6.0
-offset_right = 8.0
-offset_bottom = 6.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[connection signal="item_rect_changed" from="Immersive Player/Image Margin" to="Immersive Player" method="_on_image_margin_item_rect_changed"]
-[connection signal="item_rect_changed" from="Immersive Player/Image Margin/HBox/Image" to="Immersive Player" method="_on_image_item_rect_changed"]
-[connection signal="pressed" from="Immersive Player/Button Container/Button" to="Immersive Player" method="_on_button_pressed"]
+[connection signal="item_rect_changed" from="Image Margin/Control/Image" to="Image Margin" method="_on_image_item_rect_changed"]
+[connection signal="pressed" from="Image Margin/Control/Button" to="." method="_on_button_pressed"]
