@@ -1,10 +1,10 @@
 extends Control
 
-var loop_off_icon := SessionManager.get_icon('scale_x2/loop')
-var loop_track_icon := SessionManager.get_icon('scale_x2/loop_track')
-var loop_queue_icon := SessionManager.get_icon('scale_x2/loop_queue')
-var play_icon := SessionManager.get_icon('play')
-var pause_icon := SessionManager.get_icon('pause')
+var loop_off_icon:Texture2D = SessionManager.get_icon('scale_x2/loop')
+var loop_track_icon:Texture2D = SessionManager.get_icon('scale_x2/loop_track')
+var loop_queue_icon:Texture2D = SessionManager.get_icon('scale_x2/loop_queue')
+var play_icon:Texture2D = SessionManager.get_icon('play')
+var pause_icon:Texture2D = SessionManager.get_icon('pause')
 
 var original_queue:Array[DBTrack] = []
 var original_queue_position:int = -1

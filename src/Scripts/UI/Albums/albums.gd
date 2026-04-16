@@ -12,9 +12,9 @@ extends VBoxContainer
 	'sort_mode': {
 		'enabled': true,
 		'options': [
-			'Sort by: Title', 
-			'Sort by: Artist',
-			'Sort by: Year',
+			'Title', 
+			'Artist',
+			'Year',
 		],
 		'default': 'album_sort_mode',
 		'callback': _on_sort_mode_item_selected,

@@ -47,7 +47,8 @@ SessionManager="*uid://caowd7sywd5u3"
 [display]
 
 window/size/viewport_width=1185
-display_server/driver.linuxbsd="wayland"
+window/size/extend_to_title=true
+display_server/driver.linuxbsd="x11"
 window/vsync/vsync_mode=0
 
 [dotnet]

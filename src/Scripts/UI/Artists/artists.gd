@@ -12,7 +12,7 @@ extends VBoxContainer
 	'sort_mode': {
 		'enabled': true,
 		'options': [
-			'Sort by: Title', 
+			'Title', 
 		],
 		'default': 'artist_sort_mode',
 		'callback': _on_sort_mode_item_selected,

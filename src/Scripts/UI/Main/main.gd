@@ -7,6 +7,46 @@ const console_scene := preload('res://Scenes/Console/Console.tscn')
 		bg_color = value
 		%Background.color = value
 
+@export var global_margin:Array = [0,0,0,0]:
+	set(value):
+		global_margin = value
+		var i:int = 0
+		for property:String in ['left','top','right','bottom']:
+			%'Global Margin'.add_theme_constant_override('margin_'+property, value[i])
+			i += 1
+
+@export var tools_margin:Array = [0,0,0,0]:
+	set(value):
+		tools_margin = value
+		var i:int = 0
+		for property:String in ['left','top','right','bottom']:
+			%'Tools Margin'.add_theme_constant_override('margin_'+property, value[i])
+			i += 1
+
+@export var sidebar_margin:Array = [0,0,0,0]:
+	set(value):
+		sidebar_margin = value
+		var i:int = 0
+		for property:String in ['left','top','right','bottom']:
+			%'Sidebar Margin'.add_theme_constant_override('margin_'+property, value[i])
+			i += 1
+
+@export var right_sidebar_margin:Array = [0,0,0,0]:
+	set(value):
+		right_sidebar_margin = value
+		var i:int = 0
+		for property:String in ['left','top','right','bottom']:
+			%'Right Sidebar Margin'.add_theme_constant_override('margin_'+property, value[i])
+			i += 1
+
+@export var search_margin:Array = [0,0,0,0]:
+	set(value):
+		search_margin = value
+		var i:int = 0
+		for property:String in ['left','top','right','bottom']:
+			%'Search Margin'.add_theme_constant_override('margin_'+property, value[i])
+			i += 1
+
 @onready var general_options_popup:PopupMenu = %'General Options'.get_popup()
 @onready var tabs:Dictionary[String,Array] = {
 	'settings': [%'Tab Button Settings', SessionManager.get_layout_theme_scene('Settings/tab')],
@@ -58,18 +98,14 @@ func update_accents() -> void:
 		album_dominant_color = DisplayServer.get_accent_color()
 	if prev_album_dominant_color == album_dominant_color: return
 
-	var tinted_dominant_color:Color = album_dominant_color.lerp(Color.WHITE, 0.25)
-	var dark_tinted_dominant_color:Color = album_dominant_color.lerp(Color.WHITE, 0.1)
-	var global_theme := get_tree().root.theme
-	if not global_theme: return
-	global_theme.set_color('icon_normal_color', 'AccentButton', dark_tinted_dominant_color)
-	global_theme.set_color('icon_hover_color', 'AccentButton', dark_tinted_dominant_color)
-	global_theme.set_color('icon_pressed_color', 'AccentButton', tinted_dominant_color)
-	global_theme.set_color('icon_hover_pressed_color', 'AccentButton', tinted_dominant_color)
-	var new_slider_style:StyleBoxFlat = global_theme.get_stylebox('grabber_area', 'HSlider').duplicate()
-	new_slider_style.bg_color = dark_tinted_dominant_color
-	global_theme.set_stylebox('grabber_area', 'HSlider', new_slider_style)
-	global_theme.set_stylebox('grabber_area_highlight', 'HSlider', new_slider_style)
+	var accent:Color = album_dominant_color
+	# Clamp colors based on theme luminance.
+	var luminance:float = ThemeManager.bg_color.get_luminance() if ThemeManager.bg_color.a != 0 else ThemeManager.default_bg_color.get_luminance()
+	if luminance > 0.5:
+		accent.v = min(0.6, accent.v)
+	else:
+		accent.v = max(0.6, accent.v)
+	ThemeManager.accent = accent
 
 
 func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
@@ -90,7 +126,7 @@ func set_tab(tab:String, data=null) -> void:
 	# Remove tab content.
 	%'Tab Content/_label'.hide()
 	for child in %'Tab Content'.get_children():
-		if child.name.begins_with('_'): continue
+		if child.name.begins_with('_') or child.name == 'Topbar': continue
 		if child.process_mode == Node.PROCESS_MODE_DISABLED: continue
 		if child.has_method('unload'):
 			child.process_mode = Node.PROCESS_MODE_DISABLED
@@ -154,7 +190,7 @@ func _parse_tab_config(scene:Node) -> void:
 			for item:String in sort_mode_config.get('options',[]):
 				%'Sort Mode'.add_item(item)
 			if %'Sort Mode'.item_count == 0:
-				%'Sort Mode'.add_item('Sort by: Title')
+				%'Sort Mode'.add_item('Title')
 			# Set default.
 			var sort_mode_default = sort_mode_config.get('default')
 			if sort_mode_default is String:

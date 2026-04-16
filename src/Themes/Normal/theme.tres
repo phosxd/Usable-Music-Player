@@ -6,13 +6,19 @@
 [ext_resource type="StyleBox" uid="uid://bu8roobr2kax2" path="res://Themes/Normal/Assets/Styles/Button/normal.tres" id="4_nxdkj"]
 [ext_resource type="StyleBox" uid="uid://dxby4gtnbxakt" path="res://Themes/Normal/Assets/Styles/Button/focus.tres" id="4_u0vf8"]
 [ext_resource type="StyleBox" uid="uid://05niom1qdsh8" path="res://Themes/Normal/Assets/Styles/Separator/separator.tres" id="5_3n3yh"]
+[ext_resource type="Texture2D" uid="uid://j1lwltbp0t04" path="res://Themes/Normal/Assets/Styles/CheckButton/checked.tres" id="6_bi1cq"]
 [ext_resource type="StyleBox" uid="uid://i3ea546q867t" path="res://Themes/Normal/Assets/Styles/FoldableContainer/focus.tres" id="6_pa6ds"]
 [ext_resource type="StyleBox" uid="uid://b73y7dtrs0sf2" path="res://Themes/Normal/Assets/Styles/PanelContainer/panel.tres" id="6_u0vf8"]
 [ext_resource type="StyleBox" uid="uid://4r2qcjpeceyn" path="res://Themes/Normal/Assets/Styles/FoldableContainer/panel.tres" id="6_yweha"]
+[ext_resource type="Texture2D" uid="uid://cbvoo3b4u4k7s" path="res://Themes/Normal/Assets/Styles/CheckButton/checked_disabled.tres" id="7_qw6u4"]
 [ext_resource type="StyleBox" uid="uid://ba5xswwps47ww" path="res://Themes/Normal/Assets/Styles/PanelContainer/section_panel.tres" id="7_u0vf8"]
+[ext_resource type="Texture2D" uid="uid://8hibyngottdy" path="res://Themes/Normal/Assets/Styles/CheckButton/unchecked.tres" id="8_5687p"]
+[ext_resource type="StyleBox" uid="uid://i7ymvovqk18e" path="res://Themes/Normal/Assets/Styles/PanelContainer/island_panel.tres" id="9_1y1hw"]
+[ext_resource type="Texture2D" uid="uid://ctt8yh60dehwo" path="res://Themes/Normal/Assets/Styles/CheckButton/unchecked_disabled.tres" id="9_48jr0"]
 [ext_resource type="StyleBox" uid="uid://dvbiju7d2d77a" path="res://Themes/Normal/Assets/Styles/LineEdit/focus.tres" id="9_p4va6"]
 [ext_resource type="StyleBox" uid="uid://c2ol5ukxy0g0u" path="res://Themes/Normal/Assets/Styles/LineEdit/normal.tres" id="9_pa6ds"]
 [ext_resource type="StyleBox" uid="uid://cpy6186qdkjqs" path="res://Themes/Normal/Assets/Styles/LineEdit/ready_only.tres" id="10_f6ltk"]
+[ext_resource type="StyleBox" uid="uid://bvh1jsjvclehg" path="res://Themes/Normal/Assets/Styles/PanelContainer/tools_island_panel.tres" id="15_qgq1p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g11mq"]
 content_margin_left = 6.0
@@ -31,80 +37,6 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 4
-
-[sub_resource type="DPITexture" id="DPITexture_sdao3"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"16\"><rect width=\"36\" height=\"14\" x=\"1\" y=\"1\" fill=\"#699ce8\" rx=\"7\"/><circle cx=\"30\" cy=\"8\" r=\"5\" fill=\"#fff\"/></svg>
-"
-color_map = {
-Color(0.4117647, 0.6117647, 0.9098039, 1): Color(0.337, 0.62, 1, 1)
-}
-
-[sub_resource type="DPITexture" id="DPITexture_v7r0k"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"16\"><rect width=\"36\" height=\"14\" x=\"1\" y=\"1\" fill=\"gray\" rx=\"7\"/><circle cx=\"30\" cy=\"8\" r=\"5\" fill=\"#b3b3b3\"/></svg>
-"
-saturation = 2.0
-color_map = {
-Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
-Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
-Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
-}
-
-[sub_resource type="DPITexture" id="DPITexture_koc4f"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"16\"><rect width=\"36\" height=\"14\" x=\"1\" y=\"1\" fill=\"gray\" rx=\"7\"/><circle cx=\"8\" cy=\"8\" r=\"5\" fill=\"#b3b3b3\"/></svg>
-"
-saturation = 2.0
-color_map = {
-Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
-Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
-Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
-}
-
-[sub_resource type="DPITexture" id="DPITexture_6usot"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"16\"><rect width=\"36\" height=\"14\" x=\"1\" y=\"1\" fill=\"#699ce8\" rx=\"7\"/><circle cx=\"8\" cy=\"8\" r=\"5\" fill=\"#fff\"/></svg>
-"
-color_map = {
-Color(0.4117647, 0.6117647, 0.9098039, 1): Color(0.337, 0.62, 1, 1)
-}
-
-[sub_resource type="DPITexture" id="DPITexture_kh4qu"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"16\"><g fill=\"#e0e0e0\"><rect width=\"36\" height=\"14\" x=\"1\" y=\"1\" fill-opacity=\".2\" rx=\"7\"/><circle cx=\"8\" cy=\"8\" r=\"5\"/></g></svg>
-"
-saturation = 2.0
-color_map = {
-Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
-Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
-Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
-}
-
-[sub_resource type="DPITexture" id="DPITexture_tj1lx"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"16\"><g fill=\"gray\"><rect width=\"36\" height=\"14\" x=\"1\" y=\"1\" fill-opacity=\".2\" rx=\"7\"/><circle cx=\"8\" cy=\"8\" r=\"5\"/></g></svg>
-"
-saturation = 2.0
-color_map = {
-Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
-Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
-Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
-}
-
-[sub_resource type="DPITexture" id="DPITexture_6284n"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"16\"><g fill=\"gray\"><rect width=\"36\" height=\"14\" x=\"1\" y=\"1\" fill-opacity=\".2\" rx=\"7\"/><circle cx=\"30\" cy=\"8\" r=\"5\"/></g></svg>
-"
-saturation = 2.0
-color_map = {
-Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
-Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
-Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
-}
-
-[sub_resource type="DPITexture" id="DPITexture_iqtkp"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"38\" height=\"16\"><g fill=\"gray\"><rect width=\"36\" height=\"14\" x=\"1\" y=\"1\" fill-opacity=\".2\" rx=\"7\"/><circle cx=\"30\" cy=\"8\" r=\"5\"/></g></svg>
-"
-saturation = 2.0
-color_map = {
-Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
-Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
-Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
-}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_swytt"]
 content_margin_left = 8.0
@@ -577,14 +509,10 @@ Button/styles/hover = ExtResource("2_davr4")
 Button/styles/hover_pressed = ExtResource("3_3n3yh")
 Button/styles/normal = ExtResource("4_nxdkj")
 Button/styles/pressed = ExtResource("3_3n3yh")
-CheckButton/icons/checked = SubResource("DPITexture_sdao3")
-CheckButton/icons/checked_disabled = SubResource("DPITexture_v7r0k")
-CheckButton/icons/checked_disabled_mirrored = SubResource("DPITexture_koc4f")
-CheckButton/icons/checked_mirrored = SubResource("DPITexture_6usot")
-CheckButton/icons/unchecked = SubResource("DPITexture_kh4qu")
-CheckButton/icons/unchecked_disabled = SubResource("DPITexture_tj1lx")
-CheckButton/icons/unchecked_disabled_mirrored = SubResource("DPITexture_6284n")
-CheckButton/icons/unchecked_mirrored = SubResource("DPITexture_iqtkp")
+CheckButton/icons/checked = ExtResource("6_bi1cq")
+CheckButton/icons/checked_disabled = ExtResource("7_qw6u4")
+CheckButton/icons/unchecked = ExtResource("8_5687p")
+CheckButton/icons/unchecked_disabled = ExtResource("9_48jr0")
 CheckButton/styles/disabled = SubResource("StyleBoxFlat_swytt")
 CheckButton/styles/hover = SubResource("StyleBoxFlat_7t2es")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_ut2au")
@@ -610,6 +538,8 @@ HSlider/icons/grabber_highlight = SubResource("DPITexture_xwxhs")
 HSlider/styles/grabber_area = SubResource("StyleBoxFlat_di31b")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_tg2ob")
 HSlider/styles/slider = SubResource("StyleBoxFlat_s1k85")
+IslandPanelContainer/base_type = &"PanelContainer"
+IslandPanelContainer/styles/panel = ExtResource("9_1y1hw")
 Label/colors/font_color = Color(1, 1, 1, 0.7490196)
 Label/colors/font_outline_color = Color(1, 1, 1, 0)
 Label/colors/font_shadow_color = Color(1, 1, 1, 0)
@@ -695,6 +625,8 @@ TabContainer/styles/tabbar_background = SubResource("StyleBoxFlat_p5cll")
 TextEdit/styles/focus = ExtResource("9_p4va6")
 TextEdit/styles/normal = ExtResource("9_pa6ds")
 TextEdit/styles/read_only = ExtResource("10_f6ltk")
+ToolsIslandPanelContainer/base_type = &"PanelContainer"
+ToolsIslandPanelContainer/styles/panel = ExtResource("15_qgq1p")
 TooltipPanel/styles/panel = SubResource("StyleBoxFlat_fyvmx")
 VScrollBar/constants/padding_left = 4
 VScrollBar/constants/padding_right = 4

@@ -3,6 +3,11 @@ extends Node
 const variable_names:Array[String] = [
 	'image_corner_radius',
 	'bg_color',
+	'global_margin',
+	'tools_margin',
+	'sidebar_margin',
+	'right_sidebar_margin',
+	'search_margin',
 	'panel_color',
 	'section_panel_color',
 	'text_color',
@@ -28,11 +33,13 @@ var registered_themes:Array[Dictionary] = [
 ]
 
 ## The global theme applied to every part of the app.
+## This is a deep copy of the originally set theme, access [code]_theme[/code] for the original.
 ## Setting this will immediately update the GUI.
 var theme:Theme = registered_themes[0].item:
 	set(value):
-		theme = value
-		get_window().theme = value
+		theme = value.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
+		_theme = value
+		get_window().theme = theme
 
 		# Set main scene.
 		var main_scene = SessionManager.get_layout_theme_scene('Main/main')
@@ -41,30 +48,36 @@ var theme:Theme = registered_themes[0].item:
 		tree.change_scene_to_node.call_deferred(main_scene_instance)
 		SessionManager.main_scene = main_scene_instance
 
-		MiniLog.info('Set theme to "$~%s~$".' % theme.resource_path, ThemeManager)
+		MiniLog.info('Set theme to "$~%s~$".' % _theme.resource_path, ThemeManager)
+
+var _theme: Theme
 
 
 ## Current theme mode. [code]0[/code] is default.
 var mode:int = 0
 
 
-#region variables
+#region theme tweaks
 
-## All theme modes & their config values.
-var modes:Array[Dictionary] = []
-
-## Corner radius applied to all [TextureRectRounded] nodes.
-var image_corner_radius:int = 8:
+## Theme accent.
+## Setting this will immediately change the GUI.
+var accent := Color.WHITE:
 	set(value):
-		image_corner_radius = value
-
-## App background color. If transparent, uses default theme color.
-var bg_color := Color.TRANSPARENT:
-	set(value):
-		bg_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','bg_color')
-		value = value.blend(panel_tint)
-		if SessionManager.main_scene != null: SessionManager.main_scene.set('bg_color', value)
+		accent = value
+		# AccentButton.
+		for item in ['icon_normal_color', 'icon_disabled_color', 'icon_hover_color', 'icon_pressed_color', 'icon_hover_pressed_color']:
+			theme.set_color(item, 'AccentButton', value)
+		# HSlider.
+		_set_stylebox_color('HSlider', 'grabber_area', 'bg_color', value)
+		_set_stylebox_color('HSlider', 'grabber_area_highlight', 'bg_color', value)
+		# CheckButton.
+		var icon:Texture2D = theme.get_icon('checked', 'CheckButton')
+		if icon is DPITexture:
+			var keys = icon.color_map.keys()
+			if keys.size() > 0:
+				icon.color_map[keys[0]] = value
+				icon = DPITexture.create_from_string(icon._source, icon.base_scale, icon.saturation, icon.color_map)
+				theme.set_icon('checked', 'CheckButton', icon)
 
 var panel_tint := Color.TRANSPARENT:
 	set(value):
@@ -81,28 +94,69 @@ var button_tint := Color.TRANSPARENT:
 		self.set('button_hover_color', button_hover_color)
 		self.set('button_pressed_color', button_pressed_color)
 
+#endregion
 
-func _ensure_stylebox(theme_style:String, property:String) -> StyleBox:
-	if not theme.has_stylebox(property, theme_style):
-		theme.set_stylebox(property, theme_style, registered_themes[0].item.get_stylebox(property, theme_style))
-	return theme.get_stylebox(property, theme_style)
+#region theme variables
 
+## All theme modes & their config values.
+var modes:Array[Dictionary] = []
+
+## Corner radius applied to all [TextureRectRounded] nodes.
+var image_corner_radius:int = 8:
+	set(value):
+		image_corner_radius = value
+
+## Default background color. Setting this will not change it's value.
+var default_bg_color: Color:
+	get():
+		return registered_themes[0].config.get_value('Theme','bg_color')
+
+## App background color. If transparent, uses default theme color.
+var bg_color := Color.TRANSPARENT:
+	set(value):
+		bg_color = value
+		if value.a == 0: value = default_bg_color
+		value = value.blend(panel_tint)
+		if SessionManager.main_scene != null: SessionManager.main_scene.set('bg_color', value)
+
+var global_margin:Array = [0,0,0,0]:
+	set(value):
+		global_margin = value
+		if SessionManager.main_scene != null: SessionManager.main_scene.set('global_margin', value)
+
+var tools_margin:Array = [0,0,0,0]:
+	set(value):
+		tools_margin = value
+		if SessionManager.main_scene != null: SessionManager.main_scene.set('tools_margin', value)
+
+var sidebar_margin:Array = [0,0,0,0]:
+	set(value):
+		sidebar_margin = value
+		if SessionManager.main_scene != null: SessionManager.main_scene.set('sidebar_margin', value)
+
+var right_sidebar_margin:Array = [0,0,0,0]:
+	set(value):
+		right_sidebar_margin = value
+		if SessionManager.main_scene != null: SessionManager.main_scene.set('right_sidebar_margin', value)
+
+var search_margin:Array = [0,0,0,0]:
+	set(value):
+		search_margin = value
+		if SessionManager.main_scene != null: SessionManager.main_scene.set('search_margin', value)
 
 var panel_color := Color.TRANSPARENT:
 	set(value):
 		panel_color = value
 		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','panel_color')
 		value = value.blend(panel_tint)
-		var style:StyleBox = _ensure_stylebox('PanelContainer', 'panel')
-		if style is StyleBoxFlat: style.bg_color = value
+		_set_stylebox_property('PanelContainer', 'panel', 'bg_color', value)
 
 var section_panel_color := Color.TRANSPARENT:
 	set(value):
 		section_panel_color = value
 		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','section_panel_color')
 		value = value.blend(panel_tint)
-		var style:StyleBox = _ensure_stylebox('SectionPanelContainer', 'panel')
-		if style is StyleBoxFlat: style.bg_color = value
+		_set_stylebox_property('SectionPanelContainer', 'panel', 'bg_color', value)
 
 var text_color := Color.TRANSPARENT:
 	set(value):
@@ -137,34 +191,23 @@ var text_primary_color := Color.TRANSPARENT:
 var button_color := Color.TRANSPARENT:
 	set(value):
 		button_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','button_color')
 		value = value.blend(button_tint)
-		var style:StyleBox = _ensure_stylebox('Button', 'normal')
-		if style is StyleBoxFlat: style.bg_color = value
+		_set_stylebox_color('Button', 'normal', 'bg_color', value, true)
 
 var button_disabled_color := Color.TRANSPARENT:
 	set(value):
 		button_disabled_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','button_disabled_color')
-		value = value.blend(button_tint)
-		var style:StyleBox = _ensure_stylebox('Button', 'disabled')
-		if style is StyleBoxFlat: style.bg_color = value
+		_set_stylebox_color('Button', 'disabled', 'bg_color', value.blend(button_tint), true)
 
 var button_hover_color := Color.TRANSPARENT:
 	set(value):
 		button_hover_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','button_hover_color')
-		value = value.blend(button_tint)
-		var style:StyleBox = _ensure_stylebox('Button', 'hover')
-		if style is StyleBoxFlat: style.bg_color = value
+		_set_stylebox_color('Button', 'hover', 'bg_color', value.blend(button_tint), true)
 
 var button_pressed_color := Color.TRANSPARENT:
 	set(value):
 		button_pressed_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','button_pressed_color')
-		value = value.blend(button_tint)
-		var style:StyleBox = _ensure_stylebox('Button', 'pressed')
-		if style is StyleBoxFlat: style.bg_color = value
+		_set_stylebox_color('Button', 'pressed', 'bg_color', value.blend(button_tint), true)
 
 #endregion
 
@@ -227,20 +270,26 @@ func set_theme(id:String) -> void:
 			if value != null: mode_config.set(key, value)
 		modes.append(mode_config)
 
+	if modes.size() == 0:
+		var mode_config = {
+			'@mode_name': 'Default',
+		}
+		modes.append(mode_config)
+
 	set_theme_mode(0)
 
 
 func set_theme_mode(index:int) -> void:
-	if index == mode: return
+	if modes.size() <= index: return
 	var mode_config = modes.get(index)
-	if mode_config == null: return
 	mode = index
 
 	# Reset variables.
-	var i:int = 0
-	for variable in variable_names:
-		self.set(variable, variable_defaults[i])
+	var i:int = -1
+	for variable:String in variable_names:
 		i += 1
+		if variable in mode_config: continue
+		self.set(variable, variable_defaults[i])
 
 	mode_config = mode_config as Dictionary
 	for key in mode_config:
@@ -258,3 +307,34 @@ func get_theme_index(id:String) -> int:
 	return registered_themes.find_custom(func(item:Dictionary) -> bool:
 		return item.id == id
 	)
+
+
+#region theme manipulation
+
+func _get_stylebox_property(theme_type:String, style_name:String, property_name:String, theme_resource=null) -> Variant:
+	if theme_resource is not Theme: theme_resource = theme
+	if not theme.has_stylebox(style_name, theme_type): return
+	var style:StyleBox = theme_resource.get_stylebox(style_name, theme_type)
+	return style.get(property_name)
+
+
+func _get_stylebox_default_property(theme_type:String, style_name:String, property_name:String, use_default_theme:bool=false) -> Variant:
+	var theme_resource = _theme
+	if use_default_theme: theme_resource = registered_themes[0].item
+	return _get_stylebox_property(theme_type, style_name, property_name, theme_resource)
+
+
+func _set_stylebox_property(theme_type:String, style_name:String, property_name:String, property_value:Variant) -> void:
+	if not theme.has_stylebox(style_name, theme_type): return
+	var style:StyleBox = theme.get_stylebox(style_name, theme_type)
+	style.set(property_name, property_value)
+	theme.set_stylebox(style_name, theme_type, style)
+
+
+func _set_stylebox_color(theme_type:String, style_name:String, property_name:String, property_value:Color, use_default_if_transparent:bool=false) -> void:
+	if use_default_if_transparent && property_value.a == 0:
+		var default = _get_stylebox_default_property(theme_type, style_name, property_name)
+		if default == null: default = _get_stylebox_default_property(theme_type, style_name, property_name, true)
+	_set_stylebox_property(theme_type, style_name, property_name, property_value)
+
+#endregion

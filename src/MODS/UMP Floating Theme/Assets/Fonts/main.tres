@@ -1,0 +1,9 @@
+[gd_resource type="SystemFont" format=3 uid="uid://cyium14kcmwxa"]
+
+[sub_resource type="SystemFont" id="SystemFont_84xpo"]
+
+[resource]
+fallbacks = Array[Font]([SubResource("SystemFont_84xpo")])
+font_names = PackedStringArray("Noto Sans")
+font_weight = 425
+msdf_size = 28
