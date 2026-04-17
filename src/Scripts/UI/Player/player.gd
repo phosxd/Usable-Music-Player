@@ -29,7 +29,6 @@ func  _ready() -> void:
 
 
 func _session_manager_value_changed(property_name:String) -> void:
-	print(property_name)
 	match property_name:
 		'visualizer_bar_count':
 			%'Bar Visualizer'.bar_count = SessionManager.visualizer_bar_count

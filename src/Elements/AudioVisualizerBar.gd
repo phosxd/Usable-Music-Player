@@ -1,27 +1,29 @@
 class_name AudioVisualizerBar extends Control
 
 @export var color := Color.WHITE
+
 ## Smoothing weight. Lower values are choppier but more accurate. Higher values are smoother & floatier.
 ## [br][br]Should be a value between [code]0.0[/code] & [code]0.999[/code]. Should never be "fully" smoothed.
 @export var smoothing:float = 0.5:
 	set(value):
 		smoothing = value
 		_init_smoothing()
+
 ## How many updates are performed every second.
 ## Leave at [code]-1[/code] if this should be the same as your project frame rate.
 @export var frame_rate:int = -1:
 	set(value):
 		frame_rate = value
 		_init_frame_rate()
+
 @export var bar_count:int = 128:
 	set(value):
-		print(value)
 		bar_count = value
 		_init_data()
 		_on_resized()
+
 @export var freq_max:float = 11050
 @export var db_min:float = 60
-
 @export var align_top:bool = false
 @export var position_offset := Vector2.ZERO
 

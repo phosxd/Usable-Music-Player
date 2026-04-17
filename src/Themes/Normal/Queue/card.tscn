@@ -122,6 +122,10 @@ text = "0:00"
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
+[node name="Placeholder" type="Panel" parent="." unique_id=1500058394]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
 [connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
 [connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
