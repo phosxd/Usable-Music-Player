@@ -417,8 +417,10 @@ static func generate_database(root_path:String, callback:Callable) -> void:
 	timer.timeout.connect(func() -> void:
 		var indexing_label = SessionManager.main_scene.get_node('%Indexing Label')
 		var indexing_status = SessionManager.main_scene.get_node('%Indexing Status')
-		if indexing_label is not Label: return
-		if indexing_status is not Control: return
+		if indexing_label is not Label or indexing_status is not Control:
+			timer.stop()
+			timer.queue_free()
+			return
 		indexing_status.show()
 		indexing_label.text = SessionManager.main_scene.indexing_label_template % LibraryManager.database.tracks.size()
 		if LibraryManager.currently_updating == false:

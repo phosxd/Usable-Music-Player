@@ -1,10 +1,14 @@
 extends PanelContainer
 
 signal selected
+
 enum CardMode {
 	detailed,
 	minimal,
 }
+
+## Cull pixel margin.
+const cull_margin:int = 250
 
 @onready var context_menu:ContextMenu = SessionManager.context_menus.track_card
 var track: DBTrack
@@ -12,6 +16,7 @@ var selected_mode := CardMode.detailed
 
 
 func _ready() -> void:
+	$HBox.hide() # Hide elements.
 	context_menu.id_pressed.connect(_on_option_id_pressed)
 	context_menu.closed.connect(func() -> void:
 		if context_menu.current_instance_id != name: return
@@ -19,11 +24,22 @@ func _ready() -> void:
 	)
 
 
+func _process(_delta:float) -> void:
+	if Engine.get_process_frames() % 20 != 0: return
+	# Off-screen.
+	if self.global_position.y < -cull_margin or self.global_position.y > get_window().size.y+cull_margin:
+		$HBox.hide()
+	# On-screen.
+	else:
+		$HBox.show()
+
+
 func init(db_track:DBTrack) -> void:
 	track = db_track
 	if not track.valid: _invalidate()
 
 	%Name.text = track.name
+	%Name.tooltip_text = track.name
 	if track.number == 0: %'Track Number'.hide()
 	else: %'Track Number'.text = '%s' % (track.number)
 	%Artist.text = track.actual_artist

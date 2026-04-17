@@ -4,8 +4,9 @@ const nodes_to_hide:Array[String] = [
 	'Topbar',
 	'Sidebar',
 ]
+@export var overlay_color := Color(0, 0, 0, 0.2)
+var previous_global_margin:Array[int] = []
 @onready var default_shadow_style:StyleBox = %Shadow.get_theme_stylebox('panel')
-@export var overlay_color := Color(0.25, 0.25, 0.25, 0.5)
 var dominant_colors:Array[Color] = []
 
 
@@ -17,10 +18,21 @@ func _ready() -> void:
 	for node_name in nodes_to_hide:
 		SessionManager.main_scene.get_node('%'+node_name).hide()
 
+	var global_margin = (SessionManager.main_scene.get_node('%Global Margin') as MarginContainer)
+	for item in ['left','top','right','bottom']:
+		previous_global_margin.append(global_margin.get_theme_constant('margin_%s' % item))
+		global_margin.add_theme_constant_override('margin_%s' % item, 0)
+
 
 func _exit_tree() -> void:
 	for node_name in nodes_to_hide:
 		SessionManager.main_scene.get_node('%'+node_name).show()
+
+	var global_margin = (SessionManager.main_scene.get_node('%Global Margin') as MarginContainer)
+	var i:int = -1
+	for item in ['left','top','right','bottom']:
+		i += 1
+		global_margin.add_theme_constant_override('margin_%s' % item, previous_global_margin[i])
 
 
 func update_current_track(_track_queue_position:int, track:DBTrack) -> void:

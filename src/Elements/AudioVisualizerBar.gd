@@ -15,8 +15,10 @@ class_name AudioVisualizerBar extends Control
 		_init_frame_rate()
 @export var bar_count:int = 128:
 	set(value):
+		print(value)
 		bar_count = value
 		_init_data()
+		_on_resized()
 @export var freq_max:float = 11050
 @export var db_min:float = 60
 
@@ -29,6 +31,7 @@ var data:Array[float] = []
 var _smoothing:float = 0
 var _update_time:float = 0
 var _time_passed:float = 0
+var _idle_time:float = 0
 
 
 func _ready() -> void:
@@ -48,10 +51,15 @@ func _on_resized():
 func _process(delta:float) -> void:
 	if visible:
 		_time_passed += delta
-		if _time_passed > _update_time:
+		if _time_passed > _update_time && _idle_time < 7.0:
 			_update_data()
 			queue_redraw()
 			_time_passed = 0
+
+		if PlayerManager.is_playing:
+			_idle_time = 0
+		else:
+			_idle_time += delta
 
 
 func _draw() -> void:

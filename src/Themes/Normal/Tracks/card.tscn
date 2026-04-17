@@ -14,7 +14,7 @@ content_margin_top = 2.0
 content_margin_right = 2.0
 content_margin_bottom = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g85ae"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_if58r"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -26,6 +26,7 @@ font_size = 12
 
 [node name="Card" type="PanelContainer" unique_id=927718466]
 self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 70)
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 69.0
@@ -69,7 +70,7 @@ custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_g85ae")
+theme_override_styles/panel = SubResource("StyleBoxFlat_if58r")
 script = ExtResource("2_1pull")
 texture = ExtResource("2_57cvb")
 stretch_mode = 5

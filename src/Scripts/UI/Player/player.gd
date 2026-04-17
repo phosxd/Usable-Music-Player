@@ -20,9 +20,22 @@ func  _ready() -> void:
 	PlayerManager.pause_requested.connect(update_playing.bind(false))
 	PlayerManager.volume_updated.connect(update_volume)
 	PlayerManager.track_peak_volume_changed.connect(update_visualizer_2)
+	SessionManager.value_changed.connect(_session_manager_value_changed)
 	update_current_track(0, PlayerManager.get_current_track())
 	update_track_progress(PlayerManager.track_progress)
 	update_volume(PlayerManager.get_volume())
+	_session_manager_value_changed('visualizer_bar_count')
+	_session_manager_value_changed('visualizer_bar_smoothing')
+
+
+func _session_manager_value_changed(property_name:String) -> void:
+	print(property_name)
+	match property_name:
+		'visualizer_bar_count':
+			%'Bar Visualizer'.bar_count = SessionManager.visualizer_bar_count
+		'visualizer_bar_smoothing':
+			%'Bar Visualizer'.smoothing = SessionManager.visualizer_bar_smoothing
+	pass
 
 
 func update_current_track(_track_queue_position:int, track:DBTrack) -> void:

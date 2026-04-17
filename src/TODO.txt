@@ -10,6 +10,10 @@
 - Add option for artist/album for uploading custom image.
 - Add option for artist for regrabbing artist image from API.
 
+- Add multiple libraries
+- Read "lyricist" tag to show "Written by:" in lyrics.
+- Read "releasetype".
+
 
 - Build GDExtension for dedicated audio playback & metadata.
   This is to address the problems of needing to use a bundled Python executable for metadata & FLACs not supporting multi-channel.

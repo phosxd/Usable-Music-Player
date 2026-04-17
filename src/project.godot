@@ -107,6 +107,7 @@ page_back={
 
 [physics]
 
+common/physics_ticks_per_second=1
 2d/physics_engine="Dummy"
 3d/physics_engine="Dummy"
 

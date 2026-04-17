@@ -42,9 +42,14 @@ func _ready() -> void:
 		%'Theme Mode'.add_item(item.get('@mode_name',''))
 	%'Theme Mode'.selected = ThemeManager.mode
 	%'Landing Page'.selected = landing_page_options.find(SessionManager.landing_page)
+	# ---
 	%'Grid Item Size'.set_value_no_signal(SessionManager.grid_item_size)
 	%'Panel Tint'.color = SessionManager.panel_tint
 	%'Button Tint'.color = SessionManager.button_tint
+	%'Visualizer Bar Count'.set_value_no_signal(SessionManager.visualizer_bar_count)
+	%'Visualizer Bar Smoothing'.set_value_no_signal(SessionManager.visualizer_bar_smoothing)
+	%'Visualizer Bar Count Slider'.set_value_no_signal(SessionManager.visualizer_bar_count)
+	%'Visualizer Bar Smoothing Slider'.set_value_no_signal(SessionManager.visualizer_bar_smoothing)
 	# ---
 	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.fetch_lyrics)
 	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.fetch_artist_cover)
@@ -207,3 +212,15 @@ func _on_button_tint_popup_closed() -> void:
 func _on_button_tint_preset_color_pressed(color:Color) -> void:
 	%'Button Tint'.color = color
 	_on_button_tint_popup_closed()
+
+
+func _on_visualizer_bar_count_value_changed(value:float) -> void:
+	SessionManager.visualizer_bar_count = int(value)
+	%'Visualizer Bar Count'.set_value_no_signal(value)
+	%'Visualizer Bar Count Slider'.set_value_no_signal(value)
+
+
+func _on_visualizer_bar_smoothing_value_changed(value:float) -> void:
+	SessionManager.visualizer_bar_smoothing = value
+	%'Visualizer Bar Smoothing'.set_value_no_signal(value)
+	%'Visualizer Bar Smoothing Slider'.set_value_no_signal(value)

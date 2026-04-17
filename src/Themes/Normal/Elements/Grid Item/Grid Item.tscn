@@ -25,6 +25,7 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 script = ExtResource("1_l7ro4")
+hide_off_screen = null
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1832504744]
 layout_mode = 2
@@ -75,11 +76,15 @@ layout_mode = 2
 [node name="Label 1" parent="VBox" unique_id=1086494808 instance=ExtResource("5_l7ro4")]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 1
 label_settings = ExtResource("6_c3rqa")
 horizontal_alignment = 1
 clip_text = true
 text_overrun_behavior = 5
-enabled = false
+
+[node name="Button" parent="VBox/Label 1" index="0" unique_id=1604203953]
+mouse_filter = 2
+disabled = true
 
 [node name="Label 2" parent="VBox" unique_id=1569149691 instance=ExtResource("5_l7ro4")]
 unique_name_in_owner = true
@@ -93,9 +98,14 @@ enabled = false
 hover_font_color = Color(0.9, 0.9, 0.9, 1)
 hover_outline_color = Color(0.9, 0.9, 0.9, 1)
 
+[node name="Placeholder" type="Panel" parent="." unique_id=1737595186]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
 [connection signal="gui_input" from="VBox/Center/Button" to="." method="_on_button_gui_input"]
 [connection signal="mouse_entered" from="VBox/Center/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="VBox/Center/Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="VBox/Center/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="VBox/Label 1" to="." method="_on_label_1_pressed"]
 [connection signal="pressed" from="VBox/Label 2" to="." method="_on_label_2_pressed"]
+
+[editable path="VBox/Label 1"]

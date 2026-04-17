@@ -32,8 +32,6 @@ extends VBoxContainer
 	},
 }
 @onready var card_scene := SessionManager.get_layout_theme_scene('Tracks/card')
-@onready var placeholder_card_scene := SessionManager.get_layout_theme_scene('tracks_placeholder_card')
-const page_size:int = 50
 
 var loaded_tracks:Array[DBTrack] = []
 var selected_track_index: int

@@ -47,11 +47,13 @@ const property_data:Array[Array] = [
 	['theme',[TYPE_STRING]],
 	['theme_mode',[TYPE_INT]],
 	['visualizer_mode',[TYPE_INT]],
+	['visualizer_bar_count',[TYPE_INT]],
+	['visualizer_bar_smoothing',[TYPE_FLOAT]],
 	['dynamic_accents',[TYPE_BOOL]],
 	['custom_accent',[TYPE_COLOR]],
 	['custom_accent_enabled',[TYPE_BOOL]],
 	['landing_page',[TYPE_STRING]],
-	['grid_item_size',[TYPE_FLOAT]],
+	['grid_item_size',[TYPE_INT,TYPE_FLOAT]],
 	['panel_tint',[TYPE_COLOR]],
 	['button_tint',[TYPE_COLOR]],
 ]
@@ -164,6 +166,16 @@ var visualizer_mode:VisualizerMode = VisualizerMode.OFF:
 	set(value):
 		visualizer_mode = value
 		value_changed.emit('visualizer_mode')
+
+var visualizer_bar_count:int = 125:
+	set(value):
+		visualizer_bar_count = value
+		value_changed.emit('visualizer_bar_count')
+
+var visualizer_bar_smoothing:float = 0.5:
+	set(value):
+		visualizer_bar_smoothing = value
+		value_changed.emit('visualizer_bar_smoothing')
 
 var landing_page:String = '':
 	set(value):

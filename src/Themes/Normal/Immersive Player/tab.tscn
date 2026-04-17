@@ -4,9 +4,9 @@
 [ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_a3alx"]
 [ext_resource type="Shader" uid="uid://dvoc7ypde1coe" path="res://Assets/gradient.gdshader" id="2_hbf8i"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_hbf8i"]
-[ext_resource type="Material" uid="uid://b62hwhyefqusc" path="res://Assets/blur_material.tres" id="3_i3gmp"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_i3gmp"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_c8ttq"]
+[ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Themes/Normal/Queue/queue.tscn" id="8_fbra8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4m0va"]
 shader = ExtResource("2_hbf8i")
@@ -15,7 +15,7 @@ shader_parameter/topright = Color(0, 0, 0, 1)
 shader_parameter/bottomleft = Color(0, 0, 0, 1)
 shader_parameter/bottomright = Color(0.12225223, 0.12225223, 0.12225223, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fbra8"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rd6y7"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -45,15 +45,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Blur" type="ColorRect" parent="." unique_id=130213287]
-material = ExtResource("3_i3gmp")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="Image Margin" type="VBoxContainer" parent="." unique_id=1624354911]
 layout_mode = 1
 anchors_preset = 15
@@ -70,40 +61,73 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="Control" type="PanelContainer" parent="Image Margin" unique_id=1196254434]
-self_modulate = Color(1, 1, 1, 0)
+[node name="HBoxContainer" type="HBoxContainer" parent="Image Margin" unique_id=896511492]
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 3
 
-[node name="Shadow" type="Panel" parent="Image Margin/Control" unique_id=2125278853]
+[node name="Sep 1" type="VSeparator" parent="Image Margin/HBoxContainer" unique_id=713092414]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+
+[node name="Control" type="PanelContainer" parent="Image Margin/HBoxContainer" unique_id=1196254434]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+
+[node name="Shadow" type="Panel" parent="Image Margin/HBoxContainer/Control" unique_id=2125278853]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_a3alx")
 
-[node name="Image" type="PanelContainer" parent="Image Margin/Control" unique_id=411174489]
+[node name="Image" type="PanelContainer" parent="Image Margin/HBoxContainer/Control" unique_id=411174489]
 unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_fbra8")
+theme_override_styles/panel = SubResource("StyleBoxFlat_rd6y7")
 script = ExtResource("3_hbf8i")
 radius_bottom_left = 16
 radius_bottom_right = 16
 radius_top_left = 16
 radius_top_right = 16
 texture = ExtResource("4_i3gmp")
-expand_mode = 2
+expand_mode = 3
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
 
-[node name="Button" parent="Image Margin/Control" unique_id=519598093 instance=ExtResource("6_c8ttq")]
+[node name="Button" parent="Image Margin/HBoxContainer/Control" unique_id=519598093 instance=ExtResource("6_c8ttq")]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_behavior_recursive = 2
+
+[node name="Sep 3" type="VSeparator" parent="Image Margin/HBoxContainer" unique_id=1420459499]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="Queue" parent="Image Margin/HBoxContainer" unique_id=1119812283 instance=ExtResource("8_fbra8")]
+self_modulate = Color(1, 1, 1, 0.23529412)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("2_a3alx")
+
+[node name="Controls" parent="Image Margin/HBoxContainer/Queue/VBox" parent_id_path=PackedInt32Array(1119812283, 1514673906) index="0" unique_id=1929815790]
+visible = false
+
+[node name="Sep 1" parent="Image Margin/HBoxContainer/Queue/VBox" parent_id_path=PackedInt32Array(1119812283, 1514673906) index="1" unique_id=26743642]
+visible = false
+
+[node name="Sep 2" type="VSeparator" parent="Image Margin/HBoxContainer" unique_id=1607931019]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
 
 [node name="Sep 2" type="HSeparator" parent="Image Margin" unique_id=2089730294]
 self_modulate = Color(1, 1, 1, 0)
@@ -111,5 +135,7 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[connection signal="item_rect_changed" from="Image Margin/Control/Image" to="Image Margin" method="_on_image_item_rect_changed"]
-[connection signal="pressed" from="Image Margin/Control/Button" to="." method="_on_button_pressed"]
+[connection signal="item_rect_changed" from="Image Margin/HBoxContainer/Control/Image" to="Image Margin" method="_on_image_item_rect_changed"]
+[connection signal="pressed" from="Image Margin/HBoxContainer/Control/Button" to="." method="_on_button_pressed"]
+
+[editable path="Image Margin/HBoxContainer/Queue"]

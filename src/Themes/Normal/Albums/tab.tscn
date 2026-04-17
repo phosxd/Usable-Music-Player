@@ -26,11 +26,12 @@ layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 script = ExtResource("2_dma13")
-speed = 500.0
+speed = 650.0
 wheel_scroll_damper = SubResource("Resource_nr4yt")
 dragging_scroll_damper = SubResource("Resource_cdp3f")
 drag_with_mouse = false
 allow_horizontal_scroll = false
+allow_overdragging = true
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
 [node name="Margin" type="MarginContainer" parent="Scroll" unique_id=79693074]
