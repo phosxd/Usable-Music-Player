@@ -7,7 +7,9 @@ signal color_pressed(color:Color)
 	set(value):
 		color = value
 		var style := StyleBoxFlat.new()
-		style.bg_color = color
+		var bg_color:Color = color
+		bg_color.a = 0.5 if bg_color.a > 0 else 0.0
+		style.bg_color = bg_color
 		style.set_corner_radius_all(280)
 		$Margin/Center/Panel.add_theme_stylebox_override('panel', style)
 

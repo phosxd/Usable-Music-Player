@@ -122,6 +122,7 @@ func get_cover() -> ImageTexture:
 				1: album_cover_size = album_cover_size_2
 				2: album_cover_size = album_cover_size_3
 			ImageUtils.limit_size(image, album_cover_size)
+			image.generate_mipmaps()
 			cover = ImageTexture.create_from_image(image)
 	if not cover: return null
 

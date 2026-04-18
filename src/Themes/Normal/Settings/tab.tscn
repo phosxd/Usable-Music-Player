@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_1b3q6"]
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Themes/Normal/Assets/Icons/folder.svg" id="7_pn7em"]
 [ext_resource type="PackedScene" uid="uid://dsibuplor3qi1" path="res://Themes/Normal/Elements/Preset Color Button/Preset Color Button.tscn" id="8_sk0tj"]
-[ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="9_yf2f5"]
 [ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Themes/Normal/Assets/Icons/remove.svg" id="10_6tlhg"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Themes/Normal/Assets/Icons/load.svg" id="11_yw38e"]
 
@@ -115,7 +114,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Library/VBox/Library" unique_id=709594005]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Library"
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Library/VBox/Library" unique_id=1201920755]
@@ -173,7 +172,7 @@ When disabled, accents will use your OS accent color.
 
 This may cause minor skips when changing colors."
 mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Dynamic Accent"
 
 [node name="Dynamic Accents" type="CheckButton" parent="MarginContainer/Scroll/VBox/UI/VBox/Dynamic Accent" unique_id=235272779]
@@ -187,7 +186,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/UI/VBox/Visualizer Mode" unique_id=691839164]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Visualizer Mode"
 
 [node name="Visualizer Mode" type="OptionButton" parent="MarginContainer/Scroll/VBox/UI/VBox/Visualizer Mode" unique_id=1167130548]
@@ -210,7 +209,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/UI/VBox/Theme" unique_id=1782414603]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Theme"
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Theme" unique_id=1495886338]
@@ -235,7 +234,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/UI/VBox/Theme Mode" unique_id=551917228]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Theme Mode"
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Theme Mode" unique_id=2146685362]
@@ -255,8 +254,8 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/UI/VBox/UI Scale" unique_id=141327545]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_type_variation = &"LabelPrimary"
 text = "UI Scale"
-label_settings = ExtResource("9_yf2f5")
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/UI Scale" unique_id=1064029886]
 layout_mode = 2
@@ -280,6 +279,7 @@ ticks_position = 3
 [node name="UI Scale Label" type="Label" parent="MarginContainer/Scroll/VBox/UI/VBox/UI Scale/HBox" unique_id=1667657668]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"LabelPrimary"
 text = "100%"
 
 [node name="Sep 1" type="HSeparator" parent="MarginContainer/Scroll/VBox/UI/VBox" unique_id=466072562]
@@ -306,7 +306,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Size of the items organized in a grid (artist, album, genre grid items)."
 mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Grid Item Size"
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Grid Item Size" unique_id=95389482]
@@ -347,7 +347,7 @@ tooltip_text = "When enabled, UI elements will change to the specified color.
 
 Will not work with dynamic accent enabled."
 mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Custom Accent"
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Custom Accent" unique_id=2067191583]
@@ -375,7 +375,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Tint applied to all panels & the background."
 mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Panel Tint"
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint" unique_id=912248261]
@@ -396,31 +396,31 @@ color = Color(1, 1, 1, 0)
 
 [node name="Preset 1" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint/HBox" unique_id=1844860115 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(1, 0.5, 0.5, 0.6862745)
+color = Color(1, 0, 0, 0.11764706)
 
 [node name="Preset 2" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint/HBox" unique_id=730299033 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(1, 0.93333334, 0.5, 0.6862745)
+color = Color(1, 0.90000004, 0, 0.11764706)
 
 [node name="Preset 3" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint/HBox" unique_id=432436828 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.68333334, 1, 0.5, 0.6862745)
+color = Color(0.6333333, 1, 0, 0.11764706)
 
 [node name="Preset 4" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint/HBox" unique_id=1125812842 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.5, 1, 0.7916666, 0.6862745)
+color = Color(0, 1, 0.48333335, 0.11764706)
 
 [node name="Preset 5" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint/HBox" unique_id=138632272 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.5, 0.8083333, 1, 0.6862745)
+color = Color(0, 0.7666669, 1, 0.11764706)
 
 [node name="Preset 6" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint/HBox" unique_id=1237658733 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.54166675, 0.5, 1, 0.6862745)
+color = Color(0.4000001, 0, 1, 0.11764706)
 
 [node name="Preset 7" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint/HBox" unique_id=1920690341 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.95833325, 0.5, 1, 0.6862745)
+color = Color(0.9333334, 0, 1, 0.11764706)
 
 [node name="Button Tint" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox" unique_id=333003217]
 layout_mode = 2
@@ -430,7 +430,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Tint applied to all buttons."
 mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Button Tint"
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Button Tint" unique_id=928976164]
@@ -451,31 +451,31 @@ color = Color(1, 1, 1, 0)
 
 [node name="Preset 1" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Button Tint/HBox" unique_id=2030450733 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(1, 0.5, 0.5, 0.6862745)
+color = Color(1, 0, 0, 0.11764706)
 
 [node name="Preset 2" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Button Tint/HBox" unique_id=73300012 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(1, 0.93333334, 0.5, 0.6862745)
+color = Color(1, 0.9019608, 0, 0.11764706)
 
 [node name="Preset 3" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Button Tint/HBox" unique_id=1862305262 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.68333334, 1, 0.5, 0.6862745)
+color = Color(0.63529414, 1, 0, 0.11764706)
 
 [node name="Preset 4" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Button Tint/HBox" unique_id=75304498 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.5, 1, 0.7916666, 0.6862745)
+color = Color(0, 1, 0.48235294, 0.11764706)
 
 [node name="Preset 5" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Button Tint/HBox" unique_id=1027965279 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.5, 0.8083333, 1, 0.6862745)
+color = Color(0, 0.76862746, 1, 0.11764706)
 
 [node name="Preset 6" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Button Tint/HBox" unique_id=1063109546 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.54166675, 0.5, 1, 0.6862745)
+color = Color(0.4, 0, 1, 0.11764706)
 
 [node name="Preset 7" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Button Tint/HBox" unique_id=366497914 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.95833325, 0.5, 1, 0.6862745)
+color = Color(0.93333334, 0, 1, 0.11764706)
 
 [node name="Sep 2" type="HSeparator" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox" unique_id=1206147046]
 layout_mode = 2
@@ -488,7 +488,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Amount of bars shown when \"Visualizer Mode\" is set to \"Bar\"."
 mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Visualizer Bar Count"
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Visualizer Bar Count" unique_id=292549509]
@@ -526,7 +526,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Smoothness value of bars shown when \"Visualizer Mode\" is set to \"Bar\"."
 mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Visualizer Bar Smoothing"
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Visualizer Bar Smoothing" unique_id=1927231174]
@@ -568,7 +568,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Process/VBox/Landing Page" unique_id=861454972]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Landing Page"
 
 [node name="Landing Page" type="OptionButton" parent="MarginContainer/Scroll/VBox/Process/VBox/Landing Page" unique_id=916314514]
@@ -597,7 +597,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Maximum number of items allowed in the queue at once."
 mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Queue Size Limit"
 
 [node name="Queue Size Limit" type="SpinBox" parent="MarginContainer/Scroll/VBox/Process/VBox/Queue Size Limit" unique_id=1897251501]
@@ -618,7 +618,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Image detail level. Higher values will use more memory but look sharper."
 mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Image Detail"
 
 [node name="Image Detail" type="HSlider" parent="MarginContainer/Scroll/VBox/Process/VBox/Image Detail" unique_id=761271597]
@@ -645,7 +645,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Shortcuts/VBox/Play Pause" unique_id=1615511433]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Play / Pause"
 
 [node name="Play Pause Key" type="Button" parent="MarginContainer/Scroll/VBox/Shortcuts/VBox/Play Pause" unique_id=1106191019]
@@ -660,7 +660,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Shortcuts/VBox/Skip Backward" unique_id=1974193347]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Skip Backward"
 
 [node name="Skip Backward Key" type="Button" parent="MarginContainer/Scroll/VBox/Shortcuts/VBox/Skip Backward" unique_id=848869332]
@@ -675,7 +675,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Shortcuts/VBox/Skip Forward" unique_id=1116914384]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Skip Forward"
 
 [node name="Skip Forward Key" type="Button" parent="MarginContainer/Scroll/VBox/Shortcuts/VBox/Skip Forward" unique_id=700989784]
@@ -690,7 +690,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Shortcuts/VBox/Page Back" unique_id=418645861]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Page Back"
 
 [node name="Page Back Key" type="Button" parent="MarginContainer/Scroll/VBox/Shortcuts/VBox/Page Back" unique_id=797202248]
@@ -713,7 +713,8 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Automatically fetch lyrics from an API & save to user data upon playing a track."
-theme_type_variation = &"PrimaryLabel"
+mouse_filter = 1
+theme_type_variation = &"LabelPrimary"
 text = "Fetch Lyrics"
 
 [node name="Fetch Lyrics" type="CheckButton" parent="MarginContainer/Scroll/VBox/APIs/VBox/Fetch Lyrics" unique_id=1998370400]
@@ -728,7 +729,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Automatically fetch lyrics from an API & save to user data upon playing a track."
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Fetch Artist Cover"
 
 [node name="Fetch Artist Cover" type="CheckButton" parent="MarginContainer/Scroll/VBox/APIs/VBox/Fetch Artist Cover" unique_id=405731710]
@@ -743,7 +744,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Automatically fetch lyrics from an API & save to user data upon playing a track."
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Fetch Album Cover"
 
 [node name="Fetch Album Cover" type="CheckButton" parent="MarginContainer/Scroll/VBox/APIs/VBox/Fetch Album Cover" unique_id=142586148]
@@ -762,7 +763,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Send system notification whenever a track has finished."
 mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Track Finished Notification"
 clip_text = true
 text_overrun_behavior = 5
@@ -780,7 +781,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Send system notification whenever a track has finished."
 mouse_filter = 1
-theme_type_variation = &"PrimaryLabel"
+theme_type_variation = &"LabelPrimary"
 text = "Lib. Scan Finished Notification"
 clip_text = true
 text_overrun_behavior = 5

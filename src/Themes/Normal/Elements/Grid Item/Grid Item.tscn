@@ -4,10 +4,8 @@
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_elf6b"]
 [ext_resource type="Script" uid="uid://d043648wabjl3" path="res://Elements/GridTextureRect.gd" id="4_d642b"]
 [ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="5_l7ro4"]
-[ext_resource type="LabelSettings" uid="uid://cg67c2g36lvdn" path="res://Assets/primary_label.tres" id="6_c3rqa"]
-[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="6_y8yeu"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7ro4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y2ujv"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -25,7 +23,6 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 script = ExtResource("1_l7ro4")
-hide_off_screen = null
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1832504744]
 layout_mode = 2
@@ -49,7 +46,7 @@ unique_name_in_owner = true
 clip_children = 1
 custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_l7ro4")
+theme_override_styles/panel = SubResource("StyleBoxFlat_y2ujv")
 script = ExtResource("3_elf6b")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
@@ -77,10 +74,11 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 1
-label_settings = ExtResource("6_c3rqa")
+theme_type_variation = &"LabelPrimary"
 horizontal_alignment = 1
 clip_text = true
 text_overrun_behavior = 5
+hover_theme_type_variation = "LabelPrimaryHover"
 
 [node name="Button" parent="VBox/Label 1" index="0" unique_id=1604203953]
 mouse_filter = 2
@@ -90,15 +88,14 @@ disabled = true
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 1
-label_settings = ExtResource("6_y8yeu")
 horizontal_alignment = 1
 clip_text = true
 text_overrun_behavior = 5
 enabled = false
-hover_font_color = Color(0.9, 0.9, 0.9, 1)
-hover_outline_color = Color(0.9, 0.9, 0.9, 1)
+hover_theme_type_variation = "LabelHover"
 
 [node name="Placeholder" type="Panel" parent="." unique_id=1737595186]
+visible = false
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 

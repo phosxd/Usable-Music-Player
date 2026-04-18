@@ -5,23 +5,12 @@
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_2c8cp"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_po36v"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yikp6"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2c8cp"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 anti_aliasing = false
-
-[sub_resource type="LabelSettings" id="LabelSettings_7nu5k"]
-font_size = 12
-outline_size = 1
-shadow_size = 2
-shadow_color = Color(1, 1, 1, 0)
-shadow_offset = Vector2(0, 0)
-
-[sub_resource type="LabelSettings" id="LabelSettings_uvxfr"]
-font_size = 10
-font_color = Color(0.8, 0.8, 0.8, 1)
 
 [node name="Queue Card" type="PanelContainer" unique_id=927718466]
 self_modulate = Color(1, 1, 1, 0)
@@ -67,11 +56,11 @@ flat = true
 [node name="Image" type="PanelContainer" parent="Image Margin/HBox" unique_id=1182272309]
 unique_name_in_owner = true
 clip_children = 1
-custom_minimum_size = Vector2(35, 35)
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_yikp6")
+theme_override_styles/panel = SubResource("StyleBoxFlat_2c8cp")
 script = ExtResource("3_2c8cp")
 texture = ExtResource("4_po36v")
 stretch_mode = 5
@@ -93,17 +82,14 @@ theme_override_constants/separation = 0
 unique_name_in_owner = true
 layout_mode = 2
 text = "Track name..."
-label_settings = SubResource("LabelSettings_7nu5k")
 clip_text = true
 text_overrun_behavior = 5
 
 [node name="Artist" type="Label" parent="Image Margin/HBox/Track Info" unique_id=965784348]
 unique_name_in_owner = true
-self_modulate = Color(0.75, 0.75, 0.75, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Artist name..."
-label_settings = SubResource("LabelSettings_uvxfr")
 clip_text = true
 text_overrun_behavior = 5
 
@@ -123,6 +109,7 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
 [node name="Placeholder" type="Panel" parent="." unique_id=1500058394]
+visible = false
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 

@@ -21,7 +21,6 @@
 [ext_resource type="Script" uid="uid://k1n47i1vyqjo" path="res://Scripts/UI/Main/indexing_status.gd" id="13_hto8k"]
 [ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Themes/Normal/Assets/Icons/search.svg" id="14_koken"]
 [ext_resource type="Texture2D" uid="uid://clvub0o51v8eh" path="res://Themes/Normal/Assets/Icons/scale_x2/change_sort_mode.svg" id="15_0fk8q"]
-[ext_resource type="LabelSettings" uid="uid://c4v5jc530rpeg" path="res://Assets/mini_label.tres" id="15_jo7x3"]
 [ext_resource type="Texture2D" uid="uid://c5rcofwxyp58s" path="res://Themes/Normal/Assets/Icons/scale_x2/loading.svg" id="15_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Themes/Normal/Assets/Icons/tree_arrow_left.svg" id="16_eeh6y"]
 [ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Themes/Normal/Queue/queue.tscn" id="19_eqlsm"]
@@ -36,7 +35,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bb5d1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jo7x3"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -310,6 +309,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 4.0
+offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
@@ -327,8 +328,8 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme_type_variation = &"LabelSmall"
 text = "Indexing (%s)..."
-label_settings = ExtResource("15_jo7x3")
 clip_text = true
 text_overrun_behavior = 5
 
@@ -352,7 +353,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_bb5d1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_jo7x3")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
@@ -523,4 +524,3 @@ layout_mode = 2
 [connection signal="text_changed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_search_text_changed"]
 [connection signal="text_submitted" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_search_text_submitted"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Sorting/Tab Tool Buttons/Ascend Mode" to="." method="_on_ascend_mode_pressed"]
-[connection signal="item_rect_changed" from="Global Margin/VBox/HBox/Tab VBox/Player Bar" to="." method="_on_player_bar_item_rect_changed"]

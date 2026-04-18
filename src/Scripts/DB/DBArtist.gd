@@ -55,6 +55,7 @@ func get_cover() -> ImageTexture:
 	if FileAccess.file_exists(cover_path):
 		var image = Image.load_from_file(cover_path)
 		if image is Image:
+			image.generate_mipmaps()
 			cover = ImageTexture.create_from_image(image)
 	if not cover: return null
 	_cover = cover

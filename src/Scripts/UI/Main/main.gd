@@ -74,14 +74,14 @@ func _ready() -> void:
 	PlayerManager.current_track_updated.connect(update_current_track)
 	SessionManager.value_changed.connect(func(property_name:String) -> void:
 		if property_name == 'visualizer_mode':
-			%Player.update_visualizer(album_dominant_color)
+			%Player.update_visualizer(ThemeManager.accent)
 		if property_name in ['dynamic_accents','custom_accent_enabled','custom_accent']:
 			update_accents()
-			%Player.update_visualizer(album_dominant_color)
+			%Player.update_visualizer(ThemeManager.accent)
 	)
 	update_current_track(0, PlayerManager.get_current_track())
 	update_accents()
-	%Player.update_visualizer(album_dominant_color)
+	%Player.update_visualizer(ThemeManager.accent)
 
 	general_options_popup.id_pressed.connect(_on_general_options_id_pressed)
 
@@ -116,7 +116,7 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 	)
 	if old_cover != %'Current Track Cover'.texture:
 		update_accents()
-		%Player.update_visualizer(album_dominant_color)
+		%Player.update_visualizer(ThemeManager.accent)
 
 
 func set_tab(tab:String, data=null) -> void:

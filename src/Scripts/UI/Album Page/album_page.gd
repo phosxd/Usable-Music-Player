@@ -67,7 +67,7 @@ func init(album_:DBAlbum=null) -> void:
 
 func add_disc_sep(disc:String) -> void:
 	var label := Label.new()
-	label.label_settings = preload('res://Assets/primary_label_large.tres')
+	label.theme_type_variation = 'LabelHeader'
 	label.text = 'Disc %s' % disc
 	%'Track List'.add_spacer(false)
 	%'Track List'.add_child(label)

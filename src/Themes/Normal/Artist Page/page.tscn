@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="4_wckwj"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="5_sflqa"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_r21fa"]
-[ext_resource type="LabelSettings" uid="uid://cdw532kd3kld3" path="res://Assets/header_label.tres" id="7_oq0cq"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="9_qc06v"]
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="10_k5jwi"]
 [ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="11_nj7j1"]
@@ -42,7 +41,7 @@ height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ef45b"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_obbmb"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -133,7 +132,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_ef45b")
+theme_override_styles/panel = SubResource("StyleBoxFlat_obbmb")
 script = ExtResource("4_wckwj")
 texture = ExtResource("5_sflqa")
 expand_mode = 2
@@ -158,8 +157,8 @@ size_flags_vertical = 10
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_type_variation = &"LabelHeader2"
 text = "ARTIST NAME"
-label_settings = ExtResource("7_oq0cq")
 clip_text = true
 text_overrun_behavior = 5
 

@@ -6,9 +6,7 @@
 [ext_resource type="Script" uid="uid://bjisaiqko2bpt" path="res://Elements/FitLabel Nodes/FLMHBoxContainer.gd" id="3_k76c7"]
 [ext_resource type="Texture2D" uid="uid://doajyey54rgs2" path="res://Themes/Normal/Assets/Icons/scale_x2/non_favorite.svg" id="3_kemy3"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="3_on5bc"]
-[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="3_rmo75"]
 [ext_resource type="Texture2D" uid="uid://by3qxgtdgkogn" path="res://Themes/Normal/Assets/Icons/favorite.svg" id="4_a3o2i"]
-[ext_resource type="LabelSettings" uid="uid://6ya8wrmwclpp" path="res://Assets/header_label_small.tres" id="4_saahk"]
 [ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Themes/Normal/Assets/Icons/skip_forward.svg" id="4_ucxa4"]
 [ext_resource type="Texture2D" uid="uid://bkkmi7knca7st" path="res://Themes/Normal/Assets/Icons/audio.svg" id="6_5infn"]
 [ext_resource type="PackedScene" uid="uid://4hlv0qpe30h8" path="res://Elements/Clickable Label/Fit Clickable Label.tscn" id="6_836g3"]
@@ -132,9 +130,11 @@ theme_override_constants/separation = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(74, 0)
 layout_mode = 2
+size_flags_vertical = 1
+theme_type_variation = &"LabelHeader"
 text = "No track"
-label_settings = ExtResource("4_saahk")
 text_overrun_behavior = 1
+hover_theme_type_variation = "LabelHeaderHover"
 
 [node name="Sep 3" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox" unique_id=175285363]
 self_modulate = Color(1, 1, 1, 0)
@@ -145,9 +145,11 @@ theme_override_constants/separation = 12
 unique_name_in_owner = true
 custom_minimum_size = Vector2(67.625, 0)
 layout_mode = 2
+size_flags_vertical = 1
 text = "No artist"
-label_settings = ExtResource("3_rmo75")
+vertical_alignment = 2
 text_overrun_behavior = 1
+hover_theme_type_variation = "LabelHover"
 
 [node name="Sep 2" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox" unique_id=495887998]
 self_modulate = Color(1, 1, 1, 0)
@@ -158,8 +160,9 @@ theme_override_constants/separation = 12
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 8
+size_flags_vertical = 1
 text = "0:00 / 0:00"
+vertical_alignment = 2
 
 [node name="Sep 1" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info" unique_id=458797593]
 self_modulate = Color(1, 1, 1, 0)

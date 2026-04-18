@@ -7,40 +7,28 @@ signal pressed
 
 @export var enabled:bool = true:
 	set(value):
-		_original_label_settings = label_settings
-		_on_button_mouse_exited()
 		enabled = value
 		$Button.disabled = not enabled
 		$Button.mouse_default_cursor_shape = CURSOR_POINTING_HAND if enabled else CURSOR_ARROW
+
 @export var button_tooltip_text:String = '':
 	set(value):
 		button_tooltip_text = value
 		$Button.tooltip_text = value
 
-@export_category('On Hover')
-## Font color to set when hovering.
-@export var hover_font_color := Color.WHITE
-## Outline color to set when hovering.
-@export var hover_outline_color := Color.WHITE
-## Outline size to [i]add[/i] when hovering.
-@export var hover_outline_size:int = 1
+@export var hover_theme_type_variation:String = ''
 
-var _original_label_settings: LabelSettings
+@onready var _original_theme_type_variation:String = self.theme_type_variation
 
 
 func _on_button_mouse_entered() -> void:
 	if not enabled: return
-	_original_label_settings = label_settings
-	var ls:LabelSettings = label_settings.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
-	ls.font_color = hover_font_color
-	ls.outline_color = hover_outline_color
-	ls.outline_size += hover_outline_size
-	self.label_settings = ls
+	self.theme_type_variation = hover_theme_type_variation
 
 
 func _on_button_mouse_exited() -> void:
 	if not enabled: return
-	self.label_settings = _original_label_settings
+	self.theme_type_variation = _original_theme_type_variation
 
 
 func _on_button_button_down() -> void:

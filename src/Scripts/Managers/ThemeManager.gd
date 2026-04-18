@@ -150,6 +150,7 @@ var panel_color := Color.TRANSPARENT:
 		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','panel_color')
 		value = value.blend(panel_tint)
 		_set_stylebox_property('PanelContainer', 'panel', 'bg_color', value)
+		_set_stylebox_property('GridItemPanel', 'panel', 'bg_color', value)
 
 var section_panel_color := Color.TRANSPARENT:
 	set(value):
@@ -185,8 +186,8 @@ var text_primary_color := Color.TRANSPARENT:
 	set(value):
 		text_primary_color = value
 		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','text_primary_color')
-		theme.set_color('font_color', 'PrimaryLabel', value)
-		theme.set_color('font_outline_color', 'PrimaryLabel', value)
+		theme.set_color('font_color', 'LabelPrimary', value)
+		theme.set_color('font_outline_color', 'LabelPrimary', value)
 
 var button_color := Color.TRANSPARENT:
 	set(value):

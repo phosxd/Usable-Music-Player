@@ -3,8 +3,6 @@
 [ext_resource type="Script" uid="uid://crd0eykqnn4b0" path="res://Scripts/UI/Tracks/card.gd" id="1_pbwpk"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_1pull"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="2_57cvb"]
-[ext_resource type="LabelSettings" uid="uid://wadklneh8tg0" path="res://Assets/primary_label_dark.tres" id="4_cn4eg"]
-[ext_resource type="LabelSettings" uid="uid://o03cpjqmp03v" path="res://Assets/secondary_label.tres" id="5_b7mt2"]
 [ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="6_b7mt2"]
 [ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="6_if58r"]
 
@@ -14,15 +12,12 @@ content_margin_top = 2.0
 content_margin_right = 2.0
 content_margin_bottom = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_if58r"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6in17"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 anti_aliasing = false
-
-[sub_resource type="LabelSettings" id="LabelSettings_pbwpk"]
-font_size = 12
 
 [node name="Card" type="PanelContainer" unique_id=927718466]
 self_modulate = Color(1, 1, 1, 0)
@@ -70,7 +65,7 @@ custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_if58r")
+theme_override_styles/panel = SubResource("StyleBoxFlat_6in17")
 script = ExtResource("2_1pull")
 texture = ExtResource("2_57cvb")
 stretch_mode = 5
@@ -98,8 +93,8 @@ theme_override_constants/separation = 4
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_type_variation = &"LabelPrimary"
 text = "Track"
-label_settings = ExtResource("4_cn4eg")
 text_overrun_behavior = 5
 
 [node name="Sep 2" type="VSeparator" parent="HBox/HBox" unique_id=168385932]
@@ -110,12 +105,11 @@ theme_override_constants/separation = 12
 
 [node name="Album" parent="HBox/HBox" unique_id=732696473 instance=ExtResource("6_if58r")]
 unique_name_in_owner = true
-self_modulate = Color(0.7490196, 0.7490196, 0.7490196, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Album"
-label_settings = ExtResource("5_b7mt2")
 text_overrun_behavior = 5
+hover_theme_type_variation = "LabelHover"
 
 [node name="Sep 4" type="VSeparator" parent="HBox/HBox" unique_id=231376400]
 self_modulate = Color(1, 1, 1, 0)
@@ -125,19 +119,17 @@ theme_override_constants/separation = 12
 
 [node name="Artist" parent="HBox/HBox" unique_id=2058449531 instance=ExtResource("6_if58r")]
 unique_name_in_owner = true
-self_modulate = Color(0.7490196, 0.7490196, 0.7490196, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Artist"
-label_settings = ExtResource("5_b7mt2")
 text_overrun_behavior = 5
+hover_theme_type_variation = "LabelHover"
 
 [node name="Format" type="Label" parent="HBox" unique_id=1648349056]
 unique_name_in_owner = true
-self_modulate = Color(0.75, 0.75, 0.75, 1)
 layout_mode = 2
+theme_type_variation = &"LabelSmall"
 text = ".wav"
-label_settings = SubResource("LabelSettings_pbwpk")
 
 [node name="Sep 1" type="VSeparator" parent="HBox" unique_id=1248280519]
 self_modulate = Color(1, 1, 1, 0)
