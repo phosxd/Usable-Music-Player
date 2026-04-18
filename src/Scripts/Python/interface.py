@@ -43,15 +43,39 @@ def get_audio_meta(tag, path):
 	meta:dict = {}
 
 	# Add list properties.
-	for property in ['artist', 'album', 'albumartist', 'title', 'genre', 'year', 'comment', 'lyrics', 'copyright']:
+	for property in ['artist', 'album', 'albumartist', 'title', 'year', 'comment', 'copyright']:
 		meta[property] = list_get(raw_meta.get(property,[]),0,'')
 	# Add number properties.
 	for property in ['duration', 'channels', 'bitrate', 'bitdepth', 'samplerate', 'track', 'disc']:
 		meta[property] = raw_meta.get(property,0)
 
+	# Album artist.
 	if meta['albumartist'] == '':
 		meta['albumartist'] = meta['artist']
 
+	# Get genres.
+	meta['genres'] = raw_meta.get('genre',[])
+
+	# Get synced & unsynced lyrics.
+	meta['synced_lyrics'] = ''
+	meta['unsynced_lyrics'] = ''
+	all_lyric_fields = []
+	all_lyric_fields.append(list_get(raw_meta.get('lyrics',[]),0,''))
+	all_lyric_fields.append(list_get(raw_meta.get('unsyncedlyrics',[]),0,''))
+	all_lyric_fields.append(list_get(raw_meta.get('lyrics',[]),1,''))
+	all_lyric_fields.append(list_get(raw_meta.get('syncedlyrics',[]),0,''))
+	for lyric_field in all_lyric_fields:
+		if lyric_field == '': continue
+		if lyric_field.__contains__('[') and lyric_field.__contains__(':'):
+			meta['synced_lyrics'] = lyric_field
+		else:
+			meta['unsynced_lyrics'] = lyric_field
+
+	# If only found synced lyrics, fill in unsynced lyrics.
+	if meta['synced_lyrics'] != '' and meta['unsynced_lyrics'] == '':
+		meta['unsynced_lyrics'] = ''.replace('[','***').replace(']','***').split('***')
+
+	# Get image.
 	cover_image = tag.images.any
 	meta['image_extension'] = ''
 	if cover_image is not None:

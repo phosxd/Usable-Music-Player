@@ -72,16 +72,21 @@ func _ready() -> void:
 	if default_tab.is_empty(): default_tab = SessionManager.last_tab
 	set_tab(default_tab)
 	PlayerManager.current_track_updated.connect(update_current_track)
-	SessionManager.value_changed.connect(func(property_name:String) -> void:
-		if property_name == 'visualizer_mode':
+	SessionManager.value_changed.connect(func(property:String) -> void:
+		if property == 'visualizer_mode':
 			%Player.update_visualizer(ThemeManager.accent)
-		if property_name in ['dynamic_accents','custom_accent_enabled','custom_accent']:
+		if property in ['dynamic_accents','custom_accent_enabled','custom_accent']:
 			update_accents()
 			%Player.update_visualizer(ThemeManager.accent)
+		if property == 'tab_content_split':
+			%'Tab Content Split'.split_offsets = SessionManager.tab_content_split
+		if property == 'right_sidebar_tab':
+			%'Tab Content Split'.collapsed = SessionManager.right_sidebar_tab == ''
 	)
 	update_current_track(0, PlayerManager.get_current_track())
 	update_accents()
 	%Player.update_visualizer(ThemeManager.accent)
+	%'Tab Content Split'.split_offsets = SessionManager.tab_content_split
 
 	general_options_popup.id_pressed.connect(_on_general_options_id_pressed)
 
@@ -270,3 +275,7 @@ func _on_ascend_mode_pressed() -> void:
 
 func _on_favorites_toggled(toggled_on:bool) -> void:
 	%'Favorites Options'.visible = toggled_on
+
+
+func _on_tab_content_split_drag_ended() -> void:
+	SessionManager.tab_content_split = %'Tab Content Split'.split_offsets

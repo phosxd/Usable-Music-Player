@@ -52,15 +52,20 @@ script = ExtResource("2_sbr64")
 speed = 500.0
 wheel_scroll_damper = SubResource("Resource_rqttv")
 dragging_scroll_damper = SubResource("Resource_y0htm")
+allow_overdragging = true
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="Label" type="Label" parent="VBox/Margin/Scroll" unique_id=495479084]
+[node name="Label" type="RichTextLabel" parent="VBox/Margin/Scroll" unique_id=950016221]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_1rp2w")
-autowrap_mode = 3
+fit_content = true
+scroll_active = false
+selection_enabled = true
+drag_and_drop_selection_enabled = false
 
 [node name="VBox" type="VBoxContainer" parent="VBox/Margin" unique_id=821906855]
 layout_mode = 2

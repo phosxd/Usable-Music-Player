@@ -97,7 +97,7 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="HBox" type="HBoxContainer" parent="Global Margin/VBox" unique_id=1751914993]
+[node name="HBox" type="HBoxContainer" parent="Global Margin/VBox" unique_id=1144373236]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
@@ -471,38 +471,41 @@ theme_type_variation = &"AccentButton"
 disabled = true
 icon = ExtResource("23_jo7x3")
 
-[node name="HBox" type="HBoxContainer" parent="Global Margin/VBox/HBox/Tab VBox" unique_id=8467318]
+[node name="Tab Content Split" type="HSplitContainer" parent="Global Margin/VBox/HBox/Tab VBox" unique_id=1044830271]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="Tab Content" type="VBoxContainer" parent="Global Margin/VBox/HBox/Tab VBox/HBox" unique_id=249872197]
+[node name="Tab Content" type="VBoxContainer" parent="Global Margin/VBox/HBox/Tab VBox/Tab Content Split" unique_id=249872197]
 unique_name_in_owner = true
 z_index = -1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="_label" type="Label" parent="Global Margin/VBox/HBox/Tab VBox/HBox/Tab Content" unique_id=850495634]
+[node name="_label" type="Label" parent="Global Margin/VBox/HBox/Tab VBox/Tab Content Split/Tab Content" unique_id=850495634]
 layout_mode = 2
 size_flags_vertical = 6
 text = "No tab opened..."
 horizontal_alignment = 1
 
-[node name="Right Sidebar Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Tab VBox/HBox" unique_id=747587161]
+[node name="Right Sidebar Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Tab VBox/Tab Content Split" unique_id=747587161]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Queue" parent="Global Margin/VBox/HBox/Tab VBox/HBox/Right Sidebar Margin" unique_id=1119812283 instance=ExtResource("19_eqlsm")]
+[node name="Queue" parent="Global Margin/VBox/HBox/Tab VBox/Tab Content Split/Right Sidebar Margin" unique_id=1119812283 instance=ExtResource("19_eqlsm")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
+size_flags_horizontal = 1
 
-[node name="Lyrics" parent="Global Margin/VBox/HBox/Tab VBox/HBox/Right Sidebar Margin" unique_id=564984742 instance=ExtResource("20_lj0cr")]
+[node name="Lyrics" parent="Global Margin/VBox/HBox/Tab VBox/Tab Content Split/Right Sidebar Margin" unique_id=564984742 instance=ExtResource("20_lj0cr")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
+size_flags_horizontal = 1
 
 [node name="Player Bar" type="MarginContainer" parent="Global Margin/VBox/HBox/Tab VBox" unique_id=477050872]
 unique_name_in_owner = true
@@ -524,3 +527,4 @@ layout_mode = 2
 [connection signal="text_changed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_search_text_changed"]
 [connection signal="text_submitted" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_search_text_submitted"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Sorting/Tab Tool Buttons/Ascend Mode" to="." method="_on_ascend_mode_pressed"]
+[connection signal="drag_ended" from="Global Margin/VBox/HBox/Tab VBox/Tab Content Split" to="." method="_on_tab_content_split_drag_ended"]
