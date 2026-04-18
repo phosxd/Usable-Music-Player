@@ -8,10 +8,6 @@ signal secondary_pressed
 ## Emitted when button is right clicked.
 signal alt_pressed
 
-## Cull pixel margin.
-const cull_margin:int = 250
-
-
 @export var item_size := Vector2(175,175):
 	set(value):
 		item_size = value
@@ -50,25 +46,10 @@ const cull_margin:int = 250
 		%'Label 2'.button_tooltip_text = value
 		%'Label 2'.enabled = not secondary_text.is_empty()
 
-@export var hide_off_screen:bool = true
-
 
 func _ready() -> void:
 	if Engine.is_editor_hint() == true: return
 	item_size = Vector2.ONE*SessionManager.grid_item_size
-
-
-func _process(_delta:float) -> void:
-	if Engine.get_process_frames() % 20 != 0 && not hide_off_screen: return
-	# Off-screen.
-	if self.global_position.y < -cull_margin or self.global_position.y > get_window().size.y+cull_margin:
-		$VBox.hide()
-		$Placeholder.show()
-		$Placeholder.custom_minimum_size = $VBox.size
-	# On-screen.
-	else:
-		$VBox.show()
-		$Placeholder.hide()
 
 
 func _on_button_pressed() -> void:

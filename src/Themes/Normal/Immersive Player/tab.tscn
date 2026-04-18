@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_i3gmp"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_c8ttq"]
 [ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Themes/Normal/Queue/queue.tscn" id="8_fbra8"]
+[ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Themes/Normal/Lyrics/lyrics.tscn" id="8_oc15g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4m0va"]
 shader = ExtResource("2_hbf8i")
@@ -15,7 +16,7 @@ shader_parameter/topright = Color(0, 0, 0, 1)
 shader_parameter/bottomleft = Color(0, 0, 0, 1)
 shader_parameter/bottomright = Color(0.12225223, 0.12225223, 0.12225223, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rd6y7"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khquy"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -74,7 +75,7 @@ size_flags_stretch_ratio = 0.3
 [node name="Control" type="PanelContainer" parent="Image Margin/HBoxContainer" unique_id=1196254434]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 6
 size_flags_vertical = 3
 
 [node name="Shadow" type="Panel" parent="Image Margin/HBoxContainer/Control" unique_id=2125278853]
@@ -89,7 +90,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_rd6y7")
+theme_override_styles/panel = SubResource("StyleBoxFlat_khquy")
 script = ExtResource("3_hbf8i")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -105,13 +106,17 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_behavior_recursive = 2
 
-[node name="Sep 3" type="VSeparator" parent="Image Margin/HBoxContainer" unique_id=1420459499]
+[node name="Middle Separator" type="VSeparator" parent="Image Margin/HBoxContainer" unique_id=1420459499]
+unique_name_in_owner = true
+visible = false
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.2
 
 [node name="Queue" parent="Image Margin/HBoxContainer" unique_id=1119812283 instance=ExtResource("8_fbra8")]
+unique_name_in_owner = true
+visible = false
 self_modulate = Color(1, 1, 1, 0.23529412)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -121,6 +126,20 @@ theme_override_styles/panel = ExtResource("2_a3alx")
 visible = false
 
 [node name="Sep 1" parent="Image Margin/HBoxContainer/Queue/VBox" parent_id_path=PackedInt32Array(1119812283, 1514673906) index="1" unique_id=26743642]
+visible = false
+
+[node name="Lyrics" parent="Image Margin/HBoxContainer" unique_id=100225784 instance=ExtResource("8_oc15g")]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("2_a3alx")
+
+[node name="Label" parent="Image Margin/HBoxContainer/Lyrics/VBox" parent_id_path=PackedInt32Array(100225784, 1514673906) index="0" unique_id=1803322427]
+visible = false
+
+[node name="Sep 1" parent="Image Margin/HBoxContainer/Lyrics/VBox" parent_id_path=PackedInt32Array(100225784, 1514673906) index="1" unique_id=26743642]
 visible = false
 
 [node name="Sep 2" type="VSeparator" parent="Image Margin/HBoxContainer" unique_id=1607931019]
@@ -137,5 +156,8 @@ size_flags_stretch_ratio = 0.25
 
 [connection signal="item_rect_changed" from="Image Margin/HBoxContainer/Control/Image" to="Image Margin" method="_on_image_item_rect_changed"]
 [connection signal="pressed" from="Image Margin/HBoxContainer/Control/Button" to="." method="_on_button_pressed"]
+[connection signal="visibility_changed" from="Image Margin/HBoxContainer/Queue" to="." method="_on_right_item_visibility_changed"]
+[connection signal="visibility_changed" from="Image Margin/HBoxContainer/Lyrics" to="." method="_on_right_item_visibility_changed"]
 
 [editable path="Image Margin/HBoxContainer/Queue"]
+[editable path="Image Margin/HBoxContainer/Lyrics"]

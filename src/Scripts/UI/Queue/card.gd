@@ -1,8 +1,5 @@
 extends Control
 
-## Cull pixel margin.
-const cull_margin:int = 250
-
 @onready var context_menu:ContextMenu = SessionManager.context_menus.queue_card
 var is_dragging:bool = false
 
@@ -10,19 +7,6 @@ var is_dragging:bool = false
 func _ready() -> void:
 	context_menu.id_pressed.connect(_context_menu_id_pressed)
 	highlight(false)
-
-
-func _process(_delta:float) -> void:
-	if Engine.get_process_frames() % 20 != 0: return
-	# Off-screen.
-	if self.global_position.y < -cull_margin or self.global_position.y > get_window().size.y+cull_margin:
-		$'Image Margin'.hide()
-		$Placeholder.show()
-		$Placeholder.custom_minimum_size = $'Image Margin'.size
-	# On-screen.
-	else:
-		$'Image Margin'.show()
-		$Placeholder.hide()
 
 
 func init(track:DBTrack) -> void:

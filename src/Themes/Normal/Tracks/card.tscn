@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_1pull"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="2_57cvb"]
 [ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="6_b7mt2"]
+[ext_resource type="Script" uid="uid://cvuw8ds1htson" path="res://Elements/ControlOnScreen.gd" id="6_g85ae"]
 [ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="6_if58r"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j4uv8"]
@@ -12,7 +13,7 @@ content_margin_top = 2.0
 content_margin_right = 2.0
 content_margin_bottom = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6in17"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g85ae"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -21,10 +22,9 @@ anti_aliasing = false
 
 [node name="Card" type="PanelContainer" unique_id=927718466]
 self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 70)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 69.0
+offset_bottom = 74.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_j4uv8")
 script = ExtResource("1_pbwpk")
@@ -65,7 +65,7 @@ custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_6in17")
+theme_override_styles/panel = SubResource("StyleBoxFlat_g85ae")
 script = ExtResource("2_1pull")
 texture = ExtResource("2_57cvb")
 stretch_mode = 5
@@ -159,6 +159,24 @@ icon = ExtResource("6_b7mt2")
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 mouse_filter = 2
+
+[node name="ControlOnScreen" type="Control" parent="." unique_id=783020605 node_paths=PackedStringArray("hide_nodes", "show_nodes")]
+layout_mode = 2
+mouse_filter = 1
+mouse_behavior_recursive = 1
+script = ExtResource("6_g85ae")
+hide_nodes = [NodePath("../HBox")]
+show_nodes = [NodePath("Placeholder")]
+ratio_up = 1.5
+
+[node name="Placeholder" type="PanelContainer" parent="ControlOnScreen" unique_id=470940929]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

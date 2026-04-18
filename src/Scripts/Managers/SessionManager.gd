@@ -36,6 +36,7 @@ const property_data:Array[Array] = [
 	['artists_tab_scroll_value',[TYPE_FLOAT]],
 	['albums_tab_scroll_value',[TYPE_FLOAT]],
 	['tracks_tab_scroll_value',[TYPE_FLOAT]],
+	['right_sidebar_tab',[TYPE_STRING]],
 	# Sort data.
 	['artist_sort_mode',[TYPE_INT]],
 	['artist_ascend_mode',[TYPE_BOOL]],
@@ -186,6 +187,11 @@ var last_tab:String = 'albums':
 	set(value):
 		last_tab = value
 		value_changed.emit('last_tab')
+
+var right_sidebar_tab:String = '':
+	set(value):
+		right_sidebar_tab = value
+		value_changed.emit('right_sidebar_tab')
 
 var artists_tab_scroll_value:float = 0
 var albums_tab_scroll_value:float = 0

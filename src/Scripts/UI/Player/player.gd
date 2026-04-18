@@ -26,6 +26,7 @@ func  _ready() -> void:
 	update_volume(PlayerManager.get_volume())
 	_session_manager_value_changed('visualizer_bar_count')
 	_session_manager_value_changed('visualizer_bar_smoothing')
+	_session_manager_value_changed('right_sidebar_tab')
 
 
 func _session_manager_value_changed(property_name:String) -> void:
@@ -34,7 +35,10 @@ func _session_manager_value_changed(property_name:String) -> void:
 			%'Bar Visualizer'.bar_count = SessionManager.visualizer_bar_count
 		'visualizer_bar_smoothing':
 			%'Bar Visualizer'.smoothing = SessionManager.visualizer_bar_smoothing
-	pass
+		'right_sidebar_tab':
+			var value:String = SessionManager.right_sidebar_tab
+			%'Toggle Queue'.set_pressed_no_signal(value == 'queue')
+			%'Toggle Lyrics'.set_pressed_no_signal(value == 'lyrics')
 
 
 func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
@@ -132,34 +136,10 @@ func _on_play_progress_drag_started() -> void:
 
 
 func _on_toggle_queue_toggled(toggled_on:bool) -> void:
-	var queue_bar = SessionManager.main_scene.get_node('%Queue')
-	var lyrics_bar = SessionManager.main_scene.get_node('%Lyrics')
-	if not queue_bar: return
-	if not lyrics_bar: return
-
-	if toggled_on:
-		queue_bar.show()
-		if %'Toggle Lyrics'.button_pressed:
-			lyrics_bar.hide()
-			%'Toggle Lyrics'.button_pressed = false
-	else:
-		queue_bar.hide()
-
+	SessionManager.right_sidebar_tab = 'queue' if toggled_on else ''
 
 func _on_toggle_lyrics_toggled(toggled_on:bool) -> void:
-	var queue_bar = SessionManager.main_scene.get_node('%Queue')
-	var lyrics_bar = SessionManager.main_scene.get_node('%Lyrics')
-	if not queue_bar: return
-	if not lyrics_bar: return
-
-	if not lyrics_bar:return
-	if toggled_on:
-		lyrics_bar.show()
-		if %'Toggle Queue'.button_pressed:
-			queue_bar.hide()
-			%'Toggle Queue'.button_pressed = false
-	else:
-		lyrics_bar.hide()
+	SessionManager.right_sidebar_tab = 'lyrics' if toggled_on else ''
 
 
 func _on_toggle_shuffle_toggled(toggled_on:bool) -> void:

@@ -6,11 +6,18 @@ var update_count:int = 0
 var queue_update_blocked:bool = false
 
 
-
 func _ready() -> void:
 	update()
 	PlayerManager.queue_updated.connect(update)
 	PlayerManager.current_track_updated.connect(track_updated)
+	SessionManager.value_changed.connect(_session_manager_value_changed)
+	_session_manager_value_changed('right_sidebar_tab')
+
+
+func _session_manager_value_changed(property:String) -> void:
+	match property:
+		'right_sidebar_tab':
+			self.visible = SessionManager.right_sidebar_tab == 'queue'
 
 
 func update(code:=PlayerManager.QueueUpdateCode.Set, data:Variant=null) -> void:

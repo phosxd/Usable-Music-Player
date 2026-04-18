@@ -3,6 +3,7 @@ extends Control
 const nodes_to_hide:Array[String] = [
 	'Topbar',
 	'Sidebar',
+	'Right Sidebar Margin',
 ]
 @export var overlay_color := Color(0, 0, 0, 0.2)
 var previous_global_margin:Array[int] = []
@@ -78,3 +79,10 @@ func update_visualizer(_db:float) -> void:
 
 func _on_button_pressed() -> void:
 	SessionManager.main_scene.go_back()
+
+
+func _on_right_item_visibility_changed() -> void:
+	if not %Lyrics.visible && not %Queue.visible:
+		%'Middle Separator'.hide()
+	else:
+		%'Middle Separator'.show()

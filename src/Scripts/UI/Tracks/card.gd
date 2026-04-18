@@ -7,9 +7,6 @@ enum CardMode {
 	minimal,
 }
 
-## Cull pixel margin.
-const cull_margin:int = 250
-
 @onready var context_menu:ContextMenu = SessionManager.context_menus.track_card
 var track: DBTrack
 var selected_mode := CardMode.detailed
@@ -22,16 +19,6 @@ func _ready() -> void:
 		if context_menu.current_instance_id != name: return
 		%Options.button_pressed = false
 	)
-
-
-func _process(_delta:float) -> void:
-	if Engine.get_process_frames() % 20 != 0: return
-	# Off-screen.
-	if self.global_position.y < -cull_margin or self.global_position.y > get_window().size.y+cull_margin:
-		$HBox.hide()
-	# On-screen.
-	else:
-		$HBox.show()
 
 
 func init(db_track:DBTrack) -> void:
