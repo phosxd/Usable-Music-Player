@@ -2,6 +2,9 @@
 
 [ext_resource type="SystemFont" uid="uid://cyium14kcmwxa" path="res://MODS/UMP Floating Theme/Assets/Fonts/main.tres" id="1_24d6f"]
 [ext_resource type="StyleBox" uid="uid://drf54ct3fqk68" path="res://MODS/UMP Floating Theme/Assets/Styles/PanelContainer/panel.tres" id="1_vl7iy"]
+[ext_resource type="StyleBox" uid="uid://77tc2rpv4mkg" path="res://MODS/UMP Floating Theme/Assets/Styles/PanelContainer/island_panel.tres" id="2_ve7cr"]
+[ext_resource type="StyleBox" uid="uid://coe1ck6nubixp" path="res://Themes/Normal/Assets/Styles/PanelContainer/rounded_texture_mask.tres" id="4_6anrp"]
+[ext_resource type="StyleBox" uid="uid://ba5xswwps47ww" path="res://Themes/Normal/Assets/Styles/PanelContainer/section_panel.tres" id="5_c7wse"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2pd6n"]
 content_margin_left = 8.0
@@ -35,10 +38,6 @@ corner_radius_bottom_left = 4
 corner_detail = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hh4db"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
 bg_color = Color(0.37919998, 0.37919998, 0.37919998, 1)
 border_width_left = 1
 border_width_top = 1
@@ -52,10 +51,6 @@ corner_radius_bottom_left = 16
 corner_detail = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ruv2r"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
 bg_color = Color(0.3936, 0.3936, 0.3936, 1)
 border_width_left = 1
 border_width_top = 1
@@ -69,10 +64,6 @@ corner_radius_bottom_left = 16
 corner_detail = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hne2s"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
 bg_color = Color(0.2509804, 0.2509804, 0.2509804, 0)
 border_width_left = 1
 border_width_top = 1
@@ -719,6 +710,7 @@ HSlider/icons/grabber_highlight = SubResource("DPITexture_xwxhs")
 HSlider/styles/grabber_area = SubResource("StyleBoxFlat_di31b")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_tg2ob")
 HSlider/styles/slider = SubResource("StyleBoxFlat_s1k85")
+IslandPanelContainer/styles/panel = ExtResource("2_ve7cr")
 Label/colors/font_color = Color(1, 1, 1, 0.75)
 Label/colors/font_outline_color = Color(1, 1, 1, 0)
 Label/colors/font_shadow_color = Color(1, 1, 1, 0)
@@ -730,6 +722,49 @@ Label/constants/shadow_outline_size = 1
 Label/font_sizes/font_size = 16
 Label/styles/focus = SubResource("StyleBoxEmpty_ce5uv")
 Label/styles/normal = SubResource("StyleBoxEmpty_erhc2")
+LabelHeader/colors/font_color = Color(0.89411765, 0.89411765, 0.89411765, 1)
+LabelHeader/colors/font_outline_color = Color(0.89411765, 0.89411765, 0.89411765, 1)
+LabelHeader/constants/outline_size = 1
+LabelHeader/font_sizes/font_size = 18
+LabelHeader2/colors/font_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
+LabelHeader2/colors/font_outline_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
+LabelHeader2/constants/outline_size = 2
+LabelHeader2/font_sizes/font_size = 22
+LabelHeader3/colors/font_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
+LabelHeader3/colors/font_outline_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
+LabelHeader3/constants/outline_size = 2
+LabelHeader3/font_sizes/font_size = 26
+LabelHeader4/colors/font_color = Color(0.9, 0.9, 0.9, 1)
+LabelHeader4/colors/font_outline_color = Color(0.9, 0.9, 0.9, 1)
+LabelHeader4/colors/font_shadow_color = Color(0.9, 0.9, 0.9, 0.39215687)
+LabelHeader4/constants/outline_size = 2
+LabelHeader4/constants/shadow_offset_x = 0
+LabelHeader4/constants/shadow_offset_y = 0
+LabelHeader4/constants/shadow_outline_size = 6
+LabelHeader4/font_sizes/font_size = 30
+LabelHeaderHover/colors/font_color = Color(0.95, 0.95, 0.95, 1)
+LabelHeaderHover/colors/font_outline_color = Color(0.95, 0.95, 0.95, 1)
+LabelHeaderHover/constants/outline_size = 2
+LabelHeaderHover/font_sizes/font_size = 18
+LabelHover/colors/font_color = Color(0.85, 0.85, 0.85, 1)
+LabelHover/colors/font_outline_color = Color(0.85, 0.85, 0.85, 1)
+LabelHover/constants/outline_size = 1
+LabelLarge/font_sizes/font_size = 18
+LabelPrimary/colors/font_color = Color(0.89411765, 0.89411765, 0.89411765, 1)
+LabelPrimary/colors/font_outline_color = Color(0.89411765, 0.89411765, 0.89411765, 1)
+LabelPrimary/constants/outline_size = 1
+LabelPrimaryHover/colors/font_color = Color(0.95, 0.95, 0.95, 1)
+LabelPrimaryHover/colors/font_outline_color = Color(0.95, 0.95, 0.95, 1)
+LabelPrimaryHover/constants/outline_size = 2
+LabelPrimarySmall/colors/font_color = Color(0.89411765, 0.89411765, 0.89411765, 1)
+LabelPrimarySmall/colors/font_outline_color = Color(0.89411765, 0.89411765, 0.89411765, 1)
+LabelPrimarySmall/constants/outline_size = 1
+LabelPrimarySmall/font_sizes/font_size = 14
+LabelSecondary/colors/font_color = Color(0.8, 0.8, 0.8, 1)
+LabelSecondary/font_sizes/font_size = 14
+LabelSecondarySmall/colors/font_color = Color(0.8, 0.8, 0.8, 1)
+LabelSecondarySmall/font_sizes/font_size = 12
+LabelSmall/font_sizes/font_size = 13
 LineEdit/colors/caret_color = Color(1, 1, 1, 0.7490196)
 LineEdit/colors/clear_button_color = Color(1, 1, 1, 0.7490196)
 LineEdit/colors/clear_button_color_pressed = Color(0.3372549, 0.61960787, 1, 1)
@@ -746,6 +781,9 @@ Panel/styles/panel = SubResource("StyleBoxFlat_36d8i")
 PanelContainer/styles/panel = ExtResource("1_vl7iy")
 PanelContainer2/base_type = &"PanelContainer"
 PanelContainer2/styles/panel = SubResource("StyleBoxFlat_xqqwk")
+PrimaryLabel/colors/font_color = Color(0.89411765, 0.89411765, 0.89411765, 1)
+PrimaryLabel/colors/font_outline_color = Color(0.89, 0.89, 0.89, 1)
+PrimaryLabel/constants/outline_size = 1
 RichTextLabel/colors/default_color = Color(1, 1, 1, 0.75)
 RichTextLabel/colors/font_outline_color = Color(1, 1, 1, 0)
 RichTextLabel/colors/font_shadow_color = Color(1, 1, 1, 0)
@@ -760,10 +798,12 @@ RichTextLabel/fonts/italics_font = null
 RichTextLabel/fonts/normal_font = null
 RichTextLabel/styles/focus = SubResource("StyleBoxEmpty_2pana")
 RichTextLabel/styles/normal = SubResource("StyleBoxFlat_f1hsc")
+RoundedTextureMask/styles/panel = ExtResource("4_6anrp")
 ScrollContainer/colors/scroll_hint_horizontal_color = Color(0, 0, 0, 1)
 ScrollContainer/colors/scroll_hint_vertical_color = Color(0, 0, 0, 1)
 ScrollContainer/styles/focus = SubResource("StyleBoxFlat_g11mq")
 ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_4by78")
+SectionPanelContainer/styles/panel = ExtResource("5_c7wse")
 SoftButton/base_type = &"Button"
 SoftButton/styles/disabled = SubResource("StyleBoxEmpty_xqqwk")
 SoftButton/styles/focus = SubResource("StyleBoxEmpty_3rvjd")
@@ -797,6 +837,7 @@ TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_0y7oa")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_aygfs")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_crnkq")
 TabContainer/styles/tabbar_background = SubResource("StyleBoxFlat_p5cll")
+ToolsIslandPanelContainer/styles/panel = ExtResource("2_ve7cr")
 ToolsPanelContainer/base_type = &"PanelContainer"
 ToolsPanelContainer/styles/panel = ExtResource("1_vl7iy")
 TooltipPanel/styles/panel = SubResource("StyleBoxFlat_fyvmx")

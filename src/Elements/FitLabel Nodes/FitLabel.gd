@@ -2,6 +2,7 @@
 ##
 ## Enable a form of clipping on the text for adapting to take effect (i.e. [param clip_text] or [param text_overrun_behavior]).
 ## [br][br]
+## The label may not work correctly if it is not placed under an HBoxContainer.
 ## Use an [FLMHBoxContainer] for automatic update calls.
 @tool
 class_name FitLabel extends Label
@@ -15,13 +16,14 @@ var currently_updating:bool = false
 
 func update() -> void:
 	var parent = self.get_parent()
-	if parent is not HBoxContainer or currently_updating: return
+	if parent == null or currently_updating or not self.visible: return
+	if parent is not HBoxContainer: parent = parent.get_parent()
+	if parent is not HBoxContainer: return
 	parent = parent as HBoxContainer
 	currently_updating = true
 
-	# Set minimum size to "0" then waiting one frame to ensure calculations are not influenced by changes.
+	# Set minimum size to "0" then wait one frame to ensure calculations are not influenced by changes.
 	self.custom_minimum_size.x = 0
-	self.show()
 	await get_tree().create_timer(0).timeout
 
 	var free_pixels:float = parent.size.x-parent.get_minimum_size().x # Get amount of pixels the parent container has available.

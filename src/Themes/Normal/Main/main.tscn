@@ -23,8 +23,6 @@
 [ext_resource type="Texture2D" uid="uid://clvub0o51v8eh" path="res://Themes/Normal/Assets/Icons/scale_x2/change_sort_mode.svg" id="15_0fk8q"]
 [ext_resource type="Texture2D" uid="uid://c5rcofwxyp58s" path="res://Themes/Normal/Assets/Icons/scale_x2/loading.svg" id="15_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Themes/Normal/Assets/Icons/tree_arrow_left.svg" id="16_eeh6y"]
-[ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Themes/Normal/Queue/queue.tscn" id="19_eqlsm"]
-[ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Themes/Normal/Lyrics/lyrics.tscn" id="20_lj0cr"]
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="23_jo7x3"]
 
 [sub_resource type="Resource" id="Resource_eqlsm"]
@@ -35,7 +33,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jo7x3"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hto8k"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -353,7 +351,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_jo7x3")
+theme_override_styles/panel = SubResource("StyleBoxFlat_hto8k")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
@@ -494,18 +492,6 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="Queue" parent="Global Margin/VBox/HBox/Tab VBox/Tab Content Split/Right Sidebar Margin" unique_id=1119812283 instance=ExtResource("19_eqlsm")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 1
-
-[node name="Lyrics" parent="Global Margin/VBox/HBox/Tab VBox/Tab Content Split/Right Sidebar Margin" unique_id=564984742 instance=ExtResource("20_lj0cr")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 1
 
 [node name="Player Bar" type="MarginContainer" parent="Global Margin/VBox/HBox/Tab VBox" unique_id=477050872]
 unique_name_in_owner = true

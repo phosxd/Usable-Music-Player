@@ -72,7 +72,7 @@ func to_json(object:Object, ruleset:Dictionary) -> Variant:
 		var property_value = object.get(property.name)
 		if property_value == null: continue
 		# Exclude values that are the same as default values.
-		if ruleset.get('exclude_default_properties'):
+		if ruleset.get('exclude_default_values'):
 			if property_value == default_object.get(property.name): continue
 
 		A2J._tree_position.append(property.name)

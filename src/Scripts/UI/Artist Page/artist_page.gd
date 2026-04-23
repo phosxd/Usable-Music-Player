@@ -45,9 +45,9 @@ func init(artist_:DBArtist=null) -> void:
 
 	var runtime:float = 0
 	var track_count:int = 0
-	for album:DBAlbum in artist.albums.values():
+	for album:DBAlbum in artist.albums:
 		loaded_albums.append(album)
-		for track:DBTrack in album.tracks.values():
+		for track:DBTrack in album.tracks:
 			track_count += 1
 			runtime += track.length
 		add_card(album)
@@ -127,6 +127,6 @@ func _on_option_id_pressed(id:int) -> void:
 	match id:
 		0: pass
 		1: pass
-		2:
-			LibraryManager.rescan_artist(artist)
-			SessionManager.main_scene.refresh_tab()
+		2: pass
+			#LibraryManager.rescan_artist(artist)
+			#SessionManager.main_scene.refresh_tab()

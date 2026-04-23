@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://cnxjbmqaco85o"]
+
+[ext_resource type="Script" uid="uid://3pfdkjy7b0fv" path="res://Scripts/UI/Settings/library_item_navidrome.gd" id="1_yyirb"]
+[ext_resource type="Texture2D" uid="uid://6icvlc6d5rna" path="res://Themes/Normal/Assets/Icons/Save.svg" id="2_ayo64"]
+[ext_resource type="Texture2D" uid="uid://bvqawkutxdyax" path="res://Themes/Normal/Assets/Icons/Navidrome.png" id="2_n3its"]
+[ext_resource type="Texture2D" uid="uid://cd1hy6hohg5tn" path="res://Themes/Normal/Assets/Icons/tree_arrow_up.svg" id="3_n3its"]
+[ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Themes/Normal/Assets/Icons/remove.svg" id="4_tdsdd"]
+[ext_resource type="Texture2D" uid="uid://c7nxvr0h1tqqk" path="res://Themes/Normal/Assets/Icons/tree_arrow_down.svg" id="5_n3its"]
+
+[node name="Library Item Local" type="PanelContainer" unique_id=1722145366]
+self_modulate = Color(1, 1, 1, 0.5882353)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 39.0
+grow_horizontal = 2
+script = ExtResource("1_yyirb")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=730311427]
+layout_mode = 2
+
+[node name="Title" type="HBoxContainer" parent="VBox" unique_id=48901372]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBox/Title" unique_id=896003528]
+layout_mode = 2
+texture = ExtResource("2_n3its")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBox/Title" unique_id=938562170]
+layout_mode = 2
+text = "Navidrome Server"
+
+[node name="Controls" type="HBoxContainer" parent="VBox" unique_id=908796401]
+layout_mode = 2
+
+[node name="Update" type="Button" parent="VBox/Controls" unique_id=1209477638]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Apply changes."
+disabled = true
+icon = ExtResource("2_ayo64")
+flat = true
+
+[node name="URL" type="LineEdit" parent="VBox/Controls" unique_id=1996320132]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Your Navidrome IP & port."
+placeholder_text = "IP:Port..."
+
+[node name="Username" type="LineEdit" parent="VBox/Controls" unique_id=2134356938]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Username..."
+
+[node name="Password" type="LineEdit" parent="VBox/Controls" unique_id=697569106]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Password..."
+
+[node name="Move Up" type="Button" parent="VBox/Controls" unique_id=563130389]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("3_n3its")
+flat = true
+
+[node name="Move Down" type="Button" parent="VBox/Controls" unique_id=1863150039]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("5_n3its")
+flat = true
+
+[node name="Remove" type="Button" parent="VBox/Controls" unique_id=203149948]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("4_tdsdd")
+flat = true
+
+[connection signal="pressed" from="VBox/Controls/Update" to="." method="_on_update_pressed"]
+[connection signal="text_changed" from="VBox/Controls/URL" to="." method="_on_changed"]
+[connection signal="text_changed" from="VBox/Controls/Username" to="." method="_on_changed"]
+[connection signal="text_changed" from="VBox/Controls/Password" to="." method="_on_changed"]
+[connection signal="pressed" from="VBox/Controls/Move Up" to="." method="_on_move_up_pressed"]
+[connection signal="pressed" from="VBox/Controls/Move Down" to="." method="_on_move_down_pressed"]
+[connection signal="pressed" from="VBox/Controls/Remove" to="." method="_on_remove_pressed"]

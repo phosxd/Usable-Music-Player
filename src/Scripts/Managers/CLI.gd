@@ -6,15 +6,15 @@ const minilog_importance := MiniLog.Importance.Core
 const cli_path:String = 'CLIs'
 ## Name of expected CLI binaries.
 const clis:Array[String] = [
-	'interface',
+	#'interface',
 ]
 ## CLI versions.
 const cli_versions:Dictionary[String,int] = {
-	'interface': 0,
+	#'interface': 0,
 }
 ## Runtime absolute paths to the executable binary.
 var cli_executable_paths:Dictionary[String,String] = {
-	'interface': '',
+	#'interface': '',
 }
 
 

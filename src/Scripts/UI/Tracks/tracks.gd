@@ -35,7 +35,7 @@ extends VBoxContainer
 
 var loaded_tracks:Array[DBTrack] = []
 var selected_track_index: int
-var sort_mode: LibraryManager.TrackSortMode
+var sort_mode: DBLibrary.TrackSortMode
 var ascend_mode = null
 var update_count:int = 0
 
@@ -102,11 +102,11 @@ func _on_track_selected(track:DBTrack) -> void:
 func _on_sort_mode_item_selected(index:int) -> void:
 	var prev_sort_mode := sort_mode
 	match index:
-		0: sort_mode = LibraryManager.TrackSortMode.TITLE
-		1: sort_mode = LibraryManager.TrackSortMode.ARTIST
-		2: sort_mode = LibraryManager.TrackSortMode.YEAR
-		3: sort_mode = LibraryManager.TrackSortMode.NUMBER
-		4: sort_mode = LibraryManager.TrackSortMode.LENGTH
+		0: sort_mode = DBLibrary.TrackSortMode.title
+		1: sort_mode = DBLibrary.TrackSortMode.artist
+		2: sort_mode = DBLibrary.TrackSortMode.year
+		3: sort_mode = DBLibrary.TrackSortMode.number
+		4: sort_mode = DBLibrary.TrackSortMode.length
 	if prev_sort_mode != sort_mode:
 		sort()
 

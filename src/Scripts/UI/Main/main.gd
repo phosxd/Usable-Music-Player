@@ -90,6 +90,9 @@ func _ready() -> void:
 
 	general_options_popup.id_pressed.connect(_on_general_options_id_pressed)
 
+	%'Right Sidebar Margin'.add_child(SessionManager.get_layout_theme_scene('Queue/queue').instantiate())
+	%'Right Sidebar Margin'.add_child(SessionManager.get_layout_theme_scene('Lyrics/lyrics').instantiate())
+
 
 func update_accents() -> void:
 	var prev_album_dominant_color:Color = album_dominant_color
@@ -106,9 +109,7 @@ func update_accents() -> void:
 	var accent:Color = album_dominant_color
 	# Clamp colors based on theme luminance.
 	var luminance:float = ThemeManager.bg_color.get_luminance() if ThemeManager.bg_color.a != 0 else ThemeManager.default_bg_color.get_luminance()
-	if luminance > 0.5:
-		accent.v = min(0.6, accent.v)
-	else:
+	if luminance < 0.5:
 		accent.v = max(0.6, accent.v)
 	ThemeManager.accent = accent
 

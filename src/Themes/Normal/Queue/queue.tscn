@@ -22,7 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 8
+size_flags_vertical = 3
 script = ExtResource("1_02mni")
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1514673906]
@@ -38,7 +38,7 @@ theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="VBox/Controls" unique_id=1803322427]
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 6
 text = "Queue"
 horizontal_alignment = 1
 

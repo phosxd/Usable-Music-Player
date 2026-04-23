@@ -70,7 +70,7 @@ func _draw() -> void:
 		var height = data[i]
 		var rect := Rect2(
 			(i*bar_width) + position_offset.x,
-			size.y + position_offset.y - (size.y if align_top else 0),
+			size.y + position_offset.y - (size.y if align_top else 0.0),
 			bar_width-2,
 			-MathUtils.transfer_range_of_value(Vector2(0,1), Vector2(0,size.y), height),
 		)

@@ -5,27 +5,27 @@ class_name DBTrack extends RefCounted
 ## Parent album.
 var album: DBAlbum
 ## Track absolute file path.
-var path: String
+var path:String = ''
 ## Number of bytes of file at [param path].
-var file_size: int
+var file_size:int = 0
 ## Track name.
-var name: String
+var name:String = ''
 ## Track actual artist name.
-var actual_artist: String
+var actual_artist:String = ''
 ## Track number.
-var number: int
+var number:int = 0
 ## Track album disc number.
-var disc: int
+var disc:int = 0
 ## Track length.
-var length: float
+var length:float = 0.0
 ## Number of track channels.
-var channels: int
+var channels:int = 0
 ## Track sample rate.
-var sample_rate: float
+var sample_rate:float = 0.0
 ## Track bit rate.
-var bit_rate: float
+var bit_rate:float = 0.0
 ## Track beats per minute.
-var bpm: float
+var bpm:float = 0.0
 ## Track comment.
 var comment: String
 ## Last time the file was modified.
@@ -37,11 +37,16 @@ var valid := true
 
 ## Construct new DBTrack.
 ## Do not use [param raw_info].
-func _init(album_:DBAlbum, path_:String, data:Dictionary) -> void:
-	if path_ == '.dummy': return # Don't do any processing if is a dummy.
-	if path_.is_empty() or not album_: remove()
+func _init(album_:DBAlbum, data:Dictionary) -> void:
+	if album_ == null: return # Don't do any processing if is a dummy.
 	album = album_
-	path = path_
+	album.tracks.append(self)
+	album.artist.library.tracks.append(self)
+	update_data(data)
+
+
+func update_data(data:Dictionary) -> void:
+	path = data.get('path','')
 
 	var raw_file_size = data.get('file_size')
 	if raw_file_size is int: file_size = raw_file_size
@@ -51,9 +56,9 @@ func _init(album_:DBAlbum, path_:String, data:Dictionary) -> void:
 	if raw_length is float: length = raw_length
 	else: length = 0
 
-	var raw_title = data.get('title')
-	if raw_title is String && not raw_title.is_empty(): name = raw_title
-	else: name = 'No title found'
+	var raw_name = data.get('name')
+	if raw_name is String && not raw_name.is_empty(): name = raw_name
+	else: name = ''
 
 	var raw_aa = data.get('actual_artist')
 	if raw_aa is String && not raw_aa.is_empty(): actual_artist = raw_aa
@@ -73,7 +78,8 @@ func _init(album_:DBAlbum, path_:String, data:Dictionary) -> void:
 
 
 func remove() -> void:
-	LibraryManager.remove_track(path)
+	album.artist.library.tracks.erase(self)
+	album.tracks.erase(self)
 
 
 func get_stream() -> AudioStream:
@@ -83,6 +89,19 @@ func get_stream() -> AudioStream:
 ## Returns file system firendly name of the track.
 func as_filename() -> String:
 	return '%s__%s__%s__%s' % [album.artist.name.replace('/','_'), album.name.replace('/','_'), disc, number]
+
+
+func as_uid() -> String:
+	var library_id:String = album.artist.library.id
+	return '.'.join([
+		library_id,
+		album.artist.name,
+		album.name,
+		str(disc),
+		str(number),
+		str(length),
+		str(file_size),
+	])
 
 
 ## Returns any stored lyrics for this track, or an empty string if none found.

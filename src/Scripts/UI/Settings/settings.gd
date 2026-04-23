@@ -19,18 +19,10 @@ const landing_page_options:Array[String] = [
 	'genres',
 ]
 const dir_open_popup := preload('res://Scenes/Dir Open/dir_open.tscn')
-@onready var info_text_template:String = %Info.text
 
 
 func _ready() -> void:
 	@warning_ignore('integer_division')
-	%Info.text = info_text_template % [
-		LibraryManager.get_user_data_size()/1000/1000,
-		LibraryManager.database.get('timestamp', 'Never'),
-		LibraryManager.get_library_size()/1000/1000,
-		LibraryManager.database.tracks.size(),
-	]
-	%'Library Path'.text = SessionManager.library_location
 	%'Dynamic Accents'.set_pressed_no_signal(SessionManager.dynamic_accents)
 	%'Custom Accent Toggle'.set_pressed_no_signal(SessionManager.custom_accent_enabled)
 	%'Custom Accent'.color = SessionManager.custom_accent
@@ -57,27 +49,7 @@ func _ready() -> void:
 	%'Image Detail'.set_value_no_signal(SessionManager.image_detail)
 	%'Track Finished Notif'.set_pressed_no_signal(SessionManager.send_track_finished_notif)
 	%'Library Scan Finished Notif'.set_pressed_no_signal(SessionManager.send_library_scan_finished_notif)
-
-
-func _on_select_library_pressed() -> void:
-	if LibraryManager.currently_updating: return
-	@warning_ignore('shadowed_variable_base_class')
-	var popup:FileDialog = dir_open_popup.instantiate()
-	popup.dir_selected.connect(func(path:String) -> void:
-		_on_library_path_text_submitted(path)
-	)
-	self.add_child(popup)
-	popup.show()
-
-
-func _on_library_path_text_submitted(new_text:String) -> void:
-	if LibraryManager.currently_updating: return
-	LibraryManager.generate_database(new_text, func()->void:pass)
-
-
-func _on_rescan_library_pressed() -> void:
-	if LibraryManager.currently_updating: return
-	_on_library_path_text_submitted(%'Library Path'.text)
+	# ---
 
 
 func _on_user_data_pressed() -> void:
@@ -125,27 +97,23 @@ func _on_fetch_album_cover_toggled(_toggled_on:bool) -> void:
 
 
 func _on_play_pause_key_pressed() -> void:
-	pass # Replace with function body.
+	pass
 
 
 func _on_skip_backward_key_pressed() -> void:
-	pass # Replace with function body.
+	pass
 
 
 func _on_skip_forward_key_pressed() -> void:
-	pass # Replace with function body.
+	pass
 
 
 func _on_page_back_key_pressed() -> void:
-	pass # Replace with function body.
+	pass
 
 
 func _on_image_detail_value_changed(value:float) -> void:
 	SessionManager.image_detail = int(value) as SessionManager.ImageDetail
-
-
-func _on_scan_for_changes_pressed() -> void:
-	LibraryManager.scan_for_changes()
 
 
 func _on_track_finished_notif_toggled(toggled_on:bool) -> void:

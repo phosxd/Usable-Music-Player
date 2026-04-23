@@ -21,7 +21,7 @@ func from_artist(artist:DBArtist) -> void:
 	_reset_images()
 	_add_images()
 	var index:int = -1
-	for album:DBAlbum in artist.albums.values():
+	for album:DBAlbum in artist.albums:
 		index += 1
 		if index > 4: break
 		if index >= get_child_count(): continue

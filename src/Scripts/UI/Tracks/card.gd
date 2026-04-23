@@ -80,9 +80,7 @@ func _on_option_id_pressed(id:int) -> void:
 			SessionManager.main_scene.set_tab('album_page', track.album)
 		4: # Show in files.
 			OS.shell_show_in_file_manager(track.path)
-		5: # Rescan.
-			LibraryManager.rescan_track(track)
-			SessionManager.main_scene.refresh_tab()
+		5: pass
 
 
 func _on_button_gui_input(event:InputEvent) -> void:

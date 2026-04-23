@@ -133,7 +133,7 @@ layout_mode = 2
 size_flags_vertical = 1
 theme_type_variation = &"LabelHeader"
 text = "No track"
-text_overrun_behavior = 1
+text_overrun_behavior = 5
 hover_theme_type_variation = "LabelHeaderHover"
 
 [node name="Sep 3" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox" unique_id=175285363]
@@ -148,7 +148,7 @@ layout_mode = 2
 size_flags_vertical = 1
 text = "No artist"
 vertical_alignment = 2
-text_overrun_behavior = 1
+text_overrun_behavior = 5
 hover_theme_type_variation = "LabelHover"
 
 [node name="Sep 2" type="VSeparator" parent="Panel/VBox/GridContainer/Track Info/Track Info/Details HBox" unique_id=495887998]
@@ -255,7 +255,7 @@ expand_icon = true
 
 [node name="Swap Loop Mode" type="Button" parent="Panel/VBox/GridContainer/Controls/Controls 2" unique_id=1189711306]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(52, 32)
+custom_minimum_size = Vector2(42, 32)
 layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"AccentButton"

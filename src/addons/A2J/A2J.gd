@@ -99,7 +99,7 @@ static var type_handlers:Dictionary[String,A2JTypeHandler] = {
 ## This also means if your game export excludes certain classes you may need to remove them from here.
 static var object_registry:Dictionary[StringName,Object] = {
 	'Object':Object, 'Resource':Resource, 'GDScript':GDScript,
-	'DBArtist':DBArtist, 'DBAlbum':DBAlbum, 'DBTrack':DBTrack,
+	'DBLibrary':DBLibrary, 'DBArtist':DBArtist, 'DBAlbum':DBAlbum, 'DBTrack':DBTrack,
 }
 
 

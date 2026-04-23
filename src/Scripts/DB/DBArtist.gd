@@ -2,31 +2,35 @@
 ## Use [param new_or_reuse] when instantiating.
 class_name DBArtist extends RefCounted
 
+## Parent library.
+var library: DBLibrary
 ## Artist name.
-var name: String
+var name:String = ''
 ## All albums in this artist.
-var albums: Dictionary[String,DBAlbum]
+var albums:Array[DBAlbum] = []
 
 ## Whether or not the DB entry is valid.
 var valid := true
 var _cover
 
 
-func _init(name_:String, data:Dictionary) -> void:
-	if name_ == '.dummy': return # Don't do any processing if is a dummy.
-	name = name_
-	var albums_ = data.get('albums',{})
-	for album_name:String in albums_:
-		albums.set(album_name, albums_[album_name])
-	if albums.is_empty():
-		remove()
-
-	LibraryManager.database.artists.set(name, self)
+func _init(library_:DBLibrary, data:Dictionary) -> void:
+	if library_ == null: return # Don't do any processing if is a dummy.
+	library = library_
+	library.artists.append(self)
+	update_data(data)
 
 
-## Remove this artist & all tracks & albums under this artist.
+func update_data(data:Dictionary) -> void:
+	name = data.get('name','')
+	albums.clear(); albums.assign(data.get('albums',[]))
+	#if albums.is_empty(): remove()
+
+
+## Remove this artist & all children under this artist.
 func remove() -> void:
-	LibraryManager.remove_artist(name)
+	library.artists.erase(self)
+	for album:DBAlbum in albums: album.remove()
 
 
 ## Returns file system firendly name of the track.
@@ -36,7 +40,7 @@ func as_filename() -> String:
 
 func get_all_tracks() -> Array[DBTrack]:
 	var result:Array[DBTrack] = []
-	for album:DBAlbum in albums.values():
+	for album:DBAlbum in albums:
 		result.append_array(album.get_all_tracks())
 
 	return result

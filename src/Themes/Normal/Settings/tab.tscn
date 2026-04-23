@@ -3,10 +3,9 @@
 [ext_resource type="Script" uid="uid://bufk41o60g01x" path="res://Scripts/UI/Settings/settings.gd" id="1_7d2l6"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_3fctb"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_1b3q6"]
+[ext_resource type="Script" uid="uid://cnnj2q647i5vw" path="res://Scripts/UI/Settings/library.gd" id="4_dp5eg"]
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Themes/Normal/Assets/Icons/folder.svg" id="7_pn7em"]
 [ext_resource type="PackedScene" uid="uid://dsibuplor3qi1" path="res://Themes/Normal/Elements/Preset Color Button/Preset Color Button.tscn" id="8_sk0tj"]
-[ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Themes/Normal/Assets/Icons/remove.svg" id="10_6tlhg"]
-[ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Themes/Normal/Assets/Icons/load.svg" id="11_yw38e"]
 
 [sub_resource type="Resource" id="Resource_75g7q"]
 script = ExtResource("3_1b3q6")
@@ -15,10 +14,6 @@ rebound_strength = 14.0
 [sub_resource type="Resource" id="Resource_a6lvd"]
 script = ExtResource("3_1b3q6")
 rebound_strength = 14.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vu07l"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xrpqc"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dp5eg"]
 
@@ -84,75 +79,36 @@ text = "Report an Issue"
 [node name="Library" type="PanelContainer" parent="MarginContainer/Scroll/VBox" unique_id=1455322269]
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
+script = ExtResource("4_dp5eg")
 
 [node name="VBox" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Library" unique_id=1260831358]
 layout_mode = 2
 
-[node name="Info" type="RichTextLabel" parent="MarginContainer/Scroll/VBox/Library/VBox" unique_id=1699263480]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_vu07l")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_xrpqc")
-bbcode_enabled = true
-text = "[b]Database:[/b]
-[color=light_blue]Size:[/color] %smb
-[color=light_blue]Last Updated:[/color] %s
-
-[b]Library:[/b]
-[color=light_blue]Size:[/color] %smb (%s tracks)"
-fit_content = true
-selection_enabled = true
-drag_and_drop_selection_enabled = false
-
-[node name="Sep 1" type="HSeparator" parent="MarginContainer/Scroll/VBox/Library/VBox" unique_id=1456380964]
+[node name="Controls" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Library/VBox" unique_id=48638074]
 layout_mode = 2
 
-[node name="Library" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Library/VBox" unique_id=48638074]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Library/VBox/Library" unique_id=709594005]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"LabelPrimary"
-text = "Library"
-
-[node name="HBox" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Library/VBox/Library" unique_id=1201920755]
+[node name="Controls" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Library/VBox/Controls" unique_id=1201920755]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Library Path" type="LineEdit" parent="MarginContainer/Scroll/VBox/Library/VBox/Library/HBox" unique_id=2022043686]
+[node name="Add Library" type="MenuButton" parent="MarginContainer/Scroll/VBox/Library/VBox/Controls/Controls" unique_id=1397628788]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "No directory selected..."
-editable = false
+size_flags_horizontal = 6
+text = "Add Library"
+flat = false
+item_count = 2
+popup/item_0/text = "Local Directory"
+popup/item_0/id = 0
+popup/item_1/text = "Navidrome Server"
+popup/item_1/id = 1
 
-[node name="Scan For Changes" type="Button" parent="MarginContainer/Scroll/VBox/Library/VBox/Library/HBox" unique_id=2109067686]
+[node name="Sep 2" type="HSeparator" parent="MarginContainer/Scroll/VBox/Library/VBox" unique_id=1460687915]
+layout_mode = 2
+
+[node name="Libraries" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Library/VBox" unique_id=1720764744]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Scan library for new, missing, or modified files & update the database accordingly.
-
-This is automatically run on startup."
-disabled = true
-text = "Scan For Changes"
-
-[node name="Rescan Library" type="Button" parent="MarginContainer/Scroll/VBox/Library/VBox/Library/HBox" unique_id=1633868751]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Delete all cached data & rescan the library.
-
-Session data & preferences will be kept.
-Lyrics, cover art, & other data will all be permanently deleted."
-theme_override_colors/icon_normal_color = Color(1, 0.3, 0.3, 0.8980392)
-text = "Reset DB"
-icon = ExtResource("10_6tlhg")
-
-[node name="Select Library" type="Button" parent="MarginContainer/Scroll/VBox/Library/VBox/Library/HBox" unique_id=956764194]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Select directory"
-icon = ExtResource("11_yw38e")
 
 [node name="UI" type="PanelContainer" parent="MarginContainer/Scroll/VBox" unique_id=568890640]
 layout_mode = 2
@@ -816,10 +772,6 @@ fit_content = true
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Links/User Data" to="." method="_on_user_data_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Links/Source Code" to="." method="_on_source_code_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Links/Report Issue" to="." method="_on_report_issue_pressed"]
-[connection signal="text_submitted" from="MarginContainer/Scroll/VBox/Library/VBox/Library/HBox/Library Path" to="." method="_on_library_path_text_submitted"]
-[connection signal="pressed" from="MarginContainer/Scroll/VBox/Library/VBox/Library/HBox/Scan For Changes" to="." method="_on_scan_for_changes_pressed"]
-[connection signal="pressed" from="MarginContainer/Scroll/VBox/Library/VBox/Library/HBox/Rescan Library" to="." method="_on_rescan_library_pressed"]
-[connection signal="pressed" from="MarginContainer/Scroll/VBox/Library/VBox/Library/HBox/Select Library" to="." method="_on_select_library_pressed"]
 [connection signal="toggled" from="MarginContainer/Scroll/VBox/UI/VBox/Dynamic Accent/Dynamic Accents" to="." method="_on_dynamic_accents_toggled"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/UI/VBox/Visualizer Mode/Visualizer Mode" to="." method="_on_visualizer_mode_item_selected"]
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/UI/VBox/Theme/HBox/Theme" to="." method="_on_theme_item_selected"]

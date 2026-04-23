@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://d2qhc6y2jbdfm"]
+
+[ext_resource type="Script" uid="uid://dihobpxpah3q7" path="res://Scripts/UI/Settings/library_item_local.gd" id="1_t8w3i"]
+[ext_resource type="Texture2D" uid="uid://6icvlc6d5rna" path="res://Themes/Normal/Assets/Icons/Save.svg" id="2_rhteh"]
+[ext_resource type="Texture2D" uid="uid://cd1hy6hohg5tn" path="res://Themes/Normal/Assets/Icons/tree_arrow_up.svg" id="2_x56b4"]
+[ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Themes/Normal/Assets/Icons/remove.svg" id="3_rhteh"]
+[ext_resource type="Texture2D" uid="uid://c7nxvr0h1tqqk" path="res://Themes/Normal/Assets/Icons/tree_arrow_down.svg" id="4_rhteh"]
+
+[node name="Library Item Local" type="PanelContainer" unique_id=537629115]
+self_modulate = Color(1, 1, 1, 0.5882353)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 39.0
+grow_horizontal = 2
+script = ExtResource("1_t8w3i")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=502567071]
+layout_mode = 2
+
+[node name="Title" type="HBoxContainer" parent="VBox" unique_id=1214426502]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/Title" unique_id=1580053790]
+layout_mode = 2
+text = "Local Directory"
+
+[node name="Controls" type="HBoxContainer" parent="VBox" unique_id=440147725]
+layout_mode = 2
+
+[node name="Update" type="Button" parent="VBox/Controls" unique_id=1209477638]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+icon = ExtResource("2_rhteh")
+flat = true
+
+[node name="Path" type="LineEdit" parent="VBox/Controls" unique_id=1996320132]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Path..."
+
+[node name="Scan" type="Button" parent="VBox/Controls" unique_id=113558373]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Scan library."
+text = "Scan"
+
+[node name="Move Up" type="Button" parent="VBox/Controls" unique_id=563130389]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("2_x56b4")
+flat = true
+
+[node name="Move Down" type="Button" parent="VBox/Controls" unique_id=1863150039]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("4_rhteh")
+flat = true
+
+[node name="Remove" type="Button" parent="VBox/Controls" unique_id=203149948]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("3_rhteh")
+flat = true
+
+[connection signal="pressed" from="VBox/Controls/Update" to="." method="_on_update_pressed"]
+[connection signal="text_changed" from="VBox/Controls/Path" to="." method="_on_path_text_changed"]
+[connection signal="pressed" from="VBox/Controls/Scan" to="." method="_on_scan_pressed"]
+[connection signal="pressed" from="VBox/Controls/Move Up" to="." method="_on_move_up_pressed"]
+[connection signal="pressed" from="VBox/Controls/Move Down" to="." method="_on_move_down_pressed"]
+[connection signal="pressed" from="VBox/Controls/Remove" to="." method="_on_remove_pressed"]

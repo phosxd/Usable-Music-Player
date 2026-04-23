@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dodvlwoguvgjj"]
 
 [ext_resource type="Script" uid="uid://df4we346k3xk" path="res://Scripts/UI/Lyrics/lyrics.gd" id="1_dygbn"]
+[ext_resource type="Texture2D" uid="uid://dvl8ry0j7o180" path="res://Assets/top_bottom_alpha_blend_2.tres" id="2_r0vh7"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_sbr64"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_r0vh7"]
 [ext_resource type="LabelSettings" uid="uid://wadklneh8tg0" path="res://Assets/primary_label_dark.tres" id="4_e71wd"]
@@ -22,7 +23,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 8
 script = ExtResource("1_dygbn")
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1514673906]
@@ -36,15 +36,26 @@ horizontal_alignment = 1
 [node name="Sep 1" type="HSeparator" parent="VBox" unique_id=26743642]
 layout_mode = 2
 
-[node name="Margin" type="MarginContainer" parent="VBox" unique_id=1781969992]
+[node name="Mask" type="TextureRect" parent="VBox" unique_id=321648073]
+clip_children = 1
 layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_r0vh7")
+
+[node name="Margin" type="MarginContainer" parent="VBox/Mask" unique_id=1781969992]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Scroll" type="ScrollContainer" parent="VBox/Margin" unique_id=1975157511]
+[node name="Scroll" type="ScrollContainer" parent="VBox/Mask/Margin" unique_id=1975157511]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
@@ -55,7 +66,19 @@ dragging_scroll_damper = SubResource("Resource_y0htm")
 allow_overdragging = true
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="Label" type="RichTextLabel" parent="VBox/Margin/Scroll" unique_id=950016221]
+[node name="VBox" type="VBoxContainer" parent="VBox/Mask/Margin/Scroll" unique_id=1799090787]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Sep 1" type="HSeparator" parent="VBox/Mask/Margin/Scroll/VBox" unique_id=424236349]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="Label" type="RichTextLabel" parent="VBox/Mask/Margin/Scroll/VBox" unique_id=950016221]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -67,11 +90,17 @@ scroll_active = false
 selection_enabled = true
 drag_and_drop_selection_enabled = false
 
-[node name="VBox" type="VBoxContainer" parent="VBox/Margin" unique_id=821906855]
+[node name="Sep 2" type="HSeparator" parent="VBox/Mask/Margin/Scroll/VBox" unique_id=52282613]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="VBox" type="VBoxContainer" parent="VBox/Mask/Margin" unique_id=821906855]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="Info Label" type="Label" parent="VBox/Margin/VBox" unique_id=1218225724]
+[node name="Info Label" type="Label" parent="VBox/Mask/Margin/VBox" unique_id=1218225724]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
@@ -79,14 +108,14 @@ text = "Fetching lyrics..."
 label_settings = ExtResource("4_e71wd")
 horizontal_alignment = 1
 
-[node name="Add Lyrics" type="Button" parent="VBox/Margin/VBox" unique_id=1756415442]
+[node name="Add Lyrics" type="Button" parent="VBox/Mask/Margin/VBox" unique_id=1756415442]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Add your own"
 
-[node name="Refresh" type="Button" parent="VBox/Margin/VBox" unique_id=1553721291]
+[node name="Refresh" type="Button" parent="VBox/Mask/Margin/VBox" unique_id=1553721291]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -97,5 +126,5 @@ text = "Refresh"
 unique_name_in_owner = true
 max_redirects = 4
 
-[connection signal="pressed" from="VBox/Margin/VBox/Add Lyrics" to="." method="_on_add_lyrics_pressed"]
-[connection signal="pressed" from="VBox/Margin/VBox/Refresh" to="." method="_on_refresh_pressed"]
+[connection signal="pressed" from="VBox/Mask/Margin/VBox/Add Lyrics" to="." method="_on_add_lyrics_pressed"]
+[connection signal="pressed" from="VBox/Mask/Margin/VBox/Refresh" to="." method="_on_refresh_pressed"]

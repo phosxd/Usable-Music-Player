@@ -1,0 +1,231 @@
+[gd_scene format=3 uid="uid://cls4d0nro1rrf"]
+
+[ext_resource type="Script" uid="uid://diaugu2crn8p8" path="res://Scripts/UI/Queue/queue.gd" id="1_spoab"]
+[ext_resource type="Texture2D" uid="uid://dod6uhmhu0tw3" path="res://Themes/Normal/Assets/Icons/reload.svg" id="2_xcjav"]
+[ext_resource type="Texture2D" uid="uid://6icvlc6d5rna" path="res://Themes/Normal/Assets/Icons/Save.svg" id="3_x7r0v"]
+[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="4_jvaj1"]
+[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="5_1f7no"]
+[ext_resource type="Script" uid="uid://cor5k07keywfa" path="res://addons/ReorderableContainer/reorderable_vbox.gd" id="6_trija"]
+[ext_resource type="Script" uid="uid://cy1xn528yw1p3" path="res://MODS/UMP Floating Theme/Classes/FadeColorChanger.gd" id="7_xcjav"]
+
+[sub_resource type="Resource" id="Resource_rqttv"]
+script = ExtResource("5_1f7no")
+minimum_velocity = 0.2
+rebound_strength = 36.0
+
+[sub_resource type="Resource" id="Resource_y0htm"]
+script = ExtResource("5_1f7no")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_spoab"]
+blend_mode = 4
+
+[sub_resource type="Gradient" id="Gradient_xcjav"]
+offsets = PackedFloat32Array(0, 0.072289154)
+colors = PackedColorArray(0.14117648, 0.14117648, 0.14117648, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_x7r0v"]
+gradient = SubResource("Gradient_xcjav")
+height = 8
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xcjav"]
+blend_mode = 4
+
+[sub_resource type="Gradient" id="Gradient_x7r0v"]
+colors = PackedColorArray(0.14117648, 0.14117648, 0.14117648, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jvaj1"]
+gradient = SubResource("Gradient_x7r0v")
+height = 54
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spoab"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.2392, 0.2392, 0.26, 0.627451)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x7r0v"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.28627452, 0.28627452, 0.30980393, 0.87058824)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xcjav"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.23921569, 0.23921569, 0.25882354, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.40319997, 0.40319997, 0.40319997, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="Queue" type="PanelContainer" unique_id=1119812283]
+custom_minimum_size = Vector2(265, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_spoab")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1514673906]
+layout_mode = 2
+
+[node name="Sep 1" type="HSeparator" parent="VBox" unique_id=26743642]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Controls" type="HBoxContainer" parent="VBox" unique_id=1929815790]
+layout_mode = 2
+
+[node name="Sep 1" type="VSeparator" parent="VBox/Controls" unique_id=856248903]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="VBox/Controls" unique_id=1803322427]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Queue"
+horizontal_alignment = 1
+
+[node name="Margin" type="MarginContainer" parent="VBox" unique_id=1781969992]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="Scroll" type="ScrollContainer" parent="VBox/Margin" unique_id=1975157511]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+script = ExtResource("4_jvaj1")
+speed = 500.0
+wheel_scroll_damper = SubResource("Resource_rqttv")
+dragging_scroll_damper = SubResource("Resource_y0htm")
+allow_horizontal_scroll = false
+allow_overdragging = true
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="List" type="Container" parent="VBox/Margin/Scroll" unique_id=2011907827 node_paths=PackedStringArray("scroll_container")]
+unique_name_in_owner = true
+process_mode = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("6_trija")
+hold_duration = 0.05
+separation = 0
+is_vertical = true
+scroll_container = NodePath("..")
+auto_scroll_speed = 5.0
+auto_scroll_range = 0.1
+scroll_threshold = 10
+metadata/_custom_type_script = "uid://cor5k07keywfa"
+
+[node name="Control" type="Control" parent="VBox/Margin" unique_id=383303299]
+layout_mode = 2
+mouse_filter = 1
+mouse_behavior_recursive = 1
+
+[node name="Top Fade" type="TextureRect" parent="VBox/Margin/Control" unique_id=731041578]
+unique_name_in_owner = true
+texture_filter = 2
+material = SubResource("CanvasItemMaterial_spoab")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -11.0
+offset_bottom = 169.0
+grow_horizontal = 2
+texture = SubResource("GradientTexture2D_x7r0v")
+
+[node name="Bottom Fade" type="TextureRect" parent="VBox/Margin/Control" unique_id=214779146]
+unique_name_in_owner = true
+texture_filter = 2
+material = SubResource("CanvasItemMaterial_xcjav")
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -93.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_jvaj1")
+
+[node name="VBox" type="VBoxContainer" parent="VBox/Margin" unique_id=31384591]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="HBox" type="HBoxContainer" parent="VBox/Margin/VBox" unique_id=210038607]
+layout_mode = 2
+
+[node name="Show Current" type="Button" parent="VBox/Margin/VBox/HBox" unique_id=984070836]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+tooltip_text = "Show currently playing track."
+theme_type_variation = &"AccentButton"
+theme_override_styles/normal = SubResource("StyleBoxFlat_spoab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_x7r0v")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xcjav")
+text = "      "
+icon = ExtResource("2_xcjav")
+icon_alignment = 1
+
+[node name="Sep 1" type="VSeparator" parent="VBox/Margin/VBox/HBox" unique_id=1500326994]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Save Playlist" type="Button" parent="VBox/Margin/VBox/HBox" unique_id=118678065]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Save queue as playlist."
+theme_type_variation = &"AccentButton"
+theme_override_styles/normal = SubResource("StyleBoxFlat_spoab")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_x7r0v")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xcjav")
+text = "       "
+icon = ExtResource("3_x7r0v")
+icon_alignment = 1
+
+[node name="Sep 1" type="HSeparator" parent="VBox/Margin/VBox" unique_id=2004461203]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="FadeColorChanger" type="Node" parent="." unique_id=862697646 node_paths=PackedStringArray("fade_nodes")]
+script = ExtResource("7_xcjav")
+fade_nodes = [NodePath("../VBox/Margin/Control/Top Fade"), NodePath("../VBox/Margin/Control/Bottom Fade")]
+metadata/_custom_type_script = "uid://cy1xn528yw1p3"
+
+[connection signal="reordered" from="VBox/Margin/Scroll/List" to="." method="_on_list_reordered"]
+[connection signal="sort_children" from="VBox/Margin/Scroll/List" to="VBox/Margin/Scroll/List" method="_on_sort_children"]
+[connection signal="pressed" from="VBox/Margin/VBox/HBox/Show Current" to="." method="_on_show_current_pressed"]
+[connection signal="pressed" from="VBox/Margin/VBox/HBox/Save Playlist" to="." method="_on_save_playlist_pressed"]

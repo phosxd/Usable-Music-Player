@@ -58,13 +58,11 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="Image" type="PanelContainer" parent="HBox/HBox/HBox" unique_id=1182272309]
+[node name="Image" type="PanelContainer" parent="HBox/HBox/HBox" unique_id=713256512]
 unique_name_in_owner = true
 clip_children = 1
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
-mouse_filter = 2
-mouse_behavior_recursive = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_g85ae")
 script = ExtResource("2_1pull")
 texture = ExtResource("2_57cvb")

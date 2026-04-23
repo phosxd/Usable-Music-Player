@@ -17,7 +17,9 @@ func _ready() -> void:
 	update_current_track(0, PlayerManager.get_current_track())
 
 	for node_name in nodes_to_hide:
-		SessionManager.main_scene.get_node('%'+node_name).hide()
+		var node:Node = SessionManager.main_scene.get_node('%'+node_name)
+		node.hide()
+		node.set_process(false)
 
 	var global_margin = (SessionManager.main_scene.get_node('%Global Margin') as MarginContainer)
 	for item in ['left','top','right','bottom']:
@@ -27,7 +29,9 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	for node_name in nodes_to_hide:
-		SessionManager.main_scene.get_node('%'+node_name).show()
+		var node:Node = SessionManager.main_scene.get_node('%'+node_name)
+		node.show()
+		node.set_process(true)
 
 	var global_margin = (SessionManager.main_scene.get_node('%Global Margin') as MarginContainer)
 	var i:int = -1

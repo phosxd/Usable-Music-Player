@@ -111,6 +111,4 @@ func _on_option_id_pressed(id:int) -> void:
 	match id:
 		0: pass
 		1: pass
-		2:
-			LibraryManager.rescan_album(album)
-			SessionManager.main_scene.refresh_tab()
+		2: pass

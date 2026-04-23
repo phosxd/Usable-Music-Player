@@ -30,7 +30,7 @@ extends VBoxContainer
 	}
 }
 @onready var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
-@onready var sort_mode: LibraryManager.AlbumSortMode
+@onready var sort_mode: DBLibrary.AlbumSortMode
 var ascend_mode = null
 var loaded_albums:Array[DBAlbum]
 var update_count:int = 0
@@ -65,7 +65,7 @@ func sort() -> void:
 		if update_count != current_count[0]: return
 		var secondary_text:String = album.artist.name
 		match sort_mode:
-			LibraryManager.AlbumSortMode.YEAR: secondary_text = album.year
+			DBLibrary.AlbumSortMode.year: secondary_text = album.year
 		# Filter with search term.
 		if not SessionManager.search_term.is_empty():
 			var search_term:String = SessionManager.search_term.to_lower()
@@ -104,9 +104,9 @@ func _on_card_secondary_pressed(album:DBAlbum) -> void:
 func _on_sort_mode_item_selected(index:int) -> void:
 	var prev_sort_mode := sort_mode
 	match index:
-		0: sort_mode = LibraryManager.AlbumSortMode.TITLE
-		1: sort_mode = LibraryManager.AlbumSortMode.ARTIST
-		2: sort_mode = LibraryManager.AlbumSortMode.YEAR
+		0: sort_mode = DBLibrary.AlbumSortMode.title
+		1: sort_mode = DBLibrary.AlbumSortMode.artist
+		2: sort_mode = DBLibrary.AlbumSortMode.year
 	if prev_sort_mode != sort_mode:
 		sort()
 

@@ -16,17 +16,17 @@ static var default_cover := ImageTexture.create_from_image(preload('res://Themes
 ## Parent artist.
 var artist: DBArtist
 ## Album name.
-var name: String
-## Tracks in this album with their path being the key.
-var tracks: Dictionary[String,DBTrack]
+var name:String = ''
+## Tracks in this album.
+var tracks: Array[DBTrack]
 ## Album cover image path. Use [param get_cover] to get a usable texture.
-var cover_path: String
+var cover_path:String = ''
 ## Album release year. Not guaranteed to be formatted or be a valid year.
-var year: String
+var year:String = ''
 ## Album genres. Not guaranteed to be formatted or be a valid genre.
-var genres: PackedStringArray
+var genres := PackedStringArray()
 ## Album copyright. Not Not guaranteed to be formatted.
-var copyright: String
+var copyright:String = ''
 ## Cached color palette for the album cover image.
 var palette:Dictionary[String,Color] = {}
 
@@ -36,15 +36,19 @@ var _cover
 
 
 ## Construct new DBAlbum.
-func _init(artist_:DBArtist, name_:String, data:Dictionary) -> void:
-	if name_ == '.dummy': return # Don't do any processing if is a dummy.
-	if not artist_: remove()
+func _init(artist_:DBArtist, data:Dictionary) -> void:
+	if artist_ == null: return # Don't do any processing if is a dummy.
 	artist = artist_
-	name = name_
+	artist.albums.append(self)
+	artist.library.albums.append(self)
+	update_data(data)
 
-	var tracks_ = data.get('tracks',{})
-	for track_path:String in tracks_:
-		tracks.set(track_path, tracks_[track_path])
+
+func update_data(data:Dictionary) -> void:
+	name = data.get('name','')
+
+	var raw_tracks = data.get('tracks',[])
+	tracks.clear(); tracks.assign(raw_tracks)
 
 	var raw_cover_path = data.get('cover_path')
 	if raw_cover_path is String: cover_path = raw_cover_path
@@ -58,26 +62,27 @@ func _init(artist_:DBArtist, name_:String, data:Dictionary) -> void:
 	if raw_year is String && not raw_year.is_empty():
 		var raw_year_split:PackedStringArray = raw_year.split('T')
 		year = raw_year_split[0]
-	else: year = 'None found'
+	else: year = ''
 
-	var raw_genre = data.get('genre')
-	genres = []
-	if raw_genre is String && not raw_genre.is_empty():
-		raw_genre = raw_genre \
-			.replace(' / ','&&') \
-			.replace('/ ','&&') \
-			.replace('/','&&') \
-			.replace(' ; ','&&') \
-			.replace('; ','&&') \
-			.replace(';','&&') \
-			.replace(' , ','&&') \
-			.replace(', ','&&') \
-			.replace(',','&&')
-		var raw_genres:PackedStringArray = raw_genre.split('&&')
-		for genre in raw_genres:
-			if genre is not String: continue
-			genres.append(genre)
-		genres = raw_genres
+	var raw_genres = data.get('genres')
+	genres = raw_genres
+	#if raw_genre is String && not raw_genre.is_empty():
+		#raw_genre = raw_genre \
+			#.replace(' / ','&&') \
+			#.replace('/ ','&&') \
+			#.replace('/','&&') \
+			#.replace(' ; ','&&') \
+			#.replace('; ','&&') \
+			#.replace(';','&&') \
+			#.replace(' , ','&&') \
+			#.replace(', ','&&') \
+			#.replace(',','&&')
+		#var raw_genres:PackedStringArray = raw_genre.split('&&')
+		#for genre in raw_genres:
+			#if genre is not String: continue
+			#genres.append(genre)
+	
+		#genres = raw_genres
 
 	var raw_copyright = data.get('copyright')
 	if raw_copyright is String && not raw_copyright.is_empty(): copyright = raw_copyright
@@ -85,7 +90,9 @@ func _init(artist_:DBArtist, name_:String, data:Dictionary) -> void:
 
 
 func remove() -> void:
-	LibraryManager.remove_album(artist, name)
+	artist.library.albums.erase(self)
+	artist.albums.erase(self)
+	for track:DBTrack in tracks: track.remove()
 
 
 ## Get all tracks in order of their disc number & track number.
@@ -96,7 +103,7 @@ func get_tracks_in_order() -> Dictionary[String,Array]:
 		'1': [],
 	}
 
-	var track_list = tracks.values()
+	var track_list = tracks.duplicate()
 	track_list.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
 		return a.number < b.number
 	)

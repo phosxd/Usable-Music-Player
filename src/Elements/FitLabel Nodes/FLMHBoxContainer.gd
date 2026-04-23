@@ -31,7 +31,7 @@ enum UpdateOrder {
 @export var update_on_label_settings_changed:bool = true
 
 @export_category('Other')
-@export var print_debug:bool = false
+@warning_ignore('shadowed_global_identifier') @export var print_debug:bool = false
 
 var monitoring_nodes:Array[FitLabel] = []
 var _monitor_data:Dictionary[FitLabel,Dictionary] = {}

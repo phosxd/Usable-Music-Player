@@ -19,6 +19,7 @@
 [ext_resource type="StyleBox" uid="uid://c2ol5ukxy0g0u" path="res://Themes/Normal/Assets/Styles/LineEdit/normal.tres" id="9_pa6ds"]
 [ext_resource type="StyleBox" uid="uid://cpy6186qdkjqs" path="res://Themes/Normal/Assets/Styles/LineEdit/ready_only.tres" id="10_f6ltk"]
 [ext_resource type="StyleBox" uid="uid://bvh1jsjvclehg" path="res://Themes/Normal/Assets/Styles/PanelContainer/tools_island_panel.tres" id="15_qgq1p"]
+[ext_resource type="StyleBox" uid="uid://coe1ck6nubixp" path="res://Themes/Normal/Assets/Styles/PanelContainer/rounded_texture_mask.tres" id="18_qw6u4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g11mq"]
 content_margin_left = 6.0
@@ -639,6 +640,8 @@ RichTextLabel/fonts/italics_font = null
 RichTextLabel/fonts/normal_font = null
 RichTextLabel/styles/focus = SubResource("StyleBoxEmpty_2pana")
 RichTextLabel/styles/normal = SubResource("StyleBoxFlat_f1hsc")
+RoundedTextureMask/base_type = &"Panel"
+RoundedTextureMask/styles/panel = ExtResource("18_qw6u4")
 ScrollContainer/colors/scroll_hint_horizontal_color = Color(0, 0, 0, 1)
 ScrollContainer/colors/scroll_hint_vertical_color = Color(0, 0, 0, 1)
 ScrollContainer/styles/focus = SubResource("StyleBoxFlat_g11mq")

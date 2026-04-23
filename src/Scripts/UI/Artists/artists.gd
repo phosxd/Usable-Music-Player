@@ -28,7 +28,7 @@ extends VBoxContainer
 	}
 }
 @onready var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
-@onready var sort_mode: LibraryManager.ArtistSortMode
+@onready var sort_mode: DBLibrary.ArtistSortMode
 var ascend_mode = null
 var loaded_artists:Array[DBArtist] = []
 var update_count:int = 0
@@ -84,14 +84,14 @@ func add_card(artist:DBArtist) -> void:
 	# Fetch from API if not in DB.
 	if not stored_cover && SessionManager.fetch_artist_cover:
 		var url = AppInfo.audio_db_api_url % [artist.name.uri_encode()]
-		RequestManager.request(RequestManager.RequestType.Web, 'artist_cover', url, {}, _on_http_request_request_completed.bind(card, artist), 2.5, true)
+		#RequestManager.request(RequestManager.RequestType.Web, 'artist_cover', url, {}, _on_http_request_request_completed.bind(card, artist), 2.5, true)
 	# Use stored image if valid.
 	elif stored_cover && stored_cover.get_size().x != 1:
 		card.images = [stored_cover]
 	# Use album covers.
 	else:
 		var images:Array[Texture2D] = []
-		for album:DBAlbum in artist.albums.values():
+		for album:DBAlbum in artist.albums:
 			var cover = album.get_cover()
 			if not cover: continue
 			images.append(cover)
@@ -180,7 +180,7 @@ func _on_play_pressed() -> void:
 	if loaded_artists.is_empty(): return
 	var all_tracks:Array[DBTrack] = []
 	for artist:DBArtist in loaded_artists:
-		for album:DBAlbum in artist.albums.values():
+		for album:DBAlbum in artist.albums:
 			for disc:Array in album.get_tracks_in_order().values():
 				all_tracks.append_array(disc)
 
@@ -192,7 +192,7 @@ func _on_shuffle_pressed() -> void:
 	var all_tracks:Array[DBTrack] = []
 	var shuffled_artists:Array[DBArtist] = loaded_artists.duplicate(); shuffled_artists.shuffle()
 	for artist:DBArtist in shuffled_artists:
-		for album:DBAlbum in artist.albums.values():
+		for album:DBAlbum in artist.albums:
 			for disc:Array in album.get_tracks_in_order().values():
 				all_tracks.append_array(disc)
 

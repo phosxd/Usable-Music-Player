@@ -3,6 +3,11 @@ extends Node
 
 const minilog_importance := MiniLog.Importance.High
 
+enum LibraryType {
+	LocalDirectory,
+	NavidromeServer,
+}
+
 ## Audio visualizer mode.
 enum VisualizerMode {
 	OFF,
@@ -19,7 +24,8 @@ enum ImageDetail {
 
 const property_data:Array[Array] = [
 	# Library / API settings.
-	['library_location',[TYPE_STRING]],
+	['libraries',[TYPE_ARRAY]],
+	#['library_location',[TYPE_STRING]],
 	['fetch_lyrics',[TYPE_BOOL]],
 	['fetch_artist_cover',[TYPE_BOOL]],
 	['fetch_album_cover',[TYPE_BOOL]],
@@ -84,7 +90,6 @@ var current_window_size: Vector2i:
 
 #endregion
 
-var library_location:String = OS.get_system_dir(OS.SYSTEM_DIR_MUSIC)
 var fetch_lyrics:bool = true
 var fetch_artist_cover:bool = false
 var fetch_album_cover:bool = false
@@ -114,7 +119,7 @@ var search_term:String = '':
 #region sorting
 
 ## Artists tab sort mode.
-var artist_sort_mode := LibraryManager.ArtistSortMode.TITLE:
+var artist_sort_mode := DBLibrary.ArtistSortMode.title:
 	set(value):
 		artist_sort_mode = value
 		value_changed.emit('artist_sort_mode')
@@ -126,7 +131,7 @@ var artist_ascend_mode:bool = true:
 		value_changed.emit('artist_ascend_mode')
 
 ## Albums tab sort mode.
-var album_sort_mode := LibraryManager.AlbumSortMode.TITLE:
+var album_sort_mode := DBLibrary.AlbumSortMode.title:
 	set(value):
 		album_sort_mode = value
 		value_changed.emit('album_sort_mode')
@@ -138,7 +143,7 @@ var album_ascend_mode:bool = true:
 		value_changed.emit('album_ascend_mode')
 
 ## Tracks tab sort mode.
-var track_sort_mode := LibraryManager.TrackSortMode.TITLE:
+var track_sort_mode := DBLibrary.TrackSortMode.title:
 	set(value):
 		track_sort_mode = value
 		value_changed.emit('track_sort_mode')
@@ -344,9 +349,9 @@ func load_session() -> void:
 	var raw_queue = data.get('queue')
 	var tracks:Array[DBTrack] = []
 	if raw_queue is Array:
-		for path in raw_queue:
-			if path is not String: continue
-			var track = LibraryManager.get_track(path)
+		for uid in raw_queue:
+			if uid is not String: continue
+			var track = LibraryManager.get_track_from_uid(uid)
 			if track: tracks.append(track)
 	PlayerManager.set_queue(tracks)
 
@@ -384,7 +389,7 @@ func save_session() -> void:
 		data.set(i[0], self.get(i[0]))
 
 	for track:DBTrack in PlayerManager.queue:
-		data.queue.append(track.path)
+		data.queue.append(track.as_uid())
 
 	var file := FileAccess.open(session_file_path, FileAccess.WRITE)
 	var json = JSON.stringify(A2J.to_json(data), '\t', true, true)

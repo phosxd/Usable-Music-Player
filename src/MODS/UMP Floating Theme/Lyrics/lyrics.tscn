@@ -1,0 +1,201 @@
+[gd_scene format=3 uid="uid://5181pb4ikgoe"]
+
+[ext_resource type="Script" uid="uid://df4we346k3xk" path="res://Scripts/UI/Lyrics/lyrics.gd" id="1_lldmb"]
+[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="3_r03p6"]
+[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="4_5h4oi"]
+[ext_resource type="LabelSettings" uid="uid://wadklneh8tg0" path="res://Assets/primary_label_dark.tres" id="5_l1usk"]
+
+[sub_resource type="Gradient" id="Gradient_d3lwc"]
+offsets = PackedFloat32Array(0, 0.030120483, 0.91566265, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bj62e"]
+gradient = SubResource("Gradient_d3lwc")
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="Resource" id="Resource_rqttv"]
+script = ExtResource("4_5h4oi")
+minimum_velocity = 0.2
+rebound_strength = 36.0
+
+[sub_resource type="Resource" id="Resource_y0htm"]
+script = ExtResource("4_5h4oi")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1rp2w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5h4oi"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.23921569, 0.23921569, 0.25882354, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l1usk"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.28627452, 0.28627452, 0.30980393, 0.87058824)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bh2bp"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.3906, 0.3906, 0.42, 0.54901963)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.40319997, 0.40319997, 0.40319997, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="Lyrics" type="PanelContainer" unique_id=1119812283]
+custom_minimum_size = Vector2(265, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_lldmb")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1514673906]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Sep 1" type="HSeparator" parent="VBox" unique_id=26743642]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox" unique_id=1803322427]
+layout_mode = 2
+text = "Lyrics"
+horizontal_alignment = 1
+
+[node name="Mask" type="TextureRect" parent="VBox" unique_id=321648073]
+clip_children = 1
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("GradientTexture2D_bj62e")
+
+[node name="Margin" type="MarginContainer" parent="VBox/Mask" unique_id=1781969992]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 5
+
+[node name="Scroll" type="ScrollContainer" parent="VBox/Mask/Margin" unique_id=1975157511]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+script = ExtResource("3_r03p6")
+speed = 500.0
+wheel_scroll_damper = SubResource("Resource_rqttv")
+dragging_scroll_damper = SubResource("Resource_y0htm")
+allow_overdragging = true
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="VBox" type="VBoxContainer" parent="VBox/Mask/Margin/Scroll" unique_id=1799090787]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Sep 1" type="HSeparator" parent="VBox/Mask/Margin/Scroll/VBox" unique_id=424236349]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="Label" type="RichTextLabel" parent="VBox/Mask/Margin/Scroll/VBox" unique_id=950016221]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1rp2w")
+fit_content = true
+scroll_active = false
+selection_enabled = true
+drag_and_drop_selection_enabled = false
+
+[node name="Sep 2" type="HSeparator" parent="VBox/Mask/Margin/Scroll/VBox" unique_id=52282613]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 55
+
+[node name="VBox" type="VBoxContainer" parent="VBox/Mask/Margin" unique_id=821906855]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Info Label" type="Label" parent="VBox/Mask/Margin/VBox" unique_id=1218225724]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+text = "Fetching lyrics..."
+label_settings = ExtResource("5_l1usk")
+horizontal_alignment = 1
+
+[node name="Add Lyrics" type="Button" parent="VBox/Mask/Margin/VBox" unique_id=1756415442]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Add your own"
+
+[node name="Refresh" type="Button" parent="VBox/Mask/Margin/VBox" unique_id=1553721291]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Refresh"
+
+[node name="Controls" type="VBoxContainer" parent="." unique_id=120034192]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="HBox" type="HBoxContainer" parent="Controls" unique_id=1111503931]
+layout_mode = 2
+
+[node name="Show Current" type="CheckButton" parent="Controls/HBox" unique_id=1491196899]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+tooltip_text = "Show currently playing track."
+theme_override_styles/normal = SubResource("StyleBoxFlat_5h4oi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_l1usk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bh2bp")
+text = "Synced"
+icon_alignment = 1
+
+[node name="Sep 1" type="HSeparator" parent="Controls" unique_id=491084970]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1415831965]
+unique_name_in_owner = true
+max_redirects = 4
+
+[connection signal="pressed" from="VBox/Mask/Margin/VBox/Add Lyrics" to="." method="_on_add_lyrics_pressed"]
+[connection signal="pressed" from="VBox/Mask/Margin/VBox/Refresh" to="." method="_on_refresh_pressed"]

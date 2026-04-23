@@ -37,8 +37,8 @@ driver/output_latency=30
 
 TesseractAPI="*uid://dn4wiq2geesy6"
 TesseractErrorServer="*uid://dfsijm3jpbmlm"
+Metadata="*uid://dc3ho4a0ke1hc"
 INIT="*uid://due46eoqitfqi"
-CLI="*uid://cht4oe1otvdde"
 ThemeManager="*uid://bjpdyq7jbudnr"
 PlayerManager="*uid://bsri8hvvykwnh"
 RequestManager="*uid://cgsfn5sukipn3"
@@ -67,6 +67,8 @@ enabled=PackedStringArray("res://addons/A2J/plugin.cfg", "res://addons/Reorderab
 
 folder_colors={
 "res://Assets/": "yellow",
+"res://BIN/": "gray",
+"res://CLIs/": "gray",
 "res://EXPORT/": "gray",
 "res://Elements/": "yellow",
 "res://MODS/": "gray",
