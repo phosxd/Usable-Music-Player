@@ -46,24 +46,45 @@ def get_audio_meta(tag, path):
 	for property in ['artist', 'album', 'albumartist', 'title', 'year', 'comment', 'copyright']:
 		meta[property] = list_get(raw_meta.get(property,[]),0,'')
 	# Add number properties.
-	for property in ['duration', 'channels', 'bitrate', 'bitdepth', 'samplerate', 'track', 'disc']:
+	for property in ['duration', 'channels', 'bitrate', 'bitdepth', 'samplerate' 'track', 'disc']:
 		meta[property] = raw_meta.get(property,0)
+
+	# Replay gain.
+	meta['replaygain_album'] = 0.0
+	meta['replaygain_track'] = 0.0
+	try: meta['replaygain_album'] = float(raw_meta.get('replaygain_album_gain','')[0].split(' ')[0])
+	except: pass
+	try: meta['replaygain_track'] = float(raw_meta.get('replaygain_track_gain','')[0].split(' ')[0])
+	except: pass
 
 	# Album artist.
 	if meta['albumartist'] == '':
 		meta['albumartist'] = meta['artist']
 
+	# Album year.
+	meta['year'] = meta['year'].split('-')[0]
+
 	# Get genres.
 	meta['genres'] = raw_meta.get('genre',[])
+	if len(meta['genres']) == 1:
+		meta['genres'] = meta['genres'][0] \
+			.replace(' ; ','&&') \
+			.replace('; ','&&') \
+			.replace(';','&&') \
+			.replace(' , ','&&') \
+			.replace(', ','&&') \
+			.replace(',','&&')
+		meta['genres'] = meta['genres'].split('&&')
 
 	# Get synced & unsynced lyrics.
 	meta['synced_lyrics'] = ''
 	meta['unsynced_lyrics'] = ''
-	all_lyric_fields = []
-	all_lyric_fields.append(list_get(raw_meta.get('lyrics',[]),0,''))
-	all_lyric_fields.append(list_get(raw_meta.get('unsyncedlyrics',[]),0,''))
-	all_lyric_fields.append(list_get(raw_meta.get('lyrics',[]),1,''))
-	all_lyric_fields.append(list_get(raw_meta.get('syncedlyrics',[]),0,''))
+	all_lyric_fields = [
+		list_get(raw_meta.get('lyrics',[]),0,''),
+		list_get(raw_meta.get('unsyncedlyrics',[]),0,''),
+		list_get(raw_meta.get('lyrics',[]),1,''),
+		list_get(raw_meta.get('syncedlyrics',[]),0,''),
+	]
 	for lyric_field in all_lyric_fields:
 		if lyric_field == '': continue
 		if lyric_field.__contains__('[') and lyric_field.__contains__(':'):

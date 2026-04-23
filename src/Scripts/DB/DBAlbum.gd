@@ -29,6 +29,7 @@ var genres := PackedStringArray()
 var copyright:String = ''
 ## Cached color palette for the album cover image.
 var palette:Dictionary[String,Color] = {}
+var replay_gain:float = 0.0
 
 ## Whether or not the DB entry is valid.
 var valid := true
@@ -58,6 +59,8 @@ func update_data(data:Dictionary) -> void:
 		palette = Dictionary(raw_palette, TYPE_STRING, '', null, TYPE_COLOR, '', null)
 	else: palette = {}
 
+	replay_gain = data.get('replay_gain',0.0)
+
 	var raw_year = data.get('year')
 	if raw_year is String && not raw_year.is_empty():
 		var raw_year_split:PackedStringArray = raw_year.split('T')
@@ -66,23 +69,6 @@ func update_data(data:Dictionary) -> void:
 
 	var raw_genres = data.get('genres',[])
 	genres = raw_genres
-	#if raw_genre is String && not raw_genre.is_empty():
-		#raw_genre = raw_genre \
-			#.replace(' / ','&&') \
-			#.replace('/ ','&&') \
-			#.replace('/','&&') \
-			#.replace(' ; ','&&') \
-			#.replace('; ','&&') \
-			#.replace(';','&&') \
-			#.replace(' , ','&&') \
-			#.replace(', ','&&') \
-			#.replace(',','&&')
-		#var raw_genres:PackedStringArray = raw_genre.split('&&')
-		#for genre in raw_genres:
-			#if genre is not String: continue
-			#genres.append(genre)
-	
-		#genres = raw_genres
 
 	var raw_copyright = data.get('copyright')
 	if raw_copyright is String && not raw_copyright.is_empty(): copyright = raw_copyright

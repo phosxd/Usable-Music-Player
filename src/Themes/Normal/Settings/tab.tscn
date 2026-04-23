@@ -52,7 +52,7 @@ metadata/_custom_type_script = "uid://bgqglerkcylxx"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 8
+theme_override_constants/separation = 12
 
 [node name="Links" type="HBoxContainer" parent="MarginContainer/Scroll/VBox" unique_id=480455043]
 layout_mode = 2
@@ -588,6 +588,58 @@ rounded = true
 tick_count = 3
 ticks_position = 3
 
+[node name="Audio" type="PanelContainer" parent="MarginContainer/Scroll/VBox" unique_id=2074479509]
+layout_mode = 2
+theme_type_variation = &"SectionPanelContainer"
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/Scroll/VBox/Audio" unique_id=1538532529]
+layout_mode = 2
+
+[node name="Replay Gain" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Audio/VBox" unique_id=85143947]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Audio/VBox/Replay Gain" unique_id=1473543906]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Modify volume gain based on track/album replay gain metadata."
+mouse_filter = 1
+theme_type_variation = &"LabelPrimary"
+text = "Replay Gain Mode"
+
+[node name="Replay Gain" type="OptionButton" parent="MarginContainer/Scroll/VBox/Audio/VBox/Replay Gain" unique_id=971260837]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 3
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_1/text = "Track"
+popup/item_1/id = 1
+popup/item_2/text = "Album"
+popup/item_2/id = 2
+
+[node name="Replay Gain Preamp" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/Audio/VBox" unique_id=1817801883]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Scroll/VBox/Audio/VBox/Replay Gain Preamp" unique_id=2005249328]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Add extra gain on top of replay gain.
+
+Use this to increase volume if replay gain is too quiet."
+mouse_filter = 1
+theme_type_variation = &"LabelPrimary"
+text = "Replay Gain Preamp"
+
+[node name="Replay Gain Preamp" type="SpinBox" parent="MarginContainer/Scroll/VBox/Audio/VBox/Replay Gain Preamp" unique_id=851711135]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -100.0
+step = 0.1
+suffix = "dB"
+
 [node name="Shortcuts" type="PanelContainer" parent="MarginContainer/Scroll/VBox" unique_id=1537575725]
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
@@ -809,6 +861,8 @@ fit_content = true
 [connection signal="item_selected" from="MarginContainer/Scroll/VBox/Process/VBox/Landing Page/Landing Page" to="." method="_on_landing_page_item_selected"]
 [connection signal="value_changed" from="MarginContainer/Scroll/VBox/Process/VBox/Queue Size Limit/Queue Size Limit" to="." method="_on_queue_size_limit_value_changed"]
 [connection signal="value_changed" from="MarginContainer/Scroll/VBox/Process/VBox/Image Detail/Image Detail" to="." method="_on_image_detail_value_changed"]
+[connection signal="item_selected" from="MarginContainer/Scroll/VBox/Audio/VBox/Replay Gain/Replay Gain" to="." method="_on_replay_gain_item_selected"]
+[connection signal="value_changed" from="MarginContainer/Scroll/VBox/Audio/VBox/Replay Gain Preamp/Replay Gain Preamp" to="." method="_on_replay_gain_preamp_value_changed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Shortcuts/VBox/Play Pause/Play Pause Key" to="." method="_on_play_pause_key_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Shortcuts/VBox/Skip Backward/Skip Backward Key" to="." method="_on_skip_backward_key_pressed"]
 [connection signal="pressed" from="MarginContainer/Scroll/VBox/Shortcuts/VBox/Skip Forward/Skip Forward Key" to="." method="_on_skip_forward_key_pressed"]

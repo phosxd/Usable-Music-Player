@@ -40,6 +40,19 @@ var audio_stream_player: AudioStreamPlayer
 var track_progress: float
 var last_peak_volume: float
 var loop_mode := LoopMode.OFF
+var replay_gain:float = 0.0:
+	set(value):
+		replay_gain = value
+		volume = volume
+var volume:float = 100.0:
+	set(value):
+		volume = value
+		audio_stream_player.volume_linear = (value*0.01)
+		audio_stream_player.volume_db += replay_gain
+		print(replay_gain)
+		if SessionManager.replay_gain_mode != SessionManager.ReplayGainMode.None && replay_gain != 0.0:
+			audio_stream_player.volume_db += SessionManager.replay_gain_preamp
+		volume_updated.emit(value)
 
 var is_playing:bool = false
 var is_shuffled:bool = false
@@ -62,6 +75,14 @@ func _process(_delta:float) -> void:
 	if audio_stream_player.playing:
 		track_progress = audio_stream_player.get_playback_position()
 		track_progress_updated.emit(track_progress)
+		var track:DBTrack = get_current_track()
+		match SessionManager.replay_gain_mode:
+			SessionManager.ReplayGainMode.None:
+				if 0.0 != replay_gain: replay_gain = 0.0
+			SessionManager.ReplayGainMode.Track:
+				if track.replay_gain != replay_gain: replay_gain = track.replay_gain
+			SessionManager.ReplayGainMode.Album:
+				if track.album.replay_gain != replay_gain: replay_gain = track.album.replay_gain
 
 
 func get_current_track() -> DBTrack:
@@ -77,16 +98,6 @@ func set_playing(playing:bool) -> void:
 	else:
 		audio_stream_player.stop()
 		pause_requested.emit()
-
-
-func set_volume(value:float, emit:bool=true) -> void:
-	var big_value:float = value/100.0
-	audio_stream_player.volume_db = linear_to_db(big_value)
-	if emit: volume_updated.emit(value)
-
-
-func get_volume() -> float:
-	return audio_stream_player.volume_linear*100.0
 
 
 func set_track_progress(progress:float) -> void:

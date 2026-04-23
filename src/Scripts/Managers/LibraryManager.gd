@@ -98,7 +98,7 @@ static func get_library(id:String) -> DBLibrary:
 
 ## Returns the [DBTrack] that matches the [param uid].
 static func get_track_from_uid(uid:String) -> DBTrack:
-	var parts:PackedStringArray = uid.split('.')
+	var parts:PackedStringArray = uid.split(':')
 	if parts.size() != 7: return null
 	var library_id:String = parts[0]
 	var library := get_library(library_id)

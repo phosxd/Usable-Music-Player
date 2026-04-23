@@ -108,6 +108,7 @@ func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[Strin
 		'tracks': [],
 		'palette': palette,
 		'copyright': entry.get('copyright'),
+		'replay_gain': entry.get('replaygain_album',0.0),
 	}
 	var track_data = {
 		'path': track_path,
@@ -120,8 +121,9 @@ func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[Strin
 		'bit_rate': str(entry.get('bitrate',-1)),
 		'sample_rate': str(entry.get('samplerate',-1)),
 		'bpm': entry.get('bpm'),
+		'replay_gain': entry.get('replaygain_track',0.0),
 		'comment': entry.get('comment'),
-		'last_modified_time': FileAccess.get_modified_time(track_path)
+		'last_modified_time': FileAccess.get_modified_time(track_path),
 	}
 
 	# Add to library.
@@ -138,7 +140,6 @@ func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[Strin
 	for album:DBAlbum in self.albums:
 		if album.artist == artist_entry \
 		&& album.name == album_data.name \
-		&& album.genres == album_data.genres \
 		&& album.year == album_data.year:
 			album_entry = album
 			break
@@ -147,6 +148,7 @@ func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[Strin
 	for track:DBTrack in self.tracks:
 		if track.album == album_entry \
 		&& track.name == track_data.name \
+		&& track.path == track_data.path \
 		&& track.number == track_data.number:
 			track_entry = track
 			break

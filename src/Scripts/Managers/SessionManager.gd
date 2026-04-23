@@ -8,6 +8,12 @@ enum LibraryType {
 	NavidromeServer,
 }
 
+enum ReplayGainMode {
+	None,
+	Track,
+	Album,
+}
+
 ## Audio visualizer mode.
 enum VisualizerMode {
 	OFF,
@@ -29,6 +35,9 @@ const property_data:Array[Array] = [
 	['fetch_lyrics',[TYPE_BOOL]],
 	['fetch_artist_cover',[TYPE_BOOL]],
 	['fetch_album_cover',[TYPE_BOOL]],
+	# Audio settings.
+	['replay_gain',[TYPE_INT]],
+	['replay_gain_preamp',[TYPE_FLOAT]],
 	# Performance settings.
 	['queue_size_limit',[TYPE_INT]],
 	['image_detail',[TYPE_INT]],
@@ -90,6 +99,8 @@ var current_window_size: Vector2i:
 
 #endregion
 
+var replay_gain_mode := ReplayGainMode.Album
+var replay_gain_preamp:float = 0.0
 var fetch_lyrics:bool = true
 var fetch_artist_cover:bool = false
 var fetch_album_cover:bool = false
@@ -365,7 +376,7 @@ func load_session() -> void:
 
 	var raw_volume = data.get('volume')
 	if raw_volume is float:
-		PlayerManager.set_volume(raw_volume)
+		PlayerManager.volume = raw_volume
 
 	var raw_auto_queue_start_index = data.get('auto_queue_start_index')
 	if (raw_auto_queue_start_index is int or raw_auto_queue_start_index is float) && raw_auto_queue_start_index != -1:
@@ -382,7 +393,7 @@ func save_session() -> void:
 		'queue_position': PlayerManager.queue_position,
 		'auto_queue_start_index': PlayerManager.auto_queue_start_index,
 		'track_progress': PlayerManager.track_progress,
-		'volume': PlayerManager.get_volume(),
+		'volume': PlayerManager.volume,
 	}
 
 	for i in property_data:

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d2qhc6y2jbdfm"]
 
 [ext_resource type="Script" uid="uid://dihobpxpah3q7" path="res://Scripts/UI/Settings/library_item_local.gd" id="1_t8w3i"]
-[ext_resource type="Texture2D" uid="uid://6icvlc6d5rna" path="res://Themes/Normal/Assets/Icons/Save.svg" id="2_rhteh"]
+[ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Themes/Normal/Assets/Icons/load.svg" id="2_rhteh"]
 [ext_resource type="Texture2D" uid="uid://cd1hy6hohg5tn" path="res://Themes/Normal/Assets/Icons/tree_arrow_up.svg" id="2_x56b4"]
 [ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Themes/Normal/Assets/Icons/remove.svg" id="3_rhteh"]
 [ext_resource type="Texture2D" uid="uid://c7nxvr0h1tqqk" path="res://Themes/Normal/Assets/Icons/tree_arrow_down.svg" id="4_rhteh"]
@@ -27,10 +27,9 @@ text = "Local Directory"
 [node name="Controls" type="HBoxContainer" parent="VBox" unique_id=440147725]
 layout_mode = 2
 
-[node name="Update" type="Button" parent="VBox/Controls" unique_id=1209477638]
+[node name="Load Path" type="Button" parent="VBox/Controls" unique_id=848004652]
 unique_name_in_owner = true
 layout_mode = 2
-disabled = true
 icon = ExtResource("2_rhteh")
 flat = true
 
@@ -68,7 +67,7 @@ size_flags_horizontal = 8
 icon = ExtResource("3_rhteh")
 flat = true
 
-[connection signal="pressed" from="VBox/Controls/Update" to="." method="_on_update_pressed"]
+[connection signal="pressed" from="VBox/Controls/Load Path" to="." method="_on_load_path_pressed"]
 [connection signal="text_changed" from="VBox/Controls/Path" to="." method="_on_path_text_changed"]
 [connection signal="pressed" from="VBox/Controls/Scan" to="." method="_on_scan_pressed"]
 [connection signal="pressed" from="VBox/Controls/Move Up" to="." method="_on_move_up_pressed"]

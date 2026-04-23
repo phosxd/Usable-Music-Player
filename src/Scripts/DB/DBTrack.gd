@@ -26,6 +26,7 @@ var sample_rate:float = 0.0
 var bit_rate:float = 0.0
 ## Track beats per minute.
 var bpm:float = 0.0
+var replay_gain:float = 0.0
 ## Track comment.
 var comment: String
 ## Last time the file was modified.
@@ -76,6 +77,8 @@ func update_data(data:Dictionary) -> void:
 	if raw_lmt is int: last_modified_time = raw_lmt
 	else: last_modified_time = -1
 
+	replay_gain = data.get('replay_gain',0.0)
+
 
 func remove() -> void:
 	album.artist.library.tracks.erase(self)
@@ -92,8 +95,9 @@ func as_filename() -> String:
 
 
 func as_uid() -> String:
+	if not album.artist.library: return ''
 	var library_id:String = album.artist.library.id
-	return '.'.join([
+	return ':'.join([
 		library_id,
 		album.artist.name,
 		album.name,

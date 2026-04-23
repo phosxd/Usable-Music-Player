@@ -100,9 +100,11 @@ layout_mode = 2
 mouse_filter = 1
 mouse_behavior_recursive = 1
 script = ExtResource("5_d642b")
+update_interval = 0.05
 hide_nodes = [NodePath("../VBox")]
 show_nodes = [NodePath("Placeholder")]
-ratio_up = 1.5
+ratio_up = 2.0
+ratio_down = 2.0
 metadata/_custom_type_script = "uid://cvuw8ds1htson"
 
 [node name="Placeholder" type="PanelContainer" parent="ControlOnScreen" unique_id=1394318423]

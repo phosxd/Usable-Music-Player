@@ -23,7 +23,7 @@ func  _ready() -> void:
 	SessionManager.value_changed.connect(_session_manager_value_changed)
 	update_current_track(0, PlayerManager.get_current_track())
 	update_track_progress(PlayerManager.track_progress)
-	update_volume(PlayerManager.get_volume())
+	update_volume(PlayerManager.volume)
 	_session_manager_value_changed('visualizer_bar_count')
 	_session_manager_value_changed('visualizer_bar_smoothing')
 	_session_manager_value_changed('right_sidebar_tab')
@@ -119,7 +119,7 @@ func _on_skip_forward_pressed() -> void:
 
 
 func _on_volume_value_changed(value:float) -> void:
-	PlayerManager.set_volume(value)
+	PlayerManager.volume = value
 	volume = value
 	%'Mute Button'.button_pressed = false if value > 0 else true
 
@@ -171,10 +171,10 @@ func _on_swap_loop_mode_pressed() -> void:
 
 func _on_mute_button_toggled(toggled_on:bool) -> void:
 	if toggled_on:
-		volume = PlayerManager.get_volume()
-		PlayerManager.set_volume(0)
+		volume = PlayerManager.volume
+		PlayerManager.volume = 0
 	else:
-		PlayerManager.set_volume(volume)
+		PlayerManager.volume = volume
 
 
 func _on_track_name_pressed() -> void:

@@ -1,5 +1,7 @@
 extends Control
 
+const dir_open_scene:PackedScene = preload('res://Scenes/Dir Open/dir_open.tscn')
+
 signal scan_requested
 signal update_requested(data:Array)
 signal move_requested(up:bool)
@@ -10,13 +12,8 @@ func init(library:DBLibrary) -> void:
 	%Path.text = library.path
 
 
-func _on_update_pressed() -> void:
-	%Update.disabled = true
-	update_requested.emit([%Path.text])
-
-
 func _on_path_text_changed(_new_text:String) -> void:
-	%Update.disabled = false
+	update_requested.emit([%Path.text])
 
 
 func _on_move_up_pressed() -> void:
@@ -33,3 +30,12 @@ func _on_remove_pressed() -> void:
 
 func _on_scan_pressed() -> void:
 	scan_requested.emit()
+
+
+func _on_load_path_pressed() -> void:
+	var popup:FileDialog = dir_open_scene.instantiate()
+	popup.show()
+	popup.dir_selected.connect(func(dir:String) -> void:
+		%Path.text = dir
+		_on_path_text_changed(dir)
+	)

@@ -50,6 +50,7 @@ func _ready() -> void:
 	%'Track Finished Notif'.set_pressed_no_signal(SessionManager.send_track_finished_notif)
 	%'Library Scan Finished Notif'.set_pressed_no_signal(SessionManager.send_library_scan_finished_notif)
 	# ---
+	%'Replay Gain'.selected = SessionManager.replay_gain_mode
 
 
 func _on_user_data_pressed() -> void:
@@ -192,3 +193,11 @@ func _on_visualizer_bar_smoothing_value_changed(value:float) -> void:
 	SessionManager.visualizer_bar_smoothing = value
 	%'Visualizer Bar Smoothing'.set_value_no_signal(value)
 	%'Visualizer Bar Smoothing Slider'.set_value_no_signal(value)
+
+
+func _on_replay_gain_preamp_value_changed(value:float) -> void:
+	SessionManager.replay_gain_preamp = value
+
+
+func _on_replay_gain_item_selected(index:int) -> void:
+	SessionManager.replay_gain_mode = index as SessionManager.ReplayGainMode

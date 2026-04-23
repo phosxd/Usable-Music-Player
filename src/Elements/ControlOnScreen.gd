@@ -59,6 +59,7 @@ func update() -> void:
 			node.show()
 		# Emit signal.
 		activated.emit()
+
 	# Off screen.
 	else:
 		# Set minimum size if "preserve_size" is enabled.

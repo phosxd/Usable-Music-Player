@@ -62,15 +62,16 @@ func _ready() -> void:
 		return
 
 	# Write binary to disk.
-	DirAccess.make_dir_recursive_absolute(binary_path_external)
-	var file := FileAccess.open(full_path_external, FileAccess.WRITE)
-	file.store_buffer(bytes)
-	file.close()
-	# Give permission to run.
-	var exit_code:int = OS.execute('chmod', ['+x', full_path_external])
-	if exit_code != OK:
-		MiniLog.err('Could not modify permissions of binary "%s".' % binary_name, self)
-		return
+	if not FileAccess.file_exists(full_path_external):
+		DirAccess.make_dir_recursive_absolute(binary_path_external)
+		var file := FileAccess.open(full_path_external, FileAccess.WRITE)
+		file.store_buffer(bytes)
+		file.close()
+		# Give permission to run.
+		var exit_code:int = OS.execute('chmod', ['+x', full_path_external])
+		if exit_code != OK:
+			MiniLog.err('Could not modify permissions of binary "%s".' % binary_name, self)
+			return
 
 	_run(full_path_external)
 
