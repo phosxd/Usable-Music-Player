@@ -64,7 +64,7 @@ func update_data(data:Dictionary) -> void:
 		year = raw_year_split[0]
 	else: year = ''
 
-	var raw_genres = data.get('genres')
+	var raw_genres = data.get('genres',[])
 	genres = raw_genres
 	#if raw_genre is String && not raw_genre.is_empty():
 		#raw_genre = raw_genre \
@@ -86,7 +86,7 @@ func update_data(data:Dictionary) -> void:
 
 	var raw_copyright = data.get('copyright')
 	if raw_copyright is String && not raw_copyright.is_empty(): copyright = raw_copyright
-	else: copyright = 'None found'
+	else: copyright = ''
 
 
 func remove() -> void:

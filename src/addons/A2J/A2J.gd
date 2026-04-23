@@ -265,16 +265,18 @@ static func _from_json(value, type_details:Dictionary={}, raw_ruleset:Dictionary
 		if midpoint.call(value, ruleset) == true: return null
 
 	# Convert value.
-	var result = handler.from_json(value, ruleset)
+	var result
+	if type == 'Array':
+		result = handler.from_json(value, ruleset, A2JUtil.type_array([], type_details))
 	# Type dictionary.
-	if result is Dictionary:
-		result = A2JUtil.type_dictionary(result, type_details)
-	# Type array.
-	elif result is Array:
-		result = A2JUtil.type_array(result, type_details)
+	elif type == 'Dictionary':
+		result = handler.from_json(value, ruleset, A2JUtil.type_dictionary({}, type_details))
 	# Type other.
 	elif type_details.get('type') is int:
+		result = handler.from_json(value, ruleset)
 		result = type_convert(result, type_details.get('type'))
+	else:
+		result = handler.from_json(value, ruleset)
 	# Return result.
 	return result
 

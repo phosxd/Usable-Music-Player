@@ -28,8 +28,7 @@ func to_json(dict:Dictionary, ruleset:Dictionary) -> Dictionary[String,Variant]:
 	return result
 
 
-func from_json(json:Dictionary, ruleset:Dictionary) -> Variant:
-	var result := {}
+func from_json(json:Dictionary, ruleset:Dictionary, result:Dictionary={}) -> Variant:
 	for key in json:
 		if key is not String:
 			report_error(0)

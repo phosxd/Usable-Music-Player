@@ -74,7 +74,6 @@ func refresh() -> void:
 func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[String]) -> void:
 	var track_path:String = entry.get('path','')
 	if track_path.is_empty(): return
-	var duration:float = entry.get('duration',0)
 	var artist_name:String = entry.get('artist','').replace('\n','')
 	var actual_artist:String = artist_name
 	var album_artist:String = entry.get('albumartist','').replace('\n','')
@@ -116,7 +115,7 @@ func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[Strin
 		'actual_artist': actual_artist,
 		'number': track_number,
 		'disc': disc_number,
-		'length': duration,
+		'length': entry.get('duration',0),
 		'channels': str(entry.get('channels',-1)),
 		'bit_rate': str(entry.get('bitrate',-1)),
 		'sample_rate': str(entry.get('samplerate',-1)),
@@ -155,7 +154,7 @@ func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[Strin
 	else:
 		track_entry.update_data(track_data)
 	track_entry.save_lyrics(entry.get('lyrics',''))
-	MiniLog.pro('Indexed: "$~%s~$".' % track_path, LibraryManager)
+	MiniLog.pro('Scanned "$~%s~$".' % track_path.trim_prefix(library.path), LibraryManager)
 
 
 ## Returns a list of [DBArtist], [DBAlbum], or [DBTrack] (depending on [param item_type]) that have the specified [param name].

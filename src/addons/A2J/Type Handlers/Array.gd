@@ -28,7 +28,7 @@ func to_json(array:Array, ruleset:Dictionary) -> Variant:
 	return result
 
 
-func from_json(json, ruleset:Dictionary) -> Array:
+func from_json(json, ruleset:Dictionary, result:Array=[]) -> Array:
 	var list: Array
 	if json is Dictionary:
 		list = json.get('v', [])
@@ -36,9 +36,8 @@ func from_json(json, ruleset:Dictionary) -> Array:
 		list = json
 	else:
 		report_error(0)
-		return []
+		return result
 
-	var result:Array = []
 	var index:int = -1
 	for value in list:
 		index += 1
