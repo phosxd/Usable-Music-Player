@@ -273,11 +273,6 @@ var button_tint := Color.TRANSPARENT:
 			'text': 'Show In Files',
 			'icon': SessionManager.get_icon('folder'),
 		},
-		{
-			'type': 'button',
-			'text': 'Rescan',
-			'icon': SessionManager.get_icon('modifiers'),
-		},
 	]),
 	'queue_card': ContextMenu.new([
 		{

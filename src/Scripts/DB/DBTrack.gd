@@ -48,7 +48,7 @@ func update_data(data:Dictionary) -> void:
 
 	var raw_file_size = data.get('file_size')
 	if raw_file_size is int: file_size = raw_file_size
-	else: file_size = FileAccess.get_size(path)
+	else: file_size = FileAccess.get_size(self.get_full_path())
 
 	var raw_length = data.get('length')
 	if raw_length is float: length = raw_length
@@ -86,7 +86,11 @@ func remove() -> void:
 
 
 func get_stream() -> AudioStream:
-	return LibraryManager.load_audio(path)
+	return LibraryManager.load_audio(self.get_full_path())
+
+
+func get_full_path() -> String:
+	return album.artist.library.path + ('' if album.artist.library.path.ends_with('/') else '/') + self.path.trim_prefix('/')
 
 
 ## Returns file system firendly name of the track.

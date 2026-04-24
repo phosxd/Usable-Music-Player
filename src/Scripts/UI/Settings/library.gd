@@ -88,4 +88,6 @@ func _library_item_removed(item:Control, library:DBLibrary) -> void:
 
 func _library_item_scanned(_item:Control, library:DBLibrary) -> void:
 	library.refresh()
-	library.save()
+	var index:int = LibraryManager.libraries.find(library)
+	if index == -1: return
+	library.save(str(index)+' ')

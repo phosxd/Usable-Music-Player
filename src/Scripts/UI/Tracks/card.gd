@@ -81,8 +81,7 @@ func _on_option_id_pressed(id:int) -> void:
 		3: # Show album.
 			SessionManager.main_scene.set_tab('album_page', track.album)
 		4: # Show in files.
-			OS.shell_show_in_file_manager(track.path)
-		5: pass
+			OS.shell_show_in_file_manager(track.get_full_path())
 
 
 func _on_button_gui_input(event:InputEvent) -> void:

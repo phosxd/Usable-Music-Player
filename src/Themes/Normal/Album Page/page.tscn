@@ -13,7 +13,6 @@
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="12_d17rs"]
 [ext_resource type="Texture2D" uid="uid://dgf4br6i5tdbe" path="res://Themes/Normal/Assets/Icons/queue_add_to_queue.svg" id="13_cvxl0"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="13_ljtex"]
-[ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Themes/Normal/Assets/Icons/modifiers.svg" id="14_15sva"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wngf1"]
 shader = ExtResource("2_xl2db")
@@ -42,7 +41,7 @@ height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rqv4t"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_81ey2"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -133,7 +132,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_rqv4t")
+theme_override_styles/panel = SubResource("StyleBoxFlat_81ey2")
 script = ExtResource("4_5r8o4")
 texture = ExtResource("5_d17rs")
 expand_mode = 2
@@ -223,16 +222,13 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("9_cvxl0")
 flat = false
 icon_alignment = 1
-item_count = 3
+item_count = 2
 popup/item_0/text = "Play next"
 popup/item_0/icon = ExtResource("12_btmgh")
 popup/item_0/id = 0
 popup/item_1/text = "Add to queue"
 popup/item_1/icon = ExtResource("13_cvxl0")
 popup/item_1/id = 1
-popup/item_2/text = "Rescan"
-popup/item_2/icon = ExtResource("14_15sva")
-popup/item_2/id = 2
 
 [node name="Sep 2" type="VSeparator" parent="VBox/Controls/VBox/HBox" unique_id=715618603]
 self_modulate = Color(1, 1, 1, 0)

@@ -83,6 +83,7 @@ func _ready() -> void:
 	update_accents()
 	%Player.update_visualizer(ThemeManager.accent)
 	%'Tab Content Split'.split_offsets = SessionManager.tab_content_split
+	%'Tab Content Split'.collapsed = SessionManager.right_sidebar_tab == ''
 
 	%'Right Sidebar Margin'.add_child(SessionManager.get_layout_theme_scene('Queue/queue').instantiate())
 	%'Right Sidebar Margin'.add_child(SessionManager.get_layout_theme_scene('Lyrics/lyrics').instantiate())

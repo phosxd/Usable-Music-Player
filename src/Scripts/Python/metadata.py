@@ -46,7 +46,7 @@ def get_audio_meta(tag, path):
 	for property in ['artist', 'album', 'albumartist', 'title', 'year', 'comment', 'copyright']:
 		meta[property] = list_get(raw_meta.get(property,[]),0,'')
 	# Add number properties.
-	for property in ['duration', 'channels', 'bitrate', 'bitdepth', 'samplerate' 'track', 'disc']:
+	for property in ['duration', 'channels', 'bitrate', 'bitdepth', 'samplerate' 'track', 'disc', 'filesize']:
 		meta[property] = raw_meta.get(property,0)
 
 	# Replay gain.

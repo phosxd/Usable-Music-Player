@@ -109,6 +109,9 @@ func _on_shuffle_pressed() -> void:
 
 func _on_option_id_pressed(id:int) -> void:
 	match id:
-		0: pass
-		1: pass
-		2: pass
+		# Play next.
+		0:
+			pass
+		# Add to queue.
+		1:
+			pass

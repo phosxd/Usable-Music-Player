@@ -71,6 +71,10 @@ func refresh() -> void:
 	if not DirAccess.dir_exists_absolute(path):
 		MiniLog.err('Library path "%s" is invalid. Skipping scan.' % path, DBLibrary)
 		return
+	for library:DBLibrary in LibraryManager.libraries:
+		if library.currently_updating:
+			MiniLog.warn('Cannot start scan for $~%s~$, another library is currently scanning.' % self.id, DBLibrary)
+			return
 
 	self.currently_updating = true
 	self.scan_started.emit()
@@ -95,19 +99,20 @@ func _refresh() -> void:
 	var parsed_images:Array[String] = []
 	var found_paths:Array[String] = []
 	var progress:Array[int] = [0]
-	FileUtils.walk_dir(path, func(file_path:String) -> void:
+	FileUtils.walk_dir(self.path, func(file_path:String) -> void:
 		if file_path.get_extension().to_lower() not in LibraryManager.valid_audio_extensions: return
-		found_paths.append(file_path)
+		var short_file_path:String = file_path.trim_prefix(self.path).trim_prefix('/')
+		found_paths.append(short_file_path)
 		var lmt:int = FileAccess.get_modified_time(file_path)
-		var track_lmt = last_modified_times.get(file_path,null)
+		var track_lmt = last_modified_times.get(short_file_path,null)
 		# Don't scan if file has not changed.
 		if track_lmt is int && lmt == track_lmt: return
 		# Scan the file.
 		var entry:Dictionary = Metadata.get_audio_meta(file_path, LibraryManager.image_cache_path)
 		if entry.is_empty():
-			MiniLog.err('Failed to scan file "%s".' % file_path, self)
+			MiniLog.err('Failed to scan file "%s".' % short_file_path, self)
 			return
-		_parse_entry(self, entry, parsed_images)
+		_parse_entry(file_path, short_file_path, entry, parsed_images)
 		progress[0] += 1
 		self.scan_progress_changed.emit.call_deferred(progress[0])
 	)
@@ -119,9 +124,11 @@ func _refresh() -> void:
 			track.remove()
 
 
-func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[String]) -> void:
-	var track_path:String = entry.get('path','')
+func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, parsed_images:Array[String]) -> void:
 	if track_path.is_empty(): return
+	var file_size:int = entry.get('filesize',null)
+	if not file_size: file_size = FileAccess.get_size(full_track_path)
+
 	var artist_name:String = entry.get('artist','').replace('\n','')
 	var actual_artist:String = artist_name
 	var album_artist:String = entry.get('albumartist','').replace('\n','')
@@ -171,7 +178,8 @@ func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[Strin
 		'bpm': entry.get('bpm'),
 		'replay_gain': entry.get('replaygain_track',0.0),
 		'comment': entry.get('comment'),
-		'last_modified_time': FileAccess.get_modified_time(track_path),
+		'last_modified_time': FileAccess.get_modified_time(full_track_path),
+		'file_size': file_size,
 	}
 
 	# Add to library.
@@ -183,7 +191,7 @@ func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[Strin
 		if artist.name == artist_data.name:
 			artist_entry = artist
 			break
-	if not artist_entry: artist_entry = DBArtist.new(library, artist_data)
+	if not artist_entry: artist_entry = DBArtist.new(self, artist_data)
 	# Find or create album.
 	for album:DBAlbum in self.albums:
 		if album.artist == artist_entry \
