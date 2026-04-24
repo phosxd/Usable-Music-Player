@@ -9,11 +9,16 @@ signal remove_requested
 
 
 func init(library:DBLibrary) -> void:
+	%ID.text = library.id
 	%Path.text = library.path
 
 
+func update() -> void:
+	update_requested.emit([%ID.text,%Path.text])
+
+
 func _on_path_text_changed(_new_text:String) -> void:
-	update_requested.emit([%Path.text])
+	update()
 
 
 func _on_move_up_pressed() -> void:
@@ -39,3 +44,7 @@ func _on_load_path_pressed() -> void:
 		%Path.text = dir
 		_on_path_text_changed(dir)
 	)
+
+
+func _on_id_text_changed(_new_text:String) -> void:
+	update()

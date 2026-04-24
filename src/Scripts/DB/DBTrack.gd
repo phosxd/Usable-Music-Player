@@ -32,9 +32,6 @@ var comment: String
 ## Last time the file was modified.
 var last_modified_time: int
 
-## Whether or not the DB entry is valid.
-var valid := true
-
 
 ## Construct new DBTrack.
 ## Do not use [param raw_info].

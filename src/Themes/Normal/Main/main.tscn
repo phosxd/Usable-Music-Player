@@ -3,12 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://btawryg8volu3" path="res://Themes/Normal/Assets/Icons/audio_stream.svg" id="1_1r6ip"]
 [ext_resource type="Script" uid="uid://bwovnwhmbywrv" path="res://Scripts/UI/Main/main.gd" id="1_y3v7k"]
 [ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Themes/Normal/Assets/Icons/modifiers.svg" id="2_hryqi"]
+[ext_resource type="Script" uid="uid://bcvag8i6w6wiy" path="res://Scripts/UI/Main/tools_bar.gd" id="2_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://utn627e88d32" path="res://Themes/Normal/Assets/Icons/artist.svg" id="2_xlvfx"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Themes/Normal/Assets/Icons/load.svg" id="3_hfg1r"]
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Themes/Normal/Assets/Icons/folder.svg" id="3_y3v7k"]
 [ext_resource type="Texture2D" uid="uid://ifuhlvhg7w82" path="res://Themes/Normal/Assets/Icons/change_sort_mode.svg" id="5_vk4q2"]
-[ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="5_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://mljcfripi4u1" path="res://Themes/Normal/Assets/Icons/add.svg" id="6_imbg2"]
+[ext_resource type="Texture2D" uid="uid://cois2ol41rb8v" path="res://Themes/Normal/Assets/Icons/visible.svg" id="6_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="9_2ok46"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="9_6t3k2"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="9_hfg1r"]
@@ -112,6 +113,7 @@ layout_mode = 2
 [node name="Tools" type="PanelContainer" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin" unique_id=21195273]
 layout_mode = 2
 theme_type_variation = &"ToolsIslandPanelContainer"
+script = ExtResource("2_wbs4r")
 
 [node name="HBox" type="HBoxContainer" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools" unique_id=1840235616]
 layout_mode = 2
@@ -147,20 +149,15 @@ disabled = true
 icon = ExtResource("5_vk4q2")
 icon_alignment = 1
 
-[node name="General Options" type="MenuButton" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox" unique_id=167496477]
+[node name="General Options" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox" unique_id=1203295361]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"AccentButton"
+toggle_mode = true
 text = " "
-icon = ExtResource("5_wbs4r")
-flat = false
+icon = ExtResource("6_wbs4r")
 icon_alignment = 1
-item_count = 2
-popup/item_0/text = "Settings"
-popup/item_0/id = 0
-popup/item_1/text = "Console"
-popup/item_1/id = 1
 
 [node name="Sidebar Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Sidebar" unique_id=66888657]
 unique_name_in_owner = true
@@ -503,6 +500,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox/Tab Button Settings" to="." method="_on_tab_button_pressed" binds= ["settings"]]
+[connection signal="toggled" from="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox/General Options" to="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools" method="_on_general_options_toggled"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Artists" to="." method="_on_tab_button_pressed" binds= ["artists"]]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
@@ -511,6 +509,5 @@ layout_mode = 2
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Cover Art Margin/Panel/Current Track Cover Container/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= [".immersive_player"]]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Back Button" to="." method="_on_back_button_pressed"]
 [connection signal="text_changed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_search_text_changed"]
-[connection signal="text_submitted" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_search_text_submitted"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Sorting/Tab Tool Buttons/Ascend Mode" to="." method="_on_ascend_mode_pressed"]
 [connection signal="drag_ended" from="Global Margin/VBox/HBox/Tab VBox/Tab Content Split" to="." method="_on_tab_content_split_drag_ended"]

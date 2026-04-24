@@ -117,6 +117,7 @@ var image_detail := ImageDetail.Normal:
 	set(value):
 		image_detail = value
 		for album:DBAlbum in LibraryManager.get_albums_sorted():
+			if not album: continue
 			album._cover = null
 		value_changed.emit('image_detail')
 

@@ -66,13 +66,7 @@ static func save_libraries() -> void:
 
 	# Save libraries.
 	for library:DBLibrary in libraries:
-		var ajson = A2J.to_json(library, a2j_ruleset)
-		if ajson is not Dictionary:
-			MiniLog.err('Failed to save library "%s".' % library.id, LibraryManager)
-			continue
-		var file := FileAccess.open(libraries_path+library.id+'.json', FileAccess.WRITE)
-		file.store_string(JSON.stringify(ajson))
-		file.close()
+		library.save()
 
 
 ## Returns the [DBLibrary] or [code]null[/code] if none found.
@@ -105,6 +99,7 @@ static func get_track_from_uid(uid:String) -> DBTrack:
 	if library == null: return null
 	# Check UID for all tracks in the library.
 	for track:DBTrack in library.tracks:
+		if not track: continue
 		if track.as_uid() == uid: return track
 
 	return null
@@ -204,6 +199,7 @@ static func get_track_from_uid(uid:String) -> DBTrack:
 static func get_artists_sorted(sort_mode:=DBLibrary.ArtistSortMode.title) -> Array[DBArtist]:
 	var result:Array[DBArtist] = []
 	for library:DBLibrary in libraries:
+		if library.hidden: continue
 		result.append_array(library.get_artists_sorted(sort_mode))
 	return result
 
@@ -211,6 +207,7 @@ static func get_artists_sorted(sort_mode:=DBLibrary.ArtistSortMode.title) -> Arr
 static func get_albums_sorted(sort_mode:=DBLibrary.AlbumSortMode.title) -> Array[DBAlbum]:
 	var result:Array[DBAlbum] = []
 	for library:DBLibrary in libraries:
+		if library.hidden: continue
 		result.append_array(library.get_albums_sorted(sort_mode))
 	return result
 
@@ -218,6 +215,7 @@ static func get_albums_sorted(sort_mode:=DBLibrary.AlbumSortMode.title) -> Array
 static func get_tracks_sorted(sort_mode:=DBLibrary.TrackSortMode.title) -> Array[DBTrack]:
 	var result:Array[DBTrack] = []
 	for library:DBLibrary in libraries:
+		if library.hidden: continue
 		result.append_array(library.get_tracks_sorted(sort_mode))
 	return result
 

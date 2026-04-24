@@ -23,10 +23,12 @@ func _ready() -> void:
 
 func init(db_track:DBTrack) -> void:
 	track = db_track
-	if not track.valid: _invalidate()
+	if not track:
+		_invalidate()
+		return
 
 	%Name.text = track.name
-	%Name.tooltip_text = track.name
+	%Button.tooltip_text = track.name
 	if track.number == 0: %'Track Number'.hide()
 	else: %'Track Number'.text = '%s' % (track.number)
 	%Artist.text = track.actual_artist

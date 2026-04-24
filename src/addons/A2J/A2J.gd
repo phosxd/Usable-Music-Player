@@ -66,7 +66,7 @@ static var _dictionary_type_handler := A2JDictionaryTypeHandler.new()
 ## A2JTypeHandlers that can be used.
 ## You can add custom type handlers here.
 static var type_handlers:Dictionary[String,A2JTypeHandler] = {
-	'A2JRef':A2JReferenceTypeHandler.new(),
+	'Ref':A2JReferenceTypeHandler.new(),
 	'Obj':_object_type_handler, 'Object':_object_type_handler,
 	'Array':_array_type_handler,
 	'Dictionary':_dictionary_type_handler,

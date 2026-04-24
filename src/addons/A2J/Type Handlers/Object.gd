@@ -41,13 +41,13 @@ func to_json(object:Object, ruleset:Dictionary) -> Variant:
 	# If object is an external resource, return a reference to it.
 	if ruleset.get('automatic_resource_references') == true && object is Resource:
 		if not object.resource_path.is_empty() && not object.resource_path.contains('::'):
-			return _make_reference('.res:%s' % object.resource_path)
+			return A2JReferenceTypeHandler.make_reference('r:%s' % object.resource_path)
 
 	# If object has been serialized before, return a reference to it.
 	var ids_to_objects:Dictionary = A2J._process_data.ids_to_objects
 	var id = ids_to_objects.find_key(object)
 	if id != null:
-		return _make_reference('.i'+str(id))
+		return A2JReferenceTypeHandler.make_reference(str(id))
 	# If not, add to object stack & update index.
 	else:
 		id = ids_to_objects.keys().size()
@@ -159,7 +159,7 @@ func _validate_object_property(result, name:String, properties_to_reference:Dict
 	# If reference is on "properties_to_reference" list. Set a reference of the property.
 	if name in properties_to_reference:
 		var reference_name = properties_to_reference[name]
-		result.set(name, _make_reference(reference_name))
+		result.set(name, A2JReferenceTypeHandler.make_reference(reference_name))
 		return false
 	return true
 
@@ -174,14 +174,6 @@ func _resolve_reference(value, result, ruleset:Dictionary, object:Object, proper
 	# Set value
 	else: object.set(property, resolved_reference)
 
-	return result
-
-
-func _make_reference(name:String) -> Dictionary[String,Variant]:
-	var result:Dictionary[String,Variant] = {
-		'.t': 'A2JRef',
-		'v': name,
-	}
 	return result
 
 

@@ -67,7 +67,8 @@ func add_local_library(library:DBLibrary) -> void:
 
 
 func _library_item_updated(data:Array, library:DBLibrary) -> void:
-	library.path = data[0]
+	library.id = data[0]
+	library.path = data[1]
 
 
 func _library_item_moved(up:bool, item:Control, library:DBLibrary) -> void:
@@ -88,3 +89,4 @@ func _library_item_removed(item:Control, library:DBLibrary) -> void:
 
 func _library_item_scanned(_item:Control, library:DBLibrary) -> void:
 	library.refresh()
+	library.save()

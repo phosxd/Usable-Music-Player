@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bvhmgjpqy4jn"]
+
+[ext_resource type="Script" uid="uid://bqm3npjru2hgi" path="res://Scripts/UI/Main/general_options.gd" id="1_qxkfh"]
+
+[node name="GeneralOptions" type="PanelContainer" unique_id=219295194]
+offset_right = 134.0
+offset_bottom = 106.0
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("1_qxkfh")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=990644777]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Toggle All Libraries" type="CheckBox" parent="VBox" unique_id=1343168809]
+unique_name_in_owner = true
+layout_mode = 2
+text = "All Libraries"
+flat = true
+
+[node name="Sep 1" type="HSeparator" parent="VBox" unique_id=810793112]
+self_modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+
+[node name="Sep 2" type="HSeparator" parent="VBox" unique_id=1613662520]
+self_modulate = Color(0.75, 0.75, 0.75, 1)
+layout_mode = 2
+
+[node name="Console" type="Button" parent="VBox" unique_id=604051142]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Console"
+flat = true
+alignment = 0
+
+[connection signal="toggled" from="VBox/Toggle All Libraries" to="." method="_on_toggle_all_libraries_toggled"]
+[connection signal="pressed" from="VBox/Console" to="." method="_on_console_pressed"]

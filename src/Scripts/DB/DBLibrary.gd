@@ -39,12 +39,23 @@ enum TrackSortMode {
 var type := LibraryType.LocalDirectory
 var id: String
 var path: String
+var hidden:bool = false
 ## All artists.
 var artists:Array[DBArtist] = []
 ## All albums.
 var albums:Array[DBAlbum] = []
 ## All tracks.
 var tracks:Array[DBTrack] = []
+
+
+func save() -> void:
+	var ajson = A2J.to_json(self, LibraryManager.a2j_ruleset)
+	if ajson is not Dictionary:
+		MiniLog.err('Failed to save library "%s".' % self.id, self)
+		return
+	var file := FileAccess.open(LibraryManager.libraries_path+self.id+'.json', FileAccess.WRITE)
+	file.store_string(JSON.stringify(ajson))
+	file.close()
 
 
 func refresh() -> void:
@@ -224,14 +235,17 @@ func get_albums_sorted(sort_mode:=AlbumSortMode.title) -> Array[DBAlbum]:
 	match sort_mode:
 		AlbumSortMode.title:
 			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
+				if not a or not b: return false
 				return a.name < b.name
 			)
 		AlbumSortMode.artist:
 			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
+				if not a or not b: return false
 				return a.artist.name < b.artist.name
 			)
 		AlbumSortMode.year:
 			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
+				if not a or not b: return false
 				return a.year.to_int() < b.year.to_int()
 			)
 
@@ -244,26 +258,32 @@ func get_tracks_sorted(sort_mode:=TrackSortMode.title) -> Array[DBTrack]:
 	match sort_mode:
 		TrackSortMode.title:
 			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				if not a or not b: return false
 				return a.name < b.name
 			)
 		TrackSortMode.album:
 			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				if not a or not b: return false
 				return a.album.name < b.album.name
 			)
 		TrackSortMode.artist:
 			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				if not a or not b: return false
 				return a.album.artist.name < b.album.artist.name
 			)
 		TrackSortMode.year:
 			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				if not a or not b: return false
 				return a.album.year.to_int() < b.album.year.to_int()
 			)
 		TrackSortMode.number:
 			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				if not a or not b: return false
 				return a.number < b.number
 			)
 		TrackSortMode.length:
 			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:
+				if not a or not b: return false
 				return a.length < b.length
 			)
 

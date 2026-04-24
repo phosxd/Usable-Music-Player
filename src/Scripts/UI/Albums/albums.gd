@@ -62,7 +62,7 @@ func sort() -> void:
 	var current_count:Array[int] = [update_count]
 	var iter:int = 0
 	for album:DBAlbum in albums:
-		if update_count != current_count[0]: return
+		if not album or update_count != current_count[0]: return
 		var secondary_text:String = album.artist.name
 		match sort_mode:
 			DBLibrary.AlbumSortMode.year: secondary_text = album.year

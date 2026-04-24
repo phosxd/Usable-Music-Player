@@ -1,7 +1,5 @@
 extends Control
 
-const console_scene := preload('res://Scenes/Console/Console.tscn')
-
 @export var bg_color := Color(0.18, 0.18, 0.18, 1.0):
 	set(value):
 		bg_color = value
@@ -47,7 +45,6 @@ const console_scene := preload('res://Scenes/Console/Console.tscn')
 			%'Search Margin'.add_theme_constant_override('margin_'+property, value[i])
 			i += 1
 
-@onready var general_options_popup:PopupMenu = %'General Options'.get_popup()
 @onready var tabs:Dictionary[String,Array] = {
 	'settings': [%'Tab Button Settings', SessionManager.get_layout_theme_scene('Settings/tab')],
 	'artists': [%'Tab Button Artists', SessionManager.get_layout_theme_scene('Artists/tab')],
@@ -87,8 +84,6 @@ func _ready() -> void:
 	update_accents()
 	%Player.update_visualizer(ThemeManager.accent)
 	%'Tab Content Split'.split_offsets = SessionManager.tab_content_split
-
-	general_options_popup.id_pressed.connect(_on_general_options_id_pressed)
 
 	%'Right Sidebar Margin'.add_child(SessionManager.get_layout_theme_scene('Queue/queue').instantiate())
 	%'Right Sidebar Margin'.add_child(SessionManager.get_layout_theme_scene('Lyrics/lyrics').instantiate())
@@ -250,15 +245,6 @@ func go_back() -> void:
 		set_tab('')
 		return
 	set_tab(last_tab[0], last_tab[1])
-
-
-func _on_general_options_id_pressed(id:int) -> void:
-	match id:
-		0: set_tab('settings')
-		1:
-			var popup:Window = console_scene.instantiate()
-			add_child(popup)
-			popup.show()
 
 
 func _on_tab_button_pressed(tab:String) -> void:
