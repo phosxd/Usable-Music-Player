@@ -19,10 +19,9 @@ func _on_add_library_index_pressed(index:int) -> void:
 		0:
 			var library := DBLibrary.new()
 			library.type = DBLibrary.LibraryType.LocalDirectory
-			library.id = ''
-			for i in 16:
+			library.id = 'Local Library '
+			for i in 6:
 				library.id += str(randi_range(0,9))
-			print(library.id)
 			LibraryManager.libraries.append(library)
 			add_local_library(library)
 		1:

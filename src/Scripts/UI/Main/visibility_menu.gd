@@ -8,6 +8,7 @@ var library_buttons:Array[CheckBox] = []
 
 
 func close() -> void:
+	closed.emit()
 	self.queue_free()
 
 

@@ -56,7 +56,6 @@ extends Control
 	'genre_page': [null, SessionManager.get_layout_theme_scene('Genre Page/page')],
 	'.immersive_player': [%'Tab Button Immersive Player', SessionManager.get_layout_theme_scene('Immersive Player/tab')]
 }
-@onready var indexing_label_template:String = %'Indexing Label'.text
 var tab_history:Array[Array] = []
 
 var album_dominant_color: Color

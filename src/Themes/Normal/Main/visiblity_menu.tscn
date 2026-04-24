@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://bvhmgjpqy4jn"]
 
-[ext_resource type="Script" uid="uid://bqm3npjru2hgi" path="res://Scripts/UI/Main/general_options.gd" id="1_qxkfh"]
+[ext_resource type="Script" uid="uid://bqm3npjru2hgi" path="res://Scripts/UI/Main/visibility_menu.gd" id="1_n172u"]
 
-[node name="GeneralOptions" type="PanelContainer" unique_id=219295194]
+[node name="Visibility Menu" type="PanelContainer" unique_id=219295194]
 offset_right = 134.0
-offset_bottom = 106.0
+offset_bottom = 94.0
 theme_type_variation = &"TooltipPanel"
-script = ExtResource("1_qxkfh")
+script = ExtResource("1_n172u")
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=990644777]
 layout_mode = 2

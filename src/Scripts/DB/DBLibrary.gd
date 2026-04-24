@@ -1,6 +1,10 @@
 ## Music library interface & container.
 class_name DBLibrary extends Object
 
+signal scan_progress_changed(progress:int)
+signal scan_finished
+signal scan_started
+
 const minilog_importance := MiniLog.Importance.High
 
 enum LibraryType {
@@ -47,20 +51,40 @@ var albums:Array[DBAlbum] = []
 ## All tracks.
 var tracks:Array[DBTrack] = []
 
+var currently_updating:bool = false
 
-func save() -> void:
+
+func save(file_prefix:String='') -> void:
 	var ajson = A2J.to_json(self, LibraryManager.a2j_ruleset)
 	if ajson is not Dictionary:
 		MiniLog.err('Failed to save library "%s".' % self.id, self)
 		return
-	var file := FileAccess.open(LibraryManager.libraries_path+self.id+'.json', FileAccess.WRITE)
+	var file := FileAccess.open(LibraryManager.libraries_path+file_prefix+self.id+'.json', FileAccess.WRITE)
 	file.store_string(JSON.stringify(ajson))
 	file.close()
 
 
 func refresh() -> void:
+	if self.currently_updating:
+		MiniLog.warn('Cannot start scan for $~%s~$, already in progress.' % self.id, DBLibrary)
+		return
 	if not DirAccess.dir_exists_absolute(path):
-		MiniLog.err('Library path "%s" is invalid. Skipping scan.' % path, self)
+		MiniLog.err('Library path "%s" is invalid. Skipping scan.' % path, DBLibrary)
+		return
+
+	self.currently_updating = true
+	self.scan_started.emit()
+	MiniLog.info('Starting scan for $~%s~$.' % self.id, DBLibrary)
+
+	Async.create_thread(_refresh, func(_result) -> void:
+		self.currently_updating = false
+		self.scan_finished.emit()
+		MiniLog.info('Finished scan for $~%s$~.' % self.id, DBLibrary)
+	)
+
+
+func _refresh() -> void:
+	self.scan_progress_changed.emit.call_deferred(0)
 
 	# Get last modified time for all tracks.
 	var last_modified_times:Dictionary[String,int] = {}
@@ -70,6 +94,7 @@ func refresh() -> void:
 	# Scan files in the library.
 	var parsed_images:Array[String] = []
 	var found_paths:Array[String] = []
+	var progress:Array[int] = [0]
 	FileUtils.walk_dir(path, func(file_path:String) -> void:
 		if file_path.get_extension().to_lower() not in LibraryManager.valid_audio_extensions: return
 		found_paths.append(file_path)
@@ -83,6 +108,8 @@ func refresh() -> void:
 			MiniLog.err('Failed to scan file "%s".' % file_path, self)
 			return
 		_parse_entry(self, entry, parsed_images)
+		progress[0] += 1
+		self.scan_progress_changed.emit.call_deferred(progress[0])
 	)
 	parsed_images.clear()
 
@@ -177,7 +204,7 @@ func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[Strin
 	else:
 		track_entry.update_data(track_data)
 	track_entry.save_lyrics(entry.get('lyrics',''))
-	MiniLog.pro('Scanned "$~%s~$".' % track_path.trim_prefix(library.path), LibraryManager)
+	#MiniLog.pro('Scanned "$~%s~$".' % track_path.trim_prefix(library.path), LibraryManager)
 
 
 ## Returns a list of [DBArtist], [DBAlbum], or [DBTrack] (depending on [param item_type]) that have the specified [param name].

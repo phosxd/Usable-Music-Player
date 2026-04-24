@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://btlv6yrtpj3k1"]
+
+[ext_resource type="Script" uid="uid://jmsisew0rq2v" path="res://Scripts/UI/Main/activity_menu.gd" id="1_rqsa3"]
+
+[node name="Activity Menu" type="PanelContainer" unique_id=219295194]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_type_variation = &"TooltipPanel"
+script = ExtResource("1_rqsa3")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=990644777]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="No Activity Label" type="Label" parent="VBox" unique_id=1678656143]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 6
+text = "No activity right now..."
+horizontal_alignment = 1

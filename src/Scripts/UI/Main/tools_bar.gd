@@ -1,17 +1,13 @@
 extends Control
 
-const general_options_menu_scene:PackedScene = preload('res://Themes/Normal/Main/general_options.tscn')
-var general_options_menu: Control
+@onready var visibility_menu_scene:PackedScene = SessionManager.get_layout_theme_scene('Main/visiblity_menu')
+var visibility_menu: Control
 
 
-func _ready() -> void:
-	pass
-
-
-func _on_general_options_toggled(toggled_on:bool) -> void:
+func _on_visibility_toggled(toggled_on:bool) -> void:
 	if toggled_on:
-		general_options_menu = general_options_menu_scene.instantiate()
-		get_window().add_child(general_options_menu)
-		general_options_menu.position = %'General Options'.global_position+Vector2(0,%'General Options'.size.y)
+		visibility_menu = visibility_menu_scene.instantiate()
+		get_window().add_child(visibility_menu)
+		visibility_menu.position = %Visibility.global_position+Vector2(0,%Visibility.size.y)
 	else:
-		if general_options_menu: general_options_menu.queue_free()
+		if visibility_menu: visibility_menu.queue_free()

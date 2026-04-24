@@ -19,11 +19,10 @@
 [ext_resource type="Texture2D" uid="uid://by3qxgtdgkogn" path="res://Themes/Normal/Assets/Icons/favorite.svg" id="11_bb5d1"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="12_eeh6y"]
 [ext_resource type="Script" uid="uid://dtel3yhuvbpap" path="res://Elements/Top Bar/top_bar.gd" id="13_2ok46"]
-[ext_resource type="Script" uid="uid://k1n47i1vyqjo" path="res://Scripts/UI/Main/indexing_status.gd" id="13_hto8k"]
 [ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Themes/Normal/Assets/Icons/search.svg" id="14_koken"]
 [ext_resource type="Texture2D" uid="uid://clvub0o51v8eh" path="res://Themes/Normal/Assets/Icons/scale_x2/change_sort_mode.svg" id="15_0fk8q"]
-[ext_resource type="Texture2D" uid="uid://c5rcofwxyp58s" path="res://Themes/Normal/Assets/Icons/scale_x2/loading.svg" id="15_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Themes/Normal/Assets/Icons/tree_arrow_left.svg" id="16_eeh6y"]
+[ext_resource type="Texture2D" uid="uid://cp7rw74plkuj" path="res://Themes/Normal/Assets/Icons/scale_x2/activity.svg" id="23_bb5d1"]
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="23_jo7x3"]
 
 [sub_resource type="Resource" id="Resource_eqlsm"]
@@ -34,7 +33,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hto8k"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wbs4r"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -149,7 +148,7 @@ disabled = true
 icon = ExtResource("5_vk4q2")
 icon_alignment = 1
 
-[node name="General Options" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox" unique_id=1203295361]
+[node name="Visibility" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox" unique_id=1203295361]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -284,50 +283,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_smooth_scroll_default_mouse_filter_set = true
 
-[node name="Indexing Status" type="HBoxContainer" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1161764509]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-script = ExtResource("13_hto8k")
-
-[node name="Sep 1" type="VSeparator" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Indexing Status" unique_id=1841056331]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Icon Contrainer" type="Control" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Indexing Status" unique_id=1025760383]
-custom_minimum_size = Vector2(12, 12)
-layout_mode = 2
-
-[node name="Icon" type="TextureRect" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Indexing Status/Icon Contrainer" unique_id=1507882268]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 4.0
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("15_wbs4r")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Sep 2" type="VSeparator" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Indexing Status" unique_id=1090551411]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Indexing Label" type="Label" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Indexing Status" unique_id=550201511]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_type_variation = &"LabelSmall"
-text = "Indexing (%s)..."
-clip_text = true
-text_overrun_behavior = 5
-
 [node name="Cover Art Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Sidebar" unique_id=21399878]
 unique_name_in_owner = true
 layout_mode = 2
@@ -348,7 +303,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_hto8k")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wbs4r")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
@@ -414,6 +369,15 @@ size_flags_horizontal = 3
 placeholder_text = "Search..."
 editable = false
 clear_button_enabled = true
+flat = true
+
+[node name="Activity" type="Button" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=1549443074]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+theme_override_constants/icon_max_width = 18
+toggle_mode = true
+icon = ExtResource("23_bb5d1")
 flat = true
 
 [node name="Sorting" type="PanelContainer" parent="Global Margin/VBox/HBox/Tab VBox/Topbar" unique_id=1616870286]
@@ -500,7 +464,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox/Tab Button Settings" to="." method="_on_tab_button_pressed" binds= ["settings"]]
-[connection signal="toggled" from="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox/General Options" to="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools" method="_on_general_options_toggled"]
+[connection signal="toggled" from="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox/Visibility" to="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools" method="_on_visibility_toggled"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Artists" to="." method="_on_tab_button_pressed" binds= ["artists"]]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Albums" to="." method="_on_tab_button_pressed" binds= ["albums"]]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
@@ -509,5 +473,6 @@ layout_mode = 2
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Cover Art Margin/Panel/Current Track Cover Container/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= [".immersive_player"]]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Back Button" to="." method="_on_back_button_pressed"]
 [connection signal="text_changed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_search_text_changed"]
+[connection signal="toggled" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Activity" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_activity_toggled"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Sorting/Tab Tool Buttons/Ascend Mode" to="." method="_on_ascend_mode_pressed"]
 [connection signal="drag_ended" from="Global Margin/VBox/HBox/Tab VBox/Tab Content Split" to="." method="_on_tab_content_split_drag_ended"]

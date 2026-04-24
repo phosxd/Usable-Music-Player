@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://ucyi2ablk8px"]
+
+[ext_resource type="Script" uid="uid://d13shu4oahr5a" path="res://Scripts/UI/Main/activity_menu_card.gd" id="1_5yqfs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7dkvn"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+
+[node name="ActivityMenuCard" type="PanelContainer" unique_id=42475185]
+custom_minimum_size = Vector2(200, 0)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_7dkvn")
+script = ExtResource("1_5yqfs")
+
+[node name="HBox" type="HBoxContainer" parent="." unique_id=1009504044]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Library ID" type="Label" parent="HBox" unique_id=1743204161]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+text = "Library ID"
+text_overrun_behavior = 5
+
+[node name="Action" type="Label" parent="HBox" unique_id=1941779386]
+unique_name_in_owner = true
+self_modulate = Color(0.19999999, 0.19999999, 1, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Idle"
+
+[node name="Value" type="Label" parent="HBox" unique_id=1355924236]
+unique_name_in_owner = true
+layout_mode = 2
+text = "..."
