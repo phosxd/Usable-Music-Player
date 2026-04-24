@@ -80,9 +80,12 @@ func update_data(data:Dictionary) -> void:
 	replay_gain = data.get('replay_gain',0.0)
 
 
+## Remove this track from the library.
+## Will also remove parent album if it is the last track in the album.
 func remove() -> void:
 	album.artist.library.tracks.erase(self)
 	album.tracks.erase(self)
+	if album.tracks.size() == 0: album.remove()
 
 
 func get_stream() -> AudioStream:

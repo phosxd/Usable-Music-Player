@@ -75,10 +75,13 @@ func update_data(data:Dictionary) -> void:
 	else: copyright = ''
 
 
+## Remove this album & it's children from the library.
+## Will also remove parent artist if it is the last album in the artist.
 func remove() -> void:
 	artist.library.albums.erase(self)
 	artist.albums.erase(self)
 	for track:DBTrack in tracks: track.remove()
+	if artist.albums.size() == 0: artist.remove()
 
 
 ## Get all tracks in order of their disc number & track number.

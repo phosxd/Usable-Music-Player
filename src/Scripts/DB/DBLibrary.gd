@@ -51,16 +51,21 @@ func refresh() -> void:
 	if not DirAccess.dir_exists_absolute(path):
 		MiniLog.err('Library path "%s" is invalid. Skipping scan.' % path, self)
 
+	# Get last modified time for all tracks.
+	var last_modified_times:Dictionary[String,int] = {}
+	for track:DBTrack in self.tracks:
+		last_modified_times.set(track.path, track.last_modified_time)
+
+	# Scan files in the library.
 	var parsed_images:Array[String] = []
+	var found_paths:Array[String] = []
 	FileUtils.walk_dir(path, func(file_path:String) -> void:
 		if file_path.get_extension().to_lower() not in LibraryManager.valid_audio_extensions: return
-		for track:DBTrack in tracks:
-			if not track or track.path != file_path: continue
-			var last_modified_time:int = FileAccess.get_modified_time(file_path)
-			# If matching track found but it is modified, stop looping to start scanning.
-			if track.last_modified_time != last_modified_time: break
-			# If matching track found & is not modified, skip the file.
-			else: return
+		found_paths.append(file_path)
+		var lmt:int = FileAccess.get_modified_time(file_path)
+		var track_lmt = last_modified_times.get(file_path,null)
+		# Don't scan if file has not changed.
+		if track_lmt is int && lmt == track_lmt: return
 		# Scan the file.
 		var entry:Dictionary = Metadata.get_audio_meta(file_path, LibraryManager.image_cache_path)
 		if entry.is_empty():
@@ -69,6 +74,11 @@ func refresh() -> void:
 		_parse_entry(self, entry, parsed_images)
 	)
 	parsed_images.clear()
+
+	# Remove tracks that have been removed from the library.
+	for track:DBTrack in tracks:
+		if track.path not in found_paths:
+			track.remove()
 
 
 func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[String]) -> void:
@@ -81,7 +91,7 @@ func _parse_entry(library:DBLibrary, entry:Dictionary, parsed_images:Array[Strin
 
 	var palette = {}
 	var cover_path:String = entry.get('cover_path','')
-	if not cover_path.is_empty() && cover_path not in parsed_images:
+	if not cover_path.is_empty() && cover_path not in parsed_images && FileAccess.file_exists(cover_path):
 		var image = Image.load_from_file(cover_path)
 		image = ImageTexture.create_from_image(image)
 		palette = DBAlbum.calculate_colors(image)

@@ -27,7 +27,7 @@ func update_data(data:Dictionary) -> void:
 	#if albums.is_empty(): remove()
 
 
-## Remove this artist & all children under this artist.
+## Remove this artist & it's children from the library.
 func remove() -> void:
 	library.artists.erase(self)
 	for album:DBAlbum in albums: album.remove()
