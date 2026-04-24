@@ -29,9 +29,10 @@ enum ImageDetail {
 }
 
 const property_data:Array[Array] = [
-	# Library / API settings.
+	# Library settings.
 	['libraries',[TYPE_ARRAY]],
-	#['library_location',[TYPE_STRING]],
+	['auto_scan_interval',[TYPE_FLOAT]],
+	# API settings.
 	['fetch_lyrics',[TYPE_BOOL]],
 	['fetch_artist_cover',[TYPE_BOOL]],
 	['fetch_album_cover',[TYPE_BOOL]],
@@ -98,6 +99,12 @@ var current_window_size: Vector2i:
 		value_changed.emit('current_window_size')
 
 #endregion
+
+## How many minutes to wait before automatically scanning.
+var auto_scan_interval:float = 0.5:
+	set(value):
+		auto_scan_interval = value
+		auto_scan_timer.wait_time = value*60.0
 
 var replay_gain_mode := ReplayGainMode.Album
 var replay_gain_preamp:float = 0.0
@@ -300,10 +307,23 @@ var button_tint := Color.TRANSPARENT:
 
 #endregion
 
+#region timers
+
+var auto_scan_timer := Timer.new()
+
+#endregion
+
 
 func _ready() -> void:
 	default_window_size = get_window().size
 	current_window_size = default_window_size
+
+	# Configure auto-scan timer.
+	auto_scan_timer.one_shot = false
+	auto_scan_timer.autostart = true
+	auto_scan_timer.wait_time = auto_scan_interval*60.0
+	auto_scan_timer.timeout.connect(LibraryManager.scan_all_libraries)
+	self.add_child(auto_scan_timer)
 
 	load_session()
 	if theme.is_empty(): theme = 'UMP_DEFAULT' # Set default layout theme if none set by session file.

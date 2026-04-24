@@ -22,6 +22,8 @@ const dir_open_popup := preload('res://Scenes/Dir Open/dir_open.tscn')
 
 
 func _ready() -> void:
+	%'Auto Scan Interval'.set_value_no_signal(SessionManager.auto_scan_interval)
+	# ---
 	@warning_ignore('integer_division')
 	%'Dynamic Accents'.set_pressed_no_signal(SessionManager.dynamic_accents)
 	%'Custom Accent Toggle'.set_pressed_no_signal(SessionManager.custom_accent_enabled)
@@ -201,3 +203,7 @@ func _on_replay_gain_preamp_value_changed(value:float) -> void:
 
 func _on_replay_gain_item_selected(index:int) -> void:
 	SessionManager.replay_gain_mode = index as SessionManager.ReplayGainMode
+
+
+func _on_auto_scan_interval_value_changed(value:float) -> void:
+	SessionManager.auto_scan_interval = value

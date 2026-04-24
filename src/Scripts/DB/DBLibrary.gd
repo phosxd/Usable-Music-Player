@@ -64,31 +64,33 @@ func save(file_prefix:String='') -> void:
 	file.close()
 
 
-func refresh() -> void:
+func refresh(auto:bool=false) -> void:
 	if self.currently_updating:
-		MiniLog.warn('Cannot start scan for $~%s~$, already in progress.' % self.id, DBLibrary)
+		if not auto: MiniLog.warn('Cannot start scan for $~%s~$, already in progress.' % self.id, DBLibrary)
 		return
 	if not DirAccess.dir_exists_absolute(path):
-		MiniLog.err('Library path "%s" is invalid. Skipping scan.' % path, DBLibrary)
+		if not auto: MiniLog.err('Library path "%s" is invalid. Skipping scan.' % path, DBLibrary)
 		return
 	for library:DBLibrary in LibraryManager.libraries:
 		if library.currently_updating:
-			MiniLog.warn('Cannot start scan for $~%s~$, another library is currently scanning.' % self.id, DBLibrary)
+			if not auto: MiniLog.warn('Cannot start scan for $~%s~$, another library is currently scanning.' % self.id, DBLibrary)
 			return
 
 	self.currently_updating = true
 	self.scan_started.emit()
-	MiniLog.info('Starting scan for $~%s~$.' % self.id, DBLibrary)
+	if not auto: MiniLog.info('Starting scan for $~%s~$.' % self.id, DBLibrary)
 
-	Async.create_thread(_refresh, func(_result) -> void:
+	Async.create_thread(_refresh, func(changed:bool) -> void:
 		self.currently_updating = false
 		self.scan_finished.emit()
-		MiniLog.info('Finished scan for $~%s$~.' % self.id, DBLibrary)
+		if changed:
+			SessionManager.main_scene.refresh_tab()
+		if not auto: MiniLog.info('Finished scan for $~%s$~.' % self.id, DBLibrary)
 	)
 
 
-func _refresh() -> void:
-	self.scan_progress_changed.emit.call_deferred(0)
+func _refresh() -> bool:
+	var changed:Array[bool] = [false]
 
 	# Get last modified time for all tracks.
 	var last_modified_times:Dictionary[String,int] = {}
@@ -107,6 +109,7 @@ func _refresh() -> void:
 		var track_lmt = last_modified_times.get(short_file_path,null)
 		# Don't scan if file has not changed.
 		if track_lmt is int && lmt == track_lmt: return
+		changed[0] = true
 		# Scan the file.
 		var entry:Dictionary = Metadata.get_audio_meta(file_path, LibraryManager.image_cache_path)
 		if entry.is_empty():
@@ -119,9 +122,11 @@ func _refresh() -> void:
 	parsed_images.clear()
 
 	# Remove tracks that have been removed from the library.
-	for track:DBTrack in tracks:
+	for track:DBTrack in self.tracks.duplicate():
 		if track.path not in found_paths:
 			track.remove()
+
+	return changed[0]
 
 
 func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, parsed_images:Array[String]) -> void:

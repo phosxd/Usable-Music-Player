@@ -40,6 +40,7 @@ static var libraries:Array[DBLibrary] = []
 
 
 static func load_libraries() -> void:
+	# Load all libraries from user data.
 	DirAccess.make_dir_recursive_absolute(libraries_path)
 	FileUtils.walk_dir(libraries_path, func(path:String) -> void:
 		if path.get_extension().to_lower() == 'json':
@@ -56,6 +57,28 @@ static func load_libraries() -> void:
 			libraries.append(library)
 			MiniLog.info('Loaded library $~%s~$.' % path.get_basename().split('/')[-1], LibraryManager)
 	)
+
+	await SessionManager.get_tree().create_timer(1.0).timeout
+
+
+## Rescans all libraries, in order.
+static func scan_all_libraries() -> void:
+	var last:DBLibrary = null
+	var index:int = 0
+	for library:DBLibrary in libraries:
+		if not last:
+			library.refresh(true)
+		else:
+			last.scan_finished.connect(_on_last_scan_finished.bind(library, last, index))
+			index += 1
+		last = library
+
+
+static func _on_last_scan_finished(library:DBLibrary, last:DBLibrary, index:int):
+	await SessionManager.get_tree().create_timer(1.0).timeout
+	if library: library.refresh(true)
+	var callable = last.scan_finished.get_connections()[index].callable
+	last.scan_finished.disconnect(callable)
 
 
 static func save_libraries() -> void:
