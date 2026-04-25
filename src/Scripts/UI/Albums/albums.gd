@@ -32,7 +32,7 @@ extends VBoxContainer
 @onready var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
 @onready var sort_mode: DBLibrary.AlbumSortMode
 var ascend_mode = null
-var loaded_albums:Array[DBAlbum]
+var albums:Array[DBAlbum] = []
 var update_count:int = 0
 
 
@@ -55,32 +55,35 @@ func sort() -> void:
 	for child:Node in %Grid.get_children():
 		child.queue_free()
 
-	var albums := LibraryManager.get_albums_sorted(sort_mode)
+	albums = LibraryManager.get_albums_sorted(sort_mode).filter(func(album:DBAlbum) -> bool:
+		# Filter with search term.
+		if not SessionManager.search_term.is_empty():
+			var search_term:String = SessionManager.search_term.to_lower()
+			if not StringUtils.fuzzy_match(search_term, album.name) \
+			&& not StringUtils.fuzzy_match(search_term, album.artist.name) \
+			&& not album.year.contains(search_term):
+				return false
+		return true
+	) 
 	if ascend_mode == false: albums.reverse()
 
-	loaded_albums.clear()
+	Async.create_thread(_sort.bind(%Grid))
+
+
+func _sort(grid:Control) -> void:
 	var current_count:Array[int] = [update_count]
-	var iter:int = 0
 	for album:DBAlbum in albums:
 		if not album or update_count != current_count[0]: return
 		var secondary_text:String = album.artist.name
 		match sort_mode:
 			DBLibrary.AlbumSortMode.year: secondary_text = album.year
-		# Filter with search term.
-		if not SessionManager.search_term.is_empty():
-			var search_term:String = SessionManager.search_term.to_lower()
-			if not secondary_text.to_lower().contains(search_term) \
-			&& not album.name.to_lower().contains(search_term):
-				continue
-		iter += 1
 		# Add card.
-		loaded_albums.append(album)
-		add_card(album, secondary_text)
-		# Add one frame delay to give time to add child.
-		if iter % 4 == 0: await get_tree().create_timer(0).timeout
+		add_card(album, secondary_text, grid)
+		# Wait one frame to give time to add child.
+		await get_tree().create_timer(0).timeout
 
 
-func add_card(album:DBAlbum, secondary_text:String) -> void:
+func add_card(album:DBAlbum, secondary_text:String, grid:Control) -> void:
 	# Create card.
 	var card:Control = card_scene.instantiate()
 	card.primary_text = album.name
@@ -90,7 +93,7 @@ func add_card(album:DBAlbum, secondary_text:String) -> void:
 	card.pressed.connect(_on_card_pressed.bind(album))
 	card.secondary_pressed.connect(_on_card_secondary_pressed.bind(album))
 	# Add to grid.
-	%Grid.add_child(card)
+	grid.add_child.call_deferred(card)
 
 
 func _on_card_pressed(album:DBAlbum) -> void:
@@ -123,9 +126,9 @@ func _on_search_updated(_text:String) -> void:
 
 
 func _on_play_pressed() -> void:
-	if loaded_albums.is_empty(): return
+	if albums.is_empty(): return
 	var all_tracks:Array[DBTrack] = []
-	for album:DBAlbum in loaded_albums:
+	for album:DBAlbum in albums:
 		for disc:Array in album.get_tracks_in_order().values():
 			all_tracks.append_array(disc)
 
@@ -133,9 +136,9 @@ func _on_play_pressed() -> void:
 
 
 func _on_shuffle_pressed() -> void:
-	if loaded_albums.is_empty(): return
+	if albums.is_empty(): return
 	var all_tracks:Array[DBTrack] = []
-	var shuffled_albums:Array[DBAlbum] = loaded_albums.duplicate(); shuffled_albums.shuffle()
+	var shuffled_albums:Array[DBAlbum] = albums.duplicate(); shuffled_albums.shuffle()
 	for album:DBAlbum in shuffled_albums:
 		for disc:Array in album.get_tracks_in_order().values():
 			all_tracks.append_array(disc)

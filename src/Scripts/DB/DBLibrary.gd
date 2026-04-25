@@ -263,7 +263,7 @@ func get_artists_sorted(sort_mode:=ArtistSortMode.title) -> Array[DBArtist]:
 	match sort_mode:
 		ArtistSortMode.title:
 			result.sort_custom(func(a:DBArtist, b:DBArtist) -> bool:
-				return a.name < b.name
+				return a.name.to_lower() < b.name.to_lower()
 			)
 
 	return result
@@ -276,12 +276,12 @@ func get_albums_sorted(sort_mode:=AlbumSortMode.title) -> Array[DBAlbum]:
 		AlbumSortMode.title:
 			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
 				if not a or not b: return false
-				return a.name < b.name
+				return a.name.to_lower() < b.name.to_lower()
 			)
 		AlbumSortMode.artist:
 			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
 				if not a or not b: return false
-				return a.artist.name < b.artist.name
+				return a.artist.name.to_lower() < b.artist.name.to_lower()
 			)
 		AlbumSortMode.year:
 			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:

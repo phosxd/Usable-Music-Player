@@ -49,7 +49,6 @@ var volume:float = 100.0:
 		volume = value
 		audio_stream_player.volume_linear = (value*0.01)
 		audio_stream_player.volume_db += replay_gain
-		print(replay_gain)
 		if SessionManager.replay_gain_mode != SessionManager.ReplayGainMode.None && replay_gain != 0.0:
 			audio_stream_player.volume_db += SessionManager.replay_gain_preamp
 		volume_updated.emit(value)

@@ -33,7 +33,7 @@ extends VBoxContainer
 }
 @onready var card_scene := SessionManager.get_layout_theme_scene('Tracks/card')
 
-var loaded_tracks:Array[DBTrack] = []
+var tracks:Array[DBTrack] = []
 var selected_track_index: int
 var sort_mode: DBLibrary.TrackSortMode
 var ascend_mode = null
@@ -56,47 +56,48 @@ func unload() -> void:
 	).bind(self))
 
 
-func sort(callback=null) -> void:
+func sort() -> void:
 	update_count += 1
 	SessionManager.track_sort_mode = sort_mode
 	if ascend_mode != null: SessionManager.track_ascend_mode = ascend_mode
 	for child:Node in %Grid.get_children():
 		child.queue_free()
 
-	var tracks := LibraryManager.get_tracks_sorted(sort_mode)
-	if ascend_mode == false: tracks.reverse()
-	loaded_tracks.clear()
-
-	var current_count:Array[int] = [update_count]
-	var iter:int = 0
-	for track:DBTrack in tracks:
-		if update_count != current_count[0]: return
-		# Filter with search term.
+	# Get filtered & sorted tracks.
+	tracks = LibraryManager.get_tracks_sorted(sort_mode).filter(func(track:DBTrack) -> bool:
 		if not SessionManager.search_term.is_empty():
 			var search_term:String = SessionManager.search_term
 			if not StringUtils.fuzzy_match(search_term, track.name) \
 			&& not StringUtils.fuzzy_match(search_term, track.album.artist.name) \
-			&& not StringUtils.fuzzy_match(search_term, track.album.name):
-				continue
-		iter += 1
+			&& not StringUtils.fuzzy_match(search_term, track.album.name) \
+			&& not track.album.year.contains(search_term):
+				return false
+		return true
+	)
+	if ascend_mode == false: tracks.reverse()
+
+	Async.create_thread(_sort.bind(%Grid))
+
+
+func _sort(grid:Control) -> void:
+	var current_count:Array[int] = [update_count]
+	for track:DBTrack in tracks:
+		if update_count != current_count[0]: return
 		# Add card.
-		loaded_tracks.append(track)
-		add_card(track, _on_track_selected.bind(track))
-		# Add one frame delay every 4th iteration to give time to add child.
-		if iter % 4 == 0: await get_tree().create_timer(0).timeout
-
-	if Async.is_callable_valid(callback): callback.call()
+		add_card(track, _on_track_selected.bind(track), grid)
+		# Wait one frame to give time to add child.
+		await get_tree().create_timer(0).timeout
 
 
-func add_card(track:DBTrack, callback:Callable) -> void:
+func add_card(track:DBTrack, callback:Callable, grid:Control) -> void:
 	var card:Control = card_scene.instantiate()
 	card.init(track)
 	card.selected.connect(callback)
-	%Grid.add_child(card)
+	grid.add_child.call_deferred(card)
 
 
 func _on_track_selected(track:DBTrack) -> void:
-	PlayerManager.set_queue_and_track(loaded_tracks, track)
+	PlayerManager.set_queue_and_track(tracks, track)
 
 
 func _on_sort_mode_item_selected(index:int) -> void:
@@ -123,13 +124,13 @@ func _on_search_updated(_text:String) -> void:
 
 
 func _on_play_pressed() -> void:
-	if loaded_tracks.is_empty(): return
-	PlayerManager.set_queue_and_track(loaded_tracks, loaded_tracks[0])
+	if tracks.is_empty(): return
+	PlayerManager.set_queue_and_track(tracks, tracks[0])
 
 
 func _on_shuffle_pressed() -> void:
-	if loaded_tracks.is_empty(): return
-	var track:DBTrack = loaded_tracks.pick_random()
-	var shuffled_tracks = loaded_tracks.duplicate(); shuffled_tracks.shuffle()
+	if tracks.is_empty(): return
+	var track:DBTrack = tracks.pick_random()
+	var shuffled_tracks = tracks.duplicate(); shuffled_tracks.shuffle()
 	PlayerManager.set_queue_and_track(shuffled_tracks, track)
 	PlayerManager.shuffle_queue(track)

@@ -56,6 +56,11 @@ func sort() -> void:
 	loaded_artists.clear()
 	var artists := LibraryManager.get_artists_sorted(sort_mode)
 	if ascend_mode == false: artists.reverse()
+
+	Async.create_thread(_sort.bind(%Grid, artists))
+
+
+func _sort(grid:Control, artists:Array[DBArtist]) -> void:
 	var current_count:Array[int] = [update_count]
 	var iter:int = 0
 	for artist:DBArtist in artists:
@@ -68,12 +73,12 @@ func sort() -> void:
 		iter += 1
 		# Add card.
 		loaded_artists.append(artist)
-		add_card(artist)
-		# Add one frame delay every 4th iteration to give time to add child.
+		add_card(artist, grid)
+		# Wait one frame to give time to add child.
 		if iter % 4 == 0: await get_tree().create_timer(0).timeout
 
 
-func add_card(artist:DBArtist) -> void:
+func add_card(artist:DBArtist, grid:Control) -> void:
 	# Create card.
 	var card:Control = card_scene.instantiate()
 	card.primary_text = artist.name
@@ -82,11 +87,11 @@ func add_card(artist:DBArtist) -> void:
 
 	var stored_cover = artist.get_cover()
 	# Fetch from API if not in DB.
-	if not stored_cover && SessionManager.fetch_artist_cover:
-		var url = AppInfo.audio_db_api_url % [artist.name.uri_encode()]
+	#if not stored_cover && SessionManager.fetch_artist_cover:
+		#var url = AppInfo.audio_db_api_url % [artist.name.uri_encode()]
 		#RequestManager.request(RequestManager.RequestType.Web, 'artist_cover', url, {}, _on_http_request_request_completed.bind(card, artist), 2.5, true)
 	# Use stored image if valid.
-	elif stored_cover && stored_cover.get_size().x != 1:
+	if stored_cover && stored_cover.get_size().x != 1:
 		card.images = [stored_cover]
 	# Use album covers.
 	else:
@@ -99,7 +104,7 @@ func add_card(artist:DBArtist) -> void:
 		card.images = images
 
 	# Add to grid.
-	%Grid.add_child(card)
+	grid.add_child.call_deferred(card)
 
 
 #region card_functions
