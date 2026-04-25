@@ -24,7 +24,7 @@ func _ready() -> void:
 func init(db_track:DBTrack) -> void:
 	track = db_track
 	if not track:
-		_invalidate()
+		self.queue_free()
 		return
 
 	%Name.text = track.name
@@ -49,10 +49,6 @@ func set_mode(mode:CardMode) -> void:
 		%Album.hide()
 		%Image.hide()
 		%'Image Sep'.show()
-
-
-func _invalidate() -> void:
-	self.hide()
 
 
 func _on_button_pressed() -> void:

@@ -118,13 +118,14 @@ func _refresh() -> bool:
 		_parse_entry(file_path, short_file_path, entry, parsed_images)
 		progress[0] += 1
 		self.scan_progress_changed.emit.call_deferred(progress[0])
-	)
+	,null, true)
 	parsed_images.clear()
 
 	# Remove tracks that have been removed from the library.
 	for track:DBTrack in self.tracks.duplicate():
 		if track.path not in found_paths:
 			track.remove()
+			changed[0] = true
 
 	return changed[0]
 

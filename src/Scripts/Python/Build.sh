@@ -1,1 +1,2 @@
-pyinstaller --onefile "metadata.py"
+#pyinstaller --onefile "metadata.py"
+nuitka "metadata.py" --onefile --lto=yes

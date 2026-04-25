@@ -98,18 +98,21 @@ func as_filename() -> String:
 	return '%s__%s__%s__%s' % [album.artist.name.replace('/','_'), album.name.replace('/','_'), disc, number]
 
 
-func as_uid() -> String:
-	if not album.artist.library: return ''
+func as_id() -> String:
+	if not self.album.artist.library: return ''
 	var library_id:String = album.artist.library.id
-	return ':'.join([
-		library_id,
-		album.artist.name,
-		album.name,
-		str(disc),
-		str(number),
-		str(length),
-		str(file_size),
-	])
+	return JSON.stringify([library_id, self.path])
+
+
+## Returns the first track that matches [param id].
+static func from_id(id_json:String) -> DBTrack:
+	var id = JSON.parse_string(id_json)
+	if id is not Array or id.size() != 2: return null
+	var library:DBLibrary = LibraryManager.get_library(id[0])
+	if not library: return null
+	var tracks:Array = library.get_item_by_property(DBTrack, 'path', id[1])
+	if tracks.is_empty(): return null
+	return tracks[0] as DBTrack
 
 
 ## Returns any stored lyrics for this track, or an empty string if none found.

@@ -64,21 +64,21 @@ static func load_libraries() -> void:
 ## Rescans all libraries, in order.
 static func scan_all_libraries() -> void:
 	var last:DBLibrary = null
-	var index:int = 0
 	for library:DBLibrary in libraries:
 		if not last:
 			library.refresh(true)
 		else:
-			last.scan_finished.connect(_on_last_scan_finished.bind(library, last, index))
-			index += 1
+			var callable:Array = []
+			callable.append(_on_last_scan_finished.bind(library, last, callable))
+			if not last.scan_finished.is_connected(callable[0]):
+				last.scan_finished.connect(callable[0])
 		last = library
 
 
-static func _on_last_scan_finished(library:DBLibrary, last:DBLibrary, index:int):
+static func _on_last_scan_finished(library:DBLibrary, last:DBLibrary, callable:Array):
 	await SessionManager.get_tree().create_timer(1.0).timeout
 	if library: library.refresh(true)
-	var callable = last.scan_finished.get_connections()[index].callable
-	last.scan_finished.disconnect(callable)
+	last.scan_finished.disconnect(callable[0])
 
 
 static func save_libraries() -> void:
@@ -98,21 +98,6 @@ static func save_libraries() -> void:
 static func get_library(id:String) -> DBLibrary:
 	for library:DBLibrary in libraries:
 		if library.id == id: return library
-	return null
-
-
-## Returns the [DBTrack] that matches the [param uid].
-static func get_track_from_uid(uid:String) -> DBTrack:
-	var parts:PackedStringArray = uid.split(':')
-	if parts.size() != 7: return null
-	var library_id:String = parts[0]
-	var library := get_library(library_id)
-	if library == null: return null
-	# Check UID for all tracks in the library.
-	for track:DBTrack in library.tracks:
-		if not track: continue
-		if track.as_uid() == uid: return track
-
 	return null
 
 

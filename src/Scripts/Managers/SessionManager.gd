@@ -31,7 +31,7 @@ enum ImageDetail {
 const property_data:Array[Array] = [
 	# Library settings.
 	['libraries',[TYPE_ARRAY]],
-	['auto_scan_interval',[TYPE_FLOAT]],
+	['auto_scan_interval',[TYPE_INT,TYPE_FLOAT]],
 	# API settings.
 	['fetch_lyrics',[TYPE_BOOL]],
 	['fetch_artist_cover',[TYPE_BOOL]],
@@ -376,9 +376,9 @@ func load_session() -> void:
 	var raw_queue = data.get('queue')
 	var tracks:Array[DBTrack] = []
 	if raw_queue is Array:
-		for uid in raw_queue:
-			if uid is not String: continue
-			var track = LibraryManager.get_track_from_uid(uid)
+		for id in raw_queue:
+			if id is not String: continue
+			var track = DBTrack.from_id(id)
 			if track: tracks.append(track)
 	PlayerManager.set_queue(tracks)
 
@@ -416,7 +416,7 @@ func save_session() -> void:
 		data.set(i[0], self.get(i[0]))
 
 	for track:DBTrack in PlayerManager.queue:
-		data.queue.append(track.as_uid())
+		data.queue.append(track.as_id())
 
 	var file := FileAccess.open(session_file_path, FileAccess.WRITE)
 	var json = JSON.stringify(A2J.to_json(data), '\t', true, true)

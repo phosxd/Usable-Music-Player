@@ -44,6 +44,10 @@ PlayerManager="*uid://bsri8hvvykwnh"
 RequestManager="*uid://cgsfn5sukipn3"
 SessionManager="*uid://caowd7sywd5u3"
 
+[debug]
+
+file_logging/log_path="user://logs/.log"
+
 [display]
 
 window/size/viewport_width=1185

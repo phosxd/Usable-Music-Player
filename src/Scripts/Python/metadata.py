@@ -17,7 +17,6 @@
 
 
 import os
-import sys
 import json
 from tinytag import TinyTag
 
@@ -46,7 +45,7 @@ def get_audio_meta(tag, path):
 	for property in ['artist', 'album', 'albumartist', 'title', 'year', 'comment', 'copyright']:
 		meta[property] = list_get(raw_meta.get(property,[]),0,'')
 	# Add number properties.
-	for property in ['duration', 'channels', 'bitrate', 'bitdepth', 'samplerate' 'track', 'disc', 'filesize']:
+	for property in ['duration', 'channels', 'bitrate', 'bitdepth', 'samplerate', 'track', 'disc', 'filesize']:
 		meta[property] = raw_meta.get(property,0)
 
 	# Replay gain.
@@ -125,7 +124,7 @@ def save_audio_meta(tag, meta, output_path):
 
 def save_audio_cover(tag, output_path):
 	cover_image = tag.images.any
-	if cover_image is not None and not os.path.isfile(output_path):
+	if cover_image is not None:
 		file = open(output_path, 'wb')
 		file.write(cover_image.data)
 		file.close()
@@ -153,7 +152,7 @@ while True:
 			meta['cover_path'] = cover_path
 			save_audio_cover(tag, cover_path)
 
-		print(json.dumps(meta), file=sys.stdout)
+		print(json.dumps(meta))
 
 
 	if cmd == 'dump_audio_meta':
@@ -179,4 +178,4 @@ while True:
 				dump.append(meta)
 
 		json = json.dumps(dump)
-		print(json, file=sys.stdout)
+		print(json)
