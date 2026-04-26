@@ -1,22 +1,3 @@
-# Simple Command Line Interface for handling everything that Godot cannot.
-#
-# # # get_audio_meta:
-#
-# Gets the input audio file metadata using TinyTag.
-# Returns an organized dictionary of metadata & saves album cover image into the given directory.
-#
-# SCHEMA: <input_path> <image_output_dir>
-#
-#
-# # # dump_audio_meta:
-#
-# Returns an array of audio meta items.
-# Dumps all album cover images into the given directory.
-#
-# SCHEMA: <input_dir_path> <image_output_dir>
-
-
-import os
 import json
 from tinytag import TinyTag
 
@@ -138,44 +119,27 @@ while True:
 	raw_input = input()
 	args = raw_input.split(' [&&] ')
 	cmd = list_get(args, 0, '')
+	input_paths = []
+	image_output_dir = ''
+	for arg in args:
+		if arg.startswith('(img_out) '):
+			image_output_dir = arg.removeprefix('(img_out) ')
+		if arg.startswith('(audio) '):
+			input_paths.append(arg.removeprefix('(audio) '))
 
 
 	if cmd == 'get_audio_meta':
-		input_path = list_get(args, 1, '')
-		image_output_dir = list_get(args, 2, '')
-		if input_path == '': continue
-		tag:TinyTag = TinyTag.get(input_path, image=True)
-		meta = get_audio_meta(tag, input_path)
+		if len(input_paths) == 0: continue
+		entries = []
+		for input_path in input_paths:
+			tag:TinyTag = TinyTag.get(input_path, image=True)
+			meta = get_audio_meta(tag, input_path)
 
-		if image_output_dir != '':
-			cover_path = image_output_dir+'/'+meta_as_file_name(meta, 1)+'.'+meta['image_extension']
-			meta['cover_path'] = cover_path
-			save_audio_cover(tag, cover_path)
+			if image_output_dir != '':
+				cover_path = image_output_dir+'/'+meta_as_file_name(meta, 1)+'.'+meta['image_extension']
+				meta['cover_path'] = cover_path
+				save_audio_cover(tag, cover_path)
 
-		print(json.dumps(meta))
+			entries.append(meta)
 
-
-	if cmd == 'dump_audio_meta':
-		input_dir = list_get(args, 1, '')
-		image_output_dir = list_get(args, 2, '')
-		if input_dir == '': continue
-		dump = []
-		for subdir, dirs, files in os.walk(input_dir):
-			for file in files:
-				path = os.path.join(subdir, file)
-				# Check file type.
-				file_ext = path.split('.')[-1].lower()
-				if file_ext not in valid_extensions:
-					continue
-				# Add to dump & save image.
-				tag:TinyTag = TinyTag.get(path, image=True)
-				meta = get_audio_meta(tag, path)
-				meta['cover_path'] = ''
-				if meta['image_extension'] != '' and image_output_dir != '':
-					cover_path = image_output_dir+'/'+meta_as_file_name(meta, 1)+'.'+meta['image_extension']
-					meta['cover_path'] = cover_path
-					save_audio_cover(tag, cover_path)
-				dump.append(meta)
-
-		json = json.dumps(dump)
-		print(json)
+		print(json.dumps(entries))

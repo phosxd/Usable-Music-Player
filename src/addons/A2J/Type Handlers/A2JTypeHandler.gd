@@ -7,7 +7,7 @@
 ## Convert an AJSON object back into the original item. Can connect to [code]A2J._from_json[/code] for recursion.
 ## [br][br]
 ## [param ruleset] is not the original ruleset passed to [code]A2J.from_json[/code], but a ruleset with all of the rule groups combined.
-@abstract func from_json(value, ruleset:Dictionary)
+@abstract func from_json(headers:PackedStringArray, value, ruleset:Dictionary)
 
 
 const a2jError := '%s.gd found error at [code]%s[/code]: '
@@ -29,10 +29,7 @@ func report_error(error:int, ...translations) -> void:
 	if not message:
 		if print_errors: printerr(a2jError_+str(error))
 	else:
-		# Translate error message.
-		for tr in translations:
-			if tr is not String && tr is not StringName: continue
-			message = message.replace('~~', tr)
+		message = message % translations
 		if print_errors: printerr(a2jError_+message)
 
 	# Emit error.

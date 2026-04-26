@@ -15,25 +15,22 @@ func kill() -> void:
 	OS.kill(pid)
 
 
-func get_audio_meta(path:String, image_out_dir:String='') -> Dictionary:
-	send_command('get_audio_meta', [path, image_out_dir])
-	var output:String = io_access.get_line()
-	if io_access.get_error() != OK: return {}
-	var json = JSON.parse_string(output)
-	if json is not Dictionary: return {}
-	return json
+func get_audio_meta(paths:PackedStringArray, image_out_dir:String='') -> Array:
+	var args: PackedStringArray
+	for path:String in paths:
+		args.append('(audio) '+path)
+	args.append('(img_out) '+image_out_dir)
 
-
-func dump_audio_meta(path:String, image_out_dir:String='') -> Array:
-	send_command('dump_audio_meta', [path, image_out_dir])
+	send_command('get_audio_meta', args)
 	var output:String = io_access.get_line()
+	if io_access.get_error() != OK: return []
 	var json = JSON.parse_string(output)
 	if json is not Array: return []
 	return json
 
 
-func send_command(command:String, args:Array[String]) -> void:
-	io_access.store_line(' [&&] '.join([command]+args))
+func send_command(command:String, args:PackedStringArray) -> void:
+	io_access.store_line(' [&&] '.join([command]+Array(args)))
 
 
 func _exit_tree() -> void:

@@ -44,9 +44,9 @@ func to_json(vector, ruleset:Dictionary) -> Dictionary[String,Variant]:
 	return result
 
 
-func from_json(json:Dictionary, ruleset:Dictionary) -> Variant:
+func from_json(headers:PackedStringArray, json:Dictionary, ruleset:Dictionary) -> Variant:
 	var value = json.get('v')
-	var is_float:bool = not json.get('.t').ends_with('I')
+	var is_float:bool = not headers[0].ends_with('I')
 	# Throw error if "value" is not an Array.
 	if value is not Array:
 		report_error(1)

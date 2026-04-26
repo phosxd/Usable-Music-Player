@@ -4,13 +4,13 @@ class_name A2JArrayTypeHandler extends A2JTypeHandler
 
 func _init() -> void:
 	error_strings = [
-		'Expected array or dictionary.',
+		'Cannot convert from an invalid JSON representation.',
 	]
 
 
 func to_json(array:Array, ruleset:Dictionary) -> Variant:
-	var result:Array = []
 	# Convert all items.
+	var result:Array = []
 	var index := -1
 	for value in array:
 		index += 1
@@ -24,11 +24,11 @@ func to_json(array:Array, ruleset:Dictionary) -> Variant:
 		# Append new value.
 		result.append(new_value)
 		A2J._tree_position.pop_back()
-	
+
 	return result
 
 
-func from_json(json, ruleset:Dictionary, result:Array=[]) -> Array:
+func from_json(_headers:PackedStringArray, json, ruleset:Dictionary, result:Array=[]) -> Array:
 	var list: Array
 	if json is Dictionary:
 		list = json.get('v', [])
@@ -38,6 +38,7 @@ func from_json(json, ruleset:Dictionary, result:Array=[]) -> Array:
 		report_error(0)
 		return result
 
+	# Convert all items in the array.
 	var index:int = -1
 	for value in list:
 		index += 1

@@ -51,11 +51,8 @@ func to_json(value, ruleset:Dictionary) -> Dictionary[String,Variant]:
 	return result
 
 
-func from_json(json:Dictionary, ruleset:Dictionary) -> Variant:
-	var type = json.get('.t')
-	if type is not String:
-		report_error(1)
-		return null
+func from_json(headers:PackedStringArray, json:Dictionary, ruleset:Dictionary) -> Variant:
+	var type:String = headers[0]
 	var value = json.get('v')
 	if (type in special_types && value is not Array) or (value is not String && type not in special_types):
 		report_error(1)

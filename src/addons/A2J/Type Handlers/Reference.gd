@@ -4,7 +4,7 @@ class_name A2JReferenceTypeHandler extends A2JTypeHandler
 func _init() -> void:
 	error_strings = [
 		'"references" in ruleset should be structured as follows: Dictionary[String,Variant].',
-		'Could not load referenced resource at "~~".',
+		'Could not load referenced resource at "%s".',
 		'Cannot convert from an invalid JSON representation.',
 	]
 
@@ -26,7 +26,7 @@ func to_json(_value, _ruleset:Dictionary) -> void:
 	pass
 
 
-func from_json(json:Dictionary, ruleset:Dictionary) -> Variant:
+func from_json(headers:PackedStringArray, json:Dictionary, ruleset:Dictionary) -> Variant:
 	var named_references = ruleset.get('property_reference_values',{})
 	if named_references is not Dictionary:
 		report_error(0)
@@ -34,19 +34,22 @@ func from_json(json:Dictionary, ruleset:Dictionary) -> Variant:
 
 	var ref_name:String = json.get('v','')
 	if ref_name.is_empty():
-		var type:StringName = json.get('.t', '')
-		var split_type = type.split(':')
-		# Throw error if invalid number of splits.
-		if split_type.size() != 2:
+		# Throw error if invalid number of headers.
+		if headers.size() != 2:
 			report_error(3)
 			return null
-		ref_name = split_type[1]
+		ref_name = headers[1]
+		# Throw error if reference id is invalid.
+		if not ref_name.is_valid_int():
+			report_error(3)
+			return null
 
-	# Handle object reference.
+	# Handle variant reference.
 	if ref_name.is_valid_int():
-		var ids_to_objects = A2J._process_data.get('ids_to_objects', {})
-		if ids_to_objects is Dictionary:
-			return ids_to_objects.get(ref_name, '_A2J_unresolved_reference')
+		var variant_map = A2J._process_data.get('variant_map', {})
+		if variant_map is Dictionary:
+			return variant_map.get(ref_name.to_int(), '_A2J_unresolved_reference')
+
 	# Handle external resource reference.
 	elif ref_name.begins_with('r:'):
 		var path:String = ref_name.trim_prefix('r:')

@@ -30,7 +30,7 @@ enum ImageDetail {
 
 const property_data:Array[Array] = [
 	# Library settings.
-	['libraries',[TYPE_ARRAY]],
+	['library_order',[TYPE_PACKED_STRING_ARRAY]],
 	['auto_scan_interval',[TYPE_INT,TYPE_FLOAT]],
 	# API settings.
 	['fetch_lyrics',[TYPE_BOOL]],
@@ -100,6 +100,7 @@ var current_window_size: Vector2i:
 
 #endregion
 
+var library_order: PackedStringArray
 ## How many minutes to wait before automatically scanning.
 var auto_scan_interval:float = 0.5:
 	set(value):
@@ -318,15 +319,15 @@ func _ready() -> void:
 	default_window_size = get_window().size
 	current_window_size = default_window_size
 
+	load_session()
+	if theme.is_empty(): theme = 'UMP_DEFAULT' # Set default layout theme if none set by session file.
+
 	# Configure auto-scan timer.
 	auto_scan_timer.one_shot = false
 	auto_scan_timer.autostart = true
 	auto_scan_timer.wait_time = auto_scan_interval*60.0
 	auto_scan_timer.timeout.connect(LibraryManager.scan_all_libraries)
 	self.add_child(auto_scan_timer)
-
-	load_session()
-	if theme.is_empty(): theme = 'UMP_DEFAULT' # Set default layout theme if none set by session file.
 
 
 ## Get the scene at [param scene_name] for the current theme or [param theme_override].
@@ -366,6 +367,7 @@ func load_session() -> void:
 	var data = A2J.from_json(JSON.parse_string(file.get_as_text()))
 	if data == null: return
 
+	# Apply properties.
 	for i in property_data:
 		var data_entry = data.get(i[0])
 		if typeof(data_entry) == TYPE_FLOAT && TYPE_INT in i[1] && TYPE_FLOAT not in i[1]:
@@ -373,6 +375,10 @@ func load_session() -> void:
 		if typeof(data_entry) in i[1]:
 			set(i[0], data_entry)
 
+	# Load libraries.
+	LibraryManager.load_libraries()
+
+	# Load queue.
 	var raw_queue = data.get('queue')
 	var tracks:Array[DBTrack] = []
 	if raw_queue is Array:
@@ -382,14 +388,17 @@ func load_session() -> void:
 			if track: tracks.append(track)
 	PlayerManager.set_queue(tracks)
 
+	# Set queue position.
 	var raw_queue_position = data.get('queue_position')
 	if (raw_queue_position is int or raw_queue_position is float) && raw_queue_position != -1:
 		PlayerManager.set_current_track(int(raw_queue_position), false)
 
+	# Set track progress.
 	var raw_track_progress = data.get('track_progress')
 	if raw_track_progress is float:
 		PlayerManager.set_track_progress(raw_track_progress)
 
+	# Set volume.
 	var raw_volume = data.get('volume')
 	if raw_volume is float:
 		PlayerManager.volume = raw_volume
@@ -405,6 +414,7 @@ func load_session() -> void:
 ## Save the current session to disk.
 func save_session() -> void:
 	var data = {
+		'library_order': PackedStringArray(),
 		'queue': [],
 		'queue_position': PlayerManager.queue_position,
 		'auto_queue_start_index': PlayerManager.auto_queue_start_index,
@@ -412,12 +422,21 @@ func save_session() -> void:
 		'volume': PlayerManager.volume,
 	}
 
+	# Sync library order & save changed libraries.
+	self.library_order.clear()
+	for library:DBLibrary in LibraryManager.libraries:
+		self.library_order.append(library.id)
+		if library.changed: library.save()
+
+	# Set data properties.
 	for i in property_data:
 		data.set(i[0], self.get(i[0]))
 
+	# Set data queue.
 	for track:DBTrack in PlayerManager.queue:
 		data.queue.append(track.as_id())
 
+	# Write file.
 	var file := FileAccess.open(session_file_path, FileAccess.WRITE)
 	var json = JSON.stringify(A2J.to_json(data), '\t', true, true)
 	file.store_string(json)

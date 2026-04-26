@@ -17,7 +17,8 @@ func _ready() -> void:
 		var button := CheckBox.new()
 		button.theme_type_variation = 'AccentButton'
 		button.flat = true
-		button.text = library.id
+		button.text = library.name
+		button.tooltip_text = library.name
 		button.button_pressed = not library.hidden
 		button.toggled.connect(_on_library_toggled.bind(library))
 		button.gui_input.connect(_on_library_button_gui_input.bind(button))

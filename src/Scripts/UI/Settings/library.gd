@@ -19,9 +19,8 @@ func _on_add_library_index_pressed(index:int) -> void:
 		0:
 			var library := DBLibrary.new()
 			library.type = DBLibrary.LibraryType.LocalDirectory
-			library.id = 'Local Library '
-			for i in 6:
-				library.id += str(randi_range(0,9))
+			library.id = DBLibrary._generate_id()
+			library.name = 'New Library'
 			LibraryManager.libraries.append(library)
 			add_local_library(library)
 		1:
@@ -66,7 +65,7 @@ func add_local_library(library:DBLibrary) -> void:
 
 
 func _library_item_updated(data:Array, library:DBLibrary) -> void:
-	library.id = data[0]
+	library.name = data[0]
 	library.path = data[1]
 
 
@@ -81,13 +80,9 @@ func _library_item_moved(up:bool, item:Control, library:DBLibrary) -> void:
 
 
 func _library_item_removed(item:Control, library:DBLibrary) -> void:
-	LibraryManager.libraries.erase(library)
-	library.free()
+	library.remove()
 	item.queue_free()
 
 
 func _library_item_scanned(_item:Control, library:DBLibrary) -> void:
 	library.refresh()
-	var index:int = LibraryManager.libraries.find(library)
-	if index == -1: return
-	library.save(str(index)+' ')

@@ -42,8 +42,18 @@ enum TrackSortMode {
 
 var type := LibraryType.LocalDirectory
 var id: String
-var path: String
-var hidden:bool = false
+var name: String:
+	set(value):
+		name = value
+		changed = true
+var path: String:
+	set(value):
+		path = value
+		changed = true
+var hidden:bool = false:
+	set(value):
+		hidden = value
+		changed = true
 ## All artists.
 var artists:Array[DBArtist] = []
 ## All albums.
@@ -51,17 +61,40 @@ var albums:Array[DBAlbum] = []
 ## All tracks.
 var tracks:Array[DBTrack] = []
 
+var changed:bool = false
 var currently_updating:bool = false
+var valid:bool = true
 
 
-func save(file_prefix:String='') -> void:
+static func _generate_id() -> String:
+	var result:String = ''
+	for i in 6:
+		result += str(randi_range(0,9))
+
+	# Try again if ID taken.
+	for library:DBLibrary in LibraryManager.libraries:
+		if library.internal_id == result:
+			return _generate_id()
+
+	return result
+
+
+func save() -> void:
 	var ajson = A2J.to_json(self, LibraryManager.a2j_ruleset)
 	if ajson is not Dictionary:
 		MiniLog.err('Failed to save library "%s".' % self.id, self)
 		return
-	var file := FileAccess.open(LibraryManager.libraries_path+file_prefix+self.id+'.json', FileAccess.WRITE)
+	var file := FileAccess.open(self.get_file_path(), FileAccess.WRITE)
 	file.store_string(JSON.stringify(ajson))
 	file.close()
+
+
+func remove() -> void:
+	self.valid = false
+	LibraryManager.libraries.erase(self)
+	var err:Error = DirAccess.remove_absolute(self.get_file_path())
+	print(self.get_file_path())
+	print(error_string(err))
 
 
 func refresh(auto:bool=false) -> void:
@@ -80,17 +113,19 @@ func refresh(auto:bool=false) -> void:
 	self.scan_started.emit()
 	if not auto: MiniLog.info('Starting scan for $~%s~$.' % self.id, DBLibrary)
 
-	Async.create_thread(_refresh, func(changed:bool) -> void:
+	Async.create_thread(self._refresh, func(made_changes:bool) -> void:
 		self.currently_updating = false
 		self.scan_finished.emit()
-		if changed:
+		if made_changes:
+			self.changed = true
 			SessionManager.main_scene.refresh_tab()
 		if not auto: MiniLog.info('Finished scan for $~%s$~.' % self.id, DBLibrary)
+		self.save()
 	)
 
 
 func _refresh() -> bool:
-	var changed:Array[bool] = [false]
+	var made_changes:Array[bool] = [false]
 
 	# Get last modified time for all tracks.
 	var last_modified_times:Dictionary[String,int] = {}
@@ -102,6 +137,7 @@ func _refresh() -> bool:
 	var found_paths:Array[String] = []
 	var progress:Array[int] = [0]
 	FileUtils.walk_dir(self.path, func(file_path:String) -> void:
+		if not self.valid: return
 		if file_path.get_extension().to_lower() not in LibraryManager.valid_audio_extensions: return
 		var short_file_path:String = file_path.trim_prefix(self.path).trim_prefix('/')
 		found_paths.append(short_file_path)
@@ -109,25 +145,27 @@ func _refresh() -> bool:
 		var track_lmt = last_modified_times.get(short_file_path,null)
 		# Don't scan if file has not changed.
 		if track_lmt is int && lmt == track_lmt: return
-		changed[0] = true
-		# Scan the file.
-		var entry:Dictionary = Metadata.get_audio_meta(file_path, LibraryManager.image_cache_path)
-		if entry.is_empty():
-			MiniLog.err('Failed to scan file "%s".' % short_file_path, self)
-			return
-		_parse_entry(file_path, short_file_path, entry, parsed_images)
-		progress[0] += 1
-		self.scan_progress_changed.emit.call_deferred(progress[0])
+		# Scan file.
+		made_changes[0] = true
+		var entries:Array = Metadata.get_audio_meta([file_path], LibraryManager.image_cache_path)
+		for entry:Dictionary in entries:
+			if entry.is_empty():
+				MiniLog.err('Failed to scan file "%s".' % short_file_path, self)
+				continue
+			_parse_entry(file_path, short_file_path, entry, parsed_images)
+			progress[0] += 1
+			self.scan_progress_changed.emit.call_deferred(progress[0])
 	,null, true)
+
 	parsed_images.clear()
 
 	# Remove tracks that have been removed from the library.
 	for track:DBTrack in self.tracks.duplicate():
 		if track.path not in found_paths:
 			track.remove()
-			changed[0] = true
+			made_changes[0] = true
 
-	return changed[0]
+	return made_changes[0]
 
 
 func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, parsed_images:Array[String]) -> void:
@@ -221,20 +259,24 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	#MiniLog.pro('Scanned "$~%s~$".' % track_path.trim_prefix(library.path), LibraryManager)
 
 
+func get_file_path() -> String:
+	return LibraryManager.libraries_path+self.id+'.json'
+
+
 ## Returns a list of [DBArtist], [DBAlbum], or [DBTrack] (depending on [param item_type]) that have the specified [param name].
-func get_item_by_name(item_type, name:String, case_sensitive:bool=true) -> Array:
+func get_item_by_name(item_type, expected_name:String, case_sensitive:bool=true) -> Array:
 	var list: Array
 	match item_type:
 		DBArtist: list = artists
 		DBAlbum: list = albums
 		DBTrack: list = tracks
 
-	if not case_sensitive: name = name.to_lower()
+	if not case_sensitive: expected_name = expected_name.to_lower()
 	list = list.filter(func(item) -> bool:
 		var item_name = item.get('name')
 		if item_name is String:
 			if not case_sensitive: item_name = item_name.to_lower()
-			return item_name == name
+			return item_name == expected_name
 		return false
 	)
 

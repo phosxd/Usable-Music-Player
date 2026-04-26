@@ -43,13 +43,6 @@ func _ready() -> void:
 	# Set up desktop file.
 	if OS.get_name() == 'Linux' && not OS.has_feature('editor'): generate_desktop_file()
 
-	# Load library database.
-	LibraryManager.load_libraries()
-
-
-func _exit_tree() -> void:
-	LibraryManager.save_libraries()
-
 
 ## Generates & saves a Linux desktop file for this app.
 func generate_desktop_file() -> void:

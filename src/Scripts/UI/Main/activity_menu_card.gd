@@ -11,8 +11,8 @@ var library: DBLibrary
 
 func init(library_:DBLibrary) -> void:
 	library = library_
-	%'Library ID'.text = library.id
-	%'Library ID'.tooltip_text = library.id
+	%'Library Name'.text = library.name
+	%'Library Name'.tooltip_text = library.name
 	library.scan_started.connect(_on_scan_started)
 	library.scan_finished.connect(_on_scan_finished)
 	library.scan_progress_changed.connect(_on_scan_progress_changed)

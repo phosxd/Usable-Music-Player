@@ -16,7 +16,12 @@ static var a2j_ruleset:Dictionary[String,Dictionary] = {
 		'class_exclusions': ['GDScript'],
 	},
 	'DBLibrary': {
-		'property_exclusions': ['currently_updating'],
+		'property_exclusions': [
+			'id',
+			'changed',
+			'currently_updating',
+			'valid',
+		],
 	},
 	'DBArtist': {
 		'property_exclusions': [],
@@ -40,7 +45,6 @@ static var libraries:Array[DBLibrary] = []
 
 
 static func load_libraries() -> void:
-	# Load all libraries from user data.
 	DirAccess.make_dir_recursive_absolute(libraries_path)
 	FileUtils.walk_dir(libraries_path, func(path:String) -> void:
 		if path.get_extension().to_lower() == 'json':
@@ -54,8 +58,17 @@ static func load_libraries() -> void:
 				MiniLog.err('Unable to parse library from "%s". Skipping library.' % path, LibraryManager)
 				return
 			library.currently_updating = false
+			library.changed = false
+			library.valid = true
+			library.id = path.split('/')[-1].trim_suffix('.json')
 			libraries.append(library)
 			MiniLog.info('Loaded library $~%s~$.' % path.get_basename().split('/')[-1], LibraryManager)
+	)
+
+	libraries.sort_custom(func(a:DBLibrary, b:DBLibrary) -> bool:
+		var a_index:int = SessionManager.library_order.find(a.id)
+		var b_index:int = SessionManager.library_order.find(b.id)
+		return a_index < b_index
 	)
 
 	await SessionManager.get_tree().create_timer(1.0).timeout
@@ -82,16 +95,8 @@ static func _on_last_scan_finished(library:DBLibrary, last:DBLibrary, callable:A
 
 
 static func save_libraries() -> void:
-	# Remove previously saved library files.
-	for file_path:String in DirAccess.get_files_at(libraries_path):
-		if file_path.get_extension().to_lower() != 'json': continue
-		DirAccess.remove_absolute(libraries_path+file_path)
-
-	# Save libraries.
-	var index:int = -1
 	for library:DBLibrary in libraries:
-		index += 1
-		library.save(str(index)+' ')
+		library.save()
 
 
 ## Returns the [DBLibrary] or [code]null[/code] if none found.

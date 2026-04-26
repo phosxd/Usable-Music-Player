@@ -9,12 +9,12 @@ signal remove_requested
 
 
 func init(library:DBLibrary) -> void:
-	%ID.text = library.id
+	%Name.text = library.name
 	%Path.text = library.path
 
 
 func update() -> void:
-	update_requested.emit([%ID.text,%Path.text])
+	update_requested.emit([%Name.text,%Path.text])
 
 
 func _on_path_text_changed(_new_text:String) -> void:

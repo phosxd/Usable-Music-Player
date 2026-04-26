@@ -13,7 +13,7 @@ const script_property_type_details:Dictionary[String,Dictionary] = {
 
 func _init() -> void:
 	error_strings = [
-		'Class "~~" is not defined in registry.',
+		'Class "%s" is not defined in registry.',
 		'"property_exclusions" in ruleset should be structured as follows: Array[String].',
 		'"property_references" in ruleset should be structured as follows: Dictionary[String,String].',
 		'"instantiator_function" in ruleset should be structured as follows: Callable(registered_object:Object, object_class:String, args:Array=[]) -> Object.',
@@ -22,7 +22,10 @@ func _init() -> void:
 		'Cannot convert from an invalid JSON representation.',
 	]
 	init_data = {
-		'ids_to_objects': {},
+		# Property type data cache.
+		# This is used to store per-class property type data so
+		# it does not need to be grabbed & processed for every object.
+		'ptd_cache': {},
 	}
 
 
@@ -44,14 +47,14 @@ func to_json(object:Object, ruleset:Dictionary) -> Variant:
 			return A2JReferenceTypeHandler.make_reference('r:%s' % object.resource_path)
 
 	# If object has been serialized before, return a reference to it.
-	var ids_to_objects:Dictionary = A2J._process_data.ids_to_objects
-	var id = ids_to_objects.find_key(object)
-	if id != null:
+	var variant_map:Dictionary = A2J._process_data.variant_map
+	var id = variant_map.find_key(object)
+	if id is int:
 		return A2JReferenceTypeHandler.make_reference(str(id))
-	# If not, add to object stack & update index.
+	# If not, add to map.
 	else:
-		id = ids_to_objects.keys().size()
-		A2J._process_data.ids_to_objects.set(id, object)
+		id = variant_map.keys().size()
+		A2J._process_data.variant_map.set(id, object)
 
 	# Set up result.
 	var result:Dictionary[String,Variant] = {
@@ -86,29 +89,42 @@ func to_json(object:Object, ruleset:Dictionary) -> Variant:
 		result.set(property.name, new_value)
 		A2J._tree_position.pop_back()
 
+	# Get DPITexture source code & apply to result.
+	if object is DPITexture:
+		result.set('source', object.get_source())
+
 	return result
 
 
-func from_json(json:Dictionary, ruleset:Dictionary) -> Object:
-	var object_class:StringName = json.get('.t', '')
-	var split_object_class = object_class.split(':')
-	# Throw error if invalid number of splits.
-	if split_object_class.size() != 3:
+func from_json(headers:PackedStringArray, json:Dictionary, ruleset:Dictionary) -> Object:
+	# Throw error if invalid number of headers.
+	if headers.size() != 3:
 		report_error(6)
-		return Object.new()
+		return null
 	# Set object class & id.
-	object_class = split_object_class[2]
-	var id = split_object_class[1]
-	
+	var object_class:String = headers[2]
+	var id = headers[1]
+	# Throw error if invalid id.
+	if not id.is_valid_int():
+		report_error(6)
+		return null
+	id = id.to_int()
+
 	# Get & check registered object equivalent.
 	var registered_object = A2J.object_registry.get(object_class, null)
 	if registered_object == null:
 		report_error(0)
 	registered_object = registered_object as Object
 
-	# Add result object to "ids_to_objects" for use in references.
-	var result := _get_default_object(registered_object, object_class, ruleset)
-	A2J._process_data.ids_to_objects.set(str(id), result)
+	# Create base result object.
+	var result: Object
+	# DPITexture should be created with "create_from_string".
+	if object_class == 'DPITexture' && 'source' in json:
+		result = DPITexture.create_from_string(json['source'])
+	else:
+		result = _get_default_object(registered_object, object_class, ruleset)
+	# Add result object to "variant_map" for use in references.
+	A2J._process_data.variant_map.set(id, result)
 	# Get rules.
 	var properties_to_reference:Dictionary[String,String] = ruleset.get('property_references', Dictionary({}, TYPE_STRING, '', null, TYPE_STRING, '', null))
 	var properties_to_exclude:Array = ruleset.get('property_exclusions', [])
@@ -123,10 +139,18 @@ func from_json(json:Dictionary, ruleset:Dictionary) -> Object:
 			keys.erase(item)
 			keys.insert(0, item)
 	# Dont get property type details before script is applied.
-	var all_property_type_details:Dictionary[String,Dictionary] = _get_all_property_type_details(result) if not has_script else script_property_type_details
+	var all_property_type_details:Dictionary[String,Dictionary] = script_property_type_details
+	if not has_script:
+		var ptd_cache = A2J._process_data.ptd_cache.get(object_class,null)
+		if ptd_cache is Dictionary:
+			all_property_type_details = ptd_cache
+		else:
+			all_property_type_details = _get_all_property_type_details(result)
+			A2J._process_data.ptd_cache.set(object_class, all_property_type_details)
 
 	# Convert all values in the dictionary.
 	for key in keys:
+		if key == 'source' && object_class == 'DPITexture': continue # Skip "source" as it is used when DPITexture is created with "create_from_string".
 		if _validate_object_property(result, key, {}, properties_to_exclude, properties_to_include, do_properties_to_include, ruleset) == false: continue
 		A2J._tree_position.append(key)
 		var value = json[key]
@@ -140,13 +164,18 @@ func from_json(json:Dictionary, ruleset:Dictionary) -> Object:
 		# Set value as metadata.
 		if key.begins_with('metadata/'):
 			result.set_meta(key.replace('metadata/',''), new_value)
-		# Set value
+		# Set value.
 		else: result.set(key, new_value)
 		A2J._tree_position.pop_back()
 
 		# Update property type details after script has been applied to the object.
 		if key == 'script':
-			all_property_type_details = _get_all_property_type_details(result)
+			var ptd_cache = A2J._process_data.ptd_cache.get(id,null)
+			if ptd_cache is Dictionary:
+				all_property_type_details = ptd_cache
+			else:
+				all_property_type_details = _get_all_property_type_details(result)
+				A2J._process_data.ptd_cache.set(id, all_property_type_details)
 
 	return result
 
@@ -167,7 +196,7 @@ func _validate_object_property(result, name:String, properties_to_reference:Dict
 func _resolve_reference(value, result, ruleset:Dictionary, object:Object, property:String, reference_to_resolve) -> Variant:
 	var resolved_reference = A2J._from_json(reference_to_resolve)
 	if resolved_reference is String && resolved_reference == '_A2J_unresolved_reference': resolved_reference = null
-	
+
 	# Set value as metadata.
 	if property.begins_with('metadata/'):
 		object.set_meta(property.replace('metadata/',''), resolved_reference)
