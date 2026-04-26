@@ -7,9 +7,6 @@ enum DominantColorMethod {
 	ACCURATE,
 	ACCURATE_BLEND,
 }
-const album_cover_size_1 := Vector2i(250,250)
-const album_cover_size_2 := Vector2i(500,500)
-const album_cover_size_3 := Vector2i(1000,1000)
 
 static var default_cover := ImageTexture.create_from_image(preload('res://Themes/Normal/Assets/Icons/texture.svg').get_image())
 
@@ -112,12 +109,7 @@ func get_cover() -> ImageTexture:
 	if FileAccess.file_exists(cover_path):
 		var image = Image.load_from_file(cover_path)
 		if image is Image:
-			var album_cover_size: Vector2i
-			match SessionManager.image_detail:
-				0: album_cover_size = album_cover_size_1
-				1: album_cover_size = album_cover_size_2
-				2: album_cover_size = album_cover_size_3
-			ImageUtils.limit_size(image, album_cover_size)
+			ImageUtils.limit_size(image, Vector2.ONE*SessionManager.image_detail)
 			image.generate_mipmaps()
 			cover = ImageTexture.create_from_image(image)
 	if not cover: return null

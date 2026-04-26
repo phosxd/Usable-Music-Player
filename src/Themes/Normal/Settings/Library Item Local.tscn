@@ -19,6 +19,15 @@ layout_mode = 2
 
 [node name="Title" type="HBoxContainer" parent="VBox" unique_id=1214426502]
 layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Icon" type="Button" parent="VBox/Title" unique_id=95324500]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.39215687)
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"AccentButton"
+flat = true
 
 [node name="Name" type="LineEdit" parent="VBox/Title" unique_id=2144411406]
 unique_name_in_owner = true
@@ -33,6 +42,7 @@ layout_mode = 2
 [node name="Load Path" type="Button" parent="VBox/Controls" unique_id=848004652]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"AccentButton"
 icon = ExtResource("2_rhteh")
 flat = true
 
@@ -47,12 +57,14 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 tooltip_text = "Scan library."
+theme_type_variation = &"AccentButton"
 text = "Scan"
 
 [node name="Move Up" type="Button" parent="VBox/Controls" unique_id=563130389]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
+theme_type_variation = &"AccentButton"
 icon = ExtResource("2_x56b4")
 flat = true
 
@@ -60,6 +72,7 @@ flat = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
+theme_type_variation = &"AccentButton"
 icon = ExtResource("4_rhteh")
 flat = true
 
@@ -67,6 +80,7 @@ flat = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
+theme_type_variation = &"AccentButton"
 icon = ExtResource("3_rhteh")
 flat = true
 

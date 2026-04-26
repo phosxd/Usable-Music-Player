@@ -1,22 +1,17 @@
 - Add playlists.
-- Add auto scan for changes in library.
 - Fix queue not being updated properly when reordering an item BEFORE the currently playing track.
 - Add right-click options for artist, album, & genre cards.
 - Add ability to upload custom artist & album covers.
-- Add simple mini-player to replace immersive player.
-- Revamp library "scan for changes" implementation to only call CLI once, not for every file.
-- Add status info for "scan for changes" function.
-- Revamp "interface.py" CLI to return raw image bytes as a string instead of storing as a file.
-- Add option for artist/album for uploading custom image.
+- Add simple mini-player.
 - Add option for artist for regrabbing artist image from API.
+- Add library tag to artist & album pages.
+- Add library tag to artist cards.
+- Add option to toggle library tag visibility.
+- Finish rewriting gradient shader.
 
-- Add multiple libraries
 - Read "lyricist" tag to show "Written by:" in lyrics.
 - Read "releasetype".
 
-
-- Build GDExtension for dedicated audio playback & metadata.
-  This is to address the problems of needing to use a bundled Python executable for metadata & FLACs not supporting multi-channel.
 
 
 Color themes:

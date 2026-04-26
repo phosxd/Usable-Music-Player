@@ -14,10 +14,12 @@ static var a2j_ruleset:Dictionary[String,Dictionary] = {
 			'DBArtist': [null, {}],
 		},
 		'class_exclusions': ['GDScript'],
+		'snap_floats_to': 0.001,
 	},
 	'DBLibrary': {
 		'property_exclusions': [
 			'id',
+			'hidden',
 			'changed',
 			'currently_updating',
 			'valid',
@@ -47,7 +49,8 @@ static var libraries:Array[DBLibrary] = []
 static func load_libraries() -> void:
 	DirAccess.make_dir_recursive_absolute(libraries_path)
 	FileUtils.walk_dir(libraries_path, func(path:String) -> void:
-		if path.get_extension().to_lower() == 'json':
+		var extension:String = path.get_extension().to_lower()
+		if extension == 'json':
 			var file := FileAccess.open(path, FileAccess.READ)
 			if not file:
 				MiniLog.err('Unable to load library from "%s". Skipping library.' % path, LibraryManager)
@@ -61,8 +64,9 @@ static func load_libraries() -> void:
 			library.changed = false
 			library.valid = true
 			library.id = path.split('/')[-1].trim_suffix('.json')
+			library.hidden = not SessionManager.visible_libraries.has(library.id)
 			libraries.append(library)
-			MiniLog.info('Loaded library $~%s~$.' % path.get_basename().split('/')[-1], LibraryManager)
+			MiniLog.info('Loaded library $i%si$ after $~%sms~$.' % [path.get_basename().split('/')[-1], int(A2J.time_to_finish)], LibraryManager)
 	)
 
 	libraries.sort_custom(func(a:DBLibrary, b:DBLibrary) -> bool:

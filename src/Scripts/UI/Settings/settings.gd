@@ -48,7 +48,9 @@ func _ready() -> void:
 	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.fetch_lyrics)
 	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.fetch_artist_cover)
 	%'Queue Size Limit'.set_value_no_signal(SessionManager.queue_size_limit)
-	%'Image Detail'.set_value_no_signal(SessionManager.image_detail)
+	var image_detail = SessionManager.image_detail_values.find_key(SessionManager.image_detail)
+	if image_detail == null: image_detail = 0
+	%'Image Detail'.set_value_no_signal(image_detail)
 	%'Track Finished Notif'.set_pressed_no_signal(SessionManager.send_track_finished_notif)
 	%'Library Scan Finished Notif'.set_pressed_no_signal(SessionManager.send_library_scan_finished_notif)
 	# ---
@@ -116,7 +118,7 @@ func _on_page_back_key_pressed() -> void:
 
 
 func _on_image_detail_value_changed(value:float) -> void:
-	SessionManager.image_detail = int(value) as SessionManager.ImageDetail
+	SessionManager.image_detail = SessionManager.image_detail_values[int(value)]
 
 
 func _on_track_finished_notif_toggled(toggled_on:bool) -> void:

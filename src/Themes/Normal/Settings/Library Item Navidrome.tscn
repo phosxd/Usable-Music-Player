@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://3pfdkjy7b0fv" path="res://Scripts/UI/Settings/library_item_navidrome.gd" id="1_yyirb"]
 [ext_resource type="Texture2D" uid="uid://6icvlc6d5rna" path="res://Themes/Normal/Assets/Icons/Save.svg" id="2_ayo64"]
-[ext_resource type="Texture2D" uid="uid://bvqawkutxdyax" path="res://Themes/Normal/Assets/Icons/Navidrome.png" id="2_n3its"]
 [ext_resource type="Texture2D" uid="uid://cd1hy6hohg5tn" path="res://Themes/Normal/Assets/Icons/tree_arrow_up.svg" id="3_n3its"]
 [ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Themes/Normal/Assets/Icons/remove.svg" id="4_tdsdd"]
 [ext_resource type="Texture2D" uid="uid://c7nxvr0h1tqqk" path="res://Themes/Normal/Assets/Icons/tree_arrow_down.svg" id="5_n3its"]
@@ -20,12 +19,15 @@ layout_mode = 2
 
 [node name="Title" type="HBoxContainer" parent="VBox" unique_id=48901372]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="TextureRect" type="TextureRect" parent="VBox/Title" unique_id=896003528]
+[node name="Icon" type="Button" parent="VBox/Title" unique_id=140830373]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.39215687)
 layout_mode = 2
-texture = ExtResource("2_n3its")
-expand_mode = 2
-stretch_mode = 5
+mouse_filter = 2
+theme_type_variation = &"AccentButton"
+flat = true
 
 [node name="Label" type="Label" parent="VBox/Title" unique_id=938562170]
 layout_mode = 2
@@ -38,6 +40,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Apply changes."
+theme_type_variation = &"AccentButton"
 disabled = true
 icon = ExtResource("2_ayo64")
 flat = true
@@ -65,6 +68,7 @@ placeholder_text = "Password..."
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
+theme_type_variation = &"AccentButton"
 icon = ExtResource("3_n3its")
 flat = true
 
@@ -72,6 +76,7 @@ flat = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
+theme_type_variation = &"AccentButton"
 icon = ExtResource("5_n3its")
 flat = true
 
@@ -79,6 +84,7 @@ flat = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
+theme_type_variation = &"AccentButton"
 icon = ExtResource("4_tdsdd")
 flat = true
 

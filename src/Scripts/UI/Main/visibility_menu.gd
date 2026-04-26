@@ -22,11 +22,7 @@ func _ready() -> void:
 		button.button_pressed = not library.hidden
 		button.toggled.connect(_on_library_toggled.bind(library))
 		button.gui_input.connect(_on_library_button_gui_input.bind(button))
-		# Set icon.
-		if library.path.trim_prefix('/').split('/')[0] in ['run','mnt','media']:
-			button.icon = preload('res://Themes/Normal/Assets/Icons/lan.svg')
-		else:
-			button.icon = preload('res://Themes/Normal/Assets/Icons/folder.svg')
+		button.icon = library.get_icon()
 		button.add_theme_constant_override('icon_max_width',16)
 		# Add button.
 		$VBox.add_child(button)

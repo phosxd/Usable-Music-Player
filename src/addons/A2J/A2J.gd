@@ -189,6 +189,10 @@ static func _to_json(value:Variant, raw_ruleset:Dictionary[String,Dictionary]=_c
 	elif object_class && _class_excluded(object_class, ruleset): return null
 	# If type is primitive, return value unchanged (except when rules apply).
 	if typeof(value) in primitive_types:
+		# Apply float snapping.
+		if value is float:
+			var snap_value = ruleset.get('snap_floats_to', null)
+			if snap_value is float: value = snappedf(value, snap_value)
 		return value
 
 	# Get type handler.
@@ -252,6 +256,10 @@ static func _from_json(value, type_details:Dictionary={}, raw_ruleset:Dictionary
 	elif typeof(value) in primitive_types:
 		# If float is a whole number, convert to an int (JSON in Godot converts ints to floats, we need to convert them back).
 		if value is float && fmod(value, 1) == 0: return int(value)
+		# Apply float snapping.
+		if value is float:
+			var snap_value = ruleset.get('snap_floats_to', null)
+			if snap_value is float: value = snappedf(value, snap_value)
 		return value
 
 	# Get type handler.
@@ -304,7 +312,7 @@ static func _get_runtime_ruleset(variant:Variant, ruleset:Dictionary[String,Dict
 				if current_depth <= expected_depth: valid = true
 			else:
 				if current_depth == expected_depth: valid = true
-		elif variant is RefCounted:
+		elif variant is Object:
 			valid = A2JUtil.get_class_name(variant) == key or variant.is_class(key)
 		# Skip group if invalid.
 		if not valid: continue

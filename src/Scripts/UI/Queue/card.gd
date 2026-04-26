@@ -14,6 +14,7 @@ func init(track:DBTrack) -> void:
 	%Artist.text = track.album.artist.name
 	%Length.text = DBTrack.get_track_position_formatted(track.length)
 	%Image.texture = track.album.get_cover()
+	%Button.tooltip_text = track.name
 
 
 func highlight(on:bool) -> void:

@@ -133,6 +133,7 @@ value = 0.5
 suffix = "minutes"
 
 [node name="UI" type="PanelContainer" parent="MarginContainer/Scroll/VBox" unique_id=568890640]
+visible = false
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
 
@@ -398,7 +399,7 @@ color = Color(0.4000001, 0, 1, 0.11764706)
 
 [node name="Preset 7" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Panel Tint/HBox" unique_id=1920690341 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.9333334, 0, 1, 0.11764706)
+color = Color(0, 0, 0, 0.49019608)
 
 [node name="Button Tint" type="HBoxContainer" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox" unique_id=333003217]
 layout_mode = 2
@@ -453,7 +454,7 @@ color = Color(0.4, 0, 1, 0.11764706)
 
 [node name="Preset 7" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox/Button Tint/HBox" unique_id=366497914 instance=ExtResource("8_sk0tj")]
 layout_mode = 2
-color = Color(0.93333334, 0, 1, 0.11764706)
+color = Color(0, 0, 0, 0.49019608)
 
 [node name="Sep 2" type="HSeparator" parent="MarginContainer/Scroll/VBox/UI/VBox/Advanced Tweaks/Margin/VBox" unique_id=1206147046]
 layout_mode = 2
@@ -657,12 +658,14 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-max_value = 2.0
+max_value = 5.0
+value = 3.0
 rounded = true
-tick_count = 3
+tick_count = 6
 ticks_position = 3
 
 [node name="Shortcuts" type="PanelContainer" parent="MarginContainer/Scroll/VBox" unique_id=1537575725]
+visible = false
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
 

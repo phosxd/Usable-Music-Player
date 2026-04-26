@@ -101,6 +101,7 @@ theme_override_constants/separation = 0
 [node name="Name" type="Label" parent="Image Margin/HBox/Track Info" unique_id=824305555]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"LabelPrimarySmall"
 text = "Track name..."
 clip_text = true
 text_overrun_behavior = 5

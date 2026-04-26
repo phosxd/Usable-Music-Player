@@ -357,10 +357,11 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("16_eeh6y")
 flat = true
 
-[node name="Search Icon" type="TextureRect" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=157011682]
+[node name="Search Icon" type="Button" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=217995645]
 layout_mode = 2
-texture = ExtResource("14_koken")
-stretch_mode = 5
+theme_type_variation = &"AccentButton"
+icon = ExtResource("14_koken")
+flat = true
 
 [node name="Search" type="LineEdit" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=420801843]
 unique_name_in_owner = true

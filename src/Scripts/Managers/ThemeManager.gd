@@ -151,6 +151,11 @@ var panel_color := Color.TRANSPARENT:
 		value = value.blend(panel_tint)
 		_set_stylebox_property('PanelContainer', 'panel', 'bg_color', value)
 		_set_stylebox_property('GridItemPanel', 'panel', 'bg_color', value)
+		_set_stylebox_color('IslandPanelContainer', 'panel', 'bg_color', value)
+		_set_stylebox_color('ToolsIslandPanelContainer', 'panel', 'bg_color', value)
+		_set_stylebox_color('LineEdit', 'normal', 'bg_color', value)
+		var read_only_alpha:float = Color(_get_stylebox_default_property('LineEdit', 'read_only', 'bg_color')).a
+		_set_stylebox_color('LineEdit', 'read_only', 'bg_color', Color(value.r, value.g, value.b, read_only_alpha))
 
 var section_panel_color := Color.TRANSPARENT:
 	set(value):
@@ -159,11 +164,20 @@ var section_panel_color := Color.TRANSPARENT:
 		value = value.blend(panel_tint)
 		_set_stylebox_property('SectionPanelContainer', 'panel', 'bg_color', value)
 
+var tooltip_panel_color := Color.TRANSPARENT:
+	set(value):
+		tooltip_panel_color = value
+		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','tooltip_panel_color')
+		value = value.blend(panel_tint)
+		_set_stylebox_property('TooltipPanel', 'panel', 'bg_color', value)
+
 var text_color := Color.TRANSPARENT:
 	set(value):
 		text_color = value
 		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','text_color')
 		theme.set_color('font_color', 'Label', value)
+		theme.set_color('default_color', 'RichTextLabel', value)
+		theme.set_color('font_color', 'LineEdit', value)
 		theme.set_color('font_color', 'Button', value)
 		theme.set_color('font_color', 'AccentButton', value)
 
@@ -171,6 +185,8 @@ var text_disabled_color := Color.TRANSPARENT:
 	set(value):
 		text_disabled_color = value
 		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','text_disabled_color')
+		theme.set_color('font_uneditable_color', 'LineEdit', value)
+		theme.set_color('font_placeholder_color', 'LineEdit', value)
 		theme.set_color('font_disabled_color', 'Button', value)
 		theme.set_color('font_disabled_color', 'AccentButton', value)
 

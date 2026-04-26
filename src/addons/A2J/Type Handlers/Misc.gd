@@ -22,52 +22,52 @@ func _init() -> void:
 	]
 
 
-func to_json(value, ruleset:Dictionary) -> Dictionary[String,Variant]:
+func to_json(v, ruleset:Dictionary) -> Dictionary[String,Variant]:
 	var result:Dictionary[String,Variant] = {
-		'.t': type_string(typeof(value)),
+		'.t': type_string(typeof(v)),
 		'v': null,
 	}
 
-	if value is StringName or value is NodePath:
-		result.v = str(value)
-	elif value is Color:
-		result.v = [value.r, value.g, value.b, value.a]
-	elif value is Plane:
-		result.v = [value.x, value.y, value.z, value.d]
-	elif value is Quaternion:
-		result.v = [value.x, value.y, value.z, value.w]
-	elif value is Rect2 or value is Rect2i:
-		result.v = [value.position.x, value.position.y, value.size.x, value.size.y]
-	elif value is AABB:
+	if v is StringName or v is NodePath:
+		result.v = str(v)
+	elif v is Color:
+		result.v = A2JUtil.to_snapped_array([v.r, v.g, v.b, v.a], 0.00001) # Limit to 5 decimals.
+	elif v is Plane:
+		result.v = [v.x, v.y, v.z, v.d]
+	elif v is Quaternion:
+		result.v = [v.x, v.y, v.z, v.w]
+	elif v is Rect2 or v is Rect2i:
+		result.v = [v.position.x, v.position.y, v.size.x, v.size.y]
+	elif v is AABB:
 		result.v = [
-			value.position.x, value.position.y, value.position.z,
-			value.size.x, value.size.y, value.size.z,
+			v.position.x, v.position.y, v.position.z,
+			v.size.x, v.size.y, v.size.z,
 		]
-	elif value is Basis:
+	elif v is Basis:
 		result.v = [
-			value.x.x, value.x.y, value.x.z,
-			value.y.x, value.y.y, value.y.z,
-			value.z.x, value.z.y, value.z.z,
+			v.x.x, v.x.y, v.x.z,
+			v.y.x, v.y.y, v.y.z,
+			v.z.x, v.z.y, v.z.z,
 		]
-	elif value is Transform2D:
+	elif v is Transform2D:
 		result.v = [
-			value.x.x, value.x.y,
-			value.y.x, value.y.y,
-			value.origin.x, value.origin.y,
+			v.x.x, v.x.y,
+			v.y.x, v.y.y,
+			v.origin.x, v.origin.y,
 		]
-	elif value is Transform3D:
+	elif v is Transform3D:
 		result.v = [
-			value.basis.x.x, value.basis.x.y, value.basis.x.z,
-			value.basis.y.x, value.basis.y.y, value.basis.y.z,
-			value.basis.z.x, value.basis.z.y, value.basis.z.z,
-			value.origin.x, value.origin.y, value.origin.z,
+			v.basis.x.x, v.basis.x.y, v.basis.x.z,
+			v.basis.y.x, v.basis.y.y, v.basis.y.z,
+			v.basis.z.x, v.basis.z.y, v.basis.z.z,
+			v.origin.x, v.origin.y, v.origin.z,
 		]
-	elif value is Projection:
+	elif v is Projection:
 		result.v = [
-			value.x.x, value.x.y, value.x.z, value.x.w,
-			value.y.x, value.y.y, value.y.z, value.y.w,
-			value.z.x, value.z.y, value.z.z, value.z.w,
-			value.w.x, value.w.y, value.w.z, value.w.w,
+			v.x.x, v.x.y, v.x.z, v.x.w,
+			v.y.x, v.y.y, v.y.z, v.y.w,
+			v.z.x, v.z.y, v.z.z, v.z.w,
+			v.w.x, v.w.y, v.w.z, v.w.w,
 		]
 
 	# Throw error if not an expected type.
@@ -80,72 +80,72 @@ func to_json(value, ruleset:Dictionary) -> Dictionary[String,Variant]:
 
 func from_json(headers:PackedStringArray, json:Dictionary, ruleset:Dictionary) -> Variant:
 	var type:String = headers[0]
-	var value = json.get('v')
+	var v = json.get('v')
 
 	match type:
 		'StringName':
-			if value is not String: report_error(1); return null
-			return StringName(value)
+			if v is not String: report_error(1); return null
+			return StringName(v)
 		'NodePath':
-			if value is not String: report_error(1); return null
-			return NodePath(value)
+			if v is not String: report_error(1); return null
+			return NodePath(v)
 		'Color':
-			if value is not Array or value.size() != 4: report_error(1); return null
-			if not A2JUtil.is_number_array(value): report_error(1); return null
-			return Color(value[0], value[1], value[2], value[3])
+			if v is not Array or v.size() != 4: report_error(1); return null
+			if not A2JUtil.is_number_array(v): report_error(1); return null
+			return Color(v[0], v[1], v[2], v[3])
 		'Plane':
-			if value is not Array or value.size() != 4: report_error(1); return null
-			if not A2JUtil.is_number_array(value): report_error(1); return null
-			return Plane(Vector3(value[0], value[1], value[2]), value[3])
+			if v is not Array or v.size() != 4: report_error(1); return null
+			if not A2JUtil.is_number_array(v): report_error(1); return null
+			return Plane(Vector3(v[0], v[1], v[2]), v[3])
 		'Quaternion':
-			if value is not Array or value.size() != 4: report_error(1); return null
-			if not A2JUtil.is_number_array(value): report_error(1); return null
-			return Quaternion(value[0], value[1], value[2], value[3])
+			if v is not Array or v.size() != 4: report_error(1); return null
+			if not A2JUtil.is_number_array(v): report_error(1); return null
+			return Quaternion(v[0], v[1], v[2], v[3])
 		'Rect2':
-			if value is not Array or value.size() != 4: report_error(1); return null
-			if not A2JUtil.is_number_array(value): report_error(1); return null
-			return Rect2(value[0], value[1], value[2], value[3])
+			if v is not Array or v.size() != 4: report_error(1); return null
+			if not A2JUtil.is_number_array(v): report_error(1); return null
+			return Rect2(v[0], v[1], v[2], v[3])
 		'Rect2i':
-			if value is not Array or value.size() != 4: report_error(1); return null
-			if not A2JUtil.is_number_array(value): report_error(1); return null
-			return Rect2i(int(value[0]), int(value[1]), int(value[2]), int(value[3]))
+			if v is not Array or v.size() != 4: report_error(1); return null
+			if not A2JUtil.is_number_array(v): report_error(1); return null
+			return Rect2i(int(v[0]), int(v[1]), int(v[2]), int(v[3]))
 		'AABB':
-			if value is not Array or value.size() != 6: report_error(1); return null
-			if not A2JUtil.is_number_array(value): report_error(1); return null
-			return AABB(Vector3(value[0], value[1], value[2]), Vector3(value[3], value[4], value[5]))
+			if v is not Array or v.size() != 6: report_error(1); return null
+			if not A2JUtil.is_number_array(v): report_error(1); return null
+			return AABB(Vector3(v[0], v[1], v[2]), Vector3(v[3], v[4], v[5]))
 		'Basis':
-			if value is not Array or value.size() != 9: report_error(1); return null
-			if not A2JUtil.is_number_array(value): report_error(1); return null
+			if v is not Array or v.size() != 9: report_error(1); return null
+			if not A2JUtil.is_number_array(v): report_error(1); return null
 			return Basis(
-				Vector3(value[0], value[1], value[2]),
-				Vector3(value[3], value[4], value[5]),
-				Vector3(value[6], value[7], value[8]),
+				Vector3(v[0], v[1], v[2]),
+				Vector3(v[3], v[4], v[5]),
+				Vector3(v[6], v[7], v[8]),
 			)
 		'Transform2D':
-			if value is not Array or value.size() != 6: report_error(1); return null
-			if not A2JUtil.is_number_array(value): report_error(1); return null
+			if v is not Array or v.size() != 6: report_error(1); return null
+			if not A2JUtil.is_number_array(v): report_error(1); return null
 			return Transform2D(
-				Vector2(value[0], value[1]),
-				Vector2(value[2], value[3]),
-				Vector2(value[4], value[5]),
+				Vector2(v[0], v[1]),
+				Vector2(v[2], v[3]),
+				Vector2(v[4], v[5]),
 			)
 		'Transform3D':
-			if value is not Array or value.size() != 12: report_error(1); return null
-			if not A2JUtil.is_number_array(value): report_error(1); return null
+			if v is not Array or v.size() != 12: report_error(1); return null
+			if not A2JUtil.is_number_array(v): report_error(1); return null
 			return Transform3D(
-				Vector3(value[0], value[1], value[2]),
-				Vector3(value[3], value[4], value[5]),
-				Vector3(value[6], value[7], value[8]),
-				Vector3(value[9], value[10], value[11]),
+				Vector3(v[0], v[1], v[2]),
+				Vector3(v[3], v[4], v[5]),
+				Vector3(v[6], v[7], v[8]),
+				Vector3(v[9], v[10], v[11]),
 			)
-		'Transform3D':
-			if value is not Array or value.size() != 16: report_error(1); return null
-			if not A2JUtil.is_number_array(value): report_error(1); return null
+		'Projection':
+			if v is not Array or v.size() != 16: report_error(1); return null
+			if not A2JUtil.is_number_array(v): report_error(1); return null
 			return Projection(
-				Vector4(value[0], value[1], value[2], value[3]),
-				Vector4(value[4], value[5], value[6], value[7]),
-				Vector4(value[8], value[9], value[10], value[11]),
-				Vector4(value[12], value[13], value[14], value[15]),
+				Vector4(v[0], v[1], v[2], v[3]),
+				Vector4(v[4], v[5], v[6], v[7]),
+				Vector4(v[8], v[9], v[10], v[11]),
+				Vector4(v[12], v[13], v[14], v[15]),
 			)
 
 	# Throw error if no conditions match.

@@ -50,10 +50,6 @@ var path: String:
 	set(value):
 		path = value
 		changed = true
-var hidden:bool = false:
-	set(value):
-		hidden = value
-		changed = true
 ## All artists.
 var artists:Array[DBArtist] = []
 ## All albums.
@@ -61,6 +57,11 @@ var albums:Array[DBAlbum] = []
 ## All tracks.
 var tracks:Array[DBTrack] = []
 
+var hidden:bool = false:
+	set(value):
+		hidden = value
+		if value: SessionManager.visible_libraries.erase(self.id)
+		elif not SessionManager.visible_libraries.has(self.id): SessionManager.visible_libraries.append(self.id)
 var changed:bool = false
 var currently_updating:bool = false
 var valid:bool = true
@@ -73,7 +74,7 @@ static func _generate_id() -> String:
 
 	# Try again if ID taken.
 	for library:DBLibrary in LibraryManager.libraries:
-		if library.internal_id == result:
+		if library.id == result:
 			return _generate_id()
 
 	return result
@@ -93,25 +94,27 @@ func remove() -> void:
 	self.valid = false
 	LibraryManager.libraries.erase(self)
 	var err:Error = DirAccess.remove_absolute(self.get_file_path())
-	print(self.get_file_path())
-	print(error_string(err))
+	if err != OK:
+		MiniLog.warn('Failed to remove library file at $~%s~$.' % self.get_file_path(), DBLibrary)
 
+
+#region scanning
 
 func refresh(auto:bool=false) -> void:
 	if self.currently_updating:
-		if not auto: MiniLog.warn('Cannot start scan for $~%s~$, already in progress.' % self.id, DBLibrary)
+		if not auto: MiniLog.warn('Cannot start scan for $~%s~$, already in progress.' % self.name, DBLibrary)
 		return
 	if not DirAccess.dir_exists_absolute(path):
 		if not auto: MiniLog.err('Library path "%s" is invalid. Skipping scan.' % path, DBLibrary)
 		return
 	for library:DBLibrary in LibraryManager.libraries:
 		if library.currently_updating:
-			if not auto: MiniLog.warn('Cannot start scan for $~%s~$, another library is currently scanning.' % self.id, DBLibrary)
+			if not auto: MiniLog.warn('Cannot start scan for $~%s~$, another library is currently scanning.' % self.name, DBLibrary)
 			return
 
 	self.currently_updating = true
 	self.scan_started.emit()
-	if not auto: MiniLog.info('Starting scan for $~%s~$.' % self.id, DBLibrary)
+	if not auto: MiniLog.info('Starting scan for $~%s~$.' % self.name, DBLibrary)
 
 	Async.create_thread(self._refresh, func(made_changes:bool) -> void:
 		self.currently_updating = false
@@ -119,7 +122,7 @@ func refresh(auto:bool=false) -> void:
 		if made_changes:
 			self.changed = true
 			SessionManager.main_scene.refresh_tab()
-		if not auto: MiniLog.info('Finished scan for $~%s$~.' % self.id, DBLibrary)
+		if not auto: MiniLog.info('Finished scan for $~%s$~.' % self.name, DBLibrary)
 		self.save()
 	)
 
@@ -258,9 +261,21 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	track_entry.save_lyrics(entry.get('lyrics',''))
 	#MiniLog.pro('Scanned "$~%s~$".' % track_path.trim_prefix(library.path), LibraryManager)
 
+#endregion
+
 
 func get_file_path() -> String:
 	return LibraryManager.libraries_path+self.id+'.json'
+
+
+func get_icon() -> Texture2D:
+	match self.type:
+		LibraryType.LocalDirectory:
+			if self.path.trim_prefix('/').split('/')[0] in ['run','mnt','media']:
+				return SessionManager.get_icon('lan')
+			return SessionManager.get_icon('folder')
+
+	return null
 
 
 ## Returns a list of [DBArtist], [DBAlbum], or [DBTrack] (depending on [param item_type]) that have the specified [param name].

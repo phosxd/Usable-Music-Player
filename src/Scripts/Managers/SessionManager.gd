@@ -21,16 +21,19 @@ enum VisualizerMode {
 	BAR,
 }
 
-## Image detail levels.
-enum ImageDetail {
-	Low,
-	Normal,
-	High,
+const image_detail_values:Dictionary[int,int] = {
+	0: 100,
+	1: 300,
+	2: 600,
+	3: 800,
+	4: 1200,
+	5: 1800,
 }
 
 const property_data:Array[Array] = [
 	# Library settings.
 	['library_order',[TYPE_PACKED_STRING_ARRAY]],
+	['visible_libraries',[TYPE_PACKED_STRING_ARRAY]],
 	['auto_scan_interval',[TYPE_INT,TYPE_FLOAT]],
 	# API settings.
 	['fetch_lyrics',[TYPE_BOOL]],
@@ -101,6 +104,7 @@ var current_window_size: Vector2i:
 #endregion
 
 var library_order: PackedStringArray
+var visible_libraries: PackedStringArray
 ## How many minutes to wait before automatically scanning.
 var auto_scan_interval:float = 0.5:
 	set(value):
@@ -121,7 +125,7 @@ var queue_size_limit:int = 150
 
 ## Image detail for album & artist covers.
 ## Resets cached album cover images when set.
-var image_detail := ImageDetail.Normal:
+var image_detail:int = image_detail_values[0]:
 	set(value):
 		image_detail = value
 		for album:DBAlbum in LibraryManager.get_albums_sorted():
@@ -422,7 +426,7 @@ func save_session() -> void:
 		'volume': PlayerManager.volume,
 	}
 
-	# Sync library order & save changed libraries.
+	# Sync library order/visibility & save changed libraries.
 	self.library_order.clear()
 	for library:DBLibrary in LibraryManager.libraries:
 		self.library_order.append(library.id)

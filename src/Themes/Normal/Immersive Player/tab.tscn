@@ -15,8 +15,9 @@ shader_parameter/topleft = Color(1, 1, 1, 1)
 shader_parameter/topright = Color(0, 0, 0, 1)
 shader_parameter/bottomleft = Color(0, 0, 0, 1)
 shader_parameter/bottomright = Color(0.12225223, 0.12225223, 0.12225223, 1)
+shader_parameter/period = 1.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idskp"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fbra8"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -90,7 +91,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_idskp")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fbra8")
 script = ExtResource("3_hbf8i")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -143,7 +144,7 @@ visible = false
 [node name="Sep 1" parent="Image Margin/HBoxContainer/Lyrics/VBox" parent_id_path=PackedInt32Array(100225784, 1514673906) index="1" unique_id=26743642]
 visible = false
 
-[node name="Label" parent="Image Margin/HBoxContainer/Lyrics/VBox/Margin/Scroll" parent_id_path=PackedInt32Array(100225784, 1975157511) index="0" unique_id=950016221]
+[node name="Label" parent="Image Margin/HBoxContainer/Lyrics/VBox/Mask/Margin/Scroll/VBox" parent_id_path=PackedInt32Array(100225784, 1799090787) index="1" unique_id=950016221]
 theme_type_variation = &"LabelHeader"
 horizontal_alignment = 1
 

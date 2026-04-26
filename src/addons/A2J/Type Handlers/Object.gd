@@ -69,7 +69,7 @@ func to_json(object:Object, ruleset:Dictionary) -> Variant:
 	var do_properties_to_include = not props_to_include_temp.is_empty()
 
 	# Convert all properties.
-	for property in object.get_property_list():
+	for property:Dictionary in object.get_property_list():
 		if _validate_object_property(result, property.name, properties_to_reference, properties_to_exclude, properties_to_include, do_properties_to_include, ruleset) == false: continue
 		# Exclude null values.
 		var property_value = object.get(property.name)
@@ -220,7 +220,7 @@ func _get_default_object(registered_object:Object, object_class:StringName, rule
 	# Get arguments.
 	var args = instantiator_arguments.get(object_class)
 	# If no instantiation arguments provided, call with no arguments.
-	if args is not Array or args.size() == 0:
+	if args is not Array or args.is_empty():
 		return instantiator_function.call(registered_object, object_class)
 	# Otherwise, call with arguments.
 	else:
@@ -231,6 +231,7 @@ func _get_all_property_type_details(object:Object) -> Dictionary[String,Dictiona
 	var properties:Dictionary[String,Dictionary] = {}
 	var property_list := object.get_property_list()
 	for item in property_list:
+		if item.name.begins_with('metadata/'): continue
 		properties.set(item.name, {
 			'class_name': item.class_name,
 			'type': item.type,
