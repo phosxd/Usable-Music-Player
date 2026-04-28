@@ -3,13 +3,16 @@
 [ext_resource type="Script" uid="uid://bufk41o60g01x" path="res://Scripts/UI/Settings/settings.gd" id="1_7d2l6"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_3fctb"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_1b3q6"]
-[ext_resource type="Script" uid="uid://cnnj2q647i5vw" path="res://Scripts/UI/Settings/library.gd" id="4_dp5eg"]
+[ext_resource type="Script" uid="uid://cnnj2q647i5vw" path="res://Scripts/UI/Settings/section_library.gd" id="4_dp5eg"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Themes/Normal/Assets/Icons/load.svg" id="4_kjexh"]
 [ext_resource type="Script" uid="uid://ljm5f1vvpqkr" path="res://Scripts/UI/Settings/controls.gd" id="4_ud285"]
-[ext_resource type="Script" uid="uid://cw1oexepw7wyu" path="res://Scripts/UI/Settings/theme.gd" id="5_pn7em"]
+[ext_resource type="Script" uid="uid://cw1oexepw7wyu" path="res://Scripts/UI/Settings/section_theme.gd" id="5_pn7em"]
 [ext_resource type="Texture2D" uid="uid://6icvlc6d5rna" path="res://Themes/Normal/Assets/Icons/Save.svg" id="5_ud285"]
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Themes/Normal/Assets/Icons/folder.svg" id="7_pn7em"]
 [ext_resource type="PackedScene" uid="uid://dsibuplor3qi1" path="res://Themes/Normal/Elements/Preset Color Button/Preset Color Button.tscn" id="8_sk0tj"]
+[ext_resource type="Script" uid="uid://b036js4iv0a5e" path="res://Scripts/UI/Settings/section_ui.gd" id="11_ispo5"]
+[ext_resource type="Script" uid="uid://dwnymrla8fg3m" path="res://Scripts/UI/Settings/section_audio.gd" id="12_u75xh"]
+[ext_resource type="Script" uid="uid://cni4q5hifbayv" path="res://Scripts/UI/Settings/section_api.gd" id="13_rtbdg"]
 
 [sub_resource type="Resource" id="Resource_75g7q"]
 script = ExtResource("3_1b3q6")
@@ -500,15 +503,14 @@ text = "Apply Changes"
 [node name="UI" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=211399402]
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
+script = ExtResource("11_ispo5")
 
 [node name="UI Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/UI" unique_id=145514113]
 unique_name_in_owner = true
 layout_mode = 2
-folded = true
 title = "User Interface"
 
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold" unique_id=821509536]
-visible = false
 layout_mode = 2
 
 [node name="Landing Page" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=420927628]
@@ -656,6 +658,7 @@ ticks_position = 3
 [node name="Audio" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=2074479509]
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
+script = ExtResource("12_u75xh")
 
 [node name="Audio Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/Audio" unique_id=1609975435]
 unique_name_in_owner = true
@@ -780,17 +783,25 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "No key set..."
 
-[node name="APIs" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=295361639]
+[node name="API" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=295361639]
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
+script = ExtResource("13_rtbdg")
 
-[node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/APIs" unique_id=1035111678]
+[node name="API Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/API" unique_id=84907255]
+unique_name_in_owner = true
+layout_mode = 2
+folded = true
+title = "API"
+
+[node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/API/API Fold" unique_id=1035111678]
+visible = false
 layout_mode = 2
 
-[node name="Fetch Lyrics" type="HBoxContainer" parent="Scroll/Margin/VBox/APIs/VBox" unique_id=621578105]
+[node name="Fetch Lyrics" type="HBoxContainer" parent="Scroll/Margin/VBox/API/API Fold/VBox" unique_id=621578105]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/APIs/VBox/Fetch Lyrics" unique_id=656936251]
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Lyrics" unique_id=656936251]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Automatically fetch lyrics from an API & save to user data upon playing a track."
@@ -798,48 +809,49 @@ mouse_filter = 1
 theme_type_variation = &"LabelPrimary"
 text = "Fetch Lyrics"
 
-[node name="Fetch Lyrics" type="CheckButton" parent="Scroll/Margin/VBox/APIs/VBox/Fetch Lyrics" unique_id=1998370400]
+[node name="Fetch Lyrics" type="CheckButton" parent="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Lyrics" unique_id=1998370400]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
 
-[node name="Fetch Artist Cover" type="HBoxContainer" parent="Scroll/Margin/VBox/APIs/VBox" unique_id=1359209212]
+[node name="Fetch Artist Cover" type="HBoxContainer" parent="Scroll/Margin/VBox/API/API Fold/VBox" unique_id=1359209212]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/APIs/VBox/Fetch Artist Cover" unique_id=834414062]
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Artist Cover" unique_id=834414062]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Automatically fetch lyrics from an API & save to user data upon playing a track."
+tooltip_text = "Automatically fetch artist covers from an API."
+mouse_filter = 1
 theme_type_variation = &"LabelPrimary"
 text = "Fetch Artist Cover"
 
-[node name="Fetch Artist Cover" type="CheckButton" parent="Scroll/Margin/VBox/APIs/VBox/Fetch Artist Cover" unique_id=405731710]
+[node name="Fetch Artist Cover" type="CheckButton" parent="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Artist Cover" unique_id=405731710]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
 
-[node name="Fetch Album Cover" type="HBoxContainer" parent="Scroll/Margin/VBox/APIs/VBox" unique_id=2144935029]
+[node name="Fetch Album Cover" type="HBoxContainer" parent="Scroll/Margin/VBox/API/API Fold/VBox" unique_id=2144935029]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/APIs/VBox/Fetch Album Cover" unique_id=185488390]
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Album Cover" unique_id=185488390]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Automatically fetch lyrics from an API & save to user data upon playing a track."
 theme_type_variation = &"LabelPrimary"
 text = "Fetch Album Cover"
 
-[node name="Fetch Album Cover" type="CheckButton" parent="Scroll/Margin/VBox/APIs/VBox/Fetch Album Cover" unique_id=142586148]
+[node name="Fetch Album Cover" type="CheckButton" parent="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Album Cover" unique_id=142586148]
 layout_mode = 2
 size_flags_horizontal = 2
 disabled = true
 
-[node name="Sep 1" type="HSeparator" parent="Scroll/Margin/VBox/APIs/VBox" unique_id=1240612814]
+[node name="Sep 1" type="HSeparator" parent="Scroll/Margin/VBox/API/API Fold/VBox" unique_id=1240612814]
 layout_mode = 2
 
-[node name="Track Finished Notif" type="HBoxContainer" parent="Scroll/Margin/VBox/APIs/VBox" unique_id=487431402]
+[node name="Track Finished Notif" type="HBoxContainer" parent="Scroll/Margin/VBox/API/API Fold/VBox" unique_id=487431402]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/APIs/VBox/Track Finished Notif" unique_id=1428388250]
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/API/API Fold/VBox/Track Finished Notif" unique_id=1428388250]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Send system notification whenever a track has finished."
@@ -849,25 +861,25 @@ text = "Track Finished Notification"
 clip_text = true
 text_overrun_behavior = 5
 
-[node name="Track Finished Notif" type="CheckButton" parent="Scroll/Margin/VBox/APIs/VBox/Track Finished Notif" unique_id=236368470]
+[node name="Track Finished Notif" type="CheckButton" parent="Scroll/Margin/VBox/API/API Fold/VBox/Track Finished Notif" unique_id=236368470]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
 
-[node name="Library Scan Finished Notif" type="HBoxContainer" parent="Scroll/Margin/VBox/APIs/VBox" unique_id=995436825]
+[node name="Library Scan Finished Notif" type="HBoxContainer" parent="Scroll/Margin/VBox/API/API Fold/VBox" unique_id=995436825]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/APIs/VBox/Library Scan Finished Notif" unique_id=1259533086]
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/API/API Fold/VBox/Library Scan Finished Notif" unique_id=1259533086]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Send system notification whenever a track has finished."
+tooltip_text = "Send system notification whenever a library scan has finished."
 mouse_filter = 1
 theme_type_variation = &"LabelPrimary"
 text = "Lib. Scan Finished Notification"
 clip_text = true
 text_overrun_behavior = 5
 
-[node name="Library Scan Finished Notif" type="CheckButton" parent="Scroll/Margin/VBox/APIs/VBox/Library Scan Finished Notif" unique_id=619323010]
+[node name="Library Scan Finished Notif" type="CheckButton" parent="Scroll/Margin/VBox/API/API Fold/VBox/Library Scan Finished Notif" unique_id=619323010]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
@@ -899,6 +911,7 @@ fit_content = true
 [connection signal="pressed" from="Scroll/Margin/VBox/Controls/Links/Report Issue" to="." method="_on_report_issue_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Controls/Config/Import Config" to="Scroll/Margin/VBox/Controls" method="_on_import_config_pressed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/Library/VBox/Auto Scan Interval/Auto Scan Interval" to="." method="_on_auto_scan_interval_value_changed"]
+[connection signal="folding_changed" from="Scroll/Margin/VBox/Theme/Theme Fold" to="Scroll/Margin/VBox/Theme" method="_on_theme_fold_folding_changed"]
 [connection signal="item_selected" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Theme/HBox/Theme" to="." method="_on_theme_item_selected"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Theme/HBox/Open Themes Folder" to="Scroll/Margin/VBox/Theme" method="_on_open_themes_folder_pressed"]
 [connection signal="item_selected" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Theme Mode/HBox/Theme Mode" to="Scroll/Margin/VBox/Theme" method="_on_theme_mode_item_selected"]
@@ -928,6 +941,7 @@ fit_content = true
 [connection signal="value_changed" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Visualizer Bar Smoothing/HBox/Visualizer Bar Smoothing Slider" to="Scroll/Margin/VBox/Theme" method="_on_visualizer_bar_smoothing_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Visualizer Bar Smoothing/HBox/Visualizer Bar Smoothing" to="Scroll/Margin/VBox/Theme" method="_on_visualizer_bar_smoothing_value_changed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Theme Apply Changes" to="Scroll/Margin/VBox/Theme" method="_on_theme_apply_changes_pressed"]
+[connection signal="folding_changed" from="Scroll/Margin/VBox/UI/UI Fold" to="Scroll/Margin/VBox/UI" method="_on_ui_fold_folding_changed"]
 [connection signal="item_selected" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Landing Page/Landing Page" to="." method="_on_landing_page_item_selected"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Grid Item Size/HBox/Grid Item Size" to="." method="_on_grid_item_size_value_changed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Grid Item Size/HBox/Grid Item Size Small" to="." method="_on_grid_item_size_small_pressed"]
@@ -936,15 +950,17 @@ fit_content = true
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/UI Scale/HBox/UI Scale" to="." method="_on_ui_scale_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Queue Size Limit/Queue Size Limit" to="." method="_on_queue_size_limit_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Image Detail/Image Detail" to="." method="_on_image_detail_value_changed"]
+[connection signal="folding_changed" from="Scroll/Margin/VBox/Audio/Audio Fold" to="Scroll/Margin/VBox/Audio" method="_on_audio_fold_folding_changed"]
 [connection signal="item_selected" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain/Replay Gain" to="." method="_on_replay_gain_item_selected"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain Preamp/Replay Gain Preamp" to="." method="_on_replay_gain_preamp_value_changed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Play Pause/Play Pause Key" to="." method="_on_play_pause_key_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Skip Backward/Skip Backward Key" to="." method="_on_skip_backward_key_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Skip Forward/Skip Forward Key" to="." method="_on_skip_forward_key_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Page Back/Page Back Key" to="." method="_on_page_back_key_pressed"]
-[connection signal="toggled" from="Scroll/Margin/VBox/APIs/VBox/Fetch Lyrics/Fetch Lyrics" to="." method="_on_fetch_lyrics_toggled"]
-[connection signal="toggled" from="Scroll/Margin/VBox/APIs/VBox/Fetch Artist Cover/Fetch Artist Cover" to="." method="_on_fetch_artist_cover_toggled"]
-[connection signal="toggled" from="Scroll/Margin/VBox/APIs/VBox/Fetch Album Cover/Fetch Album Cover" to="." method="_on_fetch_album_cover_toggled"]
-[connection signal="toggled" from="Scroll/Margin/VBox/APIs/VBox/Track Finished Notif/Track Finished Notif" to="." method="_on_track_finished_notif_toggled"]
-[connection signal="toggled" from="Scroll/Margin/VBox/APIs/VBox/Library Scan Finished Notif/Library Scan Finished Notif" to="." method="_on_library_scan_finished_notif_toggled"]
+[connection signal="folding_changed" from="Scroll/Margin/VBox/API/API Fold" to="Scroll/Margin/VBox/API" method="_on_api_fold_folding_changed"]
+[connection signal="toggled" from="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Lyrics/Fetch Lyrics" to="." method="_on_fetch_lyrics_toggled"]
+[connection signal="toggled" from="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Artist Cover/Fetch Artist Cover" to="." method="_on_fetch_artist_cover_toggled"]
+[connection signal="toggled" from="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Album Cover/Fetch Album Cover" to="." method="_on_fetch_album_cover_toggled"]
+[connection signal="toggled" from="Scroll/Margin/VBox/API/API Fold/VBox/Track Finished Notif/Track Finished Notif" to="." method="_on_track_finished_notif_toggled"]
+[connection signal="toggled" from="Scroll/Margin/VBox/API/API Fold/VBox/Library Scan Finished Notif/Library Scan Finished Notif" to="." method="_on_library_scan_finished_notif_toggled"]
 [connection signal="meta_clicked" from="Scroll/Margin/VBox/Credits/VBox/Label" to="." method="_on_label_meta_clicked"]

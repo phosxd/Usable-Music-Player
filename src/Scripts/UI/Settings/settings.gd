@@ -26,12 +26,6 @@ func _ready() -> void:
 	%'Landing Page'.selected = landing_page_options.find(SessionManager.landing_page)
 	# ---
 	%'Grid Item Size'.set_value_no_signal(SessionManager.grid_item_size)
-	%'Panel Tint'.color = SessionManager.panel_tint
-	%'Button Tint'.color = SessionManager.button_tint
-	%'Visualizer Bar Count'.set_value_no_signal(SessionManager.visualizer_bar_count)
-	%'Visualizer Bar Smoothing'.set_value_no_signal(SessionManager.visualizer_bar_smoothing)
-	%'Visualizer Bar Count Slider'.set_value_no_signal(SessionManager.visualizer_bar_count)
-	%'Visualizer Bar Smoothing Slider'.set_value_no_signal(SessionManager.visualizer_bar_smoothing)
 	# ---
 	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.fetch_lyrics)
 	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.fetch_artist_cover)

@@ -108,6 +108,7 @@ const property_data:Array[Array] = [
 	['right_sidebar_tab',[TYPE_STRING]],
 	['tab_content_split',[TYPE_PACKED_INT32_ARRAY]],
 	# Sort data.
+	['folded_sections',[TYPE_PACKED_STRING_ARRAY]],
 	['artist_sort_mode',[TYPE_INT]],
 	['artist_ascend_mode',[TYPE_BOOL]],
 	['album_sort_mode',[TYPE_INT]],
@@ -246,6 +247,8 @@ var send_library_scan_finished_notif:bool = true
 
 
 #region sorting data
+
+var folded_sections: PackedStringArray
 
 ## Global search term.
 var search_term:String = ''

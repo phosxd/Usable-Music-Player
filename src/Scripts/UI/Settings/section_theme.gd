@@ -1,16 +1,35 @@
 extends Control
 
+const section:String = 'theme'
+
 
 func _ready() -> void:
-	%'Accent Mode'.selected = SessionManager.accent_mode
-	%'Custom Accent'.color = SessionManager.custom_accent
-	%'Visualizer Mode'.selected = SessionManager.visualizer_mode
+	%'Theme Fold'.folded = self.section in SessionManager.folded_sections
+	# ---
 	for item:Dictionary in ThemeManager.registered_themes:
 		%'Theme'.add_item(item.get('name',''))
 	%'Theme'.selected = ThemeManager.get_theme_index(SessionManager.theme)
 	for item:Dictionary in ThemeManager.modes:
 		%'Theme Mode'.add_item(item.get('@mode_name',''))
 	%'Theme Mode'.selected = ThemeManager.mode
+	# ---
+	%'Accent Mode'.selected = SessionManager.accent_mode
+	%'Custom Accent'.color = SessionManager.custom_accent
+	%'Panel Tint'.color = SessionManager.panel_tint
+	%'Button Tint'.color = SessionManager.button_tint
+	# ---
+	%'Visualizer Mode'.selected = SessionManager.visualizer_mode
+	%'Visualizer Bar Count'.set_value_no_signal(SessionManager.visualizer_bar_count)
+	%'Visualizer Bar Smoothing'.set_value_no_signal(SessionManager.visualizer_bar_smoothing)
+	%'Visualizer Bar Count Slider'.set_value_no_signal(SessionManager.visualizer_bar_count)
+	%'Visualizer Bar Smoothing Slider'.set_value_no_signal(SessionManager.visualizer_bar_smoothing)
+
+
+func _on_theme_fold_folding_changed(is_folded:bool) -> void:
+	if is_folded && self.section not in SessionManager.folded_sections:
+		SessionManager.folded_sections.append(self.section)
+	else:
+		SessionManager.folded_sections.erase(self.section)
 
 
 func _on_theme_mode_item_selected(index:int) -> void:

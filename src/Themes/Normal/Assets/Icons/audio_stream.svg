@@ -4,7 +4,7 @@
    height="16"
    version="1.1"
    id="svg4"
-   sodipodi:docname="AudioStreamWAV.svg"
+   sodipodi:docname="audio_stream.svg"
    inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -21,9 +21,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="49.9375"
-     inkscape:cx="8.0100125"
-     inkscape:cy="8"
+     inkscape:zoom="33.356689"
+     inkscape:cx="10.73248"
+     inkscape:cy="9.8780786"
      inkscape:window-width="1920"
      inkscape:window-height="1008"
      inkscape:window-x="0"
@@ -53,13 +53,13 @@
      fill="url(#a)"
      d="M13 2a1 1 0 0 0-1-1L4.754 3A1 1 0 0 0 4 4v5.55A2.5 2.5 0 1 0 6 12V4.756l5-1.428V6.5l2-1z"
      id="path3"
-     style="fill:#ffffff;fill-opacity:1" />
+     style="fill:#e0e0e0;fill-opacity:1" />
   <path
      fill="none"
      stroke="url(#a)"
      stroke-linecap="round"
      d="M 10.5,8 V 10.533166 13 m 2,-4 v 3 m -4,-2 v 1 m 6,-1 v 1"
      id="path4"
-     style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-opacity:1"
+     style="fill:none;fill-opacity:1;stroke:#e0e0e0;stroke-opacity:1"
      sodipodi:nodetypes="ccccccccc" />
 </svg>
