@@ -10,6 +10,8 @@ signal play_requested()
 ## Emitted when pause has been requested.
 signal pause_requested()
 signal current_track_updated(track_queue_position:int, track:DBTrack)
+signal current_track_load_started()
+signal current_track_load_finished()
 ## Emitted when the track has progressed (E.g. during playback). [param track_prgress] is the track progress in seconds.
 signal track_progress_updated(track_progress:float)
 ## Emitted when the volume has changed.
@@ -37,6 +39,7 @@ var queue:Array[DBTrack] = []
 var queue_position:int = 0
 var auto_queue_start_index:int = -1
 var audio_stream_player: AudioStreamPlayer
+var current_track_loading:bool = false
 var track_progress: float
 var last_peak_volume: float
 var loop_mode := LoopMode.OFF
@@ -92,11 +95,11 @@ func get_current_track() -> DBTrack:
 func set_playing(playing:bool) -> void:
 	is_playing = playing
 	if playing:
-		audio_stream_player.play(track_progress)
-		play_requested.emit()
+		audio_stream_player.play.call_deferred(track_progress)
+		play_requested.emit.call_deferred()
 	else:
-		audio_stream_player.stop()
-		pause_requested.emit()
+		audio_stream_player.stop.call_deferred()
+		pause_requested.emit.call_deferred()
 
 
 func set_track_progress(progress:float) -> void:
@@ -109,14 +112,22 @@ func set_current_track(track_queue_position:int, save_session:bool=true) -> void
 	if track_queue_position >= queue.size() or track_queue_position < 0: return
 	var track = queue.get(track_queue_position)
 	if track is not DBTrack: return
-	audio_stream_player.stop()
 	set_track_progress(0)
-	audio_stream_player.stream = track.get_stream()
-
+	audio_stream_player.stop()
 	queue_position = track_queue_position
 	current_track_updated.emit(track_queue_position, track)
-	if is_playing: set_playing(true)
-	if save_session: SessionManager.save_session()
+	current_track_loading = true
+	current_track_load_started.emit()
+	Async.create_thread(func() -> void:
+		var stream:AudioStream = track.get_stream()
+		if get_current_track() != track: return
+		audio_stream_player.set_deferred('stream', stream)
+		current_track_load_finished.emit.call_deferred()
+		current_track_loading = false
+	,func(_result) -> void:
+		if is_playing: set_playing(true)
+		if save_session: SessionManager.save_session()
+	)
 
 
 func skip_forward() -> void:
@@ -124,6 +135,7 @@ func skip_forward() -> void:
 		set_current_track(0)
 	else:
 		set_current_track(queue_position+1)
+		await current_track_load_finished
 	if is_playing:
 		set_playing(true)
 
@@ -133,6 +145,7 @@ func skip_backward() -> void:
 		set_track_progress(0.0)
 	else:
 		set_current_track(queue_position-1)
+		await current_track_load_finished
 		if is_playing:
 			set_playing(true)
 

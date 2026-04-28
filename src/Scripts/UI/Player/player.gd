@@ -16,6 +16,9 @@ var visualizer_color: Color
 
 
 func  _ready() -> void:
+	if PlayerManager.current_track_loading: load_started()
+	PlayerManager.current_track_load_started.connect(load_started)
+	PlayerManager.current_track_load_finished.connect(load_finished)
 	PlayerManager.current_track_updated.connect(update_current_track)
 	PlayerManager.track_progress_updated.connect(update_track_progress)
 	PlayerManager.play_requested.connect(update_playing.bind(true))
@@ -44,6 +47,14 @@ func _session_manager_value_changed(property_name:String) -> void:
 			var value:String = SessionManager.right_sidebar_tab
 			%'Toggle Queue'.set_pressed_no_signal(value == 'queue')
 			%'Toggle Lyrics'.set_pressed_no_signal(value == 'lyrics')
+
+
+func load_started() -> void:
+	%'Track Load Animation'.play('animation')
+
+
+func load_finished() -> void:
+	%'Track Load Animation'.stop()
 
 
 func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
