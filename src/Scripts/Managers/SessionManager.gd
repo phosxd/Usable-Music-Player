@@ -14,6 +14,12 @@ enum ReplayGainMode {
 	Album,
 }
 
+enum AccentMode {
+	System,
+	Dynamic,
+	Custom,
+}
+
 ## Audio visualizer mode.
 enum VisualizerMode {
 	OFF,
@@ -30,26 +36,70 @@ const image_detail_values:Dictionary[int,int] = {
 	5: 1800,
 }
 
+const sections:Array[Array] = [
+	['library', [
+		'auto_scan_internal',
+	]],
+	['theme', [
+		'theme',
+		'theme_mode',
+		'accent_mode',
+		'visualizer_mode',
+		'visualizer_bar_count',
+		'visualizer_bar_smoothing',
+		'custom_accent',
+		'panel_tint',
+		'button_tint',
+	]],
+	['ui', [
+		'landing_page',
+		'grid_item_size',
+		'queue_size_limit',
+		'image_detail',
+	]],
+	['audio', [
+		'replay_gain',
+		'replay_gain_preamp',
+	]],
+	['api', [
+		'fetch_lyrics',
+		'fetch_artist_cover',
+		'fetch_album_cover',
+		'send_track_finished_notif',
+		'send_library_scan_finished_notif',
+	]],
+]
+
 const property_data:Array[Array] = [
 	# Library settings.
 	['library_order',[TYPE_PACKED_STRING_ARRAY]],
 	['visible_libraries',[TYPE_PACKED_STRING_ARRAY]],
 	['auto_scan_interval',[TYPE_INT,TYPE_FLOAT]],
-	# API settings.
+	# Theme.
+	['theme',[TYPE_STRING]],
+	['theme_mode',[TYPE_INT]],
+	['accent_mode',[TYPE_INT]],
+	['visualizer_mode',[TYPE_INT]],
+	['visualizer_bar_count',[TYPE_INT]],
+	['visualizer_bar_smoothing',[TYPE_FLOAT]],
+	['custom_accent',[TYPE_COLOR]],
+	['panel_tint',[TYPE_COLOR]],
+	['button_tint',[TYPE_COLOR]],
+	# UI.
+	['landing_page',[TYPE_STRING]],
+	['grid_item_size',[TYPE_INT,TYPE_FLOAT]],
+	['queue_size_limit',[TYPE_INT]],
+	['image_detail',[TYPE_INT]],
+	# Audio.
+	['replay_gain',[TYPE_INT]],
+	['replay_gain_preamp',[TYPE_FLOAT]],
+	# API.
 	['fetch_lyrics',[TYPE_BOOL]],
 	['fetch_artist_cover',[TYPE_BOOL]],
 	['fetch_album_cover',[TYPE_BOOL]],
-	# Audio settings.
-	['replay_gain',[TYPE_INT]],
-	['replay_gain_preamp',[TYPE_FLOAT]],
-	# Performance settings.
-	['queue_size_limit',[TYPE_INT]],
-	['image_detail',[TYPE_INT]],
-	# Shortcut settings.
-	#['play_pause_key',[TYPE_INT]],
-	# Notification settings.
 	['send_track_finished_notif',[TYPE_BOOL]],
 	['send_library_scan_finished_notif',[TYPE_BOOL]],
+
 	# Tab data.
 	['last_tab',[TYPE_STRING]],
 	['artists_tab_scroll_value',[TYPE_FLOAT]],
@@ -64,19 +114,6 @@ const property_data:Array[Array] = [
 	['album_ascend_mode',[TYPE_BOOL]],
 	['track_sort_mode',[TYPE_INT]],
 	['track_ascend_mode',[TYPE_BOOL]],
-	# UI settings.
-	['theme',[TYPE_STRING]],
-	['theme_mode',[TYPE_INT]],
-	['visualizer_mode',[TYPE_INT]],
-	['visualizer_bar_count',[TYPE_INT]],
-	['visualizer_bar_smoothing',[TYPE_FLOAT]],
-	['dynamic_accents',[TYPE_BOOL]],
-	['custom_accent',[TYPE_COLOR]],
-	['custom_accent_enabled',[TYPE_BOOL]],
-	['landing_page',[TYPE_STRING]],
-	['grid_item_size',[TYPE_INT,TYPE_FLOAT]],
-	['panel_tint',[TYPE_COLOR]],
-	['button_tint',[TYPE_COLOR]],
 ]
 
 ## Emitted when the session has been loaded.
@@ -103,25 +140,80 @@ var current_window_size: Vector2i:
 
 #endregion
 
+#region library settings
+
 var library_order: PackedStringArray
 var visible_libraries: PackedStringArray
 ## How many minutes to wait before automatically scanning.
 var auto_scan_interval:float = 0.5:
 	set(value):
 		auto_scan_interval = value
-		auto_scan_timer.wait_time = value*60.0
+		if value == 0: auto_scan_timer.wait_time = 999_999_999_999
+		else: auto_scan_timer.wait_time = value*60.0
 
-var replay_gain_mode := ReplayGainMode.Album
-var replay_gain_preamp:float = 0.0
-var fetch_lyrics:bool = true
-var fetch_artist_cover:bool = false
-var fetch_album_cover:bool = false
+#endregion
 
-var send_track_finished_notif:bool = true
-var send_library_scan_finished_notif:bool = true
+#region theme settings
 
+var theme:String = '':
+	set(value):
+		theme = value
+		ThemeManager.set_theme(value)
+		value_changed.emit('theme')
+
+var theme_mode:int = 0:
+	set(value):
+		theme_mode = value
+		ThemeManager.set_theme_mode(value)
+		value_changed.emit('theme_mode')
+
+var accent_mode := AccentMode.System:
+	set(value):
+		accent_mode = value
+		value_changed.emit('accent_mode')
+
+var custom_accent := Color(0.9, 0.9, 0.9):
+	set(value):
+		custom_accent = value
+		value_changed.emit('custom_accent')
+
+var visualizer_mode:VisualizerMode = VisualizerMode.OFF:
+	set(value):
+		visualizer_mode = value
+		value_changed.emit('visualizer_mode')
+
+var visualizer_bar_count:int = 125:
+	set(value):
+		visualizer_bar_count = value
+		value_changed.emit('visualizer_bar_count')
+
+var visualizer_bar_smoothing:float = 0.5:
+	set(value):
+		visualizer_bar_smoothing = value
+		value_changed.emit('visualizer_bar_smoothing')
+
+var panel_tint := Color.TRANSPARENT:
+	set(value):
+		panel_tint = value
+		ThemeManager.panel_tint = value
+		value_changed.emit('panel_tint')
+
+var button_tint := Color.TRANSPARENT:
+	set(value):
+		button_tint = value
+		ThemeManager.button_tint = value
+		value_changed.emit('button_tint')
+
+#endregion
+
+#region ui settings
+
+var grid_item_size:float = 175
 ## The maximum number of items allowed in the queue at once.
-var queue_size_limit:int = 150
+var queue_size_limit:int = 150:
+	set(value):
+		queue_size_limit = value
+		value_changed.emit('queue_size_limit')
 
 ## Image detail for album & artist covers.
 ## Resets cached album cover images when set.
@@ -133,20 +225,32 @@ var image_detail:int = image_detail_values[0]:
 			album._cover = null
 		value_changed.emit('image_detail')
 
+#endregion
+
+#region audio settings
+
+var replay_gain_mode := ReplayGainMode.Album
+var replay_gain_preamp:float = 0.0
+
+#endregion
+
+#region api settings
+
+var fetch_lyrics:bool = true
+var fetch_artist_cover:bool = false
+var fetch_album_cover:bool = false
+var send_track_finished_notif:bool = true
+var send_library_scan_finished_notif:bool = true
+
+#endregion
+
+
+#region sorting data
+
 ## Global search term.
-var search_term:String = '':
-	set(value):
-		search_term = value
-		value_changed.emit('search_term')
-
-
-#region sorting
-
+var search_term:String = ''
 ## Artists tab sort mode.
-var artist_sort_mode := DBLibrary.ArtistSortMode.title:
-	set(value):
-		artist_sort_mode = value
-		value_changed.emit('artist_sort_mode')
+var artist_sort_mode := DBLibrary.ArtistSortMode.title
 
 ## Artists tab ascend mode.
 var artist_ascend_mode:bool = true:
@@ -178,36 +282,6 @@ var track_ascend_mode:bool = true:
 		track_ascend_mode = value
 		value_changed.emit('track_ascend_mode')
 
-var dynamic_accents:bool = true:
-	set(value):
-		dynamic_accents = value
-		value_changed.emit('dynamic_accents')
-
-var custom_accent_enabled:bool = false:
-	set(value):
-		custom_accent_enabled = value
-		value_changed.emit('custom_accent_enabled')
-
-var custom_accent := Color(0.9, 0.9, 0.9):
-	set(value):
-		custom_accent = value
-		value_changed.emit('custom_accent')
-
-var visualizer_mode:VisualizerMode = VisualizerMode.OFF:
-	set(value):
-		visualizer_mode = value
-		value_changed.emit('visualizer_mode')
-
-var visualizer_bar_count:int = 125:
-	set(value):
-		visualizer_bar_count = value
-		value_changed.emit('visualizer_bar_count')
-
-var visualizer_bar_smoothing:float = 0.5:
-	set(value):
-		visualizer_bar_smoothing = value
-		value_changed.emit('visualizer_bar_smoothing')
-
 var landing_page:String = '':
 	set(value):
 		landing_page = value
@@ -233,28 +307,6 @@ var albums_tab_scroll_value:float = 0
 var tracks_tab_scroll_value:float = 0
 
 #endregion
-
-var theme:String = '':
-	set(value):
-		theme = value
-		ThemeManager.set_theme(value)
-
-var theme_mode:int = 0:
-	set(value):
-		theme_mode = value
-		ThemeManager.set_theme_mode(value)
-
-var grid_item_size:float = 175
-
-var panel_tint := Color.TRANSPARENT:
-	set(value):
-		panel_tint = value
-		ThemeManager.panel_tint = value
-
-var button_tint := Color.TRANSPARENT:
-	set(value):
-		button_tint = value
-		ThemeManager.button_tint = value
 
 #region context menues
 
@@ -320,18 +372,43 @@ var auto_scan_timer := Timer.new()
 
 
 func _ready() -> void:
-	default_window_size = get_window().size
-	current_window_size = default_window_size
+	self.default_window_size = self.get_window().size
+	self.current_window_size = self.default_window_size
 
 	load_session()
-	if theme.is_empty(): theme = 'UMP_DEFAULT' # Set default layout theme if none set by session file.
+	if self.theme.is_empty(): self.theme = 'UMP_DEFAULT' # Set default layout theme if none set by session file.
 
 	# Configure auto-scan timer.
 	auto_scan_timer.one_shot = false
 	auto_scan_timer.autostart = true
-	auto_scan_timer.wait_time = auto_scan_interval*60.0
+	self.auto_scan_interval = self.auto_scan_interval
 	auto_scan_timer.timeout.connect(LibraryManager.scan_all_libraries)
 	self.add_child(auto_scan_timer)
+
+
+func reload_main_scene() -> void:
+	var main_scene_ = SessionManager.get_layout_theme_scene('Main/main')
+	var main_scene_instance:Node = main_scene_.instantiate()
+	var tree:SceneTree = self.get_tree()
+	tree.change_scene_to_node.call_deferred(main_scene_instance)
+	SessionManager.main_scene = main_scene_instance
+
+
+func get_accent_color() -> Color:
+	var accent: Color
+
+	match SessionManager.accent_mode:
+		SessionManager.AccentMode.System:
+			accent = DisplayServer.get_accent_color()
+		SessionManager.AccentMode.Dynamic:
+			if not PlayerManager.queue.is_empty():
+				accent = PlayerManager.get_current_track().album.get_album_dominant_color()
+			else:
+				accent = ThemeManager.accent_color
+		SessionManager.AccentMode.Custom:
+			accent = SessionManager.custom_accent
+
+	return accent
 
 
 ## Get the scene at [param scene_name] for the current theme or [param theme_override].
@@ -366,18 +443,8 @@ func get_icon(icon_name:String, theme_override:String='', recurse:int=0) -> Text
 ## May override current playing track in PlayerManager.
 func load_session() -> void:
 	MiniLog.info('Loading session.', SessionManager)
-	var file := FileAccess.open(session_file_path, FileAccess.READ)
-	if file == null: return
-	var data = A2J.from_json(JSON.parse_string(file.get_as_text()))
-	if data == null: return
-
-	# Apply properties.
-	for i in property_data:
-		var data_entry = data.get(i[0])
-		if typeof(data_entry) == TYPE_FLOAT && TYPE_INT in i[1] && TYPE_FLOAT not in i[1]:
-			data_entry = int(data_entry)
-		if typeof(data_entry) in i[1]:
-			set(i[0], data_entry)
+	var data = import_config(session_file_path)
+	if data is not Dictionary: return
 
 	# Load libraries.
 	LibraryManager.load_libraries()
@@ -442,6 +509,48 @@ func save_session() -> void:
 
 	# Write file.
 	var file := FileAccess.open(session_file_path, FileAccess.WRITE)
+	var json = JSON.stringify(A2J.to_json(data), '\t', true, true)
+	file.store_string(json)
+	file.close()
+
+
+func import_config(path:String) -> Dictionary:
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		file.close()
+		return {}
+	var data = A2J.from_json(JSON.parse_string(file.get_as_text()))
+	file.close()
+	if data == null: return {}
+
+	# Apply properties.
+	for i in property_data:
+		var data_entry = data.get(i[0])
+		if data_entry == null: continue
+		if typeof(data_entry) == TYPE_FLOAT && TYPE_INT in i[1] && TYPE_FLOAT not in i[1]:
+			data_entry = int(data_entry)
+		if typeof(data_entry) in i[1]:
+			set(i[0], data_entry)
+
+	return data
+
+
+## Exports preferences based on [param export_sections].
+func export_config(path:String='user://session_export.json', export_sections:Array[String]=[]) -> void:
+	var allowed_properties: PackedStringArray
+	for section:Array in self.sections:
+		if section[0] not in export_sections: continue
+		for property:String in section[1]:
+			allowed_properties.append(property)
+
+	# Set data properties.
+	var data = {}
+	for i in property_data:
+		if i[0] not in allowed_properties: continue
+		data.set(i[0], self.get(i[0]))
+
+	# Write file.
+	var file := FileAccess.open(path, FileAccess.WRITE)
 	var json = JSON.stringify(A2J.to_json(data), '\t', true, true)
 	file.store_string(json)
 	file.close()

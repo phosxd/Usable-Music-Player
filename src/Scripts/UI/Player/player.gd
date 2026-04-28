@@ -12,6 +12,8 @@ var current_track: DBTrack
 var track_progress_blocked := false
 var volume:float = 0.0
 
+var visualizer_color: Color
+
 
 func  _ready() -> void:
 	PlayerManager.current_track_updated.connect(update_current_track)
@@ -24,6 +26,7 @@ func  _ready() -> void:
 	update_current_track(0, PlayerManager.get_current_track())
 	update_track_progress(PlayerManager.track_progress)
 	update_volume(PlayerManager.volume)
+	_session_manager_value_changed('visualizer_bar_mode')
 	_session_manager_value_changed('visualizer_bar_count')
 	_session_manager_value_changed('visualizer_bar_smoothing')
 	_session_manager_value_changed('right_sidebar_tab')
@@ -31,6 +34,8 @@ func  _ready() -> void:
 
 func _session_manager_value_changed(property_name:String) -> void:
 	match property_name:
+		'visualizer_mode':
+			self.update_visualizer(SessionManager.get_accent_color())
 		'visualizer_bar_count':
 			%'Bar Visualizer'.bar_count = SessionManager.visualizer_bar_count
 		'visualizer_bar_smoothing':
@@ -61,6 +66,7 @@ func update_volume(value:float) -> void:
 
 func update_visualizer(color:Color, _db:float=0) -> void:
 	var glow_gradient = %Glow.texture.gradient as Gradient
+	visualizer_color = color
 	glow_gradient.set_color(0, color)
 	%'Bar Visualizer'.hide()
 	%'Bar Visualizer'.process_mode = Node.PROCESS_MODE_DISABLED
@@ -82,9 +88,8 @@ func update_visualizer(color:Color, _db:float=0) -> void:
 func update_visualizer_2(db:float) -> void:
 	if SessionManager.visualizer_mode == SessionManager.VisualizerMode.GLOW:
 		var glow_gradient = %Glow.texture.gradient as Gradient
-		var album_dominant_color = current_track.album.palette.get('blend_full', Color.WHITE)
 		var linear:float = db_to_linear(db)
-		glow_gradient.set_color(0, Color(album_dominant_color.r, album_dominant_color.g, album_dominant_color.b,
+		glow_gradient.set_color(0, Color(visualizer_color.r, visualizer_color.g, visualizer_color.b,
 			MathUtils.transfer_range_of_value(Vector2(0,1), Vector2(0.25, 1), linear))
 		)
 		%Glow.texture.gradient = glow_gradient

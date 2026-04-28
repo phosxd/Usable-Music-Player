@@ -46,7 +46,6 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_74mp2")
 script = ExtResource("1_8fvqj")
 
 [node name="Glow Container" type="Control" parent="." unique_id=1188943884]
-visible = false
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1

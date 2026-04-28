@@ -2,7 +2,7 @@
 class_name DBLibrary extends Object
 
 signal scan_progress_changed(progress:int)
-signal scan_finished
+signal scan_finished(made_changes:bool)
 signal scan_started
 
 const minilog_importance := MiniLog.Importance.High
@@ -113,17 +113,19 @@ func refresh(auto:bool=false) -> void:
 			return
 
 	self.currently_updating = true
-	self.scan_started.emit()
 	if not auto: MiniLog.info('Starting scan for $~%s~$.' % self.name, DBLibrary)
+	self.scan_started.emit()
 
 	Async.create_thread(self._refresh, func(made_changes:bool) -> void:
 		self.currently_updating = false
-		self.scan_finished.emit()
 		if made_changes:
+			print(made_changes)
 			self.changed = true
 			SessionManager.main_scene.refresh_tab()
+			SystemNotif.send('Usable Music Player', 'Finished scanning library "%s".' % self.name, SystemNotif.Urgency.Normal)
 		if not auto: MiniLog.info('Finished scan for $~%s$~.' % self.name, DBLibrary)
 		self.save()
+		self.scan_finished.emit(made_changes)
 	)
 
 
@@ -176,6 +178,7 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	var file_size:int = entry.get('filesize',null)
 	if not file_size: file_size = FileAccess.get_size(full_track_path)
 
+	var artist_mb_id:String = entry.get('musicbrainz_artistid','')
 	var artist_name:String = entry.get('artist','').replace('\n','')
 	var actual_artist:String = artist_name
 	var album_artist:String = entry.get('albumartist','').replace('\n','')
@@ -199,6 +202,7 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	# Sort data.
 	var artist_data:Dictionary = {
 		'name': artist_name,
+		'mb_id': artist_mb_id,
 		'albums': [],
 	}
 	@warning_ignore('incompatible_ternary')
@@ -235,7 +239,8 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	var track_entry: DBTrack
 	# Find or create artist.
 	for artist:DBArtist in self.artists:
-		if artist.name == artist_data.name:
+		if artist.name.to_lower() == artist_data.name.to_lower() \
+		or (artist.mb_id == artist_data.mb_id && not artist_data.mb_id.is_empty()):
 			artist_entry = artist
 			break
 	if not artist_entry: artist_entry = DBArtist.new(self, artist_data)
@@ -259,7 +264,6 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	else:
 		track_entry.update_data(track_data)
 	track_entry.save_lyrics(entry.get('lyrics',''))
-	#MiniLog.pro('Scanned "$~%s~$".' % track_path.trim_prefix(library.path), LibraryManager)
 
 #endregion
 

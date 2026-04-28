@@ -18,23 +18,11 @@ const landing_page_options:Array[String] = [
 	'tracks',
 	'genres',
 ]
-const dir_open_popup := preload('res://Scenes/Dir Open/dir_open.tscn')
 
 
 func _ready() -> void:
 	%'Auto Scan Interval'.set_value_no_signal(SessionManager.auto_scan_interval)
 	# ---
-	@warning_ignore('integer_division')
-	%'Dynamic Accents'.set_pressed_no_signal(SessionManager.dynamic_accents)
-	%'Custom Accent Toggle'.set_pressed_no_signal(SessionManager.custom_accent_enabled)
-	%'Custom Accent'.color = SessionManager.custom_accent
-	%'Visualizer Mode'.selected = SessionManager.visualizer_mode
-	for item:Dictionary in ThemeManager.registered_themes:
-		%'Theme'.add_item(item.get('name',''))
-	%'Theme'.selected = ThemeManager.get_theme_index(SessionManager.theme)
-	for item:Dictionary in ThemeManager.modes:
-		%'Theme Mode'.add_item(item.get('@mode_name',''))
-	%'Theme Mode'.selected = ThemeManager.mode
 	%'Landing Page'.selected = landing_page_options.find(SessionManager.landing_page)
 	# ---
 	%'Grid Item Size'.set_value_no_signal(SessionManager.grid_item_size)
@@ -141,18 +129,6 @@ func _on_queue_size_limit_value_changed(value:float) -> void:
 	SessionManager.queue_size_limit = int(value)
 
 
-func _on_custom_accent_toggle_toggled(toggled_on:bool) -> void:
-	SessionManager.custom_accent_enabled = toggled_on
-
-
-func _on_custom_accent_popup_closed() -> void:
-	SessionManager.custom_accent = %'Custom Accent'.color
-
-
-func _on_open_themes_folder_pressed() -> void:
-	OS.shell_show_in_file_manager(ProjectSettings.globalize_path('user://THEMES/'))
-
-
 func _on_grid_item_size_value_changed(value:float) -> void:
 	SessionManager.grid_item_size = value
 
@@ -167,36 +143,6 @@ func _on_grid_item_size_normal_pressed() -> void:
 
 func _on_grid_item_size_large_pressed() -> void:
 	%'Grid Item Size'.value = 230
-
-
-func _on_panel_tint_popup_closed() -> void:
-	SessionManager.panel_tint = %'Panel Tint'.color
-
-
-func _on_panel_tint_preset_color_pressed(color:Color) -> void:
-	%'Panel Tint'.color = color
-	_on_panel_tint_popup_closed()
-
-
-func _on_button_tint_popup_closed() -> void:
-	SessionManager.button_tint = %'Button Tint'.color
-
-
-func _on_button_tint_preset_color_pressed(color:Color) -> void:
-	%'Button Tint'.color = color
-	_on_button_tint_popup_closed()
-
-
-func _on_visualizer_bar_count_value_changed(value:float) -> void:
-	SessionManager.visualizer_bar_count = int(value)
-	%'Visualizer Bar Count'.set_value_no_signal(value)
-	%'Visualizer Bar Count Slider'.set_value_no_signal(value)
-
-
-func _on_visualizer_bar_smoothing_value_changed(value:float) -> void:
-	SessionManager.visualizer_bar_smoothing = value
-	%'Visualizer Bar Smoothing'.set_value_no_signal(value)
-	%'Visualizer Bar Smoothing Slider'.set_value_no_signal(value)
 
 
 func _on_replay_gain_preamp_value_changed(value:float) -> void:

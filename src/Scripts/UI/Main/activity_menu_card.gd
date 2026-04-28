@@ -24,7 +24,7 @@ func _on_scan_started() -> void:
 	%Action.self_modulate = scan_color
 
 
-func _on_scan_finished() -> void:
+func _on_scan_finished(_made_changes:bool) -> void:
 	%Action.text = idle_text
 	%Action.self_modulate = idle_color
 	%Value.text = idle_value

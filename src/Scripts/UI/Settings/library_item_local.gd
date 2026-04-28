@@ -1,6 +1,6 @@
 extends Control
 
-const dir_open_scene:PackedScene = preload('res://Scenes/Dir Open/dir_open.tscn')
+const select_library_scene:PackedScene = preload('res://Scenes/Dialogs/Select Library/scene.tscn')
 
 signal scan_requested
 signal update_requested(data:Array)
@@ -39,7 +39,7 @@ func _on_scan_pressed() -> void:
 
 
 func _on_load_path_pressed() -> void:
-	var popup:FileDialog = dir_open_scene.instantiate()
+	var popup:FileDialog = select_library_scene.instantiate()
 	popup.show()
 	popup.dir_selected.connect(func(dir:String) -> void:
 		%Path.text = dir

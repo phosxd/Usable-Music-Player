@@ -23,7 +23,7 @@ func highlight(on:bool) -> void:
 		%Name.self_modulate = Color.WHITE
 		%Artist.self_modulate = Color.WHITE
 	else:
-		var color := Color(0.75, 0.75, 0.75)
+		var color := Color(1,1,1, 0.75)
 		%Name.self_modulate = color
 		%Artist.self_modulate = color
 

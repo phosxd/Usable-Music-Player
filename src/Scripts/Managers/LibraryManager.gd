@@ -66,7 +66,7 @@ static func load_libraries() -> void:
 			library.id = path.split('/')[-1].trim_suffix('.json')
 			library.hidden = not SessionManager.visible_libraries.has(library.id)
 			libraries.append(library)
-			MiniLog.info('Loaded library $i%si$ after $~%sms~$.' % [path.get_basename().split('/')[-1], int(A2J.time_to_finish)], LibraryManager)
+			MiniLog.info('Loaded library $i%s (%s)i$ after $~%sms~$.' % [library.name, library.id, int(A2J.time_to_finish)], LibraryManager)
 	)
 
 	libraries.sort_custom(func(a:DBLibrary, b:DBLibrary) -> bool:

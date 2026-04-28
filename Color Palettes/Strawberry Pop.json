@@ -1,0 +1,32 @@
+{
+	"accent_mode": 1,
+	"button_tint": {
+		".t": "Color",
+		"v": [
+			1.0,
+			0.0,
+			0.0,
+			0.4902
+		]
+	},
+	"custom_accent": {
+		".t": "Color",
+		"v": [
+			0.0,
+			0.0,
+			0.0,
+			1.0
+		]
+	},
+	"panel_tint": {
+		".t": "Color",
+		"v": [
+			1.0,
+			0.0,
+			0.0,
+			0.39216
+		]
+	},
+	"theme": "UMP_DEFAULT",
+	"theme_mode": 1,
+}

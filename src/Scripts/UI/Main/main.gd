@@ -69,11 +69,8 @@ func _ready() -> void:
 	set_tab(default_tab)
 	PlayerManager.current_track_updated.connect(update_current_track)
 	SessionManager.value_changed.connect(func(property:String) -> void:
-		if property == 'visualizer_mode':
-			%Player.update_visualizer(ThemeManager.accent)
-		if property in ['dynamic_accents','custom_accent_enabled','custom_accent']:
+		if property in ['accent_mode','custom_accent']:
 			update_accents()
-			%Player.update_visualizer(ThemeManager.accent)
 		if property == 'tab_content_split':
 			%'Tab Content Split'.split_offsets = SessionManager.tab_content_split
 		if property == 'right_sidebar_tab':
@@ -81,7 +78,6 @@ func _ready() -> void:
 	)
 	update_current_track(0, PlayerManager.get_current_track())
 	update_accents()
-	%Player.update_visualizer(ThemeManager.accent)
 	%'Tab Content Split'.split_offsets = SessionManager.tab_content_split
 	%'Tab Content Split'.collapsed = SessionManager.right_sidebar_tab == ''
 
@@ -90,23 +86,15 @@ func _ready() -> void:
 
 
 func update_accents() -> void:
-	var prev_album_dominant_color:Color = album_dominant_color
-	if SessionManager.dynamic_accents:
-		if not PlayerManager.queue.is_empty():
-			album_dominant_color = PlayerManager.queue[PlayerManager.queue_position].album.get_album_dominant_color()
-	elif SessionManager.custom_accent_enabled:
-		album_dominant_color = SessionManager.custom_accent
-	# If dynamic & custom accents are disabled, use OS accent color.
-	else:
-		album_dominant_color = DisplayServer.get_accent_color()
-	if prev_album_dominant_color == album_dominant_color: return
-
-	var accent:Color = album_dominant_color
+	var accent:Color = SessionManager.get_accent_color()
 	# Clamp colors based on theme luminance.
 	var luminance:float = ThemeManager.bg_color.get_luminance() if ThemeManager.bg_color.a != 0 else ThemeManager.default_bg_color.get_luminance()
 	if luminance < 0.5:
 		accent.v = max(0.6, accent.v)
-	ThemeManager.accent = accent
+
+	ThemeManager.accent_override_color = accent
+	%Player.update_visualizer(accent)
+	ThemeManager.apply_changes()
 
 
 func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
@@ -117,7 +105,6 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 	)
 	if old_cover != %'Current Track Cover'.texture:
 		update_accents()
-		%Player.update_visualizer(ThemeManager.accent)
 
 
 func set_tab(tab:String, data=null) -> void:

@@ -8,6 +8,8 @@ var library: DBLibrary
 var name:String = ''
 ## All albums in this artist.
 var albums:Array[DBAlbum] = []
+## MusicBrainz Artist ID.
+var mb_id:String = ''
 
 ## Whether or not the DB entry is valid.
 var valid := true
@@ -22,9 +24,9 @@ func _init(library_:DBLibrary, data:Dictionary) -> void:
 
 
 func update_data(data:Dictionary) -> void:
-	name = data.get('name','')
-	albums.clear(); albums.assign(data.get('albums',[]))
-	#if albums.is_empty(): remove()
+	self.name = data.get('name','')
+	self.albums.clear(); self.albums.assign(data.get('albums',[]))
+	self.mb_id = data.get('mb_id','')
 
 
 ## Remove this artist & it's children from the library.

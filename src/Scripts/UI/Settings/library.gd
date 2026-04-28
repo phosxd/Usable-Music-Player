@@ -21,6 +21,7 @@ func _on_add_library_index_pressed(index:int) -> void:
 			library.type = DBLibrary.LibraryType.LocalDirectory
 			library.id = DBLibrary._generate_id()
 			library.name = 'New Library'
+			SessionManager.visible_libraries.append(library.id)
 			LibraryManager.libraries.append(library)
 			add_local_library(library)
 		1:
