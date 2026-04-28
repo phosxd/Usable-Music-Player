@@ -119,7 +119,6 @@ func refresh(auto:bool=false) -> void:
 	Async.create_thread(self._refresh, func(made_changes:bool) -> void:
 		self.currently_updating = false
 		if made_changes:
-			print(made_changes)
 			self.changed = true
 			SessionManager.main_scene.refresh_tab()
 			SystemNotif.send('Usable Music Player', 'Finished scanning library "%s".' % self.name, SystemNotif.Urgency.Normal)
@@ -131,6 +130,22 @@ func refresh(auto:bool=false) -> void:
 
 func _refresh() -> bool:
 	var made_changes:Array[bool] = [false]
+
+	# Remove rogue objects.
+	for artist:DBArtist in self.artists.duplicate():
+		for album:DBAlbum in artist.albums.duplicate():
+			if album not in self.albums:
+				album.remove()
+			else:
+				for track:DBTrack in album.tracks.duplicate():
+					if track not in self.tracks:
+						track.remove()
+	for album:DBAlbum in self.albums.duplicate():
+		if album.artist not in self.artists:
+			album.artist.remove()
+	for track:DBTrack in self.tracks.duplicate():
+		if track.album not in self.albums:
+			track.album.remove()
 
 	# Get last modified time for all tracks.
 	var last_modified_times:Dictionary[String,int] = {}
@@ -240,7 +255,7 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	# Find or create artist.
 	for artist:DBArtist in self.artists:
 		if artist.name.to_lower() == artist_data.name.to_lower() \
-		or (artist.mb_id == artist_data.mb_id && not artist_data.mb_id.is_empty()):
+		&& (artist.mb_id == artist_data.mb_id or artist_data.mb_id.is_empty()):
 			artist_entry = artist
 			break
 	if not artist_entry: artist_entry = DBArtist.new(self, artist_data)

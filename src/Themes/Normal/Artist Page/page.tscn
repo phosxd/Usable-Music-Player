@@ -8,9 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="9_qc06v"]
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="10_k5jwi"]
 [ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="11_nj7j1"]
+[ext_resource type="Texture2D" uid="uid://dod6uhmhu0tw3" path="res://Themes/Normal/Assets/Icons/reload.svg" id="11_obbmb"]
 [ext_resource type="Texture2D" uid="uid://d3xi2hlyuvtic" path="res://Themes/Normal/Assets/Icons/queue_play_next.svg" id="12_kylhy"]
 [ext_resource type="Texture2D" uid="uid://dgf4br6i5tdbe" path="res://Themes/Normal/Assets/Icons/queue_add_to_queue.svg" id="13_5rtut"]
-[ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Themes/Normal/Assets/Icons/modifiers.svg" id="14_7xsgr"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="15_ep5yx"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="16_dajyr"]
 
@@ -20,6 +20,7 @@ shader_parameter/topleft = Color(0, 0, 0, 1)
 shader_parameter/topright = Color(0, 0, 0, 1)
 shader_parameter/bottomleft = Color(0, 0, 0, 1)
 shader_parameter/bottomright = Color(0.21, 0.21, 0.21, 1)
+shader_parameter/period = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_05ng2"]
 content_margin_left = 6.0
@@ -41,7 +42,7 @@ height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_obbmb"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7qgso"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -132,7 +133,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_obbmb")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7qgso")
 script = ExtResource("4_wckwj")
 texture = ExtResource("5_sflqa")
 expand_mode = 2
@@ -193,11 +194,6 @@ icon_alignment = 1
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
-tooltip_text = "- Play next: queues artist to play after current track.
-
-- Add to queue: adds artist to end of queue.
-
-- Rescan: use if you have changed metadata for any of the tracks."
 theme_type_variation = &"AccentButton"
 icon = ExtResource("11_nj7j1")
 flat = false
@@ -210,7 +206,7 @@ popup/item_1/text = "Add to queue"
 popup/item_1/icon = ExtResource("13_5rtut")
 popup/item_1/id = 1
 popup/item_2/text = "Rescan"
-popup/item_2/icon = ExtResource("14_7xsgr")
+popup/item_2/icon = ExtResource("11_obbmb")
 popup/item_2/id = 2
 
 [node name="Sep 2" type="VSeparator" parent="VBox/Controls/VBox/HBox" unique_id=715618603]

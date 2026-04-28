@@ -125,8 +125,11 @@ func _on_shuffle_pressed() -> void:
 
 func _on_option_id_pressed(id:int) -> void:
 	match id:
+		# Play next.
 		0: pass
+		# Add to queue.
 		1: pass
-		2: pass
-			#LibraryManager.rescan_artist(artist)
-			#SessionManager.main_scene.refresh_tab()
+		# Rescan.
+		2:
+			self.artist.remove()
+			self.artist.library.refresh()

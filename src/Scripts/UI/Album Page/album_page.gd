@@ -115,3 +115,7 @@ func _on_option_id_pressed(id:int) -> void:
 		# Add to queue.
 		1:
 			pass
+		# Rescan.
+		2:
+			self.album.remove()
+			self.album.artist.library.refresh()
