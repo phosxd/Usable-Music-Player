@@ -11,7 +11,7 @@ signal remove_requested
 func init(library:DBLibrary) -> void:
 	%Name.text = library.name
 	%Path.text = library.path
-	%Icon.icon = library.get_icon()
+	%Icon.texture = library.get_icon()
 
 
 func update() -> void:

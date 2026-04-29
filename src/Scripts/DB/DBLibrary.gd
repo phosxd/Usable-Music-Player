@@ -201,6 +201,14 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 
 	var palette = {}
 	var cover_path:String = entry.get('cover_path','')
+	# Find cover in folder.
+	if cover_path.is_empty():
+		for extension:String in ['jpeg','jpg','png']:
+			for file_title:String in ['cover','folder','album']:
+				var cover_path_test:String = full_track_path.trim_suffix(track_path.split('/')[-1])+file_title+'.'+extension
+				if FileAccess.file_exists(cover_path_test):
+					cover_path = cover_path_test
+					break
 	if not cover_path.is_empty() && cover_path not in parsed_images && FileAccess.file_exists(cover_path):
 		var image = Image.load_from_file(cover_path)
 		image = ImageTexture.create_from_image(image)

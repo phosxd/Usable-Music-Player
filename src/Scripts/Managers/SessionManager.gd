@@ -12,6 +12,7 @@ enum ReplayGainMode {
 	None,
 	Track,
 	Album,
+	Auto,
 }
 
 enum AccentMode {
@@ -554,9 +555,10 @@ func export_config(path:String='user://session_export.json', export_sections:Arr
 
 	# Write file.
 	var file := FileAccess.open(path, FileAccess.WRITE)
-	var json = JSON.stringify(A2J.to_json(data), '\t', true, true)
-	file.store_string(json)
-	file.close()
+	if file:
+		var json = JSON.stringify(A2J.to_json(data), '\t', true, true)
+		file.store_string(json)
+		file.close()
 
 
 func _notification(what:int) -> void:

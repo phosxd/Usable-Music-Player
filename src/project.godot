@@ -51,8 +51,6 @@ file_logging/log_path="user://logs/.log"
 [display]
 
 window/size/viewport_width=1185
-window/size/extend_to_title=true
-display_server/driver.linuxbsd="x11"
 window/vsync/vsync_mode=0
 
 [dotnet]

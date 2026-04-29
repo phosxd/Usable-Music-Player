@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Themes/Normal/Assets/Icons/skip_forward.svg" id="4_ucxa4"]
 [ext_resource type="Texture2D" uid="uid://bkkmi7knca7st" path="res://Themes/Normal/Assets/Icons/audio.svg" id="6_5infn"]
 [ext_resource type="PackedScene" uid="uid://4hlv0qpe30h8" path="res://Elements/Clickable Label/Fit Clickable Label.tscn" id="6_836g3"]
+[ext_resource type="Script" uid="uid://cuel4avmaddm" path="res://Elements/ColoredControl.gd" id="6_a3o2i"]
 [ext_resource type="Texture2D" uid="uid://1atpjvnl4kp" path="res://Themes/Normal/Assets/Icons/scale_x2/shuffle.svg" id="7_5infn"]
 [ext_resource type="Texture2D" uid="uid://cxhba62sfdahy" path="res://Themes/Normal/Assets/Icons/scale_x2/queue.svg" id="7_on5bc"]
 [ext_resource type="Texture2D" uid="uid://n2y028woywe1" path="res://Themes/Normal/Assets/Icons/scale_x2/loop.svg" id="8_yqmis"]
@@ -39,18 +40,6 @@ anti_aliasing = false
 
 [sub_resource type="Animation" id="Animation_kemy3"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/VBox/HBox/Track Info:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_a3o2i"]
 resource_name = "animation"
@@ -59,7 +48,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/VBox/HBox/Track Info:modulate")
+tracks/0/path = NodePath("Panel/VBox/HBox/Left/Track Info:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -121,20 +110,19 @@ theme_override_constants/separation = 0
 [node name="HBox" type="HBoxContainer" parent="Panel/VBox" unique_id=586491813]
 layout_mode = 2
 
-[node name="Track Info" type="HBoxContainer" parent="Panel/VBox/HBox" unique_id=1996931163]
-unique_name_in_owner = true
+[node name="Left" type="HBoxContainer" parent="Panel/VBox/HBox" unique_id=1996931163]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.85
 
-[node name="Track Info" type="PanelContainer" parent="Panel/VBox/HBox/Track Info" unique_id=1261719850]
+[node name="Track Info" type="PanelContainer" parent="Panel/VBox/HBox/Left" unique_id=1261719850]
+unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 theme_override_styles/panel = SubResource("StyleBoxFlat_8fvqj")
 
-[node name="Details HBox" type="HBoxContainer" parent="Panel/VBox/HBox/Track Info/Track Info" unique_id=476663422]
+[node name="Details HBox" type="HBoxContainer" parent="Panel/VBox/HBox/Left/Track Info" unique_id=476663422]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
@@ -147,7 +135,7 @@ update_on_text_changed = false
 update_on_label_settings_changed = false
 metadata/_custom_type_script = "uid://bjisaiqko2bpt"
 
-[node name="Favorite" type="TextureButton" parent="Panel/VBox/HBox/Track Info/Track Info/Details HBox" unique_id=864543401]
+[node name="Favorite" type="TextureButton" parent="Panel/VBox/HBox/Left/Track Info/Details HBox" unique_id=864543401]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(18, 18)
 layout_mode = 2
@@ -158,13 +146,15 @@ texture_normal = ExtResource("3_kemy3")
 texture_pressed = ExtResource("4_a3o2i")
 ignore_texture_size = true
 stretch_mode = 5
+script = ExtResource("6_a3o2i")
+color_source = 2
 
-[node name="Sep 4" type="VSeparator" parent="Panel/VBox/HBox/Track Info/Track Info/Details HBox" unique_id=731579475]
+[node name="Sep 4" type="VSeparator" parent="Panel/VBox/HBox/Left/Track Info/Details HBox" unique_id=731579475]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="Track Name" parent="Panel/VBox/HBox/Track Info/Track Info/Details HBox" unique_id=1107486296 instance=ExtResource("6_836g3")]
+[node name="Track Name" parent="Panel/VBox/HBox/Left/Track Info/Details HBox" unique_id=1107486296 instance=ExtResource("6_836g3")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(74, 0)
 layout_mode = 2
@@ -174,12 +164,12 @@ text = "No track"
 text_overrun_behavior = 5
 hover_theme_type_variation = "LabelHeaderHover"
 
-[node name="Sep 3" type="VSeparator" parent="Panel/VBox/HBox/Track Info/Track Info/Details HBox" unique_id=175285363]
+[node name="Sep 3" type="VSeparator" parent="Panel/VBox/HBox/Left/Track Info/Details HBox" unique_id=175285363]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Artist Name" parent="Panel/VBox/HBox/Track Info/Track Info/Details HBox" unique_id=347549754 instance=ExtResource("6_836g3")]
+[node name="Artist Name" parent="Panel/VBox/HBox/Left/Track Info/Details HBox" unique_id=347549754 instance=ExtResource("6_836g3")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(67.625, 0)
 layout_mode = 2
@@ -189,12 +179,12 @@ vertical_alignment = 2
 text_overrun_behavior = 5
 hover_theme_type_variation = "LabelHover"
 
-[node name="Sep 2" type="VSeparator" parent="Panel/VBox/HBox/Track Info/Track Info/Details HBox" unique_id=495887998]
+[node name="Sep 2" type="VSeparator" parent="Panel/VBox/HBox/Left/Track Info/Details HBox" unique_id=495887998]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Track Length" type="Label" parent="Panel/VBox/HBox/Track Info/Track Info/Details HBox" unique_id=1047623048]
+[node name="Track Length" type="Label" parent="Panel/VBox/HBox/Left/Track Info/Details HBox" unique_id=1047623048]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -202,19 +192,12 @@ size_flags_vertical = 1
 text = "0:00 / 0:00"
 vertical_alignment = 2
 
-[node name="Sep 1" type="VSeparator" parent="Panel/VBox/HBox/Track Info" unique_id=458797593]
+[node name="Sep 1" type="VSeparator" parent="Panel/VBox/HBox/Left" unique_id=458797593]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Controls" type="HBoxContainer" parent="Panel/VBox/HBox" unique_id=1069252317]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Controls" type="HBoxContainer" parent="Panel/VBox/HBox/Controls" unique_id=286903142]
-layout_mode = 2
-
-[node name="Skip Backward" type="Button" parent="Panel/VBox/HBox/Controls/Controls" unique_id=887661311]
+[node name="Skip Backward" type="Button" parent="Panel/VBox/HBox/Left" unique_id=887661311]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
@@ -223,7 +206,7 @@ text = " "
 icon = ExtResource("2_rmo75")
 icon_alignment = 1
 
-[node name="Play Pause" type="Button" parent="Panel/VBox/HBox/Controls/Controls" unique_id=689319497]
+[node name="Play Pause" type="Button" parent="Panel/VBox/HBox" unique_id=689319497]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -233,7 +216,11 @@ text = " "
 icon = ExtResource("3_on5bc")
 icon_alignment = 1
 
-[node name="Skip Forward" type="Button" parent="Panel/VBox/HBox/Controls/Controls" unique_id=25641869]
+[node name="Right" type="HBoxContainer" parent="Panel/VBox/HBox" unique_id=1069252317]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Skip Forward" type="Button" parent="Panel/VBox/HBox/Right" unique_id=25641869]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
@@ -242,19 +229,19 @@ text = " "
 icon = ExtResource("4_ucxa4")
 icon_alignment = 1
 
-[node name="Sep 5" type="VSeparator" parent="Panel/VBox/HBox/Controls" unique_id=1613490969]
+[node name="Sep 5" type="VSeparator" parent="Panel/VBox/HBox/Right" unique_id=1613490969]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.1
+size_flags_stretch_ratio = 0.3
 theme_override_constants/separation = 0
 
-[node name="Volume" type="HBoxContainer" parent="Panel/VBox/HBox/Controls" unique_id=1016359684]
+[node name="Volume" type="HBoxContainer" parent="Panel/VBox/HBox/Right" unique_id=1016359684]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="Mute Button" type="TextureButton" parent="Panel/VBox/HBox/Controls/Volume" unique_id=589095583]
+[node name="Mute Button" type="TextureButton" parent="Panel/VBox/HBox/Right/Volume" unique_id=589095583]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -262,26 +249,52 @@ toggle_mode = true
 texture_normal = ExtResource("6_5infn")
 texture_pressed = ExtResource("13_ds2pc")
 stretch_mode = 5
+script = ExtResource("6_a3o2i")
+color_source = 2
 
-[node name="Volume" type="HSlider" parent="Panel/VBox/HBox/Controls/Volume" unique_id=1459485244]
+[node name="Volume" type="HSlider" parent="Panel/VBox/HBox/Right/Volume" unique_id=1459485244]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 value = 100.0
 
-[node name="Sep 2" type="VSeparator" parent="Panel/VBox/HBox/Controls" unique_id=270971694]
+[node name="HBox" type="HBoxContainer" parent="Panel/VBox/HBox/Right/Volume/Volume" unique_id=1937289307]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.08800001
+anchor_top = 0.84400004
+anchor_right = 0.97900003
+anchor_bottom = 0.84400004
+offset_left = -1.0159988
+offset_top = -0.0040006638
+offset_right = 0.052993774
+offset_bottom = 16.995998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReplayGain Indicator" type="Label" parent="Panel/VBox/HBox/Right/Volume/Volume/HBox" unique_id=1374690587]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelSecondarySmall"
+theme_override_font_sizes/font_size = 11
+text = "Replay Gain %sdb"
+horizontal_alignment = 1
+text_overrun_behavior = 5
+
+[node name="Sep 2" type="VSeparator" parent="Panel/VBox/HBox/Right" unique_id=270971694]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.1
+size_flags_stretch_ratio = 0.3
 theme_override_constants/separation = 0
 
-[node name="Controls 2" type="HBoxContainer" parent="Panel/VBox/HBox/Controls" unique_id=189115080]
+[node name="Controls 2" type="HBoxContainer" parent="Panel/VBox/HBox/Right" unique_id=189115080]
 layout_mode = 2
 
-[node name="Toggle Shuffle" type="Button" parent="Panel/VBox/HBox/Controls/Controls 2" unique_id=373971293]
+[node name="Toggle Shuffle" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=373971293]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -291,7 +304,7 @@ toggle_mode = true
 icon = ExtResource("7_5infn")
 expand_icon = true
 
-[node name="Swap Loop Mode" type="Button" parent="Panel/VBox/HBox/Controls/Controls 2" unique_id=1189711306]
+[node name="Swap Loop Mode" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=1189711306]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(42, 32)
 layout_mode = 2
@@ -302,7 +315,7 @@ icon = ExtResource("8_yqmis")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Toggle Queue" type="Button" parent="Panel/VBox/HBox/Controls/Controls 2" unique_id=1712790552]
+[node name="Toggle Queue" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=1712790552]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -312,7 +325,7 @@ toggle_mode = true
 icon = ExtResource("7_on5bc")
 expand_icon = true
 
-[node name="Toggle Lyrics" type="Button" parent="Panel/VBox/HBox/Controls/Controls 2" unique_id=862164841]
+[node name="Toggle Lyrics" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=862164841]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -322,13 +335,14 @@ toggle_mode = true
 icon = ExtResource("10_qn1da")
 expand_icon = true
 
-[node name="Sep 3" type="VSeparator" parent="Panel/VBox/HBox/Controls" unique_id=156156437]
+[node name="Sep 3" type="VSeparator" parent="Panel/VBox/HBox/Right" unique_id=156156437]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Miniplayer" type="Button" parent="Panel/VBox/HBox/Controls" unique_id=46311969]
+[node name="Miniplayer" type="Button" parent="Panel/VBox/HBox/Right" unique_id=46311969]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(18, 18)
 layout_mode = 2
 size_flags_vertical = 4
@@ -337,7 +351,8 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("18_k76c7")
 flat = true
 
-[node name="Sep 4" type="VSeparator" parent="Panel/VBox/HBox/Controls" unique_id=914598675]
+[node name="Sep 4" type="VSeparator" parent="Panel/VBox/HBox/Right" unique_id=914598675]
+visible = false
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
@@ -365,16 +380,16 @@ layout_mode = 2
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_k76c7")
 
-[connection signal="pressed" from="Panel/VBox/HBox/Track Info/Track Info/Details HBox/Track Name" to="." method="_on_track_name_pressed"]
-[connection signal="pressed" from="Panel/VBox/HBox/Track Info/Track Info/Details HBox/Artist Name" to="." method="_on_artist_name_pressed"]
-[connection signal="pressed" from="Panel/VBox/HBox/Controls/Controls/Skip Backward" to="." method="_on_skip_backward_pressed"]
-[connection signal="pressed" from="Panel/VBox/HBox/Controls/Controls/Play Pause" to="." method="_on_play_pause_pressed"]
-[connection signal="pressed" from="Panel/VBox/HBox/Controls/Controls/Skip Forward" to="." method="_on_skip_forward_pressed"]
-[connection signal="toggled" from="Panel/VBox/HBox/Controls/Volume/Mute Button" to="." method="_on_mute_button_toggled"]
-[connection signal="value_changed" from="Panel/VBox/HBox/Controls/Volume/Volume" to="." method="_on_volume_value_changed"]
-[connection signal="toggled" from="Panel/VBox/HBox/Controls/Controls 2/Toggle Shuffle" to="." method="_on_toggle_shuffle_toggled"]
-[connection signal="pressed" from="Panel/VBox/HBox/Controls/Controls 2/Swap Loop Mode" to="." method="_on_swap_loop_mode_pressed"]
-[connection signal="toggled" from="Panel/VBox/HBox/Controls/Controls 2/Toggle Queue" to="." method="_on_toggle_queue_toggled"]
-[connection signal="toggled" from="Panel/VBox/HBox/Controls/Controls 2/Toggle Lyrics" to="." method="_on_toggle_lyrics_toggled"]
+[connection signal="pressed" from="Panel/VBox/HBox/Left/Track Info/Details HBox/Track Name" to="." method="_on_track_name_pressed"]
+[connection signal="pressed" from="Panel/VBox/HBox/Left/Track Info/Details HBox/Artist Name" to="." method="_on_artist_name_pressed"]
+[connection signal="pressed" from="Panel/VBox/HBox/Left/Skip Backward" to="." method="_on_skip_backward_pressed"]
+[connection signal="pressed" from="Panel/VBox/HBox/Play Pause" to="." method="_on_play_pause_pressed"]
+[connection signal="pressed" from="Panel/VBox/HBox/Right/Skip Forward" to="." method="_on_skip_forward_pressed"]
+[connection signal="toggled" from="Panel/VBox/HBox/Right/Volume/Mute Button" to="." method="_on_mute_button_toggled"]
+[connection signal="value_changed" from="Panel/VBox/HBox/Right/Volume/Volume" to="." method="_on_volume_value_changed"]
+[connection signal="toggled" from="Panel/VBox/HBox/Right/Controls 2/Toggle Shuffle" to="." method="_on_toggle_shuffle_toggled"]
+[connection signal="pressed" from="Panel/VBox/HBox/Right/Controls 2/Swap Loop Mode" to="." method="_on_swap_loop_mode_pressed"]
+[connection signal="toggled" from="Panel/VBox/HBox/Right/Controls 2/Toggle Queue" to="." method="_on_toggle_queue_toggled"]
+[connection signal="toggled" from="Panel/VBox/HBox/Right/Controls 2/Toggle Lyrics" to="." method="_on_toggle_lyrics_toggled"]
 [connection signal="drag_ended" from="Panel/VBox/Progress/Play Progress" to="." method="_on_play_progress_drag_ended"]
 [connection signal="drag_started" from="Panel/VBox/Progress/Play Progress" to="." method="_on_play_progress_drag_started"]

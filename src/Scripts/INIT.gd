@@ -38,6 +38,7 @@ func _on_tes_error(code:int, translations:Array) -> void:
 
 
 func _ready() -> void:
+	get_window().min_size = Vector2i(800,500)
 	# Save icon to user data.
 	icon.get_image().save_png(icon_file_path)
 	# Set up desktop file.

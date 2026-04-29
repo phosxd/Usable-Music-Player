@@ -3,7 +3,6 @@ extends Node
 const binary_name:String = 'metadata'
 const binary_path_internal:String = 'res://BIN/'
 const binary_path_external:String = 'user://bin/'
-const version:int = 0
 
 var io_access: FileAccess
 var error_access: FileAccess
@@ -50,7 +49,7 @@ func _ready() -> void:
 	extension += '.'+architecture
 	var file_name:String = binary_name+extension
 	var full_path:String = binary_path_internal+file_name
-	var full_path_external:String = ProjectSettings.globalize_path(binary_path_external+file_name+'.%s' % version)
+	var full_path_external:String = ProjectSettings.globalize_path(binary_path_external+file_name)
 
 	# Get binary.
 	var bytes:PackedByteArray = FileAccess.get_file_as_bytes(full_path)
@@ -59,8 +58,10 @@ func _ready() -> void:
 		return
 
 	# Write binary to disk.
-	if not FileAccess.file_exists(full_path_external):
+	if not FileAccess.file_exists(full_path_external) or FileAccess.get_file_as_bytes(full_path_external).size() != bytes.size():
+		MiniLog.info('Exporting binary.', Metadata)
 		DirAccess.make_dir_recursive_absolute(binary_path_external)
+		DirAccess.remove_absolute(full_path_external)
 		var file := FileAccess.open(full_path_external, FileAccess.WRITE)
 		file.store_buffer(bytes)
 		file.close()

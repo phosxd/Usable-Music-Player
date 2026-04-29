@@ -14,6 +14,8 @@ var volume:float = 0.0
 
 var visualizer_color: Color
 
+@onready var replaygain_indicator_template:String = %'ReplayGain Indicator'.text
+
 
 func  _ready() -> void:
 	if PlayerManager.current_track_loading: load_started()
@@ -24,11 +26,13 @@ func  _ready() -> void:
 	PlayerManager.play_requested.connect(update_playing.bind(true))
 	PlayerManager.pause_requested.connect(update_playing.bind(false))
 	PlayerManager.volume_updated.connect(update_volume)
+	PlayerManager.replay_gain_updated.connect(update_replaygain_indicator)
 	PlayerManager.track_peak_volume_changed.connect(update_visualizer_2)
 	SessionManager.value_changed.connect(_session_manager_value_changed)
 	update_current_track(0, PlayerManager.get_current_track())
 	update_track_progress(PlayerManager.track_progress)
 	update_volume(PlayerManager.volume)
+	update_replaygain_indicator(PlayerManager.replay_gain)
 	_session_manager_value_changed('visualizer_bar_mode')
 	_session_manager_value_changed('visualizer_bar_count')
 	_session_manager_value_changed('visualizer_bar_smoothing')
@@ -73,6 +77,10 @@ func update_volume(value:float) -> void:
 	%Volume.set_value_no_signal(value)
 	if value == 0:
 		%'Mute Button'.button_pressed = true
+
+
+func update_replaygain_indicator(value:float) -> void:
+	%'ReplayGain Indicator'.text = replaygain_indicator_template % snapped(value, 0.1)
 
 
 func update_visualizer(color:Color, _db:float=0) -> void:

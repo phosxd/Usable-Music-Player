@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d2qhc6y2jbdfm"]
 
 [ext_resource type="Script" uid="uid://dihobpxpah3q7" path="res://Scripts/UI/Settings/library_item_local.gd" id="1_t8w3i"]
+[ext_resource type="Script" uid="uid://cuel4avmaddm" path="res://Elements/ColoredControl.gd" id="2_jg4x8"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Themes/Normal/Assets/Icons/load.svg" id="2_rhteh"]
 [ext_resource type="Texture2D" uid="uid://cd1hy6hohg5tn" path="res://Themes/Normal/Assets/Icons/tree_arrow_up.svg" id="2_x56b4"]
 [ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Themes/Normal/Assets/Icons/remove.svg" id="3_rhteh"]
@@ -21,13 +22,16 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Icon" type="Button" parent="VBox/Title" unique_id=95324500]
+[node name="Sep 1" type="VSeparator" parent="VBox/Title" unique_id=1357338967]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="VBox/Title" unique_id=1056343328]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.39215687)
 layout_mode = 2
-mouse_filter = 2
-theme_type_variation = &"AccentButton"
-flat = true
+stretch_mode = 5
+script = ExtResource("2_jg4x8")
 
 [node name="Name" type="LineEdit" parent="VBox/Title" unique_id=2144411406]
 unique_name_in_owner = true

@@ -18,6 +18,7 @@ signal track_progress_updated(track_progress:float)
 signal volume_updated(value:float)
 ## [param db] is a float with a minimum of -100.
 signal track_peak_volume_changed(db:float)
+signal replay_gain_updated(value:float)
 
 enum QueueUpdateCode {
 	Set,
@@ -47,6 +48,7 @@ var replay_gain:float = 0.0:
 	set(value):
 		replay_gain = value
 		volume = volume
+		replay_gain_updated.emit(value)
 var volume:float = 100.0:
 	set(value):
 		volume = value
@@ -85,8 +87,14 @@ func _process(_delta:float) -> void:
 				if track.replay_gain != replay_gain: replay_gain = track.replay_gain
 			SessionManager.ReplayGainMode.Album:
 				if track.album.replay_gain != replay_gain: replay_gain = track.album.replay_gain
+			SessionManager.ReplayGainMode.Auto:
+				if track.album.replay_gain != replay_gain:
+					replay_gain = track.album.replay_gain
+				if track.replay_gain != replay_gain:
+					replay_gain = track.replay_gain
 
 
+## Returns track currently selected in the queue or [code]null[/code] if none selected.
 func get_current_track() -> DBTrack:
 	if queue_position >= queue.size(): return
 	return queue.get(queue_position)
@@ -122,9 +130,9 @@ func set_current_track(track_queue_position:int, save_session:bool=true) -> void
 		var stream:AudioStream = track.get_stream()
 		if get_current_track() != track: return
 		audio_stream_player.set_deferred('stream', stream)
-		current_track_load_finished.emit.call_deferred()
-		current_track_loading = false
 	,func(_result) -> void:
+		current_track_load_finished.emit()
+		current_track_loading = false
 		if is_playing: set_playing(true)
 		if save_session: SessionManager.save_session()
 	)
@@ -135,9 +143,6 @@ func skip_forward() -> void:
 		set_current_track(0)
 	else:
 		set_current_track(queue_position+1)
-		await current_track_load_finished
-	if is_playing:
-		set_playing(true)
 
 
 func skip_backward() -> void:
@@ -145,9 +150,6 @@ func skip_backward() -> void:
 		set_track_progress(0.0)
 	else:
 		set_current_track(queue_position-1)
-		await current_track_load_finished
-		if is_playing:
-			set_playing(true)
 
 
 ## Replaces queue with [param new_queue] & selects the [param track] & plays it.
@@ -155,6 +157,8 @@ func set_queue_and_track(new_queue:Array[DBTrack], track:DBTrack) -> void:
 	set_queue(new_queue, track)
 	set_current_track(queue.find(track))
 	if is_shuffled: shuffle_queue(track)
+	await current_track_load_finished
+	if get_current_track() != track: return
 	set_playing(true)
 
 
@@ -224,9 +228,10 @@ func _current_track_finished() -> void:
 
 	if SessionManager.send_track_finished_notif:
 		var track:DBTrack = get_current_track()
-		SystemNotif.send(
-			'Now playing...',
-			'%s - by %s' % [track.name, track.album.artist.name],
-			SystemNotif.Urgency.Low,
-			track.album.cover_path,
-		)
+		if track:
+			SystemNotif.send(
+				'Now playing...',
+				'%s - by %s' % [track.name, track.album.artist.name],
+				SystemNotif.Urgency.Low,
+				track.album.cover_path,
+			)

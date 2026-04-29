@@ -137,8 +137,9 @@ while True:
 
 			if image_output_dir != '':
 				cover_path = image_output_dir+'/'+meta_as_file_name(meta, 1)+'.'+meta['image_extension']
-				meta['cover_path'] = cover_path
-				save_audio_cover(tag, cover_path)
+				if meta['image_extension'] != '':
+					meta['cover_path'] = cover_path
+					save_audio_cover(tag, cover_path)
 
 			entries.append(meta)
 

@@ -113,7 +113,7 @@ icon = ExtResource("5_ud285")
 flat = false
 text_overrun_behavior = 5
 item_count = 1
-popup/item_0/text = "Export"
+popup/item_0/text = "Export All"
 popup/item_0/id = 0
 
 [node name="Library" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=1455322269]
@@ -655,6 +655,31 @@ rounded = true
 tick_count = 6
 ticks_position = 3
 
+[node name="Visible Badges" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=744113382]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/Visible Badges" unique_id=1055340897]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Image detail level. Higher values will use more memory but look sharper."
+mouse_filter = 1
+theme_type_variation = &"LabelPrimary"
+text = "Visible Badges"
+
+[node name="Visible Badges" type="MenuButton" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/Visible Badges" unique_id=1085863116]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Toggle Visible Badges"
+flat = false
+item_count = 1
+popup/item_0/text = "Player Bar ReplayGain"
+popup/item_0/checkable = 1
+popup/item_0/id = 0
+
 [node name="Audio" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=2074479509]
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
@@ -663,11 +688,9 @@ script = ExtResource("12_u75xh")
 [node name="Audio Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/Audio" unique_id=1609975435]
 unique_name_in_owner = true
 layout_mode = 2
-folded = true
 title = "Audio"
 
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Audio/Audio Fold" unique_id=1538532529]
-visible = false
 layout_mode = 2
 
 [node name="Replay Gain" type="HBoxContainer" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox" unique_id=85143947]
@@ -686,13 +709,15 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 selected = 0
-item_count = 3
+item_count = 4
 popup/item_0/text = "None"
 popup/item_0/id = 0
 popup/item_1/text = "Track"
 popup/item_1/id = 1
 popup/item_2/text = "Album"
 popup/item_2/id = 2
+popup/item_3/text = "Auto"
+popup/item_3/id = 3
 
 [node name="Replay Gain Preamp" type="HBoxContainer" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox" unique_id=1817801883]
 layout_mode = 2

@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Themes/Normal/Assets/Icons/search.svg" id="14_koken"]
 [ext_resource type="Texture2D" uid="uid://clvub0o51v8eh" path="res://Themes/Normal/Assets/Icons/scale_x2/change_sort_mode.svg" id="15_0fk8q"]
 [ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Themes/Normal/Assets/Icons/tree_arrow_left.svg" id="16_eeh6y"]
+[ext_resource type="Script" uid="uid://cuel4avmaddm" path="res://Elements/ColoredControl.gd" id="21_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://cp7rw74plkuj" path="res://Themes/Normal/Assets/Icons/scale_x2/activity.svg" id="23_bb5d1"]
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="23_jo7x3"]
 
@@ -33,7 +34,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hto8k"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wbs4r"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -304,7 +305,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_hto8k")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wbs4r")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
@@ -358,11 +359,11 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("16_eeh6y")
 flat = true
 
-[node name="Search Icon" type="Button" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=217995645]
+[node name="Search Icon" type="TextureRect" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=1999607748]
 layout_mode = 2
-theme_type_variation = &"AccentButton"
-icon = ExtResource("14_koken")
-flat = true
+texture = ExtResource("14_koken")
+stretch_mode = 5
+script = ExtResource("21_wbs4r")
 
 [node name="Search" type="LineEdit" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=420801843]
 unique_name_in_owner = true

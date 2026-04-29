@@ -1,5 +1,7 @@
 extends Node
 
+signal theme_applied
+
 const variable_names:Array[String] = [
 	'image_corner_radius',
 	'accent_color',
@@ -55,6 +57,7 @@ var mode:int = 0
 var accent_override_color := Color.WHITE:
 	set(value):
 		accent_override_color = value
+		theme.set_color('accent_color', 'Control', value)
 		# AccentButton.
 		for item in ['icon_normal_color', 'icon_disabled_color', 'icon_hover_color', 'icon_pressed_color', 'icon_hover_pressed_color']:
 			theme.set_color(item, 'AccentButton', value)
@@ -345,6 +348,7 @@ func get_theme_index(id:String) -> int:
 func apply_changes() -> void:
 	get_window().theme = self.theme.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
 	if SessionManager.main_scene != null: SessionManager.main_scene.set('bg_color', self._bg_color)
+	self.theme_applied.emit()
 
 
 func get_stylebox_property(theme_type:String, style_name:String, property_name:String, theme_resource=null) -> Variant:
