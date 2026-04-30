@@ -64,6 +64,8 @@ def get_audio_meta(tag, path):
 		list_get(raw_meta.get('unsyncedlyrics',[]),0,''),
 		list_get(raw_meta.get('lyrics',[]),1,''),
 		list_get(raw_meta.get('syncedlyrics',[]),0,''),
+		list_get(raw_meta.get('USLT',[]),0,''),
+		list_get(raw_meta.get('uslt',[]),0,''),
 	]
 	for lyric_field in all_lyric_fields:
 		if lyric_field == '': continue

@@ -288,7 +288,7 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	if not track_entry: track_entry = DBTrack.new(album_entry, track_data)
 	else:
 		track_entry.update_data(track_data)
-	track_entry.save_lyrics(entry.get('lyrics',''))
+	track_entry.save_lyrics(entry.get('unsynced_lyrics',''), entry.get('synced_lyrics',''))
 
 #endregion
 

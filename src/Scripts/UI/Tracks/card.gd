@@ -8,17 +8,10 @@ enum CardMode {
 }
 
 @onready var context_menu:ContextMenu = SessionManager.context_menus.track_card
+@onready var card_details_scene:PackedScene = SessionManager.get_layout_theme_scene('Tracks/card_details')
 var track: DBTrack
 var selected_mode := CardMode.detailed
-
-
-func _ready() -> void:
-	$HBox.hide() # Hide elements.
-	context_menu.id_pressed.connect(_on_option_id_pressed)
-	context_menu.closed.connect(func() -> void:
-		if context_menu.current_instance_id != name: return
-		%Options.button_pressed = false
-	)
+var card_details_instance: Control
 
 
 func init(db_track:DBTrack) -> void:
@@ -27,28 +20,10 @@ func init(db_track:DBTrack) -> void:
 		self.queue_free()
 		return
 
-	%Name.text = track.name
-	%Button.tooltip_text = track.name
-	if track.number == 0: %'Track Number'.hide()
-	else: %'Track Number'.text = '%s' % (track.number)
-	%Artist.text = track.actual_artist
-	%Album.text = track.album.name
-	%Length.text = DBTrack.get_track_position_formatted(track.length)
-	%Format.text = '.%s' % track.path.split('.')[-1].to_lower()
-	%Image.texture = track.album.get_cover() if track.album else DBAlbum.default_cover
-	set_mode(selected_mode)
 
-
-func set_mode(mode:CardMode) -> void:
-	selected_mode = mode
-	if mode == CardMode.detailed:
-		%Album.show()
-		%Image.show()
-		%'Image Sep'.hide()
-	if mode == CardMode.minimal:
-		%Album.hide()
-		%Image.hide()
-		%'Image Sep'.show()
+func set_mode(mode:int) -> void:
+	self.selected_mode = mode as CardMode
+	if card_details_instance: card_details_instance.set_mode(mode)
 
 
 func _on_button_pressed() -> void:
@@ -56,44 +31,17 @@ func _on_button_pressed() -> void:
 	selected.emit()
 
 
-func _on_option_id_pressed(id:int) -> void:
-	if context_menu.current_instance_id != name: return
-	match id:
-		0: # Play.
-			PlayerManager.auto_queue_start_index = -1
-			selected.emit()
-		1: # Play next.
-			PlayerManager.insert_to_queue(PlayerManager.queue_position+1, track)
-			if PlayerManager.auto_queue_start_index == -1:
-				PlayerManager.auto_queue_start_index = PlayerManager.queue_position+2
-			else:
-				PlayerManager.auto_queue_start_index += 1
-		2: # Add to queue.
-			if PlayerManager.auto_queue_start_index > PlayerManager.queue_position:
-				PlayerManager.insert_to_queue(PlayerManager.auto_queue_start_index, track)
-				PlayerManager.auto_queue_start_index += 1
-			else:
-				PlayerManager.add_to_queue(track)
-		3: # Show album.
-			SessionManager.main_scene.set_tab('album_page', track.album)
-		4: # Show in files.
-			OS.shell_show_in_file_manager(track.get_full_path())
-
-
 func _on_button_gui_input(event:InputEvent) -> void:
 	if event.is_action_released('right_click'):
-		%Options.button_pressed = true
+		card_details_instance.get_node('%Options').button_pressed = true
 
 
-func _on_options_toggled(toggled_on:bool) -> void:
-	if toggled_on: context_menu.show(name)
+func _on_control_on_screen_activated() -> void:
+	if card_details_instance: return
+	card_details_instance = card_details_scene.instantiate()
+	card_details_instance.init(self, self.track)
+	self.add_child(card_details_instance)
 
 
-func _on_artist_pressed() -> void:
-	var artist:DBArtist = track.get_actual_artist()
-	if not artist: artist = track.album.artist
-	SessionManager.main_scene.set_tab('artist_page', artist)
-
-
-func _on_album_pressed() -> void:
-	SessionManager.main_scene.set_tab('album_page', track.album)
+func _on_control_on_screen_deactivated() -> void:
+	if card_details_instance: card_details_instance.queue_free()

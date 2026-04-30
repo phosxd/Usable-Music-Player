@@ -1,11 +1,7 @@
 [gd_scene format=3 uid="uid://wl3vx05t4mx8"]
 
 [ext_resource type="Script" uid="uid://crd0eykqnn4b0" path="res://Scripts/UI/Tracks/card.gd" id="1_pbwpk"]
-[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_1pull"]
-[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="2_57cvb"]
-[ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="6_b7mt2"]
 [ext_resource type="Script" uid="uid://cvuw8ds1htson" path="res://Elements/ControlOnScreen.gd" id="6_g85ae"]
-[ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="6_if58r"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j4uv8"]
 content_margin_left = 2.0
@@ -13,15 +9,9 @@ content_margin_top = 2.0
 content_margin_right = 2.0
 content_margin_bottom = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g85ae"]
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-anti_aliasing = false
-
 [node name="Card" type="PanelContainer" unique_id=927718466]
 self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 70)
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 74.0
@@ -29,159 +19,21 @@ grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_j4uv8")
 script = ExtResource("1_pbwpk")
 
-[node name="Button" type="Button" parent="." unique_id=481831511]
-unique_name_in_owner = true
-self_modulate = Color(0.85, 0.85, 0.85, 1)
-layout_mode = 2
-
-[node name="HBox" type="HBoxContainer" parent="." unique_id=387191703]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="HBox" type="HBoxContainer" parent="HBox" unique_id=1963608250]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="HBox" type="HBoxContainer" parent="HBox/HBox" unique_id=1386857803]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="Image Sep" type="VSeparator" parent="HBox/HBox/HBox" unique_id=1826124697]
-unique_name_in_owner = true
-visible = false
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(10, 70)
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="Image" type="PanelContainer" parent="HBox/HBox/HBox" unique_id=713256512]
-unique_name_in_owner = true
-clip_children = 1
-custom_minimum_size = Vector2(70, 70)
-layout_mode = 2
-mouse_filter = 2
-mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_g85ae")
-script = ExtResource("2_1pull")
-texture = ExtResource("2_57cvb")
-stretch_mode = 5
-metadata/_custom_type_script = "uid://b4ukv3a8is182"
-
-[node name="Sep 3" type="VSeparator" parent="HBox/HBox/HBox" unique_id=1268986430]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Track Number" type="Label" parent="HBox/HBox/HBox" unique_id=2042461310]
-unique_name_in_owner = true
-self_modulate = Color(0.75, 0.75, 0.75, 1)
-layout_mode = 2
-text = "1"
-
-[node name="Sep 1" type="VSeparator" parent="HBox/HBox/HBox" unique_id=1768593009]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Name" type="Label" parent="HBox/HBox/HBox" unique_id=1224333481]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"LabelPrimary"
-text = "Track"
-text_overrun_behavior = 5
-
-[node name="Sep 2" type="VSeparator" parent="HBox/HBox" unique_id=168385932]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 12
-
-[node name="Album" parent="HBox/HBox" unique_id=732696473 instance=ExtResource("6_if58r")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Album"
-text_overrun_behavior = 5
-hover_theme_type_variation = "LabelHover"
-
-[node name="Sep 4" type="VSeparator" parent="HBox/HBox" unique_id=231376400]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 12
-
-[node name="Artist" parent="HBox/HBox" unique_id=2058449531 instance=ExtResource("6_if58r")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Artist"
-text_overrun_behavior = 5
-hover_theme_type_variation = "LabelHover"
-
-[node name="Format" type="Label" parent="HBox" unique_id=1648349056]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"LabelSmall"
-text = ".wav"
-
-[node name="Sep 1" type="VSeparator" parent="HBox" unique_id=1248280519]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="Length" type="Label" parent="HBox" unique_id=369639375]
-unique_name_in_owner = true
-layout_mode = 2
-text = "0:00"
-
-[node name="Sep 2" type="VSeparator" parent="HBox" unique_id=1825734486]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="Options" type="Button" parent="HBox" unique_id=380268739]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_type_variation = &"AccentButton"
-toggle_mode = true
-icon = ExtResource("6_b7mt2")
-
-[node name="Sep 3" type="VSeparator" parent="HBox" unique_id=415426799]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="ControlOnScreen" type="Control" parent="." unique_id=783020605 node_paths=PackedStringArray("hide_nodes", "show_nodes")]
+[node name="ControlOnScreen" type="Control" parent="." unique_id=783020605]
 layout_mode = 2
 mouse_filter = 1
 mouse_behavior_recursive = 1
 script = ExtResource("6_g85ae")
 update_interval = 0.05
-hide_nodes = [NodePath("../HBox")]
-show_nodes = [NodePath("Placeholder")]
 ratio_up = 2.0
 ratio_down = 2.0
 
-[node name="Placeholder" type="PanelContainer" parent="ControlOnScreen" unique_id=470940929]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Button" type="Button" parent="." unique_id=481831511]
+unique_name_in_owner = true
+self_modulate = Color(0.85, 0.85, 0.85, 1)
+layout_mode = 2
 
+[connection signal="activated" from="ControlOnScreen" to="." method="_on_control_on_screen_activated"]
+[connection signal="deactivated" from="ControlOnScreen" to="." method="_on_control_on_screen_deactivated"]
 [connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="HBox/HBox/Album" to="." method="_on_album_pressed"]
-[connection signal="pressed" from="HBox/HBox/Artist" to="." method="_on_artist_pressed"]
-[connection signal="toggled" from="HBox/Options" to="." method="_on_options_toggled"]

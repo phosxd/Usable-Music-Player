@@ -104,10 +104,10 @@ func get_tracks_in_order() -> Dictionary[String,Array]:
 
 ## Returns the album cover [ImageTexture] or [code]null[/code] if it cannot be found.
 func get_cover() -> ImageTexture:
-	if _cover: return _cover
+	if self._cover: return self._cover
 	var cover
-	if FileAccess.file_exists(cover_path):
-		var image = Image.load_from_file(cover_path)
+	if FileAccess.file_exists(self.cover_path):
+		var image = Image.load_from_file(self.cover_path)
 		if image is Image:
 			ImageUtils.limit_size(image, Vector2.ONE*SessionManager.image_detail)
 			image.generate_mipmaps()
@@ -115,7 +115,7 @@ func get_cover() -> ImageTexture:
 	if not cover: return null
 
 	# Save cover in memory for faster reloading.
-	_cover = cover
+	self._cover = cover
 	return cover
 
 

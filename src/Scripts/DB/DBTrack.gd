@@ -128,21 +128,26 @@ static func from_id(id_json:String) -> DBTrack:
 
 
 ## Returns any stored lyrics for this track, or an empty string if none found.
-func get_lyrics() -> String:
-	var text = FileAccess.get_file_as_string(get_lyrics_path())
+func get_lyrics(synced:bool=false) -> String:
+	var text = FileAccess.get_file_as_string(get_lyrics_path(synced))
 	return text
 
 
 ## Returns the path to the file storing this track's lyrics.
-func get_lyrics_path() -> String:
-	return LibraryManager.lyrics_path+'/'+as_filename()+'.txt'
+func get_lyrics_path(synced:bool=false) -> String:
+	return LibraryManager.lyrics_path+'/'+as_filename()+('.s' if synced else '')+'.txt'
 
 
-func save_lyrics(lyrics:String) -> void:
+func save_lyrics(unsynced_lyrics:String, synced_lyrics:String='') -> void:
 	DirAccess.make_dir_recursive_absolute(LibraryManager.lyrics_path)
-	var file := FileAccess.open(get_lyrics_path(), FileAccess.WRITE)
-	file.store_string(lyrics)
-	file.close()
+	if not unsynced_lyrics.is_empty():
+		var file := FileAccess.open(get_lyrics_path(false), FileAccess.WRITE)
+		file.store_string(unsynced_lyrics)
+		file.close()
+	if not synced_lyrics.is_empty():
+		var file := FileAccess.open(get_lyrics_path(true), FileAccess.WRITE)
+		file.store_string(synced_lyrics)
+		file.close()
 
 
 static func get_track_position_formatted(value:float) -> String:
