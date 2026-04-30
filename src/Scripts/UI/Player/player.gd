@@ -80,6 +80,7 @@ func update_volume(value:float) -> void:
 
 
 func update_replaygain_indicator(value:float) -> void:
+	%'ReplayGain Indicator'.visible = not value == 0
 	%'ReplayGain Indicator'.text = replaygain_indicator_template % snapped(value, 0.1)
 
 

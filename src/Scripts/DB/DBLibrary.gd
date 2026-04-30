@@ -193,7 +193,8 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	var file_size:int = entry.get('filesize',null)
 	if not file_size: file_size = FileAccess.get_size(full_track_path)
 
-	var artist_mb_id:String = entry.get('musicbrainz_artistid','')
+	var actual_artist_mb_id:String = entry.get('musicbrainz_artistid','')
+	var album_artist_mb_id:String = entry.get('musicbrainz_albumartistid','')
 	var artist_name:String = entry.get('artist','').replace('\n','')
 	var actual_artist:String = artist_name
 	var album_artist:String = entry.get('albumartist','').replace('\n','')
@@ -203,8 +204,8 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	var cover_path:String = entry.get('cover_path','')
 	# Find cover in folder.
 	if cover_path.is_empty():
-		for extension:String in ['jpeg','jpg','png']:
-			for file_title:String in ['cover','folder','album']:
+		for extension:String in ['png', 'jpeg','jpg']:
+			for file_title:String in ['front', 'album', 'cover','folder']:
 				var cover_path_test:String = full_track_path.trim_suffix(track_path.split('/')[-1])+file_title+'.'+extension
 				if FileAccess.file_exists(cover_path_test):
 					cover_path = cover_path_test
@@ -225,7 +226,7 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	# Sort data.
 	var artist_data:Dictionary = {
 		'name': artist_name,
-		'mb_id': artist_mb_id,
+		'mb_id': album_artist_mb_id,
 		'albums': [],
 	}
 	@warning_ignore('incompatible_ternary')
@@ -243,6 +244,7 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 		'path': track_path,
 		'name': track_name,
 		'actual_artist': actual_artist,
+		'actual_artist_mb_id': actual_artist_mb_id,
 		'number': track_number,
 		'disc': disc_number,
 		'length': entry.get('duration',0),

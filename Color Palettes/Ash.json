@@ -29,7 +29,4 @@
 	},
 	"theme": "UMP_DEFAULT",
 	"theme_mode": 0,
-	"visualizer_bar_count": 128,
-	"visualizer_bar_smoothing": 0.5,
-	"visualizer_mode": 2
 }

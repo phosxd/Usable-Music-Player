@@ -90,7 +90,9 @@ func _on_options_toggled(toggled_on:bool) -> void:
 
 
 func _on_artist_pressed() -> void:
-	SessionManager.main_scene.set_tab('artist_page', track.album.artist)
+	var artist:DBArtist = track.get_actual_artist()
+	if not artist: artist = track.album.artist
+	SessionManager.main_scene.set_tab('artist_page', artist)
 
 
 func _on_album_pressed() -> void:

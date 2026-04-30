@@ -12,6 +12,8 @@ var file_size:int = 0
 var name:String = ''
 ## Track actual artist name.
 var actual_artist:String = ''
+## Track actual artist MusicBrainz ID.
+var actual_artist_mb_id:String = ''
 ## Track number.
 var number:int = 0
 ## Track album disc number.
@@ -62,6 +64,9 @@ func update_data(data:Dictionary) -> void:
 	if raw_aa is String && not raw_aa.is_empty(): actual_artist = raw_aa
 	else: actual_artist = album.artist.name if album else ''
 
+	var raw_aa_mb_id = data.get('actual_artist_mb_id')
+	if raw_aa_mb_id is String && not raw_aa_mb_id.is_empty(): actual_artist_mb_id = raw_aa_mb_id
+
 	var raw_disc = data.get('disc')
 	if raw_disc is int: disc = raw_disc
 	else: disc = 0
@@ -83,6 +88,13 @@ func remove() -> void:
 	album.artist.library.tracks.erase(self)
 	album.tracks.erase(self)
 	if album.tracks.size() == 0: album.remove()
+
+
+func get_actual_artist() -> DBArtist:
+	if self.actual_artist_mb_id.is_empty(): return null
+	var artists:Array = self.album.artist.library.get_item_by_property(DBArtist, 'mb_id', self.actual_artist_mb_id)
+	if artists.is_empty() or artists[0] is not DBArtist: return null
+	return artists[0]
 
 
 func get_stream() -> AudioStream:
