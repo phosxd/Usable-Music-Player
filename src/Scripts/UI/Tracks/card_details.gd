@@ -1,7 +1,12 @@
 extends Container
 
+signal init_completed
+
 var track: DBTrack
 var parent: Node
+var button: Button
+
+var initialized:bool = false
 
 
 func _ready() -> void:
@@ -12,23 +17,30 @@ func _ready() -> void:
 	)
 
 
-func init(parent_:Node, db_track:DBTrack) -> void:
-	parent = parent_
+func init(parent_:Node, db_track:DBTrack, button_:Button) -> void:
+	self.parent = parent_
+	self.button = button_
 	self.track = db_track
 	if not self.track:
-		self.queue_free()
+		self.queue_free.call_deferred()
 		return
+	if not self: return
 
-	%Name.text = track.name
-	self.parent.get_node('%Button').tooltip_text = track.name
-	if track.number == 0: %'Track Number'.hide()
-	else: %'Track Number'.text = '%s' % (track.number)
-	%Artist.text = track.actual_artist
-	%Album.text = track.album.name
-	%Length.text = DBTrack.get_track_position_formatted(track.length)
-	%Format.text = '.%s' % track.path.split('.')[-1].to_lower()
-	%Image.texture = track.album.get_cover() if track.album else DBAlbum.default_cover
+	if %Name: %Name.text = track.name
+	button.set_deferred('tooltip_text', track.name)
+	if %'Track Number':
+		if track.number == 0: %'Track Number'.hide()
+		else: %'Track Number'.text = '%s' % (track.number)
+	if %Artist: %Artist.text = track.actual_artist
+	if %Album: %Album.text = track.album.name
+	if %Length: %Length.text = DBTrack.get_track_position_formatted(track.length)
+	if %Format: %Format.text = '.%s' % track.path.split('.')[-1].to_lower()
+	var cover = track.album.get_cover() if track.album else DBAlbum.default_cover
+	if not self: return
+	if %Image: %Image.texture = cover
 	set_mode(self.parent.get('selected_mode'))
+	self.initialized = true
+	self.init_completed.emit()
 
 
 func set_mode(mode:int) -> void:

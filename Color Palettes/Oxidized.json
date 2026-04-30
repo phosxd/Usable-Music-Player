@@ -1,0 +1,35 @@
+{
+	"accent_mode": 2,
+	"button_tint": {
+		".t": "Color",
+		"v": [
+			0.42703,
+			0.52344,
+			0.37827000000000005,
+			0.058820000000000004
+		]
+	},
+	"custom_accent": {
+		".t": "Color",
+		"v": [
+			0.41961000000000004,
+			0.6000000000000001,
+			0.56471,
+			1.0
+		]
+	},
+	"panel_tint": {
+		".t": "Color",
+		"v": [
+			0.81569,
+			0.44706,
+			0.29412000000000005,
+			0.058820000000000004
+		]
+	},
+	"theme": "UMP_DEFAULT",
+	"theme_mode": 0,
+	"visualizer_bar_count": 128,
+	"visualizer_bar_smoothing": 0.5,
+	"visualizer_mode": 2
+}

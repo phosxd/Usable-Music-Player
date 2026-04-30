@@ -1,17 +1,18 @@
 class_name Async extends RefCounted
 
 
-static var threads:Array[Thread]
+static var thread_pool:Array[Thread]
 
 
-## Creates a thread & starts it with [param run].
-## Returns the created thread. 
-##
+## Creates a thread (or grabs from pool) & starts it with [param run].
+## Returns the thread being used.
+## [br][br]
 ## Calls [param callback] with the result once finished, which will not be called before the [param minimum_time] has passed.
-##
+## [br][br]
 ## If failed to create the thread, will run on the main thread.
 static func create_thread(run:Callable, callback=null) -> Thread:
-	var thread := Thread.new()
+	var thread:Thread = thread_pool[0] if thread_pool.size() > 0 else Thread.new()
+	thread_pool.erase(thread)
 	var err := thread.start(run)
 	if err != OK:
 		var result = run.call()
@@ -26,6 +27,7 @@ static func create_thread(run:Callable, callback=null) -> Thread:
 				timer.stop()
 				timer.queue_free()
 			var result = thread.wait_to_finish()
+			thread_pool.append(thread)
 			if is_callable_valid(callback): callback.call(result)
 	)
 	SessionManager.add_child.call_deferred(timer)

@@ -24,7 +24,8 @@ layout_mode = 2
 mouse_filter = 1
 mouse_behavior_recursive = 1
 script = ExtResource("6_g85ae")
-update_interval = 0.05
+update_interval = 0.04
+preserve_size = false
 ratio_up = 2.0
 ratio_down = 2.0
 

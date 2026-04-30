@@ -38,10 +38,18 @@ func _on_button_gui_input(event:InputEvent) -> void:
 
 func _on_control_on_screen_activated() -> void:
 	if card_details_instance: return
+	Async.create_thread(_on_control_on_screen_activated_2.bind(%Button))
+
+
+func _on_control_on_screen_activated_2(button:Button) -> void:
+	if card_details_instance: return
 	card_details_instance = card_details_scene.instantiate()
-	card_details_instance.init(self, self.track)
-	self.add_child(card_details_instance)
+	card_details_instance.init(self, self.track, button)
+	self.add_child.call_deferred(card_details_instance)
 
 
 func _on_control_on_screen_deactivated() -> void:
-	if card_details_instance: card_details_instance.queue_free()
+	if card_details_instance:
+		if not card_details_instance.initialized:
+			await card_details_instance.init_completed
+		card_details_instance.queue_free()

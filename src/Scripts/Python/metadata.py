@@ -76,7 +76,8 @@ def get_audio_meta(tag, path):
 
 	# If only found synced lyrics, fill in unsynced lyrics.
 	if meta['synced_lyrics'] != '' and meta['unsynced_lyrics'] == '':
-		meta['unsynced_lyrics'] = ''.replace('[','***').replace(']','***').split('***')
+		meta['unsynced_lyrics'] = meta['synced_lyrics']
+
 
 	# Get image.
 	cover_image = tag.images.any

@@ -32,6 +32,8 @@ var on_screen:bool = false
 var last_global_position: Vector2
 var _timer:float = 0.0
 
+@onready var window:Window = self.get_window()
+
 
 func _process(delta:float) -> void:
 	_timer += delta
@@ -79,10 +81,11 @@ func update() -> void:
 ## Returns whether or not this node is currently on screen.
 ## Global position & size is taken into account.
 func check_on_screen() -> bool:
-	var window:Window = self.get_window()
 	if window == null:
-		printerr('Cannot get window.')
-		return false
+		window = self.get_window()
+		if window == null:
+			printerr('Cannot get window.')
+			return false
 
 	return not (\
 		# Check Y axis.
