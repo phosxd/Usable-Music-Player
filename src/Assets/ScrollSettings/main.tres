@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_0eygu")
-friction = 2.0
+friction = 3.0
 rebound_strength = 14.0

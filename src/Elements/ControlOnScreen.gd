@@ -6,6 +6,8 @@ signal activated
 ## Emitted when this leaves the bounds of the window.
 signal deactivated
 
+static var enabled_global:bool = true
+
 ## How much time between each update.
 ## [br][br]
 ## Higher values will update slower but consume less resources, while lower vaues consume more resources but are quicker to respond to changes.
@@ -22,24 +24,24 @@ signal deactivated
 @export var ratio_up:float = 1.0:
 	set(value):
 		ratio_up = value
-		calculate_cache()
+		if self.is_node_ready(): calculate_margins()
 ## Downward margin ratio.
 @export var ratio_down:float = 1.0:
 	set(value):
 		ratio_down = value
-		calculate_cache()
+		if self.is_node_ready(): calculate_margins()
 ## Lefthand margin ratio.
 @export var ratio_left:float = 1.0:
 	set(value):
 		ratio_left = value
-		calculate_cache()
+		if self.is_node_ready(): calculate_margins()
 ## Righthand margin ratio.
 @export var ratio_right:float = 1.0:
 	set(value):
 		ratio_right = value
-		calculate_cache()
+		if self.is_node_ready(): calculate_margins()
 
-var _cache_values:Array[float] = [0,0,0,0]
+var _cache:Array[float] = [0,0,0,0]
 
 ## Whether or not this node is within the bounds of the window. See related [member activated] & [member deactivated].
 var on_screen:bool = false
@@ -50,11 +52,11 @@ var _timer:float = 0.0
 
 
 func _ready() -> void:
-	calculate_cache()
 	self.resized.connect(_on_resized)
 
 
 func _process(delta:float) -> void:
+	if not enabled_global: return
 	_timer += delta
 	if _timer < update_interval: return
 	_timer = 0.0
@@ -65,11 +67,12 @@ func _process(delta:float) -> void:
 
 
 func _on_resized() -> void:
-	calculate_cache()
+	calculate_margins()
+	if enabled_global: update()
 
 
-func calculate_cache() -> void:
-	_cache_values = [
+func calculate_margins() -> void:
+	_cache = [
 		self.size.y * ratio_up,
 		self.size.y * ratio_down,
 		self.size.x * ratio_left,
@@ -80,34 +83,41 @@ func calculate_cache() -> void:
 func update() -> void:
 	on_screen = check_on_screen()
 	# On screen.
-	if on_screen:
-		# Reset minimum size.
-		self.custom_minimum_size = Vector2.ZERO
-		# Hide previously shown nodes.
-		for node:Control in show_nodes:
-			if not node: continue
-			node.hide()
-		# Show previously hidden nodes.
-		for node:Control in hide_nodes:
-			if not node: continue
-			node.show()
-		# Emit signal.
-		activated.emit()
-
+	if on_screen && enabled_global:
+		activate()
 	# Off screen.
 	else:
-		# Set minimum size if "preserve_size" is enabled.
-		if preserve_size: self.custom_minimum_size = self.size
-		# Show nodes.
-		for node:Control in show_nodes:
-			if not node: continue
-			node.show()
-		# Hide nodes.
-		for node:Control in hide_nodes:
-			if not node: continue
-			node.hide()
-		# Emit signal.
-		deactivated.emit()
+		deactivate()
+
+
+func activate() -> void:
+	# Reset minimum size.
+	self.custom_minimum_size = Vector2.ZERO
+	# Hide previously shown nodes.
+	for node:Control in show_nodes:
+		if not node: continue
+		node.hide()
+	# Show previously hidden nodes.
+	for node:Control in hide_nodes:
+		if not node: continue
+		node.show()
+	# Emit signal.
+	activated.emit()
+
+
+func deactivate() -> void:
+	# Set minimum size if "preserve_size" is enabled.
+	if preserve_size: self.custom_minimum_size = self.size
+	# Show nodes.
+	for node:Control in show_nodes:
+		if not node: continue
+		node.show()
+	# Hide nodes.
+	for node:Control in hide_nodes:
+		if not node: continue
+		node.hide()
+	# Emit signal.
+	deactivated.emit()
 
 
 ## Returns whether or not this node is currently on screen.
@@ -121,10 +131,10 @@ func check_on_screen() -> bool:
 
 	return not (\
 		# Check Y axis.
-		(self.global_position.y < -_cache_values[0] \
-		or self.global_position.y - _cache_values[1] > window.size.y) \
+		(self.global_position.y < -_cache[0] \
+		or self.global_position.y - _cache[1] > window.size.y) \
 		or \
 		# Check X axis.
-		(self.global_position.x < -_cache_values[2] \
-		or self.global_position.x - _cache_values[3] > window.size.x)
+		(self.global_position.x < -_cache[2] \
+		or self.global_position.x - _cache[3] > window.size.x)
 	)

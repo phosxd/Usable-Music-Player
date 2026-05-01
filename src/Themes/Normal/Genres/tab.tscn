@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c5lu0y7vlsjut" path="res://Scripts/UI/Genres/genres.gd" id="1_oyaqn"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_nn1cj"]
 [ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="3_ltbgq"]
+[ext_resource type="Script" uid="uid://dstk0dltxlnkr" path="res://Elements/ScrollInputBlocker.gd" id="4_eljn8"]
 
 [node name="Genres Tab" type="VBoxContainer" unique_id=213465202]
 anchors_preset = 15
@@ -48,3 +49,8 @@ theme_override_constants/v_separation = 6
 [node name="Bottom Filler" type="HSeparator" parent="Scroll/Margin/VBox" unique_id=144331963]
 layout_mode = 2
 theme_type_variation = &"ScrollFillSeparator"
+
+[node name="ScrollInputBlocker" type="Control" parent="Scroll/Margin" unique_id=2129531952]
+layout_mode = 2
+script = ExtResource("4_eljn8")
+metadata/_custom_type_script = "uid://dstk0dltxlnkr"

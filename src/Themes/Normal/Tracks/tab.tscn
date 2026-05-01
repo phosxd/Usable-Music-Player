@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ctc7heisxv5nb" path="res://Scripts/UI/Tracks/tracks.gd" id="1_ht8in"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_lho61"]
 [ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="3_yi0qt"]
+[ext_resource type="Script" uid="uid://dstk0dltxlnkr" path="res://Elements/ScrollInputBlocker.gd" id="4_rc24j"]
 
 [node name="Tracks Tab" type="VBoxContainer" unique_id=213465202]
 anchors_preset = 15
@@ -49,3 +50,8 @@ metadata/_smooth_scroll_default_mouse_filter_set = true
 [node name="Bottom Filler" type="HSeparator" parent="Scroll/Margin/VBox" unique_id=1453319214]
 layout_mode = 2
 theme_type_variation = &"ScrollFillSeparator"
+
+[node name="ScrollInputBlocker" type="Control" parent="Scroll/Margin" unique_id=831703295]
+layout_mode = 2
+script = ExtResource("4_rc24j")
+metadata/_custom_type_script = "uid://dstk0dltxlnkr"

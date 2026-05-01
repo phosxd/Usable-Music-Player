@@ -2,14 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cwwjfcnw2krtk" path="res://Scripts/UI/Artists/artists.gd" id="1_5muxx"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_8q1cx"]
-[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_c0qo1"]
-
-[sub_resource type="Resource" id="Resource_2h1n7"]
-script = ExtResource("3_c0qo1")
-rebound_strength = 14.0
-
-[sub_resource type="Resource" id="Resource_2cxwe"]
-script = ExtResource("3_c0qo1")
+[ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="3_tex6d"]
+[ext_resource type="Script" uid="uid://dstk0dltxlnkr" path="res://Elements/ScrollInputBlocker.gd" id="4_tex6d"]
 
 [node name="Artists" type="VBoxContainer" unique_id=213465202]
 anchors_preset = 15
@@ -27,9 +21,8 @@ size_flags_vertical = 3
 horizontal_scroll_mode = 0
 script = ExtResource("2_8q1cx")
 speed = 500.0
-wheel_scroll_damper = SubResource("Resource_2h1n7")
-dragging_scroll_damper = SubResource("Resource_2cxwe")
-drag_with_mouse = false
+wheel_scroll_damper = ExtResource("3_tex6d")
+dragging_scroll_damper = ExtResource("3_tex6d")
 allow_horizontal_scroll = false
 allow_overdragging = true
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
@@ -56,3 +49,10 @@ theme_override_constants/v_separation = 6
 [node name="Bottom Filler" type="HSeparator" parent="Scroll/Margin/VBox" unique_id=299175765]
 layout_mode = 2
 theme_type_variation = &"ScrollFillSeparator"
+
+[node name="ScrollInputBlocker" type="Control" parent="Scroll/Margin" unique_id=922257877]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("4_tex6d")
+metadata/_custom_type_script = "uid://dstk0dltxlnkr"

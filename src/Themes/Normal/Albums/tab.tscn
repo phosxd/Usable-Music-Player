@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://br1c0ohgvfc5x" path="res://Scripts/UI/Albums/albums.gd" id="1_dnlf2"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_dma13"]
 [ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="3_hjx4q"]
+[ext_resource type="Script" uid="uid://dstk0dltxlnkr" path="res://Elements/ScrollInputBlocker.gd" id="4_j7vb3"]
 
 [node name="Albums" type="VBoxContainer" unique_id=213465202]
 anchors_preset = 15
@@ -22,8 +23,6 @@ script = ExtResource("2_dma13")
 speed = 500.0
 wheel_scroll_damper = ExtResource("3_hjx4q")
 dragging_scroll_damper = ExtResource("3_hjx4q")
-drag_with_mouse = false
-allow_horizontal_scroll = false
 allow_overdragging = true
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
@@ -50,3 +49,7 @@ theme_override_constants/v_separation = 6
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"ScrollFillSeparator"
+
+[node name="Input Blocker" type="Control" parent="Scroll/Margin" unique_id=449110573]
+layout_mode = 2
+script = ExtResource("4_j7vb3")

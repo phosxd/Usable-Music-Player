@@ -165,6 +165,7 @@ value = 0.5
 suffix = "minutes"
 
 [node name="Theme" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=568890640]
+visible = false
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
 script = ExtResource("5_pn7em")
@@ -672,6 +673,22 @@ popup/item_0/text = "Player Bar ReplayGain"
 popup/item_0/checkable = 1
 popup/item_0/id = 0
 
+[node name="Clear Queue Warning" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=1689461171]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/Clear Queue Warning" unique_id=1443571331]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Show a warning before clearing your queue."
+mouse_filter = 1
+theme_type_variation = &"LabelPrimary"
+text = "Clear Queue Warning"
+
+[node name="Clear Queue Warning" type="CheckButton" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/Clear Queue Warning" unique_id=50225925]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+
 [node name="Audio" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=2074479509]
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
@@ -971,6 +988,7 @@ theme_type_variation = &"ScrollFillSeparator"
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/UI Scale/HBox/UI Scale" to="." method="_on_ui_scale_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Queue Size Limit/Queue Size Limit" to="." method="_on_queue_size_limit_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Image Detail/Image Detail" to="Scroll/Margin/VBox/UI" method="_on_image_detail_value_changed"]
+[connection signal="toggled" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Clear Queue Warning/Clear Queue Warning" to="Scroll/Margin/VBox/UI" method="_on_clear_queue_warning_toggled"]
 [connection signal="folding_changed" from="Scroll/Margin/VBox/Audio/Audio Fold" to="Scroll/Margin/VBox/Audio" method="_on_audio_fold_folding_changed"]
 [connection signal="item_selected" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain/Replay Gain" to="Scroll/Margin/VBox/Audio" method="_on_replay_gain_item_selected"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain Preamp/Replay Gain Preamp" to="Scroll/Margin/VBox/Audio" method="_on_replay_gain_preamp_value_changed"]

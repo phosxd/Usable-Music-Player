@@ -91,6 +91,7 @@ const property_data:Array[Array] = [
 	['grid_item_size',[TYPE_INT,TYPE_FLOAT]],
 	['queue_size_limit',[TYPE_INT]],
 	['image_detail',[TYPE_INT]],
+	['clear_queue_warning',[TYPE_BOOL]],
 	# Audio.
 	['replay_gain_mode',[TYPE_INT]],
 	['replay_gain_preamp',[TYPE_FLOAT]],
@@ -226,6 +227,8 @@ var image_detail:int = image_detail_values[0]:
 			if not album: continue
 			album._cover = null
 		value_changed.emit('image_detail')
+
+var clear_queue_warning:bool = true
 
 #endregion
 

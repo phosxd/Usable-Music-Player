@@ -1,4 +1,4 @@
-extends PanelContainer
+extends Control
 
 signal selected
 
@@ -12,6 +12,7 @@ enum CardMode {
 var track: DBTrack
 var selected_mode := CardMode.detailed
 var card_details_instance: Control
+var details_reserved:bool = false
 
 
 func init(db_track:DBTrack) -> void:
@@ -27,7 +28,7 @@ func set_mode(mode:int) -> void:
 
 
 func _on_button_pressed() -> void:
-	if PlayerManager.queue.size() > 1:
+	if PlayerManager.queue.size() > 1 && SessionManager.clear_queue_warning:
 		DialogManager.popup_confirmation_dialog(
 			'Do you want to continue?\nYour queue will be cleared.', # Text.
 			'Disable this warning in settings.', # Subtext.
@@ -48,7 +49,8 @@ func _on_button_gui_input(event:InputEvent) -> void:
 
 
 func _on_control_on_screen_activated() -> void:
-	if card_details_instance: return
+	if details_reserved: return
+	details_reserved = true
 	Async.create_thread(_on_control_on_screen_activated_2.bind(%Button))
 
 
@@ -64,3 +66,4 @@ func _on_control_on_screen_deactivated() -> void:
 		if not card_details_instance.initialized:
 			await card_details_instance.init_completed
 		card_details_instance.queue_free()
+		details_reserved = false
