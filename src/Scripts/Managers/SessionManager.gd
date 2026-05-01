@@ -363,6 +363,11 @@ var tracks_tab_scroll_value:float = 0
 			'text': 'Show Album',
 			'icon': SessionManager.get_icon('folder'),
 		},
+		{
+			'type': 'button',
+			'text': 'Show In Files',
+			'icon': SessionManager.get_icon('folder'),
+		},
 	]),
 }
 

@@ -69,12 +69,14 @@ func _context_menu_id_pressed(id:int):
 		0: # Remove.
 			PlayerManager.remove_from_queue(track)
 		1: # Remove all in this album.
-			for queued_track:DBTrack in PlayerManager.queue:
+			for queued_track:DBTrack in PlayerManager.queue.duplicate():
 				if track.album == queued_track.album:
 					PlayerManager.remove_from_queue(queued_track)
 		2: # Remove all in this artist.
-			for queued_track:DBTrack in PlayerManager.queue:
+			for queued_track:DBTrack in PlayerManager.queue.duplicate():
 				if track.album.artist == queued_track.album.artist:
 					PlayerManager.remove_from_queue(queued_track)
 		3: # Show in album.
 			SessionManager.main_scene.set_tab('album_page', track.album)
+		4: # Show in files.
+			OS.shell_show_in_file_manager(track.get_full_path())

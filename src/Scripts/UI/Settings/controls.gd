@@ -27,6 +27,7 @@ func _on_import_config_pressed() -> void:
 
 func _on_export_config_index_pressed(index:int) -> void:
 	var popup:FileDialog = export_config_scene.instantiate()
+	popup.current_file = 'new_config.json'
 	popup.file_selected.connect(func(path:String) -> void:
 		if index == 0:
 			SessionManager.export_config(path, export_config_values)
