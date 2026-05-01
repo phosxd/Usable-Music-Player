@@ -37,7 +37,7 @@ func update(code:=PlayerManager.QueueUpdateCode.Set, data:Variant=null) -> void:
 			iter += 1
 			add_card(track)
 			# Add one frame delay every 4th iteration to give time to add child.
-			if iter % 4 == 0: await get_tree().create_timer(0).timeout
+			if iter % 4 == 0: await get_tree().process_frame
 		if update_count != current_count: return
 		track_updated(PlayerManager.queue_position, PlayerManager.get_current_track())
 

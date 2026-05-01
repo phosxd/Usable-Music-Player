@@ -27,6 +27,17 @@ func set_mode(mode:int) -> void:
 
 
 func _on_button_pressed() -> void:
+	if PlayerManager.queue.size() > 1:
+		DialogManager.popup_confirmation_dialog(
+			'Do you want to continue?\nYour queue will be cleared.', # Text.
+			'Disable this warning in settings.', # Subtext.
+			func() -> void:
+				_on_button_pressed_2()
+		)
+	else: _on_button_pressed_2()
+
+
+func _on_button_pressed_2() -> void:
 	PlayerManager.auto_queue_start_index = -1
 	selected.emit()
 

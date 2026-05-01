@@ -19,13 +19,27 @@ signal deactivated
 @export var preserve_size:bool = true
 
 ## Upward margin ratio.
-@export var ratio_up:float = 1.0
+@export var ratio_up:float = 1.0:
+	set(value):
+		ratio_up = value
+		calculate_cache()
 ## Downward margin ratio.
-@export var ratio_down:float = 1.0
+@export var ratio_down:float = 1.0:
+	set(value):
+		ratio_down = value
+		calculate_cache()
 ## Lefthand margin ratio.
-@export var ratio_left:float = 1.0
+@export var ratio_left:float = 1.0:
+	set(value):
+		ratio_left = value
+		calculate_cache()
 ## Righthand margin ratio.
-@export var ratio_right:float = 1.0
+@export var ratio_right:float = 1.0:
+	set(value):
+		ratio_right = value
+		calculate_cache()
+
+var _cache_values:Array[float] = [0,0,0,0]
 
 ## Whether or not this node is within the bounds of the window. See related [member activated] & [member deactivated].
 var on_screen:bool = false
@@ -33,6 +47,11 @@ var last_global_position: Vector2
 var _timer:float = 0.0
 
 @onready var window:Window = self.get_window()
+
+
+func _ready() -> void:
+	calculate_cache()
+	self.resized.connect(_on_resized)
 
 
 func _process(delta:float) -> void:
@@ -43,6 +62,19 @@ func _process(delta:float) -> void:
 	if self.global_position != last_global_position:
 		update()
 		last_global_position = self.global_position
+
+
+func _on_resized() -> void:
+	calculate_cache()
+
+
+func calculate_cache() -> void:
+	_cache_values = [
+		self.size.y * ratio_up,
+		self.size.y * ratio_down,
+		self.size.x * ratio_left,
+		self.size.x * ratio_right,
+	]
 
 
 func update() -> void:
@@ -89,10 +121,10 @@ func check_on_screen() -> bool:
 
 	return not (\
 		# Check Y axis.
-		(self.global_position.y < -(self.size.y * ratio_up) \
-		or self.global_position.y - (self.size.y * ratio_down) > window.size.y) \
+		(self.global_position.y < -_cache_values[0] \
+		or self.global_position.y - _cache_values[1] > window.size.y) \
 		or \
 		# Check X axis.
-		(self.global_position.x < -(self.size.x * ratio_left) \
-		or self.global_position.x - (self.size.x * ratio_right) > window.size.x)
+		(self.global_position.x < -_cache_values[2] \
+		or self.global_position.x - _cache_values[3] > window.size.x)
 	)

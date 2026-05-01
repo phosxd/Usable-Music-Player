@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bufk41o60g01x" path="res://Scripts/UI/Settings/settings.gd" id="1_7d2l6"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_3fctb"]
-[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_1b3q6"]
+[ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="3_rtbdg"]
 [ext_resource type="Script" uid="uid://cnnj2q647i5vw" path="res://Scripts/UI/Settings/section_library.gd" id="4_dp5eg"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Themes/Normal/Assets/Icons/load.svg" id="4_kjexh"]
 [ext_resource type="Script" uid="uid://ljm5f1vvpqkr" path="res://Scripts/UI/Settings/controls.gd" id="4_ud285"]
@@ -13,14 +13,6 @@
 [ext_resource type="Script" uid="uid://b036js4iv0a5e" path="res://Scripts/UI/Settings/section_ui.gd" id="11_ispo5"]
 [ext_resource type="Script" uid="uid://dwnymrla8fg3m" path="res://Scripts/UI/Settings/section_audio.gd" id="12_u75xh"]
 [ext_resource type="Script" uid="uid://cni4q5hifbayv" path="res://Scripts/UI/Settings/section_api.gd" id="13_rtbdg"]
-
-[sub_resource type="Resource" id="Resource_75g7q"]
-script = ExtResource("3_1b3q6")
-rebound_strength = 14.0
-
-[sub_resource type="Resource" id="Resource_a6lvd"]
-script = ExtResource("3_1b3q6")
-rebound_strength = 14.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dp5eg"]
 
@@ -41,8 +33,8 @@ follow_focus = true
 horizontal_scroll_mode = 0
 script = ExtResource("2_3fctb")
 speed = 200.0
-wheel_scroll_damper = SubResource("Resource_75g7q")
-dragging_scroll_damper = SubResource("Resource_a6lvd")
+wheel_scroll_damper = ExtResource("3_rtbdg")
+dragging_scroll_damper = ExtResource("3_rtbdg")
 drag_with_mouse = false
 allow_horizontal_scroll = false
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
@@ -931,6 +923,10 @@ text = "Made with the Godot engine.
 "
 fit_content = true
 
+[node name="Bottom Filler" type="HSeparator" parent="Scroll/Margin/VBox" unique_id=1611386648]
+layout_mode = 2
+theme_type_variation = &"ScrollFillSeparator"
+
 [connection signal="pressed" from="Scroll/Margin/VBox/Controls/Links/User Data" to="." method="_on_user_data_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Controls/Links/Source Code" to="." method="_on_source_code_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Controls/Links/Report Issue" to="." method="_on_report_issue_pressed"]
@@ -974,10 +970,10 @@ fit_content = true
 [connection signal="pressed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Grid Item Size/HBox/Grid Item Size Large" to="." method="_on_grid_item_size_large_pressed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/UI Scale/HBox/UI Scale" to="." method="_on_ui_scale_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Queue Size Limit/Queue Size Limit" to="." method="_on_queue_size_limit_value_changed"]
-[connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Image Detail/Image Detail" to="." method="_on_image_detail_value_changed"]
+[connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Image Detail/Image Detail" to="Scroll/Margin/VBox/UI" method="_on_image_detail_value_changed"]
 [connection signal="folding_changed" from="Scroll/Margin/VBox/Audio/Audio Fold" to="Scroll/Margin/VBox/Audio" method="_on_audio_fold_folding_changed"]
-[connection signal="item_selected" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain/Replay Gain" to="." method="_on_replay_gain_item_selected"]
-[connection signal="value_changed" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain Preamp/Replay Gain Preamp" to="." method="_on_replay_gain_preamp_value_changed"]
+[connection signal="item_selected" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain/Replay Gain" to="Scroll/Margin/VBox/Audio" method="_on_replay_gain_item_selected"]
+[connection signal="value_changed" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain Preamp/Replay Gain Preamp" to="Scroll/Margin/VBox/Audio" method="_on_replay_gain_preamp_value_changed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Play Pause/Play Pause Key" to="." method="_on_play_pause_key_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Skip Backward/Skip Backward Key" to="." method="_on_skip_backward_key_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Skip Forward/Skip Forward Key" to="." method="_on_skip_forward_key_pressed"]

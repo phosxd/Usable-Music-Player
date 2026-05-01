@@ -26,8 +26,8 @@ mouse_behavior_recursive = 1
 script = ExtResource("6_g85ae")
 update_interval = 0.04
 preserve_size = false
-ratio_up = 2.0
-ratio_down = 2.0
+ratio_up = 4.0
+ratio_down = 4.0
 
 [node name="Button" type="Button" parent="." unique_id=481831511]
 unique_name_in_owner = true

@@ -45,7 +45,7 @@ static func unload(nodes:Array[Node], callback=null) -> void:
 		if not node or not is_instance_valid(node): continue
 		iter += 1
 		node.queue_free.call_deferred()
-		if iter % 4 == 0: await SessionManager.get_tree().create_timer(0).timeout
+		if iter % 4 == 0: await SessionManager.get_tree().process_frame
 
 	if is_callable_valid(callback): callback.call()
 

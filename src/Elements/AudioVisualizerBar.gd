@@ -1,6 +1,6 @@
 class_name AudioVisualizerBar extends Control
 
-@export var color := Color.WHITE
+@export var colors:Array = [Color.WHITE]
 
 ## Smoothing weight. Lower values are choppier but more accurate. Higher values are smoother & floatier.
 ## [br][br]Should be a value between [code]0.0[/code] & [code]0.999[/code]. Should never be "fully" smoothed.
@@ -74,7 +74,7 @@ func _draw() -> void:
 			bar_width-2,
 			-MathUtils.transfer_range_of_value(Vector2(0,1), Vector2(0,size.y), height),
 		)
-		if self.visible: draw_rect(rect, color)
+		if self.visible: draw_rect(rect, colors[wrap(i, 0, colors.size())])
 
 
 ## Sets [param _smoothing] to a usable value based on [param smoothing].

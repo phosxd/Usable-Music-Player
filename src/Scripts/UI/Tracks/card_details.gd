@@ -38,6 +38,7 @@ func init(parent_:Node, db_track:DBTrack, button_:Button) -> void:
 	var cover = track.album.get_cover() if track.album else DBAlbum.default_cover
 	if not self: return
 	if %Image: %Image.texture = cover
+	if not self.parent: return
 	set_mode(self.parent.get('selected_mode'))
 	self.initialized = true
 	self.init_completed.emit()

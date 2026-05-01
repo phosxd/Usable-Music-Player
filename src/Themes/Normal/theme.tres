@@ -217,6 +217,8 @@ corner_detail = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4by78"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qw6u4"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xqqwk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3rvjd"]
@@ -648,6 +650,9 @@ ScrollContainer/colors/scroll_hint_horizontal_color = Color(0, 0, 0, 1)
 ScrollContainer/colors/scroll_hint_vertical_color = Color(0, 0, 0, 1)
 ScrollContainer/styles/focus = SubResource("StyleBoxFlat_g11mq")
 ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_4by78")
+ScrollFillSeparator/base_type = &"HSeparator"
+ScrollFillSeparator/constants/separation = 40
+ScrollFillSeparator/styles/separator = SubResource("StyleBoxEmpty_qw6u4")
 SectionPanelContainer/base_type = &"PanelContainer"
 SectionPanelContainer/styles/panel = ExtResource("7_u0vf8")
 SoftButton/base_type = &"Button"

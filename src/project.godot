@@ -43,6 +43,7 @@ ThemeManager="*uid://bjpdyq7jbudnr"
 PlayerManager="*uid://bsri8hvvykwnh"
 RequestManager="*uid://cgsfn5sukipn3"
 SessionManager="*uid://caowd7sywd5u3"
+DialogManager="*uid://defjaugc2loxu"
 
 [debug]
 

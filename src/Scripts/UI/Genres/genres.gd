@@ -21,7 +21,7 @@ func _ready() -> void:
 		var albums:Array = genres[genre]
 		add_card(genre, albums)
 		# Add one frame delay to give time to add child.
-		await get_tree().create_timer(0).timeout
+		await get_tree().process_frame
 
 
 func add_card(genre_name:String, albums:Array) -> void:

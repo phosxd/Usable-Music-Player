@@ -3,17 +3,9 @@
 [ext_resource type="Script" uid="uid://diaugu2crn8p8" path="res://Scripts/UI/Queue/queue.gd" id="1_02mni"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_0inh1"]
 [ext_resource type="Texture2D" uid="uid://dod6uhmhu0tw3" path="res://Themes/Normal/Assets/Icons/reload.svg" id="2_j0kya"]
-[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_j0kya"]
 [ext_resource type="Texture2D" uid="uid://6icvlc6d5rna" path="res://Themes/Normal/Assets/Icons/Save.svg" id="3_qppo7"]
 [ext_resource type="Script" uid="uid://cor5k07keywfa" path="res://addons/ReorderableContainer/reorderable_vbox.gd" id="4_0inh1"]
-
-[sub_resource type="Resource" id="Resource_rqttv"]
-script = ExtResource("3_j0kya")
-minimum_velocity = 0.2
-rebound_strength = 36.0
-
-[sub_resource type="Resource" id="Resource_y0htm"]
-script = ExtResource("3_j0kya")
+[ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="5_qppo7"]
 
 [node name="Queue" type="PanelContainer" unique_id=1119812283]
 custom_minimum_size = Vector2(265, 0)
@@ -74,8 +66,8 @@ size_flags_vertical = 3
 follow_focus = true
 script = ExtResource("2_0inh1")
 speed = 500.0
-wheel_scroll_damper = SubResource("Resource_rqttv")
-dragging_scroll_damper = SubResource("Resource_y0htm")
+wheel_scroll_damper = ExtResource("5_qppo7")
+dragging_scroll_damper = ExtResource("5_qppo7")
 allow_horizontal_scroll = false
 allow_overdragging = true
 metadata/_custom_type_script = "uid://bgqglerkcylxx"

@@ -11,8 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://d3xi2hlyuvtic" path="res://Themes/Normal/Assets/Icons/queue_play_next.svg" id="11_uopqy"]
 [ext_resource type="Texture2D" uid="uid://dgf4br6i5tdbe" path="res://Themes/Normal/Assets/Icons/queue_add_to_queue.svg" id="12_dyds1"]
 [ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Themes/Normal/Assets/Icons/modifiers.svg" id="13_j0d1a"]
+[ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="13_ysr7q"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="14_rdpiu"]
-[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="15_ulvdd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wngf1"]
 shader = ExtResource("2_g4b1r")
@@ -20,6 +20,7 @@ shader_parameter/topleft = Color(0, 0, 0, 1)
 shader_parameter/topright = Color(0, 0, 0, 1)
 shader_parameter/bottomleft = Color(0, 0, 0, 1)
 shader_parameter/bottomright = Color(0.21, 0.21, 0.21, 1)
+shader_parameter/period = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_05ng2"]
 content_margin_left = 6.0
@@ -41,19 +42,12 @@ height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64yvu"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ysr7q"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 anti_aliasing = false
-
-[sub_resource type="Resource" id="Resource_c52vo"]
-script = ExtResource("15_ulvdd")
-rebound_strength = 14.0
-
-[sub_resource type="Resource" id="Resource_btmgh"]
-script = ExtResource("15_ulvdd")
 
 [node name="Genre Page" type="Control" unique_id=373382617]
 layout_mode = 3
@@ -132,7 +126,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_64yvu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ysr7q")
 script = ExtResource("4_5ku3p")
 texture = ExtResource("5_3f3rx")
 expand_mode = 2
@@ -224,8 +218,9 @@ size_flags_vertical = 3
 horizontal_scroll_mode = 0
 script = ExtResource("14_rdpiu")
 speed = 500.0
-wheel_scroll_damper = SubResource("Resource_c52vo")
-dragging_scroll_damper = SubResource("Resource_btmgh")
+wheel_scroll_damper = ExtResource("13_ysr7q")
+dragging_scroll_damper = ExtResource("13_ysr7q")
+allow_overdragging = true
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
 [node name="Content" type="MarginContainer" parent="VBox/Scroll" unique_id=83077900]
@@ -256,9 +251,9 @@ size_flags_vertical = 3
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 6
 
-[node name="Sep 1" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=168058502]
-self_modulate = Color(1, 1, 1, 0)
+[node name="Bottom Filler" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=168058502]
 layout_mode = 2
+theme_type_variation = &"ScrollFillSeparator"
 
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Icon Margin/Album Button" to="." method="_on_album_button_pressed"]
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Play" to="." method="_on_play_pressed"]

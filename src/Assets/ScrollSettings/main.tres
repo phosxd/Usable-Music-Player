@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ExpoScrollDamper" format=3 uid="uid://bq51bvd045uht"]
+
+[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="1_0eygu"]
+
+[resource]
+script = ExtResource("1_0eygu")
+friction = 2.0
+rebound_strength = 14.0

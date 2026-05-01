@@ -86,7 +86,7 @@ func _sort(grid:Control) -> void:
 		# Add card.
 		add_card(track, _on_track_selected.bind(track), grid)
 		# Wait one frame to give time to add child.
-		await get_tree().create_timer(0).timeout
+		await get_tree().process_frame
 
 
 func add_card(track:DBTrack, callback:Callable, grid:Control) -> void:

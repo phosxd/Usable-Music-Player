@@ -92,7 +92,7 @@ const property_data:Array[Array] = [
 	['queue_size_limit',[TYPE_INT]],
 	['image_detail',[TYPE_INT]],
 	# Audio.
-	['replay_gain',[TYPE_INT]],
+	['replay_gain_mode',[TYPE_INT]],
 	['replay_gain_preamp',[TYPE_FLOAT]],
 	# API.
 	['fetch_lyrics',[TYPE_BOOL]],

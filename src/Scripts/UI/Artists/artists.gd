@@ -75,7 +75,7 @@ func _sort(grid:Control, artists:Array[DBArtist]) -> void:
 		loaded_artists.append(artist)
 		add_card(artist, grid)
 		# Wait one frame to give time to add child.
-		if iter % 4 == 0: await get_tree().create_timer(0).timeout
+		if iter % 4 == 0: await get_tree().process_frame
 
 
 func add_card(artist:DBArtist, grid:Control) -> void:

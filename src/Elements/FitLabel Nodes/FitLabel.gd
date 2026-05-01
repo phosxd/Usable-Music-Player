@@ -24,7 +24,7 @@ func update() -> void:
 
 	# Set minimum size to "0" then wait one frame to ensure calculations are not influenced by changes.
 	self.custom_minimum_size.x = 0
-	await get_tree().create_timer(0).timeout
+	await get_tree().process_frame
 
 	var free_pixels:float = parent.size.x-parent.get_minimum_size().x # Get amount of pixels the parent container has available.
 	var char_rect:Rect2 = self.get_character_bounds(self.text.length()-1)

@@ -2,14 +2,7 @@
 
 [ext_resource type="Script" uid="uid://br1c0ohgvfc5x" path="res://Scripts/UI/Albums/albums.gd" id="1_dnlf2"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_dma13"]
-[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_j4kfj"]
-
-[sub_resource type="Resource" id="Resource_nr4yt"]
-script = ExtResource("3_j4kfj")
-rebound_strength = 14.0
-
-[sub_resource type="Resource" id="Resource_cdp3f"]
-script = ExtResource("3_j4kfj")
+[ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="3_hjx4q"]
 
 [node name="Albums" type="VBoxContainer" unique_id=213465202]
 anchors_preset = 15
@@ -26,9 +19,9 @@ layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 script = ExtResource("2_dma13")
-speed = 650.0
-wheel_scroll_damper = SubResource("Resource_nr4yt")
-dragging_scroll_damper = SubResource("Resource_cdp3f")
+speed = 500.0
+wheel_scroll_damper = ExtResource("3_hjx4q")
+dragging_scroll_damper = ExtResource("3_hjx4q")
 drag_with_mouse = false
 allow_horizontal_scroll = false
 allow_overdragging = true
@@ -42,10 +35,18 @@ theme_override_constants/margin_left = 14
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 14
 
-[node name="Grid" type="HFlowContainer" parent="Scroll/Margin" unique_id=1839645094]
+[node name="VBox" type="VBoxContainer" parent="Scroll/Margin" unique_id=1781191908]
+layout_mode = 2
+
+[node name="Grid" type="HFlowContainer" parent="Scroll/Margin/VBox" unique_id=1839645094]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 6
+
+[node name="Bottom Filler" type="HSeparator" parent="Scroll/Margin/VBox" unique_id=984207736]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ScrollFillSeparator"

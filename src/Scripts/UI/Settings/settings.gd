@@ -30,13 +30,8 @@ func _ready() -> void:
 	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.fetch_lyrics)
 	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.fetch_artist_cover)
 	%'Queue Size Limit'.set_value_no_signal(SessionManager.queue_size_limit)
-	var image_detail = SessionManager.image_detail_values.find_key(SessionManager.image_detail)
-	if image_detail == null: image_detail = 0
-	%'Image Detail'.set_value_no_signal(image_detail)
 	%'Track Finished Notif'.set_pressed_no_signal(SessionManager.send_track_finished_notif)
 	%'Library Scan Finished Notif'.set_pressed_no_signal(SessionManager.send_library_scan_finished_notif)
-	# ---
-	%'Replay Gain'.selected = SessionManager.replay_gain_mode
 
 
 func _on_user_data_pressed() -> void:
@@ -99,10 +94,6 @@ func _on_page_back_key_pressed() -> void:
 	pass
 
 
-func _on_image_detail_value_changed(value:float) -> void:
-	SessionManager.image_detail = SessionManager.image_detail_values[int(value)]
-
-
 func _on_track_finished_notif_toggled(toggled_on:bool) -> void:
 	SessionManager.send_track_finished_notif = toggled_on
 
@@ -137,14 +128,6 @@ func _on_grid_item_size_normal_pressed() -> void:
 
 func _on_grid_item_size_large_pressed() -> void:
 	%'Grid Item Size'.value = 230
-
-
-func _on_replay_gain_preamp_value_changed(value:float) -> void:
-	SessionManager.replay_gain_preamp = value
-
-
-func _on_replay_gain_item_selected(index:int) -> void:
-	SessionManager.replay_gain_mode = index as SessionManager.ReplayGainMode
 
 
 func _on_auto_scan_interval_value_changed(value:float) -> void:

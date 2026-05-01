@@ -4,8 +4,8 @@
 - Add ability to upload custom artist & album covers.
 - Add simple mini-player.
 - Add option for artist for regrabbing artist image from API.
-- Add option to toggle library tag visibility.
 - Finish rewriting gradient shader.
+- Add option to disable clear queue warning.
 
 - Read "lyricist" tag to show "Written by:" in lyrics.
 - Read "releasetype".

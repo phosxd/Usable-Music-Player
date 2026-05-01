@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://braiu28y6hl6h"]
+
+[ext_resource type="Script" uid="uid://bpxwuso43kvii" path="res://Scenes/Dialogs/Confirmation/scene.gd" id="1_mqlmt"]
+
+[node name="Confirmation" type="PanelContainer" unique_id=1047763430]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.5
+offset_top = -45.5
+offset_right = 46.5
+offset_bottom = 45.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"SectionPanelContainer"
+script = ExtResource("1_mqlmt")
+text = "Text"
+subtext = "Subtext"
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=11663374]
+layout_mode = 2
+
+[node name="Text" type="Label" parent="VBox" unique_id=1971945543]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Text"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Sep 1" type="HSeparator" parent="VBox" unique_id=807982989]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Subtext" type="Label" parent="VBox" unique_id=1157878904]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"LabelSecondarySmall"
+text = "Subtext"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="VBox" unique_id=225517884]
+layout_mode = 2
+
+[node name="Yes" type="Button" parent="VBox/HBox" unique_id=1254662541]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Yes"
+
+[node name="No" type="Button" parent="VBox/HBox" unique_id=1079428529]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "No"
+
+[connection signal="pressed" from="VBox/HBox/Yes" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="VBox/HBox/No" to="." method="_on_no_pressed"]

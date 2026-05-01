@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="12_d17rs"]
 [ext_resource type="Texture2D" uid="uid://dod6uhmhu0tw3" path="res://Themes/Normal/Assets/Icons/reload.svg" id="12_rqv4t"]
 [ext_resource type="Texture2D" uid="uid://dgf4br6i5tdbe" path="res://Themes/Normal/Assets/Icons/queue_add_to_queue.svg" id="13_cvxl0"]
-[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="13_ljtex"]
+[ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="14_rqv4t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wngf1"]
 shader = ExtResource("2_xl2db")
@@ -49,13 +49,6 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 anti_aliasing = false
-
-[sub_resource type="Resource" id="Resource_c52vo"]
-script = ExtResource("13_ljtex")
-rebound_strength = 14.0
-
-[sub_resource type="Resource" id="Resource_btmgh"]
-script = ExtResource("13_ljtex")
 
 [node name="Album Page" type="Control" unique_id=373382617]
 layout_mode = 3
@@ -245,8 +238,9 @@ size_flags_vertical = 3
 horizontal_scroll_mode = 0
 script = ExtResource("12_d17rs")
 speed = 500.0
-wheel_scroll_damper = SubResource("Resource_c52vo")
-dragging_scroll_damper = SubResource("Resource_btmgh")
+wheel_scroll_damper = ExtResource("14_rqv4t")
+dragging_scroll_damper = ExtResource("14_rqv4t")
+allow_overdragging = true
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
 [node name="Content" type="MarginContainer" parent="VBox/Scroll" unique_id=83077900]
@@ -326,9 +320,9 @@ text = "Copyright"
 clip_text = true
 text_overrun_behavior = 5
 
-[node name="Sep 1" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=168058502]
-self_modulate = Color(1, 1, 1, 0)
+[node name="Bottom Filler" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=168058502]
 layout_mode = 2
+theme_type_variation = &"ScrollFillSeparator"
 
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Icon Margin/Album Button" to="." method="_on_album_button_pressed"]
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Details/Secondary Details/Artist" to="." method="_on_artist_pressed"]

@@ -80,7 +80,7 @@ func _sort(grid:Control) -> void:
 		# Add card.
 		add_card(album, secondary_text, grid)
 		# Wait one frame to give time to add child.
-		await get_tree().create_timer(0).timeout
+		await get_tree().process_frame
 
 
 func add_card(album:DBAlbum, secondary_text:String, grid:Control) -> void:

@@ -42,7 +42,7 @@ func  _ready() -> void:
 func _session_manager_value_changed(property_name:String) -> void:
 	match property_name:
 		'visualizer_mode':
-			self.update_visualizer(SessionManager.get_accent_color())
+			self.update_visualizer([SessionManager.get_accent_color()])
 		'visualizer_bar_count':
 			%'Bar Visualizer'.bar_count = SessionManager.visualizer_bar_count
 		'visualizer_bar_smoothing':
@@ -84,10 +84,10 @@ func update_replaygain_indicator(value:float) -> void:
 	%'ReplayGain Indicator'.text = replaygain_indicator_template % snapped(value, 0.1)
 
 
-func update_visualizer(color:Color, _db:float=0) -> void:
+func update_visualizer(colors:Array, _db:float=0) -> void:
 	var glow_gradient = %Glow.texture.gradient as Gradient
-	visualizer_color = color
-	glow_gradient.set_color(0, color)
+	visualizer_color = colors.get(0)
+	glow_gradient.set_color(0, colors.get(0))
 	%'Bar Visualizer'.hide()
 	%'Bar Visualizer'.process_mode = Node.PROCESS_MODE_DISABLED
 	if SessionManager.visualizer_mode == SessionManager.VisualizerMode.OFF:
@@ -99,7 +99,7 @@ func update_visualizer(color:Color, _db:float=0) -> void:
 		%'Bar Visualizer'.show()
 		%Glow.position.y = -50
 		glow_gradient.set_color(0, Color(0,0,0,0.5))
-		%'Bar Visualizer'.color = color
+		%'Bar Visualizer'.colors = colors
 	%Glow.texture.gradient = glow_gradient
 	#var color_2:Color = glow_gradient.get_color(1)
 	glow_gradient.set_color(1, Color(0,0,0,0))
