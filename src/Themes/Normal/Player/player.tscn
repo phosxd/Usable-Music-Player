@@ -101,6 +101,7 @@ align_top = true
 metadata/_custom_type_script = "uid://ctl5olurx2x3b"
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=1314853469]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="VBox" type="VBoxContainer" parent="Panel" unique_id=1333926168]
@@ -197,7 +198,7 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Skip Backward" type="Button" parent="Panel/VBox/HBox/Left" unique_id=887661311]
+[node name="Skip Backward" type="Button" parent="Panel/VBox/HBox/Left" unique_id=887661311 groups=["solid_button"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
@@ -206,7 +207,7 @@ text = " "
 icon = ExtResource("2_rmo75")
 icon_alignment = 1
 
-[node name="Play Pause" type="Button" parent="Panel/VBox/HBox" unique_id=689319497]
+[node name="Play Pause" type="Button" parent="Panel/VBox/HBox" unique_id=689319497 groups=["solid_button"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -220,7 +221,7 @@ icon_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Skip Forward" type="Button" parent="Panel/VBox/HBox/Right" unique_id=25641869]
+[node name="Skip Forward" type="Button" parent="Panel/VBox/HBox/Right" unique_id=25641869 groups=["solid_button"]]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
@@ -294,7 +295,7 @@ theme_override_constants/separation = 0
 [node name="Controls 2" type="HBoxContainer" parent="Panel/VBox/HBox/Right" unique_id=189115080]
 layout_mode = 2
 
-[node name="Toggle Shuffle" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=373971293]
+[node name="Toggle Shuffle" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=373971293 groups=["solid_button"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -304,7 +305,7 @@ toggle_mode = true
 icon = ExtResource("7_5infn")
 expand_icon = true
 
-[node name="Swap Loop Mode" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=1189711306]
+[node name="Swap Loop Mode" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=1189711306 groups=["solid_button"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(42, 32)
 layout_mode = 2
@@ -315,7 +316,7 @@ icon = ExtResource("8_yqmis")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Toggle Queue" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=1712790552]
+[node name="Toggle Queue" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=1712790552 groups=["solid_button"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -325,7 +326,7 @@ toggle_mode = true
 icon = ExtResource("7_on5bc")
 expand_icon = true
 
-[node name="Toggle Lyrics" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=862164841]
+[node name="Toggle Lyrics" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=862164841 groups=["solid_button"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2

@@ -93,7 +93,6 @@ func update_accents() -> void:
 		accent.v = max(0.6, accent.v)
 
 	ThemeManager.accent_override_color = accent
-	%Player.update_visualizer([accent])
 	ThemeManager.apply_changes()
 
 

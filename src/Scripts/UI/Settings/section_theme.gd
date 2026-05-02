@@ -1,10 +1,10 @@
 extends Control
 
-const section:String = 'theme'
+const section:String = 'Theme'
 
 
 func _ready() -> void:
-	%'Theme Fold'.folded = self.section in SessionManager.folded_sections
+	%'Theme Fold'.folded = section in SessionManager.folded_sections
 	# ---
 	for item:Dictionary in ThemeManager.registered_themes:
 		%'Theme'.add_item(item.get('name',''))
@@ -23,13 +23,14 @@ func _ready() -> void:
 	%'Visualizer Bar Smoothing'.set_value_no_signal(SessionManager.visualizer_bar_smoothing)
 	%'Visualizer Bar Count Slider'.set_value_no_signal(SessionManager.visualizer_bar_count)
 	%'Visualizer Bar Smoothing Slider'.set_value_no_signal(SessionManager.visualizer_bar_smoothing)
+	%'Reactive Immersive View'.set_pressed_no_signal(SessionManager.reactive_immersive_view)
 
 
 func _on_theme_fold_folding_changed(is_folded:bool) -> void:
-	if is_folded && self.section not in SessionManager.folded_sections:
-		SessionManager.folded_sections.append(self.section)
+	if is_folded && section not in SessionManager.folded_sections:
+		SessionManager.folded_sections.append(section)
 	else:
-		SessionManager.folded_sections.erase(self.section)
+		SessionManager.folded_sections.erase(section)
 
 
 func _on_theme_mode_item_selected(index:int) -> void:
@@ -86,3 +87,7 @@ func _on_visualizer_bar_smoothing_value_changed(value:float) -> void:
 
 func _on_theme_apply_changes_pressed() -> void:
 	ThemeManager.apply_changes()
+
+
+func _on_reactive_immersive_view_toggled(toggled_on:bool) -> void:
+	SessionManager.reactive_immersive_view = toggled_on

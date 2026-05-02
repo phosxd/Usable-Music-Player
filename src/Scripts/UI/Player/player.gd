@@ -29,6 +29,7 @@ func  _ready() -> void:
 	PlayerManager.replay_gain_updated.connect(update_replaygain_indicator)
 	PlayerManager.track_peak_volume_changed.connect(update_visualizer_2)
 	SessionManager.value_changed.connect(_session_manager_value_changed)
+	ThemeManager.theme_applied.connect(_on_theme_applied)
 	update_current_track(0, PlayerManager.get_current_track())
 	update_track_progress(PlayerManager.track_progress)
 	update_volume(PlayerManager.volume)
@@ -37,6 +38,11 @@ func  _ready() -> void:
 	_session_manager_value_changed('visualizer_bar_count')
 	_session_manager_value_changed('visualizer_bar_smoothing')
 	_session_manager_value_changed('right_sidebar_tab')
+	_on_theme_applied()
+
+	# Sync play / pause button state.
+	%'Play Pause'.set_pressed_no_signal(PlayerManager.is_playing)
+	%'Play Pause'.icon = pause_icon if PlayerManager.is_playing else play_icon
 
 
 func _session_manager_value_changed(property_name:String) -> void:
@@ -53,6 +59,14 @@ func _session_manager_value_changed(property_name:String) -> void:
 			%'Toggle Lyrics'.set_pressed_no_signal(value == 'lyrics')
 
 
+func _on_theme_applied() -> void:
+	update_visualizer([ThemeManager.accent_override_color])
+
+
+func get_buttons() -> Array[Node]:
+	return get_tree().get_nodes_in_group('solid_button') 
+
+
 func load_started() -> void:
 	%'Track Load Animation'.play('animation')
 
@@ -67,7 +81,7 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 	%'Track Name'.text = current_track.name
 	%'Track Name'.button_tooltip_text = current_track.name
 	%'Artist Name'.text = '%s' % [current_track.album.artist.name]
-	%'Details HBox'.update()
+	%'Details HBox'.update() # Update text clipping.
 	if %'Toggle Shuffle'.button_pressed:
 		original_queue.clear()
 		%'Toggle Shuffle'.button_pressed = false
@@ -129,7 +143,7 @@ func update_playing(playing:bool) -> void:
 
 
 func _on_play_pause_pressed() -> void:
-	if PlayerManager.audio_stream_player.playing:
+	if PlayerManager.is_playing:
 		PlayerManager.set_playing(false)
 	else:
 		PlayerManager.set_playing(true)

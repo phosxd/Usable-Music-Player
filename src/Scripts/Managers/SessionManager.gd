@@ -38,10 +38,14 @@ const image_detail_values:Dictionary[int,int] = {
 }
 
 const sections:Array[Array] = [
-	['library', [
+	['Library', [
 		'auto_scan_internal',
 	]],
-	['theme', [
+	['Audio', [
+		'replay_gain',
+		'replay_gain_preamp',
+	]],
+	['Theme', [
 		'theme',
 		'theme_mode',
 		'accent_mode',
@@ -52,17 +56,17 @@ const sections:Array[Array] = [
 		'panel_tint',
 		'button_tint',
 	]],
-	['ui', [
+	['UI', [
 		'landing_page',
 		'grid_item_size',
 		'queue_size_limit',
 		'image_detail',
 	]],
-	['audio', [
-		'replay_gain',
-		'replay_gain_preamp',
+	['Immersive View', [
+		'reactive_immersive_view',
+		'immersive_view_texture_name',
 	]],
-	['api', [
+	['API', [
 		'fetch_lyrics',
 		'fetch_artist_cover',
 		'fetch_album_cover',
@@ -92,6 +96,9 @@ const property_data:Array[Array] = [
 	['queue_size_limit',[TYPE_INT]],
 	['image_detail',[TYPE_INT]],
 	['clear_queue_warning',[TYPE_BOOL]],
+	# Immersive View.
+	['reactive_immersive_view',[TYPE_BOOL]],
+	['immersive_view_texture_name',[TYPE_STRING]],
 	# Audio.
 	['replay_gain_mode',[TYPE_INT]],
 	['replay_gain_preamp',[TYPE_FLOAT]],
@@ -232,6 +239,13 @@ var clear_queue_warning:bool = true
 
 #endregion
 
+#region immersive veiw
+
+var reactive_immersive_view:bool = false
+var immersive_view_texture_name:String = 'Stripes'
+
+#endregion
+
 #region audio settings
 
 var replay_gain_mode := ReplayGainMode.Album
@@ -246,6 +260,13 @@ var fetch_artist_cover:bool = false
 var fetch_album_cover:bool = false
 var send_track_finished_notif:bool = true
 var send_library_scan_finished_notif:bool = true
+
+#endregion
+
+
+#region registers
+
+var immersive_view_texture_names:Array[String] = []
 
 #endregion
 
@@ -385,15 +406,24 @@ var auto_scan_timer := Timer.new()
 
 func _ready() -> void:
 	self.default_window_size = self.get_window().size
-	self.current_window_size = self.default_window_size
+	self.current_window_size = default_window_size
 
+	# Load session & ensure proper theme.
 	load_session()
-	if self.theme.is_empty(): self.theme = 'UMP_DEFAULT' # Set default layout theme if none set by session file.
+	if theme.is_empty(): theme = 'UMP_DEFAULT' # Set default layout theme if none set by session file.
+
+	# Populate register: immersive veiw texture names.
+	for mod:TesseractMod in TesseractAPI.mod_instances.values():
+		var files:PackedStringArray = mod.get_files_at('Assets/Immersive View Textures')
+		for file_path in files:
+			immersive_view_texture_names.append(file_path.split('/')[0].get_basename())
+	for file_name:String in DirAccess.get_files_at('res://Assets/Immersive View Textures'):
+		immersive_view_texture_names.append(file_name.get_basename())
 
 	# Configure auto-scan timer.
 	auto_scan_timer.one_shot = false
 	auto_scan_timer.autostart = true
-	self.auto_scan_interval = self.auto_scan_interval
+	auto_scan_interval = auto_scan_interval
 	auto_scan_timer.timeout.connect(LibraryManager.scan_all_libraries)
 	self.add_child(auto_scan_timer)
 
@@ -447,8 +477,15 @@ func get_icon(icon_name:String, theme_override:String='', recurse:int=0) -> Text
 	var icon
 	var icon_path:String = 'res://Themes/%s/Assets/Icons/%s.svg' % [theme_, icon_name]
 	if ResourceLoader.exists(icon_path): icon = load(icon_path)
-	if not icon: return SessionManager.get_icon(icon_name, 'Normal', recurse+1)
+	if icon is not Texture2D: return SessionManager.get_icon(icon_name, 'Normal', recurse+1)
 	return icon
+
+
+func get_immersive_view_texture() -> Texture2D:
+	var texture
+	var texture_path:String = 'res://Assets/Immersive View Textures/%s.tres' % immersive_view_texture_name
+	if ResourceLoader.exists(texture_path): texture = load(texture_path)
+	return texture
 
 
 ## Load session from disk.

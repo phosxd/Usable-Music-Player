@@ -4,8 +4,7 @@
 - Add ability to upload custom artist & album covers.
 - Add simple mini-player.
 - Add option for artist for regrabbing artist image from API.
-- Finish rewriting gradient shader.
-- Add option to disable clear queue warning.
+- Finish clear queue warning logic. Should not warn if queue has not been filled up via "intentional actions" such as artist/album play/shuffle buttons or via add to queue buttons.
 
 - Read "lyricist" tag to show "Written by:" in lyrics.
 - Read "releasetype".

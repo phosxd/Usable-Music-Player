@@ -1,6 +1,6 @@
 extends Control
 
-const section:String = 'ui'
+const section:String = 'UI'
 
 
 func _ready() -> void:
@@ -12,10 +12,10 @@ func _ready() -> void:
 
 
 func _on_ui_fold_folding_changed(is_folded:bool) -> void:
-	if is_folded && self.section not in SessionManager.folded_sections:
-		SessionManager.folded_sections.append(self.section)
+	if is_folded && section not in SessionManager.folded_sections:
+		SessionManager.folded_sections.append(section)
 	else:
-		SessionManager.folded_sections.erase(self.section)
+		SessionManager.folded_sections.erase(section)
 
 
 func _on_image_detail_value_changed(value:float) -> void:

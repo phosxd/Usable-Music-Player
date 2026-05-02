@@ -19,16 +19,7 @@ shader = ExtResource("2_di6n5")
 shader_parameter/topleft = Color(0, 0, 0, 1)
 shader_parameter/topright = Color(0, 0, 0, 1)
 shader_parameter/bottomleft = Color(0, 0, 0, 1)
-shader_parameter/bottomright = Color(0.21, 0.21, 0.21, 1)
-shader_parameter/period = 1.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_05ng2"]
-content_margin_left = 6.0
-content_margin_top = 4.0
-content_margin_right = 6.0
-content_margin_bottom = 4.0
-bg_color = Color(0.1848, 0.1848, 0.1848, 1)
-corner_detail = 4
+shader_parameter/bottomright = Color(0, 0, 0, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0e0sc"]
 blend_mode = 4
@@ -74,7 +65,7 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.4
 
-[node name="Gradient" type="Panel" parent="VBox/Controls" unique_id=366783618]
+[node name="Gradient" type="ColorRect" parent="VBox/Controls" unique_id=1183359611]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_wngf1")
 layout_mode = 1
@@ -84,7 +75,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_05ng2")
 
 [node name="Fade" type="TextureRect" parent="VBox/Controls" unique_id=1055429295]
 material = SubResource("CanvasItemMaterial_0e0sc")

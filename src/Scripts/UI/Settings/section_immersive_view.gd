@@ -1,0 +1,21 @@
+extends Control
+
+const section:String = 'Immersive View'
+
+
+func _ready() -> void:
+	%'Immersive View Fold'.folded = section in SessionManager.folded_sections
+	for texture_name:String in SessionManager.immersive_view_texture_names:
+		%'Immersive View Texture Name'.add_item(texture_name)
+	%'Immersive View Texture Name'.selected = SessionManager.immersive_view_texture_names.find(SessionManager.immersive_view_texture_name)
+
+
+func _on_immersive_view_fold_folding_changed(is_folded:bool) -> void:
+	if is_folded && section not in SessionManager.folded_sections:
+		SessionManager.folded_sections.append(section)
+	else:
+		SessionManager.folded_sections.erase(section)
+
+
+func _on_immersive_view_texture_name_item_selected(index:int) -> void:
+	SessionManager.immersive_view_texture_name = SessionManager.immersive_view_texture_names[index]

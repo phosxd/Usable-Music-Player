@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dsibuplor3qi1" path="res://Themes/Normal/Elements/Preset Color Button/Preset Color Button.tscn" id="8_sk0tj"]
 [ext_resource type="Script" uid="uid://b036js4iv0a5e" path="res://Scripts/UI/Settings/section_ui.gd" id="11_ispo5"]
 [ext_resource type="Script" uid="uid://dwnymrla8fg3m" path="res://Scripts/UI/Settings/section_audio.gd" id="12_u75xh"]
+[ext_resource type="Script" uid="uid://byhvfeen0t5em" path="res://Scripts/UI/Settings/section_immersive_view.gd" id="13_enh62"]
 [ext_resource type="Script" uid="uid://cni4q5hifbayv" path="res://Scripts/UI/Settings/section_api.gd" id="13_rtbdg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dp5eg"]
@@ -164,8 +165,67 @@ step = 0.1
 value = 0.5
 suffix = "minutes"
 
+[node name="Audio" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=2074479509]
+layout_mode = 2
+theme_type_variation = &"SectionPanelContainer"
+script = ExtResource("12_u75xh")
+
+[node name="Audio Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/Audio" unique_id=1609975435]
+unique_name_in_owner = true
+layout_mode = 2
+title = "Audio"
+
+[node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Audio/Audio Fold" unique_id=1538532529]
+layout_mode = 2
+
+[node name="Replay Gain" type="HBoxContainer" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox" unique_id=85143947]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain" unique_id=1473543906]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Modify volume gain based on track/album replay gain metadata."
+mouse_filter = 1
+theme_type_variation = &"LabelPrimary"
+text = "Replay Gain Mode"
+
+[node name="Replay Gain" type="OptionButton" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain" unique_id=971260837]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 4
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_1/text = "Track"
+popup/item_1/id = 1
+popup/item_2/text = "Album"
+popup/item_2/id = 2
+popup/item_3/text = "Auto"
+popup/item_3/id = 3
+
+[node name="Replay Gain Preamp" type="HBoxContainer" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox" unique_id=1817801883]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain Preamp" unique_id=2005249328]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Add extra gain on top of replay gain.
+
+Use this to increase volume if replay gain is too quiet."
+mouse_filter = 1
+theme_type_variation = &"LabelPrimary"
+text = "Replay Gain Preamp"
+
+[node name="Replay Gain Preamp" type="SpinBox" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain Preamp" unique_id=851711135]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -100.0
+step = 0.1
+suffix = "dB"
+
 [node name="Theme" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=568890640]
-visible = false
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
 script = ExtResource("5_pn7em")
@@ -483,16 +543,6 @@ max_value = 0.99
 step = 0.01
 value = 0.1
 
-[node name="Sep 3" type="HSeparator" parent="Scroll/Margin/VBox/Theme/Theme Fold/VBox" unique_id=1106690348]
-visible = false
-layout_mode = 2
-
-[node name="Theme Apply Changes" type="Button" parent="Scroll/Margin/VBox/Theme/Theme Fold/VBox" unique_id=905379496]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Apply Changes"
-
 [node name="UI" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=211399402]
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
@@ -505,6 +555,22 @@ title = "User Interface"
 
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold" unique_id=821509536]
 layout_mode = 2
+
+[node name="Clear Queue Warning" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=1689461171]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/Clear Queue Warning" unique_id=1443571331]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Show a warning before clearing your queue."
+mouse_filter = 1
+theme_type_variation = &"LabelPrimary"
+text = "Clear Queue Warning"
+
+[node name="Clear Queue Warning" type="CheckButton" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/Clear Queue Warning" unique_id=50225925]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
 
 [node name="Landing Page" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=420927628]
 layout_mode = 2
@@ -673,81 +739,52 @@ popup/item_0/text = "Player Bar ReplayGain"
 popup/item_0/checkable = 1
 popup/item_0/id = 0
 
-[node name="Clear Queue Warning" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=1689461171]
+[node name="Immersive View" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=257337058]
+layout_mode = 2
+theme_type_variation = &"SectionPanelContainer"
+script = ExtResource("13_enh62")
+
+[node name="Immersive View Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/Immersive View" unique_id=412975468]
+unique_name_in_owner = true
+layout_mode = 2
+title = "Immersive View"
+
+[node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold" unique_id=1362471797]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/Clear Queue Warning" unique_id=1443571331]
+[node name="Reactive Background" type="HBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox" unique_id=986277391]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background" unique_id=651892342]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Show a warning before clearing your queue."
+tooltip_text = "Modulate the immersive view's background based on volume during playback.
+
+Works best on brighter colors, & louder songs."
 mouse_filter = 1
 theme_type_variation = &"LabelPrimary"
-text = "Clear Queue Warning"
+text = "Reactive Background"
 
-[node name="Clear Queue Warning" type="CheckButton" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/Clear Queue Warning" unique_id=50225925]
+[node name="Reactive Immersive View" type="CheckButton" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background" unique_id=2032609623]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
 
-[node name="Audio" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=2074479509]
-layout_mode = 2
-theme_type_variation = &"SectionPanelContainer"
-script = ExtResource("12_u75xh")
-
-[node name="Audio Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/Audio" unique_id=1609975435]
-unique_name_in_owner = true
-layout_mode = 2
-title = "Audio"
-
-[node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Audio/Audio Fold" unique_id=1538532529]
+[node name="Background Texture" type="HBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox" unique_id=2074534880]
 layout_mode = 2
 
-[node name="Replay Gain" type="HBoxContainer" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox" unique_id=85143947]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain" unique_id=1473543906]
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Background Texture" unique_id=559960666]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Modify volume gain based on track/album replay gain metadata."
+tooltip_text = "Immersive view's background texture."
 mouse_filter = 1
 theme_type_variation = &"LabelPrimary"
-text = "Replay Gain Mode"
+text = "Background Texture"
 
-[node name="Replay Gain" type="OptionButton" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain" unique_id=971260837]
+[node name="Immersive View Texture Name" type="OptionButton" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Background Texture" unique_id=1573680960]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-selected = 0
-item_count = 4
-popup/item_0/text = "None"
-popup/item_0/id = 0
-popup/item_1/text = "Track"
-popup/item_1/id = 1
-popup/item_2/text = "Album"
-popup/item_2/id = 2
-popup/item_3/text = "Auto"
-popup/item_3/id = 3
-
-[node name="Replay Gain Preamp" type="HBoxContainer" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox" unique_id=1817801883]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain Preamp" unique_id=2005249328]
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "Add extra gain on top of replay gain.
-
-Use this to increase volume if replay gain is too quiet."
-mouse_filter = 1
-theme_type_variation = &"LabelPrimary"
-text = "Replay Gain Preamp"
-
-[node name="Replay Gain Preamp" type="SpinBox" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain Preamp" unique_id=851711135]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-min_value = -100.0
-step = 0.1
-suffix = "dB"
 
 [node name="Shortcuts" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=1537575725]
 visible = false
@@ -949,6 +986,9 @@ theme_type_variation = &"ScrollFillSeparator"
 [connection signal="pressed" from="Scroll/Margin/VBox/Controls/Links/Report Issue" to="." method="_on_report_issue_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Controls/Config/Import Config" to="Scroll/Margin/VBox/Controls" method="_on_import_config_pressed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/Library/VBox/Auto Scan Interval/Auto Scan Interval" to="." method="_on_auto_scan_interval_value_changed"]
+[connection signal="folding_changed" from="Scroll/Margin/VBox/Audio/Audio Fold" to="Scroll/Margin/VBox/Audio" method="_on_audio_fold_folding_changed"]
+[connection signal="item_selected" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain/Replay Gain" to="Scroll/Margin/VBox/Audio" method="_on_replay_gain_item_selected"]
+[connection signal="value_changed" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain Preamp/Replay Gain Preamp" to="Scroll/Margin/VBox/Audio" method="_on_replay_gain_preamp_value_changed"]
 [connection signal="folding_changed" from="Scroll/Margin/VBox/Theme/Theme Fold" to="Scroll/Margin/VBox/Theme" method="_on_theme_fold_folding_changed"]
 [connection signal="item_selected" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Theme/HBox/Theme" to="." method="_on_theme_item_selected"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Theme/HBox/Open Themes Folder" to="Scroll/Margin/VBox/Theme" method="_on_open_themes_folder_pressed"]
@@ -978,8 +1018,8 @@ theme_type_variation = &"ScrollFillSeparator"
 [connection signal="value_changed" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Visualizer Bar Count/HBox/Visualizer Bar Count" to="Scroll/Margin/VBox/Theme" method="_on_visualizer_bar_count_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Visualizer Bar Smoothing/HBox/Visualizer Bar Smoothing Slider" to="Scroll/Margin/VBox/Theme" method="_on_visualizer_bar_smoothing_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Visualizer Bar Smoothing/HBox/Visualizer Bar Smoothing" to="Scroll/Margin/VBox/Theme" method="_on_visualizer_bar_smoothing_value_changed"]
-[connection signal="pressed" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Theme Apply Changes" to="Scroll/Margin/VBox/Theme" method="_on_theme_apply_changes_pressed"]
 [connection signal="folding_changed" from="Scroll/Margin/VBox/UI/UI Fold" to="Scroll/Margin/VBox/UI" method="_on_ui_fold_folding_changed"]
+[connection signal="toggled" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Clear Queue Warning/Clear Queue Warning" to="Scroll/Margin/VBox/UI" method="_on_clear_queue_warning_toggled"]
 [connection signal="item_selected" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Landing Page/Landing Page" to="." method="_on_landing_page_item_selected"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Grid Item Size/HBox/Grid Item Size" to="." method="_on_grid_item_size_value_changed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Grid Item Size/HBox/Grid Item Size Small" to="." method="_on_grid_item_size_small_pressed"]
@@ -988,10 +1028,9 @@ theme_type_variation = &"ScrollFillSeparator"
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/UI Scale/HBox/UI Scale" to="." method="_on_ui_scale_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Queue Size Limit/Queue Size Limit" to="." method="_on_queue_size_limit_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Image Detail/Image Detail" to="Scroll/Margin/VBox/UI" method="_on_image_detail_value_changed"]
-[connection signal="toggled" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Clear Queue Warning/Clear Queue Warning" to="Scroll/Margin/VBox/UI" method="_on_clear_queue_warning_toggled"]
-[connection signal="folding_changed" from="Scroll/Margin/VBox/Audio/Audio Fold" to="Scroll/Margin/VBox/Audio" method="_on_audio_fold_folding_changed"]
-[connection signal="item_selected" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain/Replay Gain" to="Scroll/Margin/VBox/Audio" method="_on_replay_gain_item_selected"]
-[connection signal="value_changed" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain Preamp/Replay Gain Preamp" to="Scroll/Margin/VBox/Audio" method="_on_replay_gain_preamp_value_changed"]
+[connection signal="folding_changed" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_fold_folding_changed"]
+[connection signal="toggled" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background/Reactive Immersive View" to="Scroll/Margin/VBox/Theme" method="_on_reactive_immersive_view_toggled"]
+[connection signal="item_selected" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Background Texture/Immersive View Texture Name" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_texture_name_item_selected"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Play Pause/Play Pause Key" to="." method="_on_play_pause_key_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Skip Backward/Skip Backward Key" to="." method="_on_skip_backward_key_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Skip Forward/Skip Forward Key" to="." method="_on_skip_forward_key_pressed"]
