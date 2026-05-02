@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_c8ttq"]
 [ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Themes/Normal/Queue/queue.tscn" id="8_fbra8"]
 [ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Themes/Normal/Lyrics/lyrics.tscn" id="8_oc15g"]
+[ext_resource type="Script" uid="uid://3c2q7qpnxy2o" path="res://Scripts/UI/Immersive Player/hide_player_timer.gd" id="10_idskp"]
 [ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Themes/Normal/Player/player.tscn" id="10_khquy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oc15g"]
@@ -180,10 +181,17 @@ visible = false
 [node name="Panel" parent="Image Margin/Player" index="2" unique_id=1314853469]
 self_modulate = Color(1, 1, 1, 0.49019608)
 
+[node name="Hide Player Timer" type="Timer" parent="." unique_id=1911542422]
+unique_name_in_owner = true
+wait_time = 4.0
+autostart = true
+script = ExtResource("10_idskp")
+
 [connection signal="item_rect_changed" from="Image Margin/HBoxContainer/Control/Image" to="Image Margin" method="_on_image_item_rect_changed"]
 [connection signal="pressed" from="Image Margin/HBoxContainer/Control/Button" to="." method="_on_button_pressed"]
 [connection signal="visibility_changed" from="Image Margin/HBoxContainer/Queue" to="." method="_on_right_item_visibility_changed"]
 [connection signal="visibility_changed" from="Image Margin/HBoxContainer/Lyrics" to="." method="_on_right_item_visibility_changed"]
+[connection signal="timeout" from="Hide Player Timer" to="Hide Player Timer" method="_on_timeout"]
 
 [editable path="Image Margin/HBoxContainer/Queue"]
 [editable path="Image Margin/HBoxContainer/Lyrics"]

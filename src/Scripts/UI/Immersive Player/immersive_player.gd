@@ -67,7 +67,7 @@ func _process(delta:float) -> void:
 	# Animate background.
 	if Engine.get_process_frames() % 2 == 0 && %Background.texture is NoiseTexture2D:
 		var noise:FastNoiseLite = (%Background.texture as NoiseTexture2D).noise
-		noise.offset.z += delta*100
+		noise.offset.z += delta*75
 
 
 func update_current_track(_track_queue_position:int, track:DBTrack) -> void:

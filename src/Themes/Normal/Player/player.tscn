@@ -93,6 +93,7 @@ expand_mode = 1
 
 [node name="Bar Visualizer" type="Control" parent="." unique_id=1199885428]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("2_k76c7")
