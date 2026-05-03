@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://3c2q7qpnxy2o" path="res://Scripts/UI/Immersive Player/hide_player_timer.gd" id="10_idskp"]
 [ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Themes/Normal/Player/player.tscn" id="10_khquy"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oc15g"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khquy"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -102,7 +102,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_oc15g")
+theme_override_styles/panel = SubResource("StyleBoxFlat_khquy")
 script = ExtResource("3_hbf8i")
 radius_bottom_left = 16
 radius_bottom_right = 16

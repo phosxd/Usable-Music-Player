@@ -7,7 +7,8 @@ func _ready() -> void:
 	%'Immersive View Fold'.folded = section in SessionManager.folded_sections
 	for texture_name:String in SessionManager.immersive_view_texture_names:
 		%'Immersive View Texture Name'.add_item(texture_name)
-	%'Immersive View Texture Name'.selected = SessionManager.immersive_view_texture_names.find(SessionManager.immersive_view_texture_name)
+	var selected:int = SessionManager.immersive_view_texture_names.find(SessionManager.immersive_view_texture_name)
+	%'Immersive View Texture Name'.selected = selected+1 if selected != -1 else 0
 
 
 func _on_immersive_view_fold_folding_changed(is_folded:bool) -> void:
@@ -18,4 +19,7 @@ func _on_immersive_view_fold_folding_changed(is_folded:bool) -> void:
 
 
 func _on_immersive_view_texture_name_item_selected(index:int) -> void:
-	SessionManager.immersive_view_texture_name = SessionManager.immersive_view_texture_names[index]
+	if index == 0:
+		SessionManager.immersive_view_texture_name = ''
+	else:
+		SessionManager.immersive_view_texture_name = SessionManager.immersive_view_texture_names[index-1]

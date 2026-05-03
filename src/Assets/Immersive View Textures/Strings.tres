@@ -10,7 +10,10 @@ frequency = 0.002
 fractal_type = 0
 
 [resource]
+width = 264
+height = 264
 generate_mipmaps = false
 noise = SubResource("FastNoiseLite_khquy")
 color_ramp = SubResource("Gradient_oc15g")
 in_3d_space = true
+metadata/speed = 60.0

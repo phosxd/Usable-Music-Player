@@ -1,7 +1,7 @@
 [gd_resource type="NoiseTexture2D" format=3 uid="uid://nmgv32f4qxdf"]
 
 [sub_resource type="Gradient" id="Gradient_d40wm"]
-offsets = PackedFloat32Array(0.1, 0.8, 0.9)
+offsets = PackedFloat32Array(0.25, 0.7, 0.9)
 colors = PackedColorArray(0, 0, 0, 1, 0.47001648, 0.4700165, 0.4700165, 1, 0.86036915, 0.8603692, 0.8603692, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_oc15g"]
@@ -10,7 +10,10 @@ frequency = 0.005
 fractal_type = 0
 
 [resource]
+width = 264
+height = 264
 generate_mipmaps = false
 noise = SubResource("FastNoiseLite_oc15g")
 color_ramp = SubResource("Gradient_d40wm")
 in_3d_space = true
+metadata/speed = 60.0

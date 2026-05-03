@@ -5,9 +5,12 @@ const nodes_to_hide:Array[String] = [
 	'Sidebar',
 	'Right Sidebar Margin',
 ]
-var previous_global_margin:Array[int] = []
+const default_bg_speed:float = 75.0
 @onready var default_shadow_style:StyleBox = %Shadow.get_theme_stylebox('panel')
+var previous_global_margin:Array[int] = []
+
 var dominant_colors:Array[Color] = []
+var bg_speed:float = default_bg_speed
 
 
 func _ready() -> void:
@@ -35,6 +38,9 @@ func _ready() -> void:
 	var bg_texture = SessionManager.get_immersive_view_texture()
 	if bg_texture:
 		%Background.texture = bg_texture
+		var bg_speed_ = bg_texture.get_meta('speed') if bg_texture.has_meta('speed') else null
+		if bg_speed_ is not float: bg_speed = default_bg_speed
+		else: bg_speed = bg_speed_
 	# Apply random noise seed to background texture.
 	if %Background.texture is NoiseTexture2D:
 		%Background.texture.noise.seed = randi_range(0,100_000)
@@ -67,7 +73,7 @@ func _process(delta:float) -> void:
 	# Animate background.
 	if Engine.get_process_frames() % 2 == 0 && %Background.texture is NoiseTexture2D:
 		var noise:FastNoiseLite = (%Background.texture as NoiseTexture2D).noise
-		noise.offset.z += delta*75
+		noise.offset.z += delta*bg_speed
 
 
 func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
@@ -84,11 +90,13 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 		track.album.palette.get('secondary', Color.WHITE),
 		track.album.palette.get('trinary', Color.WHITE),
 	]
-	if %Background.texture is NoiseTexture2D:
-		var ramp:Gradient = %Background.texture.color_ramp
-		for i in ramp.colors.size():
-			ramp.set_color(i, dominant_colors[wrap(i,0,2)])
-		%Background.self_modulate = Color.WHITE
+	if %Background.texture is NoiseTexture2D or %Background.texture is GradientTexture2D:
+		var grad: Gradient
+		if %Background.texture is NoiseTexture2D: grad = %Background.texture.color_ramp
+		elif %Background.texture is GradientTexture2D: grad = %Background.texture.gradient
+		for i in grad.colors.size():
+			grad.set_color(i, dominant_colors[wrap(i,0,2)])
+	%Background.self_modulate = Color.WHITE
 
 	# Update album cover shadow.
 	var new_style = default_shadow_style.duplicate()
