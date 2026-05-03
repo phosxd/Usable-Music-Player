@@ -8,3 +8,4 @@ colors = PackedColorArray(1, 1, 1, 1)
 gradient = SubResource("Gradient_ain0q")
 width = 16
 height = 16
+metadata/blur = false

@@ -41,6 +41,7 @@ enum TrackSortMode {
 }
 
 var type := LibraryType.LocalDirectory
+var version: int
 var id: String
 var name: String:
 	set(value):
@@ -163,8 +164,9 @@ func _refresh() -> bool:
 		found_paths.append(short_file_path)
 		var lmt:int = FileAccess.get_modified_time(file_path)
 		var track_lmt = last_modified_times.get(short_file_path,null)
-		# Don't scan if file has not changed.
-		if track_lmt is int && lmt == track_lmt: return
+		# Don't scan if file has not changed or library version has not changed.
+		if self.version == LibraryManager.library_version \
+		&& (track_lmt is int && lmt == track_lmt): return
 		# Scan file.
 		made_changes[0] = true
 		var entries:Array = Metadata.get_audio_meta([file_path], LibraryManager.image_cache_path)
@@ -185,6 +187,7 @@ func _refresh() -> bool:
 			track.remove()
 			made_changes[0] = true
 
+	version = LibraryManager.library_version
 	return made_changes[0]
 
 

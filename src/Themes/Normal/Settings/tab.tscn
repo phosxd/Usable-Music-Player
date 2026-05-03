@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cnnj2q647i5vw" path="res://Scripts/UI/Settings/section_library.gd" id="4_dp5eg"]
 [ext_resource type="Texture2D" uid="uid://dhmxlcvbqgba1" path="res://Themes/Normal/Assets/Icons/load.svg" id="4_kjexh"]
 [ext_resource type="Script" uid="uid://ljm5f1vvpqkr" path="res://Scripts/UI/Settings/controls.gd" id="4_ud285"]
+[ext_resource type="Texture2D" uid="uid://dod6uhmhu0tw3" path="res://Themes/Normal/Assets/Icons/reload.svg" id="5_2pv4b"]
 [ext_resource type="Script" uid="uid://cw1oexepw7wyu" path="res://Scripts/UI/Settings/section_theme.gd" id="5_pn7em"]
 [ext_resource type="Texture2D" uid="uid://6icvlc6d5rna" path="res://Themes/Normal/Assets/Icons/Save.svg" id="5_ud285"]
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Themes/Normal/Assets/Icons/folder.svg" id="7_pn7em"]
@@ -55,39 +56,38 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="Controls" type="HBoxContainer" parent="Scroll/Margin/VBox" unique_id=480455043]
+[node name="Controls" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=316565853]
+layout_mode = 2
+theme_type_variation = &"SectionPanelContainer"
+
+[node name="Controls" type="HBoxContainer" parent="Scroll/Margin/VBox/Controls" unique_id=480455043]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 8
 script = ExtResource("4_ud285")
 
-[node name="Links" type="HBoxContainer" parent="Scroll/Margin/VBox/Controls" unique_id=955544066]
+[node name="Links" type="HBoxContainer" parent="Scroll/Margin/VBox/Controls/Controls" unique_id=955544066]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="User Data" type="Button" parent="Scroll/Margin/VBox/Controls/Links" unique_id=23274312]
+[node name="Refresh User Data Size" type="Button" parent="Scroll/Margin/VBox/Controls/Controls/Links" unique_id=593382539]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Refresh user data size."
+theme_type_variation = &"AccentButton"
+icon = ExtResource("5_2pv4b")
+
+[node name="User Data" type="Button" parent="Scroll/Margin/VBox/Controls/Controls/Links" unique_id=23274312]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Open user data directory"
-text = "User Data"
+text = "User Data (100 MiB)"
 
-[node name="Source Code" type="Button" parent="Scroll/Margin/VBox/Controls/Links" unique_id=1677530294]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Open source code repository"
-text = "Source Code"
-
-[node name="Report Issue" type="Button" parent="Scroll/Margin/VBox/Controls/Links" unique_id=1460273289]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Open source code repository issues page"
-text = "Report an Issue"
-
-[node name="Config" type="HBoxContainer" parent="Scroll/Margin/VBox/Controls" unique_id=336138735]
+[node name="Config" type="HBoxContainer" parent="Scroll/Margin/VBox/Controls/Controls" unique_id=336138735]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Import Config" type="Button" parent="Scroll/Margin/VBox/Controls/Config" unique_id=331341606]
+[node name="Import Config" type="Button" parent="Scroll/Margin/VBox/Controls/Controls/Config" unique_id=331341606]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -96,7 +96,7 @@ text = "Import Config"
 icon = ExtResource("4_kjexh")
 text_overrun_behavior = 5
 
-[node name="Export Config" type="MenuButton" parent="Scroll/Margin/VBox/Controls/Config" unique_id=286235336]
+[node name="Export Config" type="MenuButton" parent="Scroll/Margin/VBox/Controls/Controls/Config" unique_id=286235336]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -120,11 +120,7 @@ layout_mode = 2
 [node name="Controls" type="HBoxContainer" parent="Scroll/Margin/VBox/Library/VBox" unique_id=48638074]
 layout_mode = 2
 
-[node name="Controls" type="HBoxContainer" parent="Scroll/Margin/VBox/Library/VBox/Controls" unique_id=1201920755]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Add Library" type="MenuButton" parent="Scroll/Margin/VBox/Library/VBox/Controls/Controls" unique_id=1397628788]
+[node name="Add Library" type="MenuButton" parent="Scroll/Margin/VBox/Library/VBox/Controls" unique_id=1397628788]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
@@ -985,10 +981,9 @@ fit_content = true
 layout_mode = 2
 theme_type_variation = &"ScrollFillSeparator"
 
-[connection signal="pressed" from="Scroll/Margin/VBox/Controls/Links/User Data" to="." method="_on_user_data_pressed"]
-[connection signal="pressed" from="Scroll/Margin/VBox/Controls/Links/Source Code" to="." method="_on_source_code_pressed"]
-[connection signal="pressed" from="Scroll/Margin/VBox/Controls/Links/Report Issue" to="." method="_on_report_issue_pressed"]
-[connection signal="pressed" from="Scroll/Margin/VBox/Controls/Config/Import Config" to="Scroll/Margin/VBox/Controls" method="_on_import_config_pressed"]
+[connection signal="pressed" from="Scroll/Margin/VBox/Controls/Controls/Links/Refresh User Data Size" to="Scroll/Margin/VBox/Controls/Controls" method="_on_refresh_user_data_size_pressed"]
+[connection signal="pressed" from="Scroll/Margin/VBox/Controls/Controls/Links/User Data" to="." method="_on_user_data_pressed"]
+[connection signal="pressed" from="Scroll/Margin/VBox/Controls/Controls/Config/Import Config" to="Scroll/Margin/VBox/Controls/Controls" method="_on_import_config_pressed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/Library/VBox/Auto Scan Interval/Auto Scan Interval" to="." method="_on_auto_scan_interval_value_changed"]
 [connection signal="folding_changed" from="Scroll/Margin/VBox/Audio/Audio Fold" to="Scroll/Margin/VBox/Audio" method="_on_audio_fold_folding_changed"]
 [connection signal="item_selected" from="Scroll/Margin/VBox/Audio/Audio Fold/VBox/Replay Gain/Replay Gain" to="Scroll/Margin/VBox/Audio" method="_on_replay_gain_item_selected"]

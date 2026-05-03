@@ -17,3 +17,4 @@ noise = SubResource("FastNoiseLite_oc15g")
 color_ramp = SubResource("Gradient_d40wm")
 in_3d_space = true
 metadata/speed = 60.0
+metadata/blur = true

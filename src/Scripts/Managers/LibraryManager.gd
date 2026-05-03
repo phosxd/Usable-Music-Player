@@ -2,6 +2,7 @@
 class_name LibraryManager extends RefCounted
 
 const minilog_importance := MiniLog.Importance.High
+const library_version:int = 0
 
 static var a2j_ruleset:Dictionary[String,Dictionary] = {
 	'@global': {
@@ -163,21 +164,22 @@ static func wipe_lyrics() -> void:
 	,Callable())
 
 
-## Returns & recalculates the total bytes of the user data folder.
+## Returns the total bytes of the user data folder.
+## Call [member refresh_user_data_size] to update value.
 static func get_user_data_size() -> int:
+	return SessionManager.user_data_bytes
+
+
+## Recalculates the total bytes of the user data folder.
+static func refresh_user_data_size() -> int:
 	var total:Array[int] = [0]
 
 	FileUtils.walk_dir(OS.get_user_data_dir(), func(file_path:String) -> void:
 		total[0] += FileAccess.get_size(file_path)
 	,func(_dir_path)->void:pass)
 
+	SessionManager.user_data_bytes = total[0]
 	return total[0]
-
-
-## Returns the total bytes of the library.
-static func get_library_size() -> int:
-	var total:int = 0
-	return total
 
 
 static func load_audio(path:String) -> AudioStream:

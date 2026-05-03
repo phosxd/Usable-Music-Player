@@ -14,6 +14,12 @@ func _ready() -> void:
 		export_config_popup.add_item(item[0])
 		export_config_values.append(item[0])
 	export_config_popup.index_pressed.connect(_on_export_config_index_pressed)
+	update_user_data_text()
+
+
+func update_user_data_text() -> void:
+	@warning_ignore('integer_division')
+	%'User Data'.text = 'User Data (%s MiB)' % int(LibraryManager.get_user_data_size()/1048_000)
 
 
 func _on_import_config_pressed() -> void:
@@ -36,3 +42,8 @@ func _on_export_config_index_pressed(index:int) -> void:
 			SessionManager.export_config(path, [section])
 	)
 	popup.show()
+
+
+func _on_refresh_user_data_size_pressed() -> void:
+	LibraryManager.refresh_user_data_size()
+	update_user_data_text()

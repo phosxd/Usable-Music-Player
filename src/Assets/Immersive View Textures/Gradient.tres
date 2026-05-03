@@ -9,3 +9,4 @@ gradient = SubResource("Gradient_ain0q")
 width = 32
 height = 32
 fill = 1
+metadata/blur = false

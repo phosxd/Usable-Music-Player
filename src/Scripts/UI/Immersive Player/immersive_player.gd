@@ -39,6 +39,7 @@ func _ready() -> void:
 	if bg_texture:
 		%Background.texture = bg_texture
 		var bg_speed_ = bg_texture.get_meta('speed') if bg_texture.has_meta('speed') else null
+		%Blur.visible = bg_texture.get_meta('blur') if bg_texture.has_meta('blur') else false
 		if bg_speed_ is not float: bg_speed = default_bg_speed
 		else: bg_speed = bg_speed_
 	# Apply random noise seed to background texture.
@@ -87,6 +88,7 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 	var dominant_color = track.album.get_album_dominant_color()
 	dominant_colors = [
 		dominant_color,
+		track.album.palette.get('primary', Color.WHITE),
 		track.album.palette.get('secondary', Color.WHITE),
 		track.album.palette.get('trinary', Color.WHITE),
 	]

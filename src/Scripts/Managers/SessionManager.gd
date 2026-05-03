@@ -109,6 +109,8 @@ const property_data:Array[Array] = [
 	['send_track_finished_notif',[TYPE_BOOL]],
 	['send_library_scan_finished_notif',[TYPE_BOOL]],
 
+	# Misc data.
+	['user_data_bytes',[TYPE_INT]],
 	# Tab data.
 	['last_tab',[TYPE_STRING]],
 	['artists_tab_scroll_value',[TYPE_FLOAT]],
@@ -270,6 +272,12 @@ var immersive_view_texture_names:Array[String] = []
 
 #endregion
 
+
+#region misc data
+
+var user_data_bytes:int = 0
+
+#endregion
 
 #region sorting data
 

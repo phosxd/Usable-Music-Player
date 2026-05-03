@@ -2,16 +2,16 @@
 
 [ext_resource type="Script" uid="uid://d3kxsvnf3vv3b" path="res://Scripts/UI/Immersive Player/immersive_player.gd" id="1_ulmvq"]
 [ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_a3alx"]
+[ext_resource type="Material" uid="uid://b62hwhyefqusc" path="res://Assets/blur_material.tres" id="2_khquy"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_hbf8i"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_i3gmp"]
-[ext_resource type="Material" uid="uid://b62hwhyefqusc" path="res://Assets/blur_material.tres" id="4_khquy"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_c8ttq"]
 [ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Themes/Normal/Queue/queue.tscn" id="8_fbra8"]
 [ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Themes/Normal/Lyrics/lyrics.tscn" id="8_oc15g"]
 [ext_resource type="Script" uid="uid://3c2q7qpnxy2o" path="res://Scripts/UI/Immersive Player/hide_player_timer.gd" id="10_idskp"]
 [ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Themes/Normal/Player/player.tscn" id="10_khquy"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khquy"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idskp"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -40,8 +40,10 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Blur" type="ColorRect" parent="Background" unique_id=89459203]
-material = ExtResource("4_khquy")
+[node name="Blur" type="ColorRect" parent="Background" unique_id=136730947]
+unique_name_in_owner = true
+visible = false
+material = ExtResource("2_khquy")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -102,7 +104,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_khquy")
+theme_override_styles/panel = SubResource("StyleBoxFlat_idskp")
 script = ExtResource("3_hbf8i")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -185,7 +187,7 @@ anchors_preset = 15
 
 [node name="Hide Player Timer" type="Timer" parent="." unique_id=1911542422]
 unique_name_in_owner = true
-wait_time = 0.75
+wait_time = 1.25
 one_shot = true
 autostart = true
 script = ExtResource("10_idskp")
