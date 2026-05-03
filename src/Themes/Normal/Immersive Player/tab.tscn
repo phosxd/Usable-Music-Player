@@ -180,10 +180,13 @@ visible = false
 
 [node name="Panel" parent="Image Margin/Player" index="2" unique_id=1314853469]
 self_modulate = Color(1, 1, 1, 0.49019608)
+layout_mode = 1
+anchors_preset = 15
 
 [node name="Hide Player Timer" type="Timer" parent="." unique_id=1911542422]
 unique_name_in_owner = true
-wait_time = 4.0
+wait_time = 0.75
+one_shot = true
 autostart = true
 script = ExtResource("10_idskp")
 

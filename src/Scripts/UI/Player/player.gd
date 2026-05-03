@@ -45,10 +45,18 @@ func  _ready() -> void:
 	%'Play Pause'.icon = pause_icon if PlayerManager.is_playing else play_icon
 
 
+func _process(_delta:float) -> void:
+	var min_size := Vector2.ZERO
+	for child:Node in self.get_children():
+		if child is not Control: continue
+		min_size.x = max(min_size.x, child.size.x)
+		min_size.y = max(min_size.y, child.size.y)
+
+
 func _session_manager_value_changed(property_name:String) -> void:
 	match property_name:
 		'visualizer_mode':
-			self.update_visualizer([SessionManager.get_accent_color()])
+			self.update_visualizer([ThemeManager.accent_override_color])
 		'visualizer_bar_count':
 			%'Bar Visualizer'.bar_count = SessionManager.visualizer_bar_count
 		'visualizer_bar_smoothing':
