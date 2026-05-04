@@ -51,6 +51,7 @@ func _process(_delta:float) -> void:
 
 
 func unload() -> void:
+	update_count += 1 # Interupt sorting.
 	Async.unload(%Grid.get_children(), (func(scene:Node) -> void:
 		scene.queue_free()
 	).bind(self))
