@@ -4,18 +4,18 @@
 [ext_resource type="Script" uid="uid://ctl5olurx2x3b" path="res://Elements/AudioVisualizerBar.gd" id="2_k76c7"]
 [ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Themes/Normal/Assets/Icons/skip_backward.svg" id="2_rmo75"]
 [ext_resource type="Script" uid="uid://bjisaiqko2bpt" path="res://Elements/FitLabel Nodes/FLMHBoxContainer.gd" id="3_k76c7"]
-[ext_resource type="Texture2D" uid="uid://doajyey54rgs2" path="res://Themes/Normal/Assets/Icons/scale_x2/non_favorite.svg" id="3_kemy3"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="3_on5bc"]
 [ext_resource type="Texture2D" uid="uid://by3qxgtdgkogn" path="res://Themes/Normal/Assets/Icons/favorite.svg" id="4_a3o2i"]
+[ext_resource type="Texture2D" uid="uid://c6ce7g8avpxng" path="res://Themes/Normal/Assets/Icons/non_favorite.svg" id="4_k76c7"]
 [ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Themes/Normal/Assets/Icons/skip_forward.svg" id="4_ucxa4"]
 [ext_resource type="Texture2D" uid="uid://bkkmi7knca7st" path="res://Themes/Normal/Assets/Icons/audio.svg" id="6_5infn"]
 [ext_resource type="PackedScene" uid="uid://4hlv0qpe30h8" path="res://Elements/Clickable Label/Fit Clickable Label.tscn" id="6_836g3"]
 [ext_resource type="Script" uid="uid://cuel4avmaddm" path="res://Elements/ColoredControl.gd" id="6_a3o2i"]
-[ext_resource type="Texture2D" uid="uid://1atpjvnl4kp" path="res://Themes/Normal/Assets/Icons/scale_x2/shuffle.svg" id="7_5infn"]
-[ext_resource type="Texture2D" uid="uid://cxhba62sfdahy" path="res://Themes/Normal/Assets/Icons/scale_x2/queue.svg" id="7_on5bc"]
-[ext_resource type="Texture2D" uid="uid://n2y028woywe1" path="res://Themes/Normal/Assets/Icons/scale_x2/loop.svg" id="8_yqmis"]
-[ext_resource type="Texture2D" uid="uid://c38fmgiqibpti" path="res://Themes/Normal/Assets/Icons/scale_x2/lyrics.svg" id="10_qn1da"]
 [ext_resource type="Texture2D" uid="uid://ciqqntp7ixyuj" path="res://Themes/Normal/Assets/Icons/audio_mute.svg" id="13_ds2pc"]
+[ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="13_kemy3"]
+[ext_resource type="Texture2D" uid="uid://cmfhyocnnts36" path="res://Themes/Normal/Assets/Icons/loop.svg" id="14_a3o2i"]
+[ext_resource type="Texture2D" uid="uid://cr62t880itebb" path="res://Themes/Normal/Assets/Icons/queue.svg" id="15_a3o2i"]
+[ext_resource type="Texture2D" uid="uid://imn0wsrh0qm8" path="res://Themes/Normal/Assets/Icons/lyrics.svg" id="16_a3o2i"]
 [ext_resource type="Texture2D" uid="uid://qo42hyjmudbd" path="res://Themes/Normal/Assets/Icons/copy.svg" id="18_k76c7"]
 
 [sub_resource type="Gradient" id="Gradient_74mp2"]
@@ -155,7 +155,7 @@ layout_mode = 2
 size_flags_vertical = 4
 mouse_default_cursor_shape = 2
 toggle_mode = true
-texture_normal = ExtResource("3_kemy3")
+texture_normal = ExtResource("4_k76c7")
 texture_pressed = ExtResource("4_a3o2i")
 ignore_texture_size = true
 stretch_mode = 5
@@ -314,7 +314,7 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"AccentButton"
 toggle_mode = true
-icon = ExtResource("7_5infn")
+icon = ExtResource("13_kemy3")
 expand_icon = true
 
 [node name="Swap Loop Mode" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=1189711306 groups=["solid_button"]]
@@ -324,7 +324,7 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"AccentButton"
 toggle_mode = true
-icon = ExtResource("8_yqmis")
+icon = ExtResource("14_a3o2i")
 icon_alignment = 1
 expand_icon = true
 
@@ -335,7 +335,7 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"AccentButton"
 toggle_mode = true
-icon = ExtResource("7_on5bc")
+icon = ExtResource("15_a3o2i")
 expand_icon = true
 
 [node name="Toggle Lyrics" type="Button" parent="Panel/VBox/HBox/Right/Controls 2" unique_id=862164841 groups=["solid_button"]]
@@ -345,7 +345,7 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"AccentButton"
 toggle_mode = true
-icon = ExtResource("10_qn1da")
+icon = ExtResource("16_a3o2i")
 expand_icon = true
 
 [node name="Sep 3" type="VSeparator" parent="Panel/VBox/HBox/Right" unique_id=156156437]

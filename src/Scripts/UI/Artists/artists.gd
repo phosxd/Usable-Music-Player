@@ -61,10 +61,24 @@ func sort() -> void:
 
 
 func _sort(grid:Control, artists:Array[DBArtist]) -> void:
+	if artists.is_empty(): return
+
 	var current_count:Array[int] = [update_count]
 	var iter:int = 0
+	#var current_library_id:String = artists[0].library.id
 	for artist:DBArtist in artists:
 		if update_count != current_count[0]: return
+		## If new library, add separator.
+		#if artist.library.id != current_library_id:
+			#var separator := HSeparator.new()
+			#separator.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			#var title := Label.new()
+			#title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			#title.text = artist.library.name
+			#title.theme_type_variation = 'LabelHeader2'
+			#grid.add_child(title)
+			#grid.add_child(separator)
+
 		# Filter with search term.
 		if not SessionManager.search_term.is_empty():
 			var search_term:String = SessionManager.search_term.to_lower()
@@ -81,6 +95,8 @@ func _sort(grid:Control, artists:Array[DBArtist]) -> void:
 func add_card(artist:DBArtist, grid:Control) -> void:
 	# Create card.
 	var card:Control = card_scene.instantiate()
+	card.icon = artist.library.get_icon()
+	card.icon_tooltip_text = artist.library.name
 	card.primary_text = artist.name
 	# Connect signal to card.
 	card.pressed.connect(_on_card_pressed.bind(artist))

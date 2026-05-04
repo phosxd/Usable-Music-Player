@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dh6g4vy4liksv" path="res://Themes/Normal/Elements/Grid Item/grid_item.gd" id="1_l7ro4"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_elf6b"]
 [ext_resource type="Script" uid="uid://d043648wabjl3" path="res://Elements/GridTextureRect.gd" id="4_d642b"]
+[ext_resource type="Script" uid="uid://cuel4avmaddm" path="res://Elements/ColoredControl.gd" id="4_l7ro4"]
 [ext_resource type="Script" uid="uid://cvuw8ds1htson" path="res://Elements/ControlOnScreen.gd" id="5_d642b"]
 [ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="5_l7ro4"]
 
@@ -24,6 +25,7 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 script = ExtResource("1_l7ro4")
+icon_tooltip_text = null
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1832504744]
 layout_mode = 2
@@ -71,9 +73,24 @@ theme_type_variation = &"SoftButton"
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Label 1" parent="VBox" unique_id=1086494808 instance=ExtResource("5_l7ro4")]
+[node name="Title" type="HBoxContainer" parent="VBox" unique_id=781891802]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Icon" type="TextureRect" parent="VBox/Title" unique_id=285769186]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.88235295)
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("4_l7ro4")
+color_source = 2
+
+[node name="Label 1" parent="VBox/Title" unique_id=1086494808 instance=ExtResource("5_l7ro4")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 1
 theme_type_variation = &"LabelPrimary"
 horizontal_alignment = 1
@@ -81,7 +98,7 @@ clip_text = true
 text_overrun_behavior = 5
 hover_theme_type_variation = "LabelPrimaryHover"
 
-[node name="Button" parent="VBox/Label 1" index="0" unique_id=1604203953]
+[node name="Button" parent="VBox/Title/Label 1" index="0" unique_id=1604203953]
 mouse_filter = 2
 disabled = true
 
@@ -122,4 +139,4 @@ grow_vertical = 2
 [connection signal="pressed" from="VBox/Center/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="VBox/Label 2" to="." method="_on_label_2_pressed"]
 
-[editable path="VBox/Label 1"]
+[editable path="VBox/Title/Label 1"]

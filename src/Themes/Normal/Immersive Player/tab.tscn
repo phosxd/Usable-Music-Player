@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://3c2q7qpnxy2o" path="res://Scripts/UI/Immersive Player/hide_player_timer.gd" id="10_idskp"]
 [ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Themes/Normal/Player/player.tscn" id="10_khquy"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idskp"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khquy"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -104,7 +104,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_idskp")
+theme_override_styles/panel = SubResource("StyleBoxFlat_khquy")
 script = ExtResource("3_hbf8i")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -187,10 +187,11 @@ anchors_preset = 15
 
 [node name="Hide Player Timer" type="Timer" parent="." unique_id=1911542422]
 unique_name_in_owner = true
-wait_time = 1.25
+wait_time = 4.0
 one_shot = true
 autostart = true
 script = ExtResource("10_idskp")
+wait_time_2 = 1.5
 
 [connection signal="item_rect_changed" from="Image Margin/HBoxContainer/Control/Image" to="Image Margin" method="_on_image_item_rect_changed"]
 [connection signal="pressed" from="Image Margin/HBoxContainer/Control/Button" to="." method="_on_button_pressed"]

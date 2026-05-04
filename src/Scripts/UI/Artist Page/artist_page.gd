@@ -87,6 +87,8 @@ func set_gradient(image:ImageTexture) -> void:
 func add_card(album:DBAlbum) -> void:
 	if not card_scene: return
 	var card:Control = card_scene.instantiate()
+	card.icon = album.artist.library.get_icon()
+	card.icon_tooltip_text = album.artist.library.name
 	card.primary_text = album.name
 	card.images = [album.get_cover()]
 	card.pressed.connect(_on_album_pressed.bind(album))

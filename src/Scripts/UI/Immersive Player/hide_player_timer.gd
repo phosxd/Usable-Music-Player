@@ -1,5 +1,7 @@
 extends Timer
 
+@export var wait_time_2: float
+
 var tweens: Array[Tween]
 
 
@@ -23,7 +25,7 @@ func _process(_delta:float) -> void:
 
 	# If hovering over player while hidden, play animation to show it.
 	if self.time_left == 0:
-		start_animation([0,0], 0.4)
+		start_animation([0,0], 0.5)
 
 	# Reset timer when hovering over player.
 	%'Hide Player Timer'.stop()
@@ -31,4 +33,5 @@ func _process(_delta:float) -> void:
 
 
 func _on_timeout() -> void:
-	start_animation([%Player/%Panel.size.y, %Player/%'Bar Visualizer'.size.y], 0.6)
+	start_animation([%Player/%Panel.size.y, %Player/%'Bar Visualizer'.size.y], 0.75)
+	self.wait_time = wait_time_2

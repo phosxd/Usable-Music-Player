@@ -33,6 +33,17 @@ signal alt_pressed
 			%Image.hide()
 			%'Grid Image'.from_array(value)
 
+@export var icon: Texture2D:
+	set(value):
+		icon = value
+		%Icon.texture = icon
+		%Icon.visible = value != null
+
+@export var icon_tooltip_text: String:
+	set(value):
+		icon_tooltip_text = value
+		%Icon.tooltip_text = value
+
 @export var primary_text:String = '':
 	set(value):
 		primary_text = value

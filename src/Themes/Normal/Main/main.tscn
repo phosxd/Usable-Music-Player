@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://clcbjy34jselh"]
 
-[ext_resource type="Texture2D" uid="uid://btawryg8volu3" path="res://Themes/Normal/Assets/Icons/audio_stream.svg" id="1_1r6ip"]
+[ext_resource type="Texture2D" uid="uid://ra61hkob8bjq" path="res://Themes/Normal/Assets/Icons/audio_stream.svg" id="1_1r6ip"]
 [ext_resource type="Script" uid="uid://bwovnwhmbywrv" path="res://Scripts/UI/Main/main.gd" id="1_y3v7k"]
 [ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Themes/Normal/Assets/Icons/modifiers.svg" id="2_hryqi"]
 [ext_resource type="Script" uid="uid://bcvag8i6w6wiy" path="res://Scripts/UI/Main/tools_bar.gd" id="2_wbs4r"]
@@ -20,10 +20,9 @@
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="12_eeh6y"]
 [ext_resource type="Script" uid="uid://dtel3yhuvbpap" path="res://Elements/Top Bar/top_bar.gd" id="13_2ok46"]
 [ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Themes/Normal/Assets/Icons/search.svg" id="14_koken"]
-[ext_resource type="Texture2D" uid="uid://clvub0o51v8eh" path="res://Themes/Normal/Assets/Icons/scale_x2/change_sort_mode.svg" id="15_0fk8q"]
 [ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Themes/Normal/Assets/Icons/tree_arrow_left.svg" id="16_eeh6y"]
 [ext_resource type="Script" uid="uid://cuel4avmaddm" path="res://Elements/ColoredControl.gd" id="21_wbs4r"]
-[ext_resource type="Texture2D" uid="uid://cp7rw74plkuj" path="res://Themes/Normal/Assets/Icons/scale_x2/activity.svg" id="23_bb5d1"]
+[ext_resource type="Texture2D" uid="uid://cmm6jyptkjmg2" path="res://Themes/Normal/Assets/Icons/activity.svg" id="22_wbs4r"]
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="23_jo7x3"]
 
 [sub_resource type="Resource" id="Resource_eqlsm"]
@@ -34,7 +33,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wbs4r"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hto8k"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -305,7 +304,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_wbs4r")
+theme_override_styles/panel = SubResource("StyleBoxFlat_hto8k")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
@@ -380,7 +379,7 @@ layout_mode = 2
 theme_type_variation = &"AccentButton"
 theme_override_constants/icon_max_width = 18
 toggle_mode = true
-icon = ExtResource("23_bb5d1")
+icon = ExtResource("22_wbs4r")
 flat = true
 
 [node name="Sorting" type="PanelContainer" parent="Global Margin/VBox/HBox/Tab VBox/Topbar" unique_id=1616870286]
@@ -402,7 +401,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_type_variation = &"AccentButton"
 theme_override_constants/icon_max_width = 16
-theme_override_icons/icon = ExtResource("15_0fk8q")
+theme_override_icons/icon = ExtResource("5_vk4q2")
 disabled = true
 selected = 0
 fit_to_longest_item = false
