@@ -237,10 +237,6 @@ func _on_tab_button_pressed(tab:String) -> void:
 	set_tab(tab)
 
 
-func _on_back_button_pressed() -> void:
-	go_back()
-
-
 func _on_ascend_mode_pressed() -> void:
 	ascend_mode = not ascend_mode
 	%'Ascend Mode'.text = 'A-Z' if ascend_mode else 'Z-A'

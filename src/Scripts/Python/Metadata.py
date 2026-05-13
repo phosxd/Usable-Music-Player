@@ -1,5 +1,7 @@
-import json
+# TinyTag CLI interface module.
 from tinytag import TinyTag
+import Utils
+
 
 valid_extensions = [
 	'mp3',
@@ -9,12 +11,33 @@ valid_extensions = [
 ]
 
 
-# Safely get an item in an array.
-def list_get (l, idx, default=None):
-	try:
-		return l[idx]
-	except IndexError:
-		return default
+def command_get_audio_meta(args):
+	input_paths = []
+	image_output_dir = ''
+	# Get arguments.
+	for arg in args:
+		if arg['type'] == 'audio':
+			input_paths.append(arg['value'])
+		if arg['type'] == 'img_out':
+			image_output_dir = arg['value']
+	if len(input_paths) == 0: return
+
+	# Process each audio file.
+	entries = []
+	for input_path in input_paths:
+		tag:TinyTag = TinyTag.get(input_path, image=True)
+		meta = get_audio_meta(tag, input_path)
+
+		if image_output_dir != '':
+			cover_path = image_output_dir+'/'+meta_as_file_name(meta, 1)+'.'+meta['image_extension']
+			if meta['image_extension'] != '':
+				meta['cover_path'] = cover_path
+				save_audio_cover(tag, cover_path)
+
+		entries.append(meta)
+
+	# Return command result.
+	return entries
 
 
 # Get audio metadata.
@@ -23,8 +46,8 @@ def get_audio_meta(tag, path):
 	meta:dict = {}
 
 	# Add list properties.
-	for property in ['artist', "musicbrainz_albumartistid", 'musicbrainz_artistid', 'album', 'albumartist', 'title', 'year', 'comment', 'copyright']:
-		meta[property] = list_get(raw_meta.get(property,[]),0,'')
+	for property in ['artist', "musicbrainz_albumartistid", 'musicbrainz_artistid', 'album', 'albumartist', 'title', 'year', 'releaseyear', 'comment', 'copyright']:
+		meta[property] = Utils.list_get(raw_meta.get(property,[]),0,'')
 	# Add number properties.
 	for property in ['duration', 'channels', 'bitrate', 'bitdepth', 'samplerate', 'track', 'disc', 'filesize']:
 		meta[property] = raw_meta.get(property,0)
@@ -43,8 +66,9 @@ def get_audio_meta(tag, path):
 
 	# Album year.
 	meta['year'] = meta['year'].split('-')[0]
+	meta['releaseyear'] = meta['releaseyear'].split('-')[0]
 
-	# Get genres.
+	# Album genres.
 	meta['genres'] = raw_meta.get('genre',[])
 	if len(meta['genres']) == 1:
 		meta['genres'] = meta['genres'][0] \
@@ -56,16 +80,16 @@ def get_audio_meta(tag, path):
 			.replace(',','&&')
 		meta['genres'] = meta['genres'].split('&&')
 
-	# Get synced & unsynced lyrics.
+	# Track synced & unsynced lyrics.
 	meta['synced_lyrics'] = ''
 	meta['unsynced_lyrics'] = ''
 	all_lyric_fields = [
-		list_get(raw_meta.get('lyrics',[]),0,''),
-		list_get(raw_meta.get('unsyncedlyrics',[]),0,''),
-		list_get(raw_meta.get('lyrics',[]),1,''),
-		list_get(raw_meta.get('syncedlyrics',[]),0,''),
-		list_get(raw_meta.get('USLT',[]),0,''),
-		list_get(raw_meta.get('uslt',[]),0,''),
+		Utils.list_get(raw_meta.get('lyrics',[]),0,''),
+		Utils.list_get(raw_meta.get('unsyncedlyrics',[]),0,''),
+		Utils.list_get(raw_meta.get('lyrics',[]),1,''),
+		Utils.list_get(raw_meta.get('syncedlyrics',[]),0,''),
+		Utils.list_get(raw_meta.get('USLT',[]),0,''),
+		Utils.list_get(raw_meta.get('uslt',[]),0,''),
 	]
 	for lyric_field in all_lyric_fields:
 		if lyric_field == '': continue
@@ -79,7 +103,7 @@ def get_audio_meta(tag, path):
 		meta['unsynced_lyrics'] = meta['synced_lyrics']
 
 
-	# Get image.
+	# Album image.
 	cover_image = tag.images.any
 	meta['image_extension'] = ''
 	if cover_image is not None:
@@ -99,51 +123,9 @@ def meta_as_file_name(meta, mode=0):
 		return '%s__%s' % (meta['albumartist'].replace('/','_'), meta['album'].replace('/','_'))
 
 
-def save_audio_meta(tag, meta, output_path):
-	formatted_meta = json.dumps(meta)
-	file = open(output_path, 'w')
-	file.write(formatted_meta)
-	file.close()
-
-
 def save_audio_cover(tag, output_path):
 	cover_image = tag.images.any
 	if cover_image is not None:
 		file = open(output_path, 'wb')
 		file.write(cover_image.data)
 		file.close()
-
-
-# MAIN LOOP
-# ---------
-
-
-while True:
-	raw_input = input()
-	args = raw_input.split(' [&&] ')
-	cmd = list_get(args, 0, '')
-	input_paths = []
-	image_output_dir = ''
-	for arg in args:
-		if arg.startswith('(img_out) '):
-			image_output_dir = arg.removeprefix('(img_out) ')
-		if arg.startswith('(audio) '):
-			input_paths.append(arg.removeprefix('(audio) '))
-
-
-	if cmd == 'get_audio_meta':
-		if len(input_paths) == 0: continue
-		entries = []
-		for input_path in input_paths:
-			tag:TinyTag = TinyTag.get(input_path, image=True)
-			meta = get_audio_meta(tag, input_path)
-
-			if image_output_dir != '':
-				cover_path = image_output_dir+'/'+meta_as_file_name(meta, 1)+'.'+meta['image_extension']
-				if meta['image_extension'] != '':
-					meta['cover_path'] = cover_path
-					save_audio_cover(tag, cover_path)
-
-			entries.append(meta)
-
-		print(json.dumps(entries))

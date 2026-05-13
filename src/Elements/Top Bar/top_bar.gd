@@ -26,3 +26,11 @@ func _on_activity_toggled(toggled_on:bool) -> void:
 		activity_menu.position = %Activity.global_position+Vector2(0,%Activity.size.y)
 	else:
 		if activity_menu: activity_menu.queue_free()
+
+
+func _on_forth_button_pressed() -> void:
+	pass #SessionManager.main_scene.go_forward()
+
+
+func _on_back_button_pressed() -> void:
+	SessionManager.main_scene.go_back()

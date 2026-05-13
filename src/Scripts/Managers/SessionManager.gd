@@ -349,26 +349,31 @@ var tracks_tab_scroll_value:float = 0
 @onready var context_menus:Dictionary[String,ContextMenu] = {
 	'track_card': ContextMenu.new([
 		{
+			'id': 'play',
 			'type': 'button',
 			'text': 'Play (clear queue)',
 			'icon': SessionManager.get_icon('play'),
 		},
 		{
+			'id': 'play_next',
 			'type': 'button',
 			'text': 'Play Next',
 			'icon': SessionManager.get_icon('queue_play_next'),
 		},
 		{
+			'id': 'add_to_queue',
 			'type': 'button',
 			'text': 'Add To Queue',
 			'icon': SessionManager.get_icon('queue_add_to_queue'),
 		},
 		{
+			'id': 'show_album',
 			'type': 'button',
 			'text': 'Show Album',
 			'icon': SessionManager.get_icon('folder'),
 		},
 		{
+			'id': 'show_in_files',
 			'type': 'button',
 			'text': 'Show In Files',
 			'icon': SessionManager.get_icon('folder'),
@@ -376,26 +381,42 @@ var tracks_tab_scroll_value:float = 0
 	]),
 	'queue_card': ContextMenu.new([
 		{
-			'type': 'button',
+			'id': 'remove',
+			'type': 'submenu',
 			'text': 'Remove',
 			'icon': SessionManager.get_icon('remove'),
+			'items': [
+				{
+					'id': 'remove_track',
+					'type': 'button',
+					'text': 'Track',
+				},
+				{
+					'id': 'remove_album',
+					'type': 'button',
+					'text': 'Album',
+				},
+				{
+					'id': 'remove_artist',
+					'type': 'button',
+					'text': 'Artist',
+				},
+			],
 		},
 		{
+			'id': 'stop_after_this',
 			'type': 'button',
-			'text': 'Remove This Album',
-			'icon': SessionManager.get_icon('remove'),
+			'text': 'Stop After This',
+			'icon': SessionManager.get_icon('pause'),
 		},
 		{
-			'type': 'button',
-			'text': 'Remove This Artist',
-			'icon': SessionManager.get_icon('remove'),
-		},
-		{
+			'id': 'show_album',
 			'type': 'button',
 			'text': 'Show Album',
 			'icon': SessionManager.get_icon('folder'),
 		},
 		{
+			'id': 'show_in_files',
 			'type': 'button',
 			'text': 'Show In Files',
 			'icon': SessionManager.get_icon('folder'),

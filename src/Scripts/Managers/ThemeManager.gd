@@ -78,6 +78,7 @@ var panel_tint := Color.TRANSPARENT:
 		panel_tint = value
 		self.set('bg_color', bg_color)
 		self.set('panel_color', panel_color)
+		self.set('tooltip_panel_color', tooltip_panel_color)
 		self.set('section_panel_color', section_panel_color)
 
 var button_tint := Color.TRANSPARENT:
@@ -143,44 +144,39 @@ var search_margin:Array = [0,0,0,0]:
 var panel_color := Color.TRANSPARENT:
 	set(value):
 		panel_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','panel_color')
 		value = value.blend(panel_tint)
-		set_stylebox_property('PanelContainer', 'panel', 'bg_color', value)
-		set_stylebox_property('GridItemPanel', 'panel', 'bg_color', value)
+		set_stylebox_color('PanelContainer', 'panel', 'bg_color', value)
+		set_stylebox_color('GridItemPanel', 'panel', 'bg_color', value)
 		set_stylebox_color('IslandPanelContainer', 'panel', 'bg_color', value)
 		set_stylebox_color('ToolsIslandPanelContainer', 'panel', 'bg_color', value)
 		set_stylebox_color('LineEdit', 'normal', 'bg_color', value)
-		var read_only_alpha:float = Color(get_stylebox_default_property('LineEdit', 'read_only', 'bg_color')).a
-		set_stylebox_color('LineEdit', 'read_only', 'bg_color', Color(value.r, value.g, value.b, read_only_alpha))
+		set_stylebox_color('LineEdit', 'read_only', 'bg_color', value)
 
 var section_panel_color := Color.TRANSPARENT:
 	set(value):
 		section_panel_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','section_panel_color')
 		value = value.blend(panel_tint)
-		set_stylebox_property('SectionPanelContainer', 'panel', 'bg_color', value)
+		set_stylebox_color('SectionPanelContainer', 'panel', 'bg_color', value)
 
 var tooltip_panel_color := Color.TRANSPARENT:
 	set(value):
 		tooltip_panel_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','tooltip_panel_color')
 		value = value.blend(panel_tint)
-		set_stylebox_property('TooltipPanel', 'panel', 'bg_color', value)
+		set_stylebox_color('TooltipPanel', 'panel', 'bg_color', value)
+		set_stylebox_color('PopupMenu', 'panel', 'bg_color', value)
 
 var text_color := Color.TRANSPARENT:
 	set(value):
 		text_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','text_color')
-		theme.set_color('font_color', 'Label', value)
-		theme.set_color('default_color', 'RichTextLabel', value)
-		theme.set_color('font_color', 'LineEdit', value)
-		theme.set_color('font_color', 'Button', value)
-		theme.set_color('font_color', 'AccentButton', value)
+		set_color('Label', 'font_color', value)
+		set_color('RichTextLabel', 'default_color', value)
+		set_color('LineEdit', 'font_color', value)
+		set_color('Button', 'font_color', value)
+		set_color('AccentButton', 'font_color', value)
 
 var text_disabled_color := Color.TRANSPARENT:
 	set(value):
 		text_disabled_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','text_disabled_color')
 		theme.set_color('font_uneditable_color', 'LineEdit', value)
 		theme.set_color('font_placeholder_color', 'LineEdit', value)
 		theme.set_color('font_disabled_color', 'Button', value)
@@ -189,7 +185,6 @@ var text_disabled_color := Color.TRANSPARENT:
 var text_hover_color := Color.TRANSPARENT:
 	set(value):
 		text_hover_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','text_hover_color')
 		for item in ['Button','AccentButton']:
 			for item_2 in ['font_hover_color','font_focused_color','font_pressed_color','font_hover_pressed_color']:
 				theme.set_color(item_2, item, value)
@@ -199,7 +194,6 @@ var text_hover_color := Color.TRANSPARENT:
 var text_primary_color := Color.TRANSPARENT:
 	set(value):
 		text_primary_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','text_primary_color')
 		theme.set_color('font_color', 'LabelPrimary', value)
 		theme.set_color('font_outline_color', 'LabelPrimary', value)
 		theme.set_color('font_color', 'LabelPrimarySmall', value)
@@ -210,7 +204,6 @@ var text_primary_color := Color.TRANSPARENT:
 var text_primary_hover_color := Color.TRANSPARENT:
 	set(value):
 		text_primary_hover_color = value
-		if value == Color.TRANSPARENT: value = registered_themes[0].config.get_value('Theme','text_primary_hover_color')
 		theme.set_color('font_color', 'LabelPrimaryHover', value)
 		theme.set_color('font_outline_color', 'LabelPrimaryHover', value)
 		theme.set_color('font_color', 'LabelHeaderHover', value)
@@ -345,12 +338,14 @@ func get_theme_index(id:String) -> int:
 
 #region theme manipulation
 
+## Apply changes made to [member theme].
 func apply_changes() -> void:
 	get_window().theme = self.theme.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
 	if SessionManager.main_scene != null: SessionManager.main_scene.set('bg_color', self._bg_color)
 	self.theme_applied.emit()
 
 
+## Gets the [member theme] or [param theme_resource] stylebox property.
 func get_stylebox_property(theme_type:String, style_name:String, property_name:String, theme_resource=null) -> Variant:
 	if theme_resource is not Theme: theme_resource = theme
 	if not theme.has_stylebox(style_name, theme_type): return
@@ -358,12 +353,15 @@ func get_stylebox_property(theme_type:String, style_name:String, property_name:S
 	return style.get(property_name)
 
 
+## Sets the [member original_theme] stylebox property.
+## If [param use_default_theme] is [code]true[/code] will grab from the app default theme instead of the current theme.
 func get_stylebox_default_property(theme_type:String, style_name:String, property_name:String, use_default_theme:bool=false) -> Variant:
 	var theme_resource = original_theme
 	if use_default_theme: theme_resource = registered_themes[0].item
 	return get_stylebox_property(theme_type, style_name, property_name, theme_resource)
 
 
+## Sets the [member theme] stylebox property.
 func set_stylebox_property(theme_type:String, style_name:String, property_name:String, property_value:Variant) -> void:
 	if not theme.has_stylebox(style_name, theme_type): return
 	var style:StyleBox = theme.get_stylebox(style_name, theme_type)
@@ -371,10 +369,24 @@ func set_stylebox_property(theme_type:String, style_name:String, property_name:S
 	theme.set_stylebox(style_name, theme_type, style)
 
 
-func set_stylebox_color(theme_type:String, style_name:String, property_name:String, property_value:Color, use_default_if_transparent:bool=false) -> void:
+## Sets the [member theme] stylebox color, with modifiers.
+func set_stylebox_color(theme_type:String, style_name:String, property_name:String, property_value:Color, use_default_if_transparent:bool=true, preserve_alpha:bool=true) -> void:
 	if use_default_if_transparent && property_value.a == 0:
 		var default = get_stylebox_default_property(theme_type, style_name, property_name)
 		if default == null: default = get_stylebox_default_property(theme_type, style_name, property_name, true)
+	if preserve_alpha:
+		var alpha:float = get_stylebox_default_property(theme_type, style_name, property_name).a
+		property_value = Color(property_value.r, property_value.g, property_value.b, alpha)
 	set_stylebox_property(theme_type, style_name, property_name, property_value)
+
+
+## Sets the [member theme] color, with modifiers.
+func set_color(theme_type:String, property_name:String, property_value:Color, use_default_if_transparent:bool=true, preserve_alpha:bool=true) -> void:
+	if use_default_if_transparent && property_value.a == 0:
+		property_value = original_theme.get_color(property_name, theme_type)
+	if preserve_alpha:
+		var alpha:float = original_theme.get_color(property_name, theme_type).a
+		property_value = Color(property_value.r, property_value.g, property_value.b, alpha)
+	theme.set_color(property_name, theme_type, property_value)
 
 #endregion

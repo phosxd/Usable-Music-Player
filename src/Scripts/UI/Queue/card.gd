@@ -62,21 +62,23 @@ func _on_button_gui_input(event:InputEvent) -> void:
 		context_menu.show(name)
 
 
-func _context_menu_id_pressed(id:int):
+func _context_menu_id_pressed(id:String):
 	if context_menu.current_instance_id != name: return
-	var track:DBTrack = PlayerManager.queue[get_index()]
+	var track:DBTrack = PlayerManager.queue[self.get_index()]
+	if id in ['remove','remove_track']:
+		PlayerManager.remove_from_queue(track)
 	match id:
-		0: # Remove.
-			PlayerManager.remove_from_queue(track)
-		1: # Remove all in this album.
+		'remove_album':
 			for queued_track:DBTrack in PlayerManager.queue.duplicate():
 				if track.album == queued_track.album:
 					PlayerManager.remove_from_queue(queued_track)
-		2: # Remove all in this artist.
+		'remove_artist':
 			for queued_track:DBTrack in PlayerManager.queue.duplicate():
 				if track.album.artist == queued_track.album.artist:
 					PlayerManager.remove_from_queue(queued_track)
-		3: # Show in album.
+		'stop_after_this':
+			PlayerManager.stop_at_index = PlayerManager.queue.find(track)+1
+		'show_album':
 			SessionManager.main_scene.set_tab('album_page', track.album)
-		4: # Show in files.
+		'show_in_files':
 			OS.shell_show_in_file_manager(track.get_full_path())

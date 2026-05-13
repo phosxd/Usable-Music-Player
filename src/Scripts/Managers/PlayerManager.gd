@@ -58,6 +58,9 @@ var volume:float = 100.0:
 			audio_stream_player.volume_db += SessionManager.replay_gain_preamp
 		volume_updated.emit(value)
 
+## Queue index to stop playing at. If [code]-1[/code], will do nothing.
+var stop_at_index:int = -1
+
 var is_playing:bool = false
 var is_shuffled:bool = false
 
@@ -133,7 +136,10 @@ func set_current_track(track_queue_position:int, save_session:bool=true) -> void
 	,func(_result) -> void:
 		current_track_load_finished.emit()
 		current_track_loading = false
-		if is_playing: set_playing(true)
+		if is_playing && track_queue_position != stop_at_index: set_playing(true)
+		else:
+			set_playing(false)
+			stop_at_index = -1
 		if save_session: SessionManager.save_session()
 	)
 

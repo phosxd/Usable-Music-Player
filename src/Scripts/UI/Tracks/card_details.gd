@@ -18,9 +18,9 @@ func _ready() -> void:
 
 
 func init(parent_:Node, db_track:DBTrack, button_:Button) -> void:
-	self.parent = parent_
-	self.button = button_
-	self.track = db_track
+	parent = parent_
+	button = button_
+	track = db_track
 	if not self.track:
 		self.queue_free.call_deferred()
 		return
@@ -40,12 +40,12 @@ func init(parent_:Node, db_track:DBTrack, button_:Button) -> void:
 	if %Image: %Image.texture = cover
 	if not self.parent: return
 	set_mode(self.parent.get('selected_mode'))
-	self.initialized = true
-	self.init_completed.emit()
+	initialized = true
+	init_completed.emit()
 
 
 func set_mode(mode:int) -> void:
-	self.parent.set('selected_mode', mode)
+	parent.set('selected_mode', mode)
 	if mode == 0: # Detailed.
 		%Album.show()
 		%Image.show()
@@ -56,27 +56,27 @@ func set_mode(mode:int) -> void:
 		%'Image Sep'.show()
 
 
-func _on_option_id_pressed(id:int) -> void:
-	if self.parent.context_menu.current_instance_id != self.parent.name: return
+func _on_option_id_pressed(id:String) -> void:
+	if parent.context_menu.current_instance_id != parent.name: return
 	match id:
-		0: # Play.
+		'play':
 			PlayerManager.auto_queue_start_index = -1
-			self.parent.selected.emit()
-		1: # Play next.
+			parent.selected.emit()
+		'play_next':
 			PlayerManager.insert_to_queue(PlayerManager.queue_position+1, track)
 			if PlayerManager.auto_queue_start_index == -1:
 				PlayerManager.auto_queue_start_index = PlayerManager.queue_position+2
 			else:
 				PlayerManager.auto_queue_start_index += 1
-		2: # Add to queue.
+		'add_to_queue':
 			if PlayerManager.auto_queue_start_index > PlayerManager.queue_position:
 				PlayerManager.insert_to_queue(PlayerManager.auto_queue_start_index, track)
 				PlayerManager.auto_queue_start_index += 1
 			else:
 				PlayerManager.add_to_queue(track)
-		3: # Show album.
+		'show_album':
 			SessionManager.main_scene.set_tab('album_page', track.album)
-		4: # Show in files.
+		'show_in_files':
 			OS.shell_show_in_file_manager(track.get_full_path())
 
 
@@ -85,10 +85,10 @@ func _on_album_pressed() -> void:
 
 
 func _on_artist_pressed() -> void:
-	var artist:DBArtist = self.track.get_actual_artist()
-	if not artist: artist = self.track.album.artist
+	var artist:DBArtist = track.get_actual_artist()
+	if not artist: artist = track.album.artist
 	SessionManager.main_scene.set_tab('artist_page', artist)
 
 
 func _on_options_toggled(toggled_on:bool) -> void:
-	if toggled_on: self.parent.context_menu.show(parent.name)
+	if toggled_on: parent.context_menu.show(parent.name)

@@ -20,6 +20,7 @@
 [ext_resource type="StyleBox" uid="uid://cpy6186qdkjqs" path="res://Themes/Normal/Assets/Styles/LineEdit/ready_only.tres" id="10_f6ltk"]
 [ext_resource type="StyleBox" uid="uid://bvh1jsjvclehg" path="res://Themes/Normal/Assets/Styles/PanelContainer/tools_island_panel.tres" id="15_qgq1p"]
 [ext_resource type="StyleBox" uid="uid://coe1ck6nubixp" path="res://Themes/Normal/Assets/Styles/PanelContainer/rounded_texture_mask.tres" id="18_qw6u4"]
+[ext_resource type="StyleBox" uid="uid://ivkwcaj8fepd" path="res://Themes/Normal/Assets/Styles/Tooltip/normal.tres" id="21_5687p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g11mq"]
 content_margin_left = 6.0
@@ -380,22 +381,6 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_detail = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fyvmx"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.1764706, 0.1764706, 0.1764706, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
 [sub_resource type="ImageTexture" id="ImageTexture_ecbqw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4oivh"]
@@ -624,8 +609,10 @@ LineEdit/colors/selection_color = Color(0.389, 0.713, 1.15, 0.5)
 LineEdit/styles/focus = ExtResource("9_p4va6")
 LineEdit/styles/normal = ExtResource("9_pa6ds")
 LineEdit/styles/read_only = ExtResource("10_f6ltk")
+MenuBar/styles/normal = ExtResource("21_5687p")
 Panel/styles/panel = SubResource("StyleBoxFlat_36d8i")
 PanelContainer/styles/panel = ExtResource("6_u0vf8")
+PopupMenu/styles/panel = ExtResource("21_5687p")
 PrimaryLabel/base_type = &"Label"
 PrimaryLabel/colors/font_color = Color(0.89411765, 0.89411765, 0.89411765, 1)
 PrimaryLabel/colors/font_outline_color = Color(0.89, 0.89, 0.89, 1)
@@ -693,7 +680,7 @@ TextEdit/styles/normal = ExtResource("9_pa6ds")
 TextEdit/styles/read_only = ExtResource("10_f6ltk")
 ToolsIslandPanelContainer/base_type = &"PanelContainer"
 ToolsIslandPanelContainer/styles/panel = ExtResource("15_qgq1p")
-TooltipPanel/styles/panel = SubResource("StyleBoxFlat_fyvmx")
+TooltipPanel/styles/panel = ExtResource("21_5687p")
 VScrollBar/constants/padding_left = 4
 VScrollBar/constants/padding_right = 4
 VScrollBar/icons/decrement = SubResource("ImageTexture_ecbqw")
