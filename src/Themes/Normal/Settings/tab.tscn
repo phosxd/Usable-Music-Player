@@ -748,6 +748,22 @@ title = "Immersive View"
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold" unique_id=1362471797]
 layout_mode = 2
 
+[node name="Slide Away Player" type="HBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox" unique_id=379749127]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Slide Away Player" unique_id=1427876035]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Player will slide out of view when not being used. Hover over it's original position to bring it back."
+mouse_filter = 1
+theme_type_variation = &"LabelPrimary"
+text = "Slide-Away Player"
+
+[node name="Immersive View Slide Away Player" type="CheckButton" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Slide Away Player" unique_id=2062817173]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+
 [node name="Reactive Background" type="HBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox" unique_id=986277391]
 layout_mode = 2
 
@@ -761,7 +777,7 @@ mouse_filter = 1
 theme_type_variation = &"LabelPrimary"
 text = "Reactive Background"
 
-[node name="Reactive Immersive View" type="CheckButton" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background" unique_id=2032609623]
+[node name="Immersive View Reactive Background" type="CheckButton" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background" unique_id=2032609623]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
@@ -1028,7 +1044,8 @@ theme_type_variation = &"ScrollFillSeparator"
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Queue Size Limit/Queue Size Limit" to="." method="_on_queue_size_limit_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Image Detail/Image Detail" to="Scroll/Margin/VBox/UI" method="_on_image_detail_value_changed"]
 [connection signal="folding_changed" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_fold_folding_changed"]
-[connection signal="toggled" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background/Reactive Immersive View" to="Scroll/Margin/VBox/Theme" method="_on_reactive_immersive_view_toggled"]
+[connection signal="toggled" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Slide Away Player/Immersive View Slide Away Player" to="Scroll/Margin/VBox/Immersive View" method="_on_slide_away_player_toggled"]
+[connection signal="toggled" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background/Immersive View Reactive Background" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_reactive_background_toggled"]
 [connection signal="item_selected" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Background Texture/Immersive View Texture Name" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_texture_name_item_selected"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Play Pause/Play Pause Key" to="." method="_on_play_pause_key_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Skip Backward/Skip Backward Key" to="." method="_on_skip_backward_key_pressed"]

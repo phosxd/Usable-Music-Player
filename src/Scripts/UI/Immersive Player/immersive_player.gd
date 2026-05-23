@@ -113,7 +113,7 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 
 var prev_bg_color := Color.WHITE
 func update_visualizer(db:float) -> void:
-	if not SessionManager.reactive_immersive_view:
+	if not SessionManager.immersive_view_reactive_background:
 		%Background.self_modulate = Color.WHITE
 		return
 

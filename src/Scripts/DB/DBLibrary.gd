@@ -266,14 +266,14 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 	var album_entry: DBAlbum
 	var track_entry: DBTrack
 	# Find or create artist.
-	for artist:DBArtist in self.artists:
+	for artist:DBArtist in artists:
 		if artist.name.to_lower() == artist_data.name.to_lower() \
 		&& (artist.mb_id == artist_data.mb_id or artist_data.mb_id.is_empty()):
 			artist_entry = artist
 			break
 	if not artist_entry: artist_entry = DBArtist.new(self, artist_data)
 	# Find or create album.
-	for album:DBAlbum in self.albums:
+	for album:DBAlbum in albums:
 		if album.artist == artist_entry \
 		&& album.name == album_data.name \
 		&& album.year == album_data.year:
@@ -281,7 +281,7 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 			break
 	if not album_entry: album_entry = DBAlbum.new(artist_entry, album_data)
 	# Find or create track.
-	for track:DBTrack in self.tracks:
+	for track:DBTrack in tracks:
 		if track.album == album_entry \
 		&& track.name == track_data.name \
 		&& track.path == track_data.path \

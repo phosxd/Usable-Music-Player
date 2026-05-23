@@ -21,6 +21,7 @@ func start_animation(targets:Array[float], duration:float) -> void:
 
 
 func _process(_delta:float) -> void:
+	if not SessionManager.immersive_view_slide_away_player: return
 	if not %Player/'Bar Visualizer'.get_global_rect().has_point(get_viewport().get_mouse_position()): return
 
 	# If hovering over player while hidden, play animation to show it.
@@ -33,5 +34,6 @@ func _process(_delta:float) -> void:
 
 
 func _on_timeout() -> void:
+	if not SessionManager.immersive_view_slide_away_player: return
 	start_animation([%Player/%Panel.size.y, %Player/%'Bar Visualizer'.size.y], 0.75)
 	self.wait_time = wait_time_2

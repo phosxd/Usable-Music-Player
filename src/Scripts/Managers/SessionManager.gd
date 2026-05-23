@@ -63,7 +63,8 @@ const sections:Array[Array] = [
 		'image_detail',
 	]],
 	['Immersive View', [
-		'reactive_immersive_view',
+		'immersive_view_slide_away_player',
+		'immersive_view_reactive_background',
 		'immersive_view_texture_name',
 	]],
 	['API', [
@@ -97,7 +98,8 @@ const property_data:Array[Array] = [
 	['image_detail',[TYPE_INT]],
 	['clear_queue_warning',[TYPE_BOOL]],
 	# Immersive View.
-	['reactive_immersive_view',[TYPE_BOOL]],
+	['immersive_view_slide_away_player',[TYPE_BOOL]],
+	['immersive_view_reactive_background',[TYPE_BOOL]],
 	['immersive_view_texture_name',[TYPE_STRING]],
 	# Audio.
 	['replay_gain_mode',[TYPE_INT]],
@@ -243,7 +245,8 @@ var clear_queue_warning:bool = true
 
 #region immersive veiw
 
-var reactive_immersive_view:bool = false
+var immersive_view_slide_away_player:bool = true
+var immersive_view_reactive_background:bool = false
 var immersive_view_texture_name:String = 'Stripes'
 
 #endregion

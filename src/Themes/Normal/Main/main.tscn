@@ -34,7 +34,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hto8k"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wbs4r"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -305,7 +305,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_hto8k")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wbs4r")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
