@@ -2,7 +2,7 @@ extends Control
 
 signal closed
 
-@onready var card_scene:PackedScene = SessionManager.get_layout_theme_scene('Main/activity_menu_card')
+@onready var card_scene:PackedScene = SessionManager.get_scene('Main/activity_menu_card')
 
 var cards:Array[Control] = []
 

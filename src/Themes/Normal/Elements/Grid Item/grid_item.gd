@@ -60,7 +60,7 @@ signal alt_pressed
 
 func _ready() -> void:
 	if Engine.is_editor_hint() == true: return
-	item_size = Vector2.ONE*SessionManager.grid_item_size
+	item_size = Vector2.ONE*SessionManager.get_var('grid_item_size')
 
 
 func _on_button_pressed() -> void:

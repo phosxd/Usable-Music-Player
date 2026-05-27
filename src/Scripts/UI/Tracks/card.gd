@@ -8,7 +8,7 @@ enum CardMode {
 }
 
 @onready var context_menu:ContextMenu = SessionManager.context_menus.track_card
-@onready var card_details_scene:PackedScene = SessionManager.get_layout_theme_scene('Tracks/card_details')
+@onready var card_details_scene:PackedScene = SessionManager.get_scene('Tracks/card_details')
 var track: DBTrack
 var selected_mode := CardMode.detailed
 var card_details_instance: Control
@@ -28,7 +28,7 @@ func set_mode(mode:int) -> void:
 
 
 func _on_button_pressed() -> void:
-	if PlayerManager.queue.size() > 1 && SessionManager.clear_queue_warning:
+	if PlayerManager.queue.size() > 1 && SessionManager.get_var('clear_queue_warning'):
 		DialogManager.popup_confirmation_dialog(
 			'Do you want to continue?\nYour queue will be cleared.', # Text.
 			'Disable this warning in settings.', # Subtext.

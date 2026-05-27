@@ -3,136 +3,9 @@ extends Node
 
 const minilog_importance := MiniLog.Importance.High
 
-enum LibraryType {
-	LocalDirectory,
-	NavidromeServer,
-}
-
-enum ReplayGainMode {
-	None,
-	Track,
-	Album,
-	Auto,
-}
-
-enum AccentMode {
-	System,
-	Dynamic,
-	Custom,
-}
-
-## Audio visualizer mode.
-enum VisualizerMode {
-	OFF,
-	GLOW,
-	BAR,
-}
-
-const image_detail_values:Dictionary[int,int] = {
-	0: 100,
-	1: 300,
-	2: 600,
-	3: 800,
-	4: 1200,
-	5: 1800,
-}
-
-const sections:Array[Array] = [
-	['Library', [
-		'auto_scan_internal',
-	]],
-	['Audio', [
-		'replay_gain',
-		'replay_gain_preamp',
-	]],
-	['Theme', [
-		'theme',
-		'theme_mode',
-		'accent_mode',
-		'visualizer_mode',
-		'visualizer_bar_count',
-		'visualizer_bar_smoothing',
-		'custom_accent',
-		'panel_tint',
-		'button_tint',
-	]],
-	['UI', [
-		'landing_page',
-		'grid_item_size',
-		'queue_size_limit',
-		'image_detail',
-	]],
-	['Immersive View', [
-		'immersive_view_slide_away_player',
-		'immersive_view_reactive_background',
-		'immersive_view_texture_name',
-	]],
-	['API', [
-		'fetch_lyrics',
-		'fetch_artist_cover',
-		'fetch_album_cover',
-		'send_track_finished_notif',
-		'send_library_scan_finished_notif',
-	]],
-]
-
-const property_data:Array[Array] = [
-	# Library settings.
-	['library_order',[TYPE_PACKED_STRING_ARRAY]],
-	['visible_libraries',[TYPE_PACKED_STRING_ARRAY]],
-	['auto_scan_interval',[TYPE_INT,TYPE_FLOAT]],
-	# Theme.
-	['theme',[TYPE_STRING]],
-	['theme_mode',[TYPE_INT]],
-	['accent_mode',[TYPE_INT]],
-	['visualizer_mode',[TYPE_INT]],
-	['visualizer_bar_count',[TYPE_INT]],
-	['visualizer_bar_smoothing',[TYPE_FLOAT]],
-	['custom_accent',[TYPE_COLOR]],
-	['panel_tint',[TYPE_COLOR]],
-	['button_tint',[TYPE_COLOR]],
-	# UI.
-	['landing_page',[TYPE_STRING]],
-	['grid_item_size',[TYPE_INT,TYPE_FLOAT]],
-	['queue_size_limit',[TYPE_INT]],
-	['image_detail',[TYPE_INT]],
-	['clear_queue_warning',[TYPE_BOOL]],
-	# Immersive View.
-	['immersive_view_slide_away_player',[TYPE_BOOL]],
-	['immersive_view_reactive_background',[TYPE_BOOL]],
-	['immersive_view_texture_name',[TYPE_STRING]],
-	# Audio.
-	['replay_gain_mode',[TYPE_INT]],
-	['replay_gain_preamp',[TYPE_FLOAT]],
-	# API.
-	['fetch_lyrics',[TYPE_BOOL]],
-	['fetch_artist_cover',[TYPE_BOOL]],
-	['fetch_album_cover',[TYPE_BOOL]],
-	['send_track_finished_notif',[TYPE_BOOL]],
-	['send_library_scan_finished_notif',[TYPE_BOOL]],
-
-	# Misc data.
-	['user_data_bytes',[TYPE_INT]],
-	# Tab data.
-	['last_tab',[TYPE_STRING]],
-	['artists_tab_scroll_value',[TYPE_FLOAT]],
-	['albums_tab_scroll_value',[TYPE_FLOAT]],
-	['tracks_tab_scroll_value',[TYPE_FLOAT]],
-	['right_sidebar_tab',[TYPE_STRING]],
-	['tab_content_split',[TYPE_PACKED_INT32_ARRAY]],
-	# Sort data.
-	['folded_sections',[TYPE_PACKED_STRING_ARRAY]],
-	['artist_sort_mode',[TYPE_INT]],
-	['artist_ascend_mode',[TYPE_BOOL]],
-	['album_sort_mode',[TYPE_INT]],
-	['album_ascend_mode',[TYPE_BOOL]],
-	['track_sort_mode',[TYPE_INT]],
-	['track_ascend_mode',[TYPE_BOOL]],
-]
-
 ## Emitted when the session has been loaded.
 signal session_loaded
-signal value_changed(property_name:String)
+signal value_changed(property_name:String, source_name:String)
 ## Path to the session file.
 const session_file_path:String = 'user://session.json'
 
@@ -144,324 +17,167 @@ var main_scene: Node
 var default_window_size: Vector2i:
 	set(value):
 		default_window_size = value
-		value_changed.emit('default_window_size')
+		value_changed.emit('default_window_size', 'base')
 
 ## The current window size.
 var current_window_size: Vector2i:
 	set(value):
 		current_window_size = value
-		value_changed.emit('current_window_size')
-
-#endregion
-
-#region library settings
-
-var library_order: PackedStringArray
-var visible_libraries: PackedStringArray
-## How many minutes to wait before automatically scanning.
-var auto_scan_interval:float = 0.5:
-	set(value):
-		auto_scan_interval = value
-		if value == 0: auto_scan_timer.wait_time = 999_999_999_999
-		else: auto_scan_timer.wait_time = value*60.0
-
-#endregion
-
-#region theme settings
-
-var theme:String = '':
-	set(value):
-		theme = value
-		ThemeManager.set_theme(value)
-		value_changed.emit('theme')
-
-var theme_mode:int = 0:
-	set(value):
-		theme_mode = value
-		ThemeManager.set_theme_mode(value)
-		value_changed.emit('theme_mode')
-
-var accent_mode := AccentMode.System:
-	set(value):
-		accent_mode = value
-		value_changed.emit('accent_mode')
-
-var custom_accent := Color(0.9, 0.9, 0.9):
-	set(value):
-		custom_accent = value
-		value_changed.emit('custom_accent')
-
-var visualizer_mode:VisualizerMode = VisualizerMode.OFF:
-	set(value):
-		visualizer_mode = value
-		value_changed.emit('visualizer_mode')
-
-var visualizer_bar_count:int = 125:
-	set(value):
-		visualizer_bar_count = value
-		value_changed.emit('visualizer_bar_count')
-
-var visualizer_bar_smoothing:float = 0.5:
-	set(value):
-		visualizer_bar_smoothing = value
-		value_changed.emit('visualizer_bar_smoothing')
-
-var panel_tint := Color.TRANSPARENT:
-	set(value):
-		panel_tint = value
-		ThemeManager.panel_tint = value
-		value_changed.emit('panel_tint')
-
-var button_tint := Color.TRANSPARENT:
-	set(value):
-		button_tint = value
-		ThemeManager.button_tint = value
-		value_changed.emit('button_tint')
-
-#endregion
-
-#region ui settings
-
-var grid_item_size:float = 175
-## The maximum number of items allowed in the queue at once.
-var queue_size_limit:int = 150:
-	set(value):
-		queue_size_limit = value
-		value_changed.emit('queue_size_limit')
-
-## Image detail for album & artist covers.
-## Resets cached album cover images when set.
-var image_detail:int = image_detail_values[0]:
-	set(value):
-		image_detail = value
-		for album:DBAlbum in LibraryManager.get_albums_sorted():
-			if not album: continue
-			album._cover = null
-		value_changed.emit('image_detail')
-
-var clear_queue_warning:bool = true
-
-#endregion
-
-#region immersive veiw
-
-var immersive_view_slide_away_player:bool = true
-var immersive_view_reactive_background:bool = false
-var immersive_view_texture_name:String = 'Stripes'
-
-#endregion
-
-#region audio settings
-
-var replay_gain_mode := ReplayGainMode.Album
-var replay_gain_preamp:float = 0.0
-
-#endregion
-
-#region api settings
-
-var fetch_lyrics:bool = true
-var fetch_artist_cover:bool = false
-var fetch_album_cover:bool = false
-var send_track_finished_notif:bool = true
-var send_library_scan_finished_notif:bool = true
+		value_changed.emit('current_window_size', 'base')
 
 #endregion
 
 
-#region registers
-
-var immersive_view_texture_names:Array[String] = []
-
-#endregion
-
-
-#region misc data
-
-var user_data_bytes:int = 0
-
-#endregion
-
-#region sorting data
-
-var folded_sections: PackedStringArray
-
-## Global search term.
-var search_term:String = ''
-## Artists tab sort mode.
-var artist_sort_mode := DBLibrary.ArtistSortMode.title
-
-## Artists tab ascend mode.
-var artist_ascend_mode:bool = true:
-	set(value):
-		artist_ascend_mode = value
-		value_changed.emit('artist_ascend_mode')
-
-## Albums tab sort mode.
-var album_sort_mode := DBLibrary.AlbumSortMode.title:
-	set(value):
-		album_sort_mode = value
-		value_changed.emit('album_sort_mode')
-
-## Albums tab ascend mode.
-var album_ascend_mode:bool = true:
-	set(value):
-		album_ascend_mode = value
-		value_changed.emit('album_ascend_mode')
-
-## Tracks tab sort mode.
-var track_sort_mode := DBLibrary.TrackSortMode.title:
-	set(value):
-		track_sort_mode = value
-		value_changed.emit('track_sort_mode')
-
-## Tracks tab ascend mode.
-var track_ascend_mode:bool = true:
-	set(value):
-		track_ascend_mode = value
-		value_changed.emit('track_ascend_mode')
-
-var landing_page:String = '':
-	set(value):
-		landing_page = value
-		value_changed.emit('landing_page')
-
-var last_tab:String = 'albums':
-	set(value):
-		last_tab = value
-		value_changed.emit('last_tab')
-
-var right_sidebar_tab:String = '':
-	set(value):
-		right_sidebar_tab = value
-		value_changed.emit('right_sidebar_tab')
-
-var tab_content_split := PackedInt32Array():
-	set(value):
-		tab_content_split = value
-		value_changed.emit('tab_content_split')
-
-var artists_tab_scroll_value:float = 0
-var albums_tab_scroll_value:float = 0
-var tracks_tab_scroll_value:float = 0
-
-#endregion
-
-#region context menues
-
-@onready var context_menus:Dictionary[String,ContextMenu] = {
-	'track_card': ContextMenu.new([
-		{
-			'id': 'play',
-			'type': 'button',
-			'text': 'Play (clear queue)',
-			'icon': SessionManager.get_icon('play'),
-		},
-		{
-			'id': 'play_next',
-			'type': 'button',
-			'text': 'Play Next',
-			'icon': SessionManager.get_icon('queue_play_next'),
-		},
-		{
-			'id': 'add_to_queue',
-			'type': 'button',
-			'text': 'Add To Queue',
-			'icon': SessionManager.get_icon('queue_add_to_queue'),
-		},
-		{
-			'id': 'show_album',
-			'type': 'button',
-			'text': 'Show Album',
-			'icon': SessionManager.get_icon('folder'),
-		},
-		{
-			'id': 'show_in_files',
-			'type': 'button',
-			'text': 'Show In Files',
-			'icon': SessionManager.get_icon('folder'),
-		},
-	]),
-	'queue_card': ContextMenu.new([
-		{
-			'id': 'remove',
-			'type': 'submenu',
-			'text': 'Remove',
-			'icon': SessionManager.get_icon('remove'),
-			'items': [
-				{
-					'id': 'remove_track',
-					'type': 'button',
-					'text': 'Track',
-				},
-				{
-					'id': 'remove_album',
-					'type': 'button',
-					'text': 'Album',
-				},
-				{
-					'id': 'remove_artist',
-					'type': 'button',
-					'text': 'Artist',
-				},
-			],
-		},
-		{
-			'id': 'stop_after_this',
-			'type': 'button',
-			'text': 'Stop After This',
-			'icon': SessionManager.get_icon('pause'),
-		},
-		{
-			'id': 'show_album',
-			'type': 'button',
-			'text': 'Show Album',
-			'icon': SessionManager.get_icon('folder'),
-		},
-		{
-			'id': 'show_in_files',
-			'type': 'button',
-			'text': 'Show In Files',
-			'icon': SessionManager.get_icon('folder'),
-		},
-	]),
-}
-
-#endregion
-
-#region timers
-
-var auto_scan_timer := Timer.new()
-
-#endregion
+var session_scripts:Dictionary[String,Object] = {}
+var session_ready:bool = false
+var context_menus:Dictionary[String,ContextMenu] = {}
 
 
 func _ready() -> void:
 	self.default_window_size = self.get_window().size
 	self.current_window_size = default_window_size
 
-	# Load session & ensure proper theme.
-	load_session()
-	if theme.is_empty(): theme = 'UMP_DEFAULT' # Set default layout theme if none set by session file.
-
-	# Populate register: immersive veiw texture names.
 	for mod:TesseractMod in TesseractAPI.mod_instances.values():
-		var files:PackedStringArray = mod.get_files_at('Assets/Immersive View Textures')
+		var files:PackedStringArray = mod.get_files_at('Session Scripts')
 		for file_path in files:
-			immersive_view_texture_names.append(file_path.split('/')[0].get_basename())
-	for file_name:String in DirAccess.get_files_at('res://Assets/Immersive View Textures'):
-		immersive_view_texture_names.append(file_name.get_basename())
+			var script = mod.resources[file_path]
+			if script is not GDScript: continue
+			init_session_script(file_path.split('/')[0].get_basename(), script)
 
-	# Configure auto-scan timer.
-	auto_scan_timer.one_shot = false
-	auto_scan_timer.autostart = true
-	auto_scan_interval = auto_scan_interval
-	auto_scan_timer.timeout.connect(LibraryManager.scan_all_libraries)
-	self.add_child(auto_scan_timer)
+	for file_name:String in DirAccess.get_files_at('res://Session Scripts'):
+		if file_name.get_extension().to_lower() not in ['gd','gdc']: continue
+		var script = load('res://Session Scripts/'+file_name)
+		if script is not GDScript: continue
+		init_session_script(file_name.get_basename(), script)
+
+
+	load_session()
+	if get_var('theme').is_empty(): set_var('theme', 'UMP_DEFAULT') # Set default layout theme if none set by session file.
+
+
+	context_menus = {
+		'track_card': ContextMenu.new([
+			{
+				'id': 'play',
+				'type': 'button',
+				'text': 'Play (clear queue)',
+				'icon': SessionManager.get_icon('play'),
+			},
+			{
+				'id': 'play_next',
+				'type': 'button',
+				'text': 'Play Next',
+				'icon': SessionManager.get_icon('queue_play_next'),
+			},
+			{
+				'id': 'add_to_queue',
+				'type': 'button',
+				'text': 'Add To Queue',
+				'icon': SessionManager.get_icon('queue_add_to_queue'),
+			},
+			{
+				'id': 'show_album',
+				'type': 'button',
+				'text': 'Show Album',
+				'icon': SessionManager.get_icon('folder'),
+			},
+			{
+				'id': 'show_in_files',
+				'type': 'button',
+				'text': 'Show In Files',
+				'icon': SessionManager.get_icon('folder'),
+			},
+		]),
+		'queue_card': ContextMenu.new([
+			{
+				'id': 'remove',
+				'type': 'submenu',
+				'text': 'Remove',
+				'icon': SessionManager.get_icon('remove'),
+				'items': [
+					{
+						'id': 'remove_track',
+						'type': 'button',
+						'text': 'Track',
+					},
+					{
+						'id': 'remove_album',
+						'type': 'button',
+						'text': 'Album',
+					},
+					{
+						'id': 'remove_artist',
+						'type': 'button',
+						'text': 'Artist',
+					},
+				],
+			},
+			{
+				'id': 'stop_after_this',
+				'type': 'button',
+				'text': 'Stop After This',
+				'icon': SessionManager.get_icon('pause'),
+			},
+			{
+				'id': 'show_album',
+				'type': 'button',
+				'text': 'Show Album',
+				'icon': SessionManager.get_icon('folder'),
+			},
+			{
+				'id': 'show_in_files',
+				'type': 'button',
+				'text': 'Show In Files',
+				'icon': SessionManager.get_icon('folder'),
+			},
+		]),
+	}
+
+
+	session_ready = true
+
+
+func init_session_script(script_name:String, script:GDScript) -> void:
+	var script_instance = script.new()
+	if script_instance is not Object: return
+	script_instance = script_instance as Object
+	session_scripts[script_name] = script_instance
+
+
+func get_var(property_name:String, source_name:String='base') -> Variant:
+	# Get script.
+	var source_script = session_scripts.get(source_name)
+	if source_script is not Object: return null
+	source_script = source_script as Object
+	# Return value.
+	var property_value = source_script.get(property_name)
+	return property_value
+
+
+func set_var(property_name:String, value:Variant, source_name:String='base') -> void:
+	# Get script.
+	var source_script = session_scripts.get(source_name)
+	if source_script is not Object: return
+	source_script = source_script as Object
+	var old_value = get_var(property_name, source_name)
+	# Set value.
+	source_script.set(property_name, value)
+	# Emit value changed signal.
+	if session_ready && old_value != value:
+		value_changed.emit(property_name, source_name)
+
+
+func call_func(func_name:String, args:Array=[], source_name:String='base') -> Variant:
+	# Get script.
+	var source_script = session_scripts.get(source_name)
+	if source_script is not Object: return
+	source_script = source_script as Object
+	# Call function & return value.
+	return source_script.callv(func_name, args)
 
 
 func reload_main_scene() -> void:
-	var main_scene_ = SessionManager.get_layout_theme_scene('Main/main')
+	var main_scene_ = SessionManager.get_scene('Main/main')
 	var main_scene_instance:Node = main_scene_.instantiate()
 	var tree:SceneTree = self.get_tree()
 	tree.change_scene_to_node.call_deferred(main_scene_instance)
@@ -471,31 +187,31 @@ func reload_main_scene() -> void:
 func get_accent_color() -> Color:
 	var accent: Color
 
-	match SessionManager.accent_mode:
-		SessionManager.AccentMode.System:
+	match SessionManager.get_var('accent_mode'):
+		0: # System.
 			accent = DisplayServer.get_accent_color()
-		SessionManager.AccentMode.Dynamic:
+		1: # Dynamic.
 			if not PlayerManager.queue.is_empty():
 				accent = PlayerManager.get_current_track().album.get_album_dominant_color()
 			else:
 				accent = ThemeManager.accent_color
-		SessionManager.AccentMode.Custom:
-			accent = SessionManager.custom_accent
+		2: # Custom.
+			accent = SessionManager.get_var('custom_accent')
 
 	return accent
 
 
 ## Get the scene at [param scene_name] for the current theme or [param theme_override].
-func get_layout_theme_scene(scene_name:String, theme_override:String='', recurse:int=0) -> PackedScene:
+func get_scene(scene_name:String, theme_override:String='', recurse:int=0) -> PackedScene:
 	if recurse > 1: return null
 	var theme_: String
-	if theme_override.is_empty(): theme_ = theme
+	if theme_override.is_empty(): theme_ = get_var('theme')
 	else: theme_ = theme_override
 
 	var scene
 	var scene_path:String = 'res://Themes/%s/%s.tscn' % [theme_, scene_name]
 	if ResourceLoader.exists(scene_path): scene = load(scene_path)
-	if not scene: return SessionManager.get_layout_theme_scene(scene_name, 'Normal', recurse+1)
+	if not scene: return SessionManager.get_scene(scene_name, 'Normal', recurse+1)
 	return scene
 
 
@@ -503,7 +219,7 @@ func get_layout_theme_scene(scene_name:String, theme_override:String='', recurse
 func get_icon(icon_name:String, theme_override:String='', recurse:int=0) -> Texture2D:
 	if recurse > 1: return null
 	var theme_: String
-	if theme_override.is_empty(): theme_ = theme
+	if theme_override.is_empty(): theme_ = get_var('theme')
 	else: theme_ = theme_override
 
 	var icon
@@ -511,13 +227,6 @@ func get_icon(icon_name:String, theme_override:String='', recurse:int=0) -> Text
 	if ResourceLoader.exists(icon_path): icon = load(icon_path)
 	if icon is not Texture2D: return SessionManager.get_icon(icon_name, 'Normal', recurse+1)
 	return icon
-
-
-func get_immersive_view_texture() -> Texture2D:
-	var texture
-	var texture_path:String = 'res://Assets/Immersive View Textures/%s.tres' % immersive_view_texture_name
-	if ResourceLoader.exists(texture_path): texture = load(texture_path)
-	return texture
 
 
 ## Load session from disk.
@@ -552,13 +261,17 @@ func load_session() -> void:
 
 	# Set volume.
 	var raw_volume = data.get('volume')
-	if raw_volume is float:
+	if raw_volume is float or raw_volume is int:
 		PlayerManager.volume = raw_volume
 
 	var raw_auto_queue_start_index = data.get('auto_queue_start_index')
 	if (raw_auto_queue_start_index is int or raw_auto_queue_start_index is float) && raw_auto_queue_start_index != -1:
 		PlayerManager.auto_queue_start_index = int(raw_auto_queue_start_index)
 
+	# Emit session loaded signals.
+	for script:Object in session_scripts.values():
+		if script.has_method('session_loaded') && script.get_method_argument_count('session_loaded') == 0:
+			script.call('session_loaded')
 	session_loaded.emit()
 	MiniLog.info('Session loaded.', SessionManager)
 
@@ -575,14 +288,18 @@ func save_session() -> void:
 	}
 
 	# Sync library order/visibility & save changed libraries.
-	self.library_order.clear()
+	get_var('library_order').clear()
 	for library:DBLibrary in LibraryManager.libraries:
-		self.library_order.append(library.id)
+		get_var('library_order').append(library.id)
 		if library.changed: library.save()
 
 	# Set data properties.
-	for i in property_data:
-		data.set(i[0], self.get(i[0]))
+	for script in session_scripts.values():
+		var property_data = script.get('property_data')
+		if property_data is not Array: continue
+		for i in property_data:
+			if i is not Array: continue
+			data.set(i[0], script.get(i[0]))
 
 	# Set data queue.
 	for track:DBTrack in PlayerManager.queue:
@@ -605,13 +322,17 @@ func import_config(path:String) -> Dictionary:
 	if data == null: return {}
 
 	# Apply properties.
-	for i in property_data:
-		var data_entry = data.get(i[0])
-		if data_entry == null: continue
-		if typeof(data_entry) == TYPE_FLOAT && TYPE_INT in i[1] && TYPE_FLOAT not in i[1]:
-			data_entry = int(data_entry)
-		if typeof(data_entry) in i[1]:
-			set(i[0], data_entry)
+	for script in session_scripts.values():
+		var property_data = script.get('property_data')
+		if property_data is not Array: continue
+		for i in property_data:
+			if i is not Array: continue
+			var data_entry = data.get(i[0])
+			if data_entry == null: continue
+			if typeof(data_entry) == TYPE_FLOAT && TYPE_INT in i[1] && TYPE_FLOAT not in i[1]:
+				data_entry = int(data_entry)
+			if typeof(data_entry) in i[1]:
+				script.set(i[0], data_entry)
 
 	return data
 
@@ -626,9 +347,13 @@ func export_config(path:String='user://session_export.json', export_sections:Arr
 
 	# Set data properties.
 	var data = {}
-	for i in property_data:
-		if i[0] not in allowed_properties: continue
-		data.set(i[0], self.get(i[0]))
+	for script in session_scripts.values():
+		var property_data = script.get('property_data')
+		if property_data is not Array: continue
+		for i in property_data:
+			if i is not Array: continue
+			if i[0] not in allowed_properties: continue
+			data.set(i[0], script.get(i[0]))
 
 	# Write file.
 	var file := FileAccess.open(path, FileAccess.WRITE)

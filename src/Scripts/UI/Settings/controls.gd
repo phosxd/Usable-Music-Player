@@ -10,7 +10,7 @@ var export_config_values:Array[String] = []
 func _ready() -> void:
 	export_config_values.clear()
 	export_config_popup.add_separator()
-	for item in SessionManager.sections:
+	for item in SessionManager.get_var('sections'):
 		export_config_popup.add_item(item[0])
 		export_config_values.append(item[0])
 	export_config_popup.index_pressed.connect(_on_export_config_index_pressed)

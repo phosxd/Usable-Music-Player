@@ -1,7 +1,11 @@
 extends Control
 
-@onready var activity_menu_scene:PackedScene = SessionManager.get_layout_theme_scene('Main/activity_menu')
+@onready var activity_menu_scene:PackedScene = SessionManager.get_scene('Main/activity_menu')
 var activity_menu: Control
+
+
+func _ready() -> void:
+	%Search.text = SessionManager.get_var('search_term')
 
 
 func _process(_delta:float) -> void:
@@ -15,7 +19,7 @@ func _process(_delta:float) -> void:
 
 
 func _on_search_text_changed(new_text:String) -> void:
-	SessionManager.search_term = new_text
+	SessionManager.set_var('search_term', new_text)
 	%Search.text_submitted.emit(new_text)
 
 

@@ -68,25 +68,22 @@ placeholder_text = "Password..."
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 icon = ExtResource("3_n3its")
-flat = true
 
 [node name="Move Down" type="Button" parent="VBox/Controls" unique_id=1863150039]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 icon = ExtResource("5_n3its")
-flat = true
 
 [node name="Remove" type="Button" parent="VBox/Controls" unique_id=203149948]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 icon = ExtResource("4_tdsdd")
-flat = true
 
 [connection signal="pressed" from="VBox/Controls/Update" to="." method="_on_update_pressed"]
 [connection signal="text_changed" from="VBox/Controls/URL" to="." method="_on_changed"]

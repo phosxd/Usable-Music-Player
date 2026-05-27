@@ -54,7 +54,7 @@ var volume:float = 100.0:
 		volume = value
 		audio_stream_player.volume_linear = (value*0.01)
 		audio_stream_player.volume_db += replay_gain
-		if SessionManager.replay_gain_mode != SessionManager.ReplayGainMode.None && replay_gain != 0.0:
+		if SessionManager.get_var('replay_gain_mode') != 0 && replay_gain != 0.0:
 			audio_stream_player.volume_db += SessionManager.replay_gain_preamp
 		volume_updated.emit(value)
 
@@ -83,14 +83,14 @@ func _process(_delta:float) -> void:
 		track_progress = audio_stream_player.get_playback_position()
 		track_progress_updated.emit(track_progress)
 		var track:DBTrack = get_current_track()
-		match SessionManager.replay_gain_mode:
-			SessionManager.ReplayGainMode.None:
+		match SessionManager.get_var('replay_gain_mode'):
+			0: # None.
 				if 0.0 != replay_gain: replay_gain = 0.0
-			SessionManager.ReplayGainMode.Track:
+			1: # Track.
 				if track.replay_gain != replay_gain: replay_gain = track.replay_gain
-			SessionManager.ReplayGainMode.Album:
+			2: # Album.
 				if track.album.replay_gain != replay_gain: replay_gain = track.album.replay_gain
-			SessionManager.ReplayGainMode.Auto:
+			3: # Auto.
 				if track.album.replay_gain != replay_gain:
 					replay_gain = track.album.replay_gain
 				if track.replay_gain != replay_gain:
@@ -175,18 +175,19 @@ func set_queue(new_queue:Array[DBTrack], anchor:DBTrack=null) -> void:
 	MiniLog.pro('Set queue.', PlayerManager)
 	is_shuffled = false
 
+	var queue_size_limit:int = SessionManager.get_var('queue_size_limit')
 	var anchor_index:int = new_queue.find(anchor) if anchor else -1
-	if anchor && anchor_index != -1 && new_queue.size() >= SessionManager.queue_size_limit:
-		queue = new_queue.slice(anchor_index, SessionManager.queue_size_limit+anchor_index)
+	if anchor && anchor_index != -1 && new_queue.size() >= queue_size_limit:
+		queue = new_queue.slice(anchor_index, queue_size_limit+anchor_index)
 	else:
-		queue = new_queue.slice(0, SessionManager.queue_size_limit)
+		queue = new_queue.slice(0, queue_size_limit)
 
 	queue_updated.emit(QueueUpdateCode.Set, null)
 
 
 func add_to_queue(track:DBTrack, emit:bool=true) -> void:
 	queue.append(track)
-	if queue.size() >= SessionManager.queue_size_limit:
+	if queue.size() >= SessionManager.get_var('queue_size_limit'):
 		remove_from_queue(queue[0 if queue_position != 0 else 1])
 
 	if emit: queue_updated.emit(QueueUpdateCode.Add, track)
@@ -206,7 +207,7 @@ func insert_to_queue(position:int, track:DBTrack, emit:bool=true) -> void:
 		queue.insert(position, track)
 		if position < PlayerManager.queue_position:
 			PlayerManager.queue_position += 1
-	if queue.size() >= SessionManager.queue_size_limit:
+	if queue.size() >= SessionManager.get_var('queue_size_limit'):
 		remove_from_queue(queue[0 if queue_position != 0 else 1])
 
 	if emit: queue_updated.emit(QueueUpdateCode.Insert, {'track':track,'index':position})
@@ -232,7 +233,7 @@ func _current_track_finished() -> void:
 	if loop_mode == LoopMode.TRACK: set_playing(true)
 	else: skip_forward()
 
-	if SessionManager.send_track_finished_notif:
+	if SessionManager.get_var('send_track_finished_notif'):
 		var track:DBTrack = get_current_track()
 		if track:
 			SystemNotif.send(

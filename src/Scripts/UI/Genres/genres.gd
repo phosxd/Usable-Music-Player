@@ -12,7 +12,7 @@ extends VBoxContainer
 		'enabled': false,
 	}
 }
-@onready var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
+@onready var card_scene := SessionManager.get_scene('Elements/Grid Item/Grid Item')
 
 
 func _ready() -> void:

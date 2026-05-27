@@ -29,7 +29,7 @@ extends VBoxContainer
 		'callback': _on_search_updated,
 	}
 }
-@onready var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
+@onready var card_scene := SessionManager.get_scene('Elements/Grid Item/Grid Item')
 @onready var sort_mode: DBLibrary.AlbumSortMode
 var ascend_mode = null
 var albums:Array[DBAlbum] = []
@@ -37,8 +37,8 @@ var update_count:int = 0
 
 
 func _ready() -> void:
-	sort_mode = SessionManager.album_sort_mode
-	ascend_mode = SessionManager.album_ascend_mode
+	sort_mode = SessionManager.get_var('album_sort_mode')
+	ascend_mode = SessionManager.get_var('album_ascend_mode')
 	sort()
 
 
@@ -51,15 +51,15 @@ func unload() -> void:
 
 func sort() -> void:
 	update_count += 1
-	SessionManager.album_sort_mode = sort_mode
-	if ascend_mode != null: SessionManager.album_ascend_mode = ascend_mode
+	SessionManager.set_var('album_sort_mode', sort_mode)
+	if ascend_mode != null: SessionManager.set_var('album_ascend_mode', ascend_mode)
 	for child:Node in %Grid.get_children():
 		child.queue_free()
 
 	albums = LibraryManager.get_albums_sorted(sort_mode).filter(func(album:DBAlbum) -> bool:
 		# Filter with search term.
-		if not SessionManager.search_term.is_empty():
-			var search_term:String = SessionManager.search_term.to_lower()
+		if not SessionManager.get_var('search_term').is_empty():
+			var search_term:String = SessionManager.get_var('search_term').to_lower()
 			if not StringUtils.fuzzy_match(search_term, album.name) \
 			&& not StringUtils.fuzzy_match(search_term, album.artist.name) \
 			&& not album.year.contains(search_term):

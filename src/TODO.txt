@@ -7,7 +7,6 @@
 - Finish clear queue warning logic. Should not warn if queue has not been filled up via "intentional actions" such as artist/album play/shuffle buttons or via add to queue buttons.
 - Integrate with MPRIS via Python subprocess.
 - Rework how images are stored in user data.
-- Add toggle setting for disappearing player bar in immersive view.
 - Only show library tags when multiple libraries are visible.
 
 - Read "lyricist" tag to show "Written by:" in lyrics.

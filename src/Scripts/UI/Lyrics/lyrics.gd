@@ -11,10 +11,10 @@ func _ready() -> void:
 	_session_manager_value_changed('right_sidebar_tab')
 
 
-func _session_manager_value_changed(property:String) -> void:
+func _session_manager_value_changed(property:String, _source_name:String='base') -> void:
 	match property:
 		'right_sidebar_tab':
-			self.visible = SessionManager.right_sidebar_tab == 'lyrics'
+			self.visible = SessionManager.get_var('right_sidebar_tab') == 'lyrics'
 
 
 func update(_queue_position:int, track:DBTrack) -> void:
@@ -35,7 +35,7 @@ func update(_queue_position:int, track:DBTrack) -> void:
 	var stored_lyrics = track.get_lyrics()
 
 	# Fetch from API if not in DB.
-	if stored_lyrics.is_empty() && SessionManager.fetch_lyrics:
+	if stored_lyrics.is_empty() && SessionManager.get_var('fetch_lyrics'):
 		var url = 'https://lrclib.net/api/get?artist_name=%s&track_name=%s&album_name=%s&duration=%s' % [
 			track.album.artist.name.uri_encode(),
 			track.name.uri_encode(),
@@ -49,7 +49,7 @@ func update(_queue_position:int, track:DBTrack) -> void:
 		%'Info Label'.hide()
 		%Label.text = stored_lyrics
 
-	elif not SessionManager.fetch_lyrics:
+	elif not SessionManager.get_var('fetch_lyrics'):
 		%'Info Label'.text = 'No lyrics found...'
 		%'Add Lyrics'.show()
 

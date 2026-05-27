@@ -11,7 +11,7 @@ extends Control
 		'enabled': false,
 	}
 }
-@onready var card_scene:PackedScene = SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
+@onready var card_scene:PackedScene = SessionManager.get_scene('Elements/Grid Item/Grid Item')
 const overlay_color := Color(0.25, 0.25, 0.25, 0.5)
 @onready var options_popup:PopupMenu = %Options.get_popup()
 var loaded_albums:Array[DBAlbum] = []

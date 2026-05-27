@@ -1,6 +1,6 @@
 extends PanelContainer
 
-@onready var card_scene = SessionManager.get_layout_theme_scene('Queue/card')
+@onready var card_scene = SessionManager.get_scene('Queue/card')
 var last_node: Node
 var update_count:int = 0
 var queue_update_blocked:bool = false
@@ -14,10 +14,10 @@ func _ready() -> void:
 	_session_manager_value_changed('right_sidebar_tab')
 
 
-func _session_manager_value_changed(property:String) -> void:
+func _session_manager_value_changed(property:String, _source_name:String='base') -> void:
 	match property:
 		'right_sidebar_tab':
-			self.visible = SessionManager.right_sidebar_tab == 'queue'
+			self.visible = SessionManager.get_var('right_sidebar_tab') == 'queue'
 
 
 func update(code:=PlayerManager.QueueUpdateCode.Set, data:Variant=null) -> void:

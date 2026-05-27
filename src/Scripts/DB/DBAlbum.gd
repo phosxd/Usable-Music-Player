@@ -109,7 +109,7 @@ func get_cover() -> ImageTexture:
 	if FileAccess.file_exists(self.cover_path):
 		var image = Image.load_from_file(self.cover_path)
 		if image is Image:
-			ImageUtils.limit_size(image, Vector2.ONE*SessionManager.image_detail)
+			ImageUtils.limit_size(image, Vector2.ONE*SessionManager.get_var('image_detail'))
 			image.generate_mipmaps()
 			cover = ImageTexture.create_from_image(image)
 	if not cover: return null

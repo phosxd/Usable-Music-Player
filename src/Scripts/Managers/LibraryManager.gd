@@ -65,14 +65,14 @@ static func load_libraries() -> void:
 			library.changed = false
 			library.valid = true
 			library.id = path.split('/')[-1].trim_suffix('.json')
-			library.hidden = not SessionManager.visible_libraries.has(library.id)
+			library.hidden = not SessionManager.get_var('visible_libraries').has(library.id)
 			libraries.append(library)
 			MiniLog.info('Loaded library $i%s (%s)i$ after $~%sms~$.' % [library.name, library.id, int(A2J.time_to_finish)], LibraryManager)
 	)
 
 	libraries.sort_custom(func(a:DBLibrary, b:DBLibrary) -> bool:
-		var a_index:int = SessionManager.library_order.find(a.id)
-		var b_index:int = SessionManager.library_order.find(b.id)
+		var a_index:int = SessionManager.get_var('library_order').find(a.id)
+		var b_index:int = SessionManager.get_var('library_order').find(b.id)
 		return a_index < b_index
 	)
 
@@ -93,7 +93,7 @@ static func scan_all_libraries() -> void:
 		last = library
 
 
-static func _on_last_scan_finished(library:DBLibrary, last:DBLibrary, callable:Array):
+static func _on_last_scan_finished(_made_changes:bool, library:DBLibrary, last:DBLibrary, callable:Array):
 	await SessionManager.get_tree().create_timer(1.0).timeout
 	if library: library.refresh(true)
 	last.scan_finished.disconnect(callable[0])
@@ -167,7 +167,7 @@ static func wipe_lyrics() -> void:
 ## Returns the total bytes of the user data folder.
 ## Call [member refresh_user_data_size] to update value.
 static func get_user_data_size() -> int:
-	return SessionManager.user_data_bytes
+	return SessionManager.get_var('user_data_bytes')
 
 
 ## Recalculates the total bytes of the user data folder.
@@ -178,7 +178,7 @@ static func refresh_user_data_size() -> int:
 		total[0] += FileAccess.get_size(file_path)
 	,func(_dir_path)->void:pass)
 
-	SessionManager.user_data_bytes = total[0]
+	SessionManager.set_var('user_data_bytes', total[0])
 	return total[0]
 
 

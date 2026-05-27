@@ -31,7 +31,7 @@ extends VBoxContainer
 		'callback': _on_search_updated,
 	},
 }
-@onready var card_scene := SessionManager.get_layout_theme_scene('Tracks/card')
+@onready var card_scene := SessionManager.get_scene('Tracks/card')
 
 var tracks:Array[DBTrack] = []
 var selected_track_index: int
@@ -41,13 +41,13 @@ var update_count:int = 0
 
 
 func _ready() -> void:
-	sort_mode = SessionManager.track_sort_mode
-	ascend_mode = SessionManager.track_ascend_mode
+	sort_mode = SessionManager.get_var('track_sort_mode')
+	ascend_mode = SessionManager.get_var('track_ascend_mode')
 	sort()
 
 
 func _process(_delta:float) -> void:
-	SessionManager.tracks_tab_scroll_value = %Scroll.scroll_vertical
+	SessionManager.set_var('tracks_tab_scroll_value', %Scroll.scroll_vertical)
 
 
 func unload() -> void:
@@ -59,14 +59,14 @@ func unload() -> void:
 
 func sort() -> void:
 	update_count += 1
-	SessionManager.track_sort_mode = sort_mode
-	if ascend_mode != null: SessionManager.track_ascend_mode = ascend_mode
+	SessionManager.set_var('track_sort_mode', sort_mode)
+	if ascend_mode != null: SessionManager.set_var('track_ascend_mode', ascend_mode)
 	for child:Node in %Grid.get_children():
 		child.queue_free()
 
 	# Get filtered & sorted tracks.
 	tracks = LibraryManager.get_tracks_sorted(sort_mode).filter(func(track:DBTrack) -> bool:
-		if not SessionManager.search_term.is_empty():
+		if not SessionManager.get_var('search_term').is_empty():
 			var search_term:String = SessionManager.search_term
 			if not StringUtils.fuzzy_match(search_term, track.name) \
 			&& not StringUtils.fuzzy_match(search_term, track.album.artist.name) \

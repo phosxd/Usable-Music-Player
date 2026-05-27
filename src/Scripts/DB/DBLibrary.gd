@@ -61,8 +61,9 @@ var tracks:Array[DBTrack] = []
 var hidden:bool = false:
 	set(value):
 		hidden = value
-		if value: SessionManager.visible_libraries.erase(self.id)
-		elif not SessionManager.visible_libraries.has(self.id): SessionManager.visible_libraries.append(self.id)
+		var visible_libraries:PackedStringArray = SessionManager.get_var('visible_libraries')
+		if value: visible_libraries.erase(id)
+		elif not visible_libraries.has(id): visible_libraries.append(id)
 var changed:bool = false
 var currently_updating:bool = false
 var valid:bool = true
@@ -102,7 +103,7 @@ func remove() -> void:
 #region scanning
 
 func refresh(auto:bool=false) -> void:
-	if self.currently_updating:
+	if currently_updating:
 		if not auto: MiniLog.warn('Cannot start scan for $~%s~$, already in progress.' % self.name, DBLibrary)
 		return
 	if not DirAccess.dir_exists_absolute(path):
@@ -113,19 +114,19 @@ func refresh(auto:bool=false) -> void:
 			if not auto: MiniLog.warn('Cannot start scan for $~%s~$, another library is currently scanning.' % self.name, DBLibrary)
 			return
 
-	self.currently_updating = true
+	currently_updating = true
 	if not auto: MiniLog.info('Starting scan for $~%s~$.' % self.name, DBLibrary)
-	self.scan_started.emit()
+	scan_started.emit()
 
-	Async.create_thread(self._refresh, func(made_changes:bool) -> void:
-		self.currently_updating = false
+	Async.create_thread(_refresh, func(made_changes:bool) -> void:
+		currently_updating = false
 		if made_changes:
-			self.changed = true
+			changed = true
 			SessionManager.main_scene.refresh_tab()
 			SystemNotif.send('Usable Music Player', 'Finished scanning library "%s".' % self.name, SystemNotif.Urgency.Normal)
 		if not auto: MiniLog.info('Finished scan for $~%s$~.' % self.name, DBLibrary)
-		self.save()
-		self.scan_finished.emit(made_changes)
+		save()
+		scan_finished.emit(made_changes)
 	)
 
 

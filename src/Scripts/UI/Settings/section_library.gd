@@ -1,7 +1,7 @@
 extends Control
 
-@onready var library_item_local_scene:PackedScene = SessionManager.get_layout_theme_scene('Settings/Library Item Local')
-@onready var library_item_navidrome_scene:PackedScene = SessionManager.get_layout_theme_scene('Settings/Library Item Navidrome')
+@onready var library_item_local_scene:PackedScene = SessionManager.get_scene('Settings/Library Item Local')
+@onready var library_item_navidrome_scene:PackedScene = SessionManager.get_scene('Settings/Library Item Navidrome')
 
 
 func _ready() -> void:

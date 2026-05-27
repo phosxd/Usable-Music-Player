@@ -35,7 +35,7 @@ func _ready() -> void:
 		button.add_theme_stylebox_override('normal', style)
 
 	# Apply texture to background.
-	var bg_texture = SessionManager.get_immersive_view_texture()
+	var bg_texture = SessionManager.call_func('get_immersive_view_texture')
 	if bg_texture:
 		%Background.texture = bg_texture
 		var bg_speed_ = bg_texture.get_meta('speed') if bg_texture.has_meta('speed') else null
@@ -98,7 +98,6 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 		elif %Background.texture is GradientTexture2D: grad = %Background.texture.gradient
 		for i in grad.colors.size():
 			grad.set_color(i, dominant_colors[wrap(i,0,2)])
-	%Background.self_modulate = Color.WHITE
 
 	# Update album cover shadow.
 	var new_style = default_shadow_style.duplicate()
@@ -113,7 +112,7 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 
 var prev_bg_color := Color.WHITE
 func update_visualizer(db:float) -> void:
-	if not SessionManager.immersive_view_reactive_background:
+	if not SessionManager.get_var('immersive_view_reactive_background'):
 		%Background.self_modulate = Color.WHITE
 		return
 

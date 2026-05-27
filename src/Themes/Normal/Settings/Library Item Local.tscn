@@ -69,28 +69,22 @@ text = "Scan"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-mouse_default_cursor_shape = 2
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 icon = ExtResource("2_x56b4")
-flat = true
 
 [node name="Move Down" type="Button" parent="VBox/Controls" unique_id=1863150039]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-mouse_default_cursor_shape = 2
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 icon = ExtResource("4_rhteh")
-flat = true
 
 [node name="Remove" type="Button" parent="VBox/Controls" unique_id=203149948]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-mouse_default_cursor_shape = 2
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 icon = ExtResource("3_rhteh")
-flat = true
 
 [connection signal="text_changed" from="VBox/Title/Name" to="." method="_on_id_text_changed"]
 [connection signal="pressed" from="VBox/Controls/Load Path" to="." method="_on_load_path_pressed"]

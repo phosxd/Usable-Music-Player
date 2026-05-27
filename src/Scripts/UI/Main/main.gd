@@ -46,15 +46,15 @@ extends Control
 			i += 1
 
 @onready var tabs:Dictionary[String,Array] = {
-	'settings': [%'Tab Button Settings', SessionManager.get_layout_theme_scene('Settings/tab')],
-	'artists': [%'Tab Button Artists', SessionManager.get_layout_theme_scene('Artists/tab')],
-	'artist_page': [null, SessionManager.get_layout_theme_scene('Artist Page/page')],
-	'albums': [%'Tab Button Albums', SessionManager.get_layout_theme_scene('Albums/tab')],
-	'album_page': [null, SessionManager.get_layout_theme_scene('Album Page/page')],
-	'tracks': [%'Tab Button Tracks', SessionManager.get_layout_theme_scene('Tracks/tab')],
-	'genres': [%'Tab Button Genres', SessionManager.get_layout_theme_scene('Genres/tab')],
-	'genre_page': [null, SessionManager.get_layout_theme_scene('Genre Page/page')],
-	'.immersive_player': [%'Tab Button Immersive Player', SessionManager.get_layout_theme_scene('Immersive Player/tab')]
+	'settings': [%'Tab Button Settings', SessionManager.get_scene('Settings/tab')],
+	'artists': [%'Tab Button Artists', SessionManager.get_scene('Artists/tab')],
+	'artist_page': [null, SessionManager.get_scene('Artist Page/page')],
+	'albums': [%'Tab Button Albums', SessionManager.get_scene('Albums/tab')],
+	'album_page': [null, SessionManager.get_scene('Album Page/page')],
+	'tracks': [%'Tab Button Tracks', SessionManager.get_scene('Tracks/tab')],
+	'genres': [%'Tab Button Genres', SessionManager.get_scene('Genres/tab')],
+	'genre_page': [null, SessionManager.get_scene('Genre Page/page')],
+	'.immersive_player': [%'Tab Button Immersive Player', SessionManager.get_scene('Immersive Player/tab')]
 }
 var tab_history:Array[Array] = []
 
@@ -64,25 +64,25 @@ var ascend_mode:bool = true
 
 func _ready() -> void:
 	SessionManager.main_scene = self
-	var default_tab:String = SessionManager.landing_page
-	if default_tab.is_empty(): default_tab = SessionManager.last_tab
+	var default_tab:String = SessionManager.get_var('landing_page')
+	if default_tab.is_empty(): default_tab = SessionManager.get_var('last_tab')
 	set_tab(default_tab)
 	PlayerManager.current_track_updated.connect(update_current_track)
-	SessionManager.value_changed.connect(func(property:String) -> void:
+	SessionManager.value_changed.connect(func(property:String, _source_name:String) -> void:
 		if property in ['accent_mode','custom_accent']:
 			update_accents()
 		if property == 'tab_content_split':
-			%'Tab Content Split'.split_offsets = SessionManager.tab_content_split
+			%'Main Split'.split_offsets = SessionManager.get_var('main_split')
 		if property == 'right_sidebar_tab':
-			%'Tab Content Split'.collapsed = SessionManager.right_sidebar_tab == ''
+			%'Main Split'.collapsed = SessionManager.get_var('right_sidebar_tab') == ''
 	)
 	update_current_track(0, PlayerManager.get_current_track())
 	update_accents()
-	%'Tab Content Split'.split_offsets = SessionManager.tab_content_split
-	%'Tab Content Split'.collapsed = SessionManager.right_sidebar_tab == ''
+	%'Main Split'.split_offsets = SessionManager.get_var('main_split')
+	%'Main Split'.collapsed = SessionManager.get_var('right_sidebar_tab') == ''
 
-	%'Right Sidebar Margin'.add_child(SessionManager.get_layout_theme_scene('Queue/queue').instantiate())
-	%'Right Sidebar Margin'.add_child(SessionManager.get_layout_theme_scene('Lyrics/lyrics').instantiate())
+	%'Right Sidebar Margin'.add_child(SessionManager.get_scene('Queue/queue').instantiate())
+	%'Right Sidebar Margin'.add_child(SessionManager.get_scene('Lyrics/lyrics').instantiate())
 
 
 func update_accents() -> void:
@@ -107,7 +107,7 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 
 
 func set_tab(tab:String, data=null) -> void:
-	SessionManager.last_tab = tab
+	SessionManager.set_var('last_tab', tab)
 	tab_history.append([tab, data])
 
 	# Remove tab content.
@@ -181,7 +181,7 @@ func _parse_tab_config(scene:Node) -> void:
 			# Set default.
 			var sort_mode_default = sort_mode_config.get('default')
 			if sort_mode_default is String:
-				var default = SessionManager.get(sort_mode_default)
+				var default = SessionManager.get_var(sort_mode_default)
 				if default != null: %'Sort Mode'.selected = default
 			# Connect callback.
 			var sort_mode_callback = sort_mode_config.get('callback')
@@ -194,7 +194,7 @@ func _parse_tab_config(scene:Node) -> void:
 			# Set default.
 			var ascend_mode_default = ascend_mode_config.get('default')
 			if ascend_mode_default is String:
-				var default = SessionManager.get(ascend_mode_default)
+				var default = SessionManager.get_var(ascend_mode_default)
 				if default is bool: ascend_mode = not default
 			_on_ascend_mode_pressed() # Update state & text.
 			# Connect callback.
@@ -246,5 +246,5 @@ func _on_favorites_toggled(toggled_on:bool) -> void:
 	%'Favorites Options'.visible = toggled_on
 
 
-func _on_tab_content_split_drag_ended() -> void:
-	SessionManager.tab_content_split = %'Tab Content Split'.split_offsets
+func _on_main_split_drag_ended() -> void:
+	SessionManager.set_var('main_split', %'Main Split'.split_offsets)

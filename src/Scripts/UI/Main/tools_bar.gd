@@ -1,6 +1,6 @@
 extends Control
 
-@onready var visibility_menu_scene:PackedScene = SessionManager.get_layout_theme_scene('Main/visiblity_menu')
+@onready var visibility_menu_scene:PackedScene = SessionManager.get_scene('Main/visiblity_menu')
 var visibility_menu: Control
 
 

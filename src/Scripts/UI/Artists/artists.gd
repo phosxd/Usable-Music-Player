@@ -27,7 +27,7 @@ extends VBoxContainer
 		'callback': _on_search_updated,
 	}
 }
-@onready var card_scene := SessionManager.get_layout_theme_scene('Elements/Grid Item/Grid Item')
+@onready var card_scene := SessionManager.get_scene('Elements/Grid Item/Grid Item')
 @onready var sort_mode: DBLibrary.ArtistSortMode
 var ascend_mode = null
 var loaded_artists:Array[DBArtist] = []
@@ -35,8 +35,8 @@ var update_count:int = 0
 
 
 func _ready() -> void:
-	sort_mode = SessionManager.artist_sort_mode
-	ascend_mode = SessionManager.artist_ascend_mode
+	sort_mode = SessionManager.get_var('artist_sort_mode')
+	ascend_mode = SessionManager.get_var('artist_ascend_mode')
 	sort()
 
 
@@ -49,8 +49,8 @@ func unload() -> void:
 
 func sort() -> void:
 	update_count += 1
-	SessionManager.artist_sort_mode = sort_mode
-	if ascend_mode != null: SessionManager.artist_ascend_mode = ascend_mode
+	SessionManager.set_var('artist_sort_mode', sort_mode)
+	if ascend_mode != null: SessionManager.set_var('artist_ascend_mode', ascend_mode)
 	for child:Node in %Grid.get_children():
 		child.queue_free()
 
@@ -81,8 +81,8 @@ func _sort(grid:Control, artists:Array[DBArtist]) -> void:
 			#grid.add_child(separator)
 
 		# Filter with search term.
-		if not SessionManager.search_term.is_empty():
-			var search_term:String = SessionManager.search_term.to_lower()
+		if not SessionManager.get_var('search_term').is_empty():
+			var search_term:String = SessionManager.get_var('search_term').to_lower()
 			if not artist.name.to_lower().contains(search_term):
 				continue
 		iter += 1

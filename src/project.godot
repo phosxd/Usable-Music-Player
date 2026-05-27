@@ -79,6 +79,7 @@ folder_colors={
 "res://MODS/": "gray",
 "res://Scenes/": "blue",
 "res://Scripts/": "red",
+"res://Session Scripts/": "red",
 "res://Themes/Normal/Assets/": "yellow",
 "res://Themes/Normal/Elements/": "yellow"
 }

@@ -21,17 +21,17 @@ const landing_page_options:Array[String] = [
 
 
 func _ready() -> void:
-	%'Auto Scan Interval'.set_value_no_signal(SessionManager.auto_scan_interval)
+	%'Auto Scan Interval'.set_value_no_signal(SessionManager.get_var('auto_scan_interval'))
 	# ---
-	%'Landing Page'.selected = landing_page_options.find(SessionManager.landing_page)
+	%'Landing Page'.selected = landing_page_options.find(SessionManager.get_var('landing_page'))
 	# ---
-	%'Grid Item Size'.set_value_no_signal(SessionManager.grid_item_size)
+	%'Grid Item Size'.set_value_no_signal(SessionManager.get_var('grid_item_size'))
 	# ---
-	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.fetch_lyrics)
-	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.fetch_artist_cover)
-	%'Queue Size Limit'.set_value_no_signal(SessionManager.queue_size_limit)
-	%'Track Finished Notif'.set_pressed_no_signal(SessionManager.send_track_finished_notif)
-	%'Library Scan Finished Notif'.set_pressed_no_signal(SessionManager.send_library_scan_finished_notif)
+	%'Fetch Lyrics'.set_pressed_no_signal(SessionManager.get_var('fetch_lyrics'))
+	%'Fetch Artist Cover'.set_pressed_no_signal(SessionManager.get_var('fetch_artist_cover'))
+	%'Queue Size Limit'.set_value_no_signal(SessionManager.get_var('queue_size_limit'))
+	%'Track Finished Notif'.set_pressed_no_signal(SessionManager.get_var('send_track_finished_notif'))
+	%'Library Scan Finished Notif'.set_pressed_no_signal(SessionManager.get_var('send_library_scan_finished_notif'))
 
 
 func _on_user_data_pressed() -> void:
@@ -47,31 +47,31 @@ func _on_report_issue_pressed() -> void:
 
 
 func _on_dynamic_accents_toggled(toggled_on:bool) -> void:
-	SessionManager.dynamic_accents = toggled_on
+	SessionManager.set_var('dynamic_accents', toggled_on)
 
 
 func _on_visualizer_mode_item_selected(index:int) -> void:
-	SessionManager.visualizer_mode = index as SessionManager.VisualizerMode
+	SessionManager.set_var('visualizer_mode', index)
 
 
 func _on_theme_item_selected(index:int) -> void:
-	SessionManager.theme = ThemeManager.registered_themes[index].get('id','')
+	SessionManager.set_var('theme', ThemeManager.registered_themes[index].get('id',''))
 
 
 func _on_theme_mode_item_selected(index:int) -> void:
-	SessionManager.theme_mode = index
+	SessionManager.set_var('theme_mode', index)
 
 
 func _on_landing_page_item_selected(index:int) -> void:
-	SessionManager.landing_page = landing_page_options[index]
+	SessionManager.set_var('landing_page', landing_page_options[index])
 
 
 func _on_fetch_lyrics_toggled(toggled_on:bool) -> void:
-	SessionManager.fetch_lyrics = toggled_on
+	SessionManager.set_var('fetch_lyrics', toggled_on)
 
 
 func _on_fetch_artist_cover_toggled(toggled_on:bool) -> void:
-	SessionManager.fetch_artist_cover = toggled_on
+	SessionManager.set_var('fetch_artist_cover', toggled_on)
 
 
 func _on_fetch_album_cover_toggled(_toggled_on:bool) -> void:
@@ -95,11 +95,11 @@ func _on_page_back_key_pressed() -> void:
 
 
 func _on_track_finished_notif_toggled(toggled_on:bool) -> void:
-	SessionManager.send_track_finished_notif = toggled_on
+	SessionManager.set_var('send_track_finished_notif', toggled_on)
 
 
 func _on_library_scan_finished_notif_toggled(toggled_on:bool) -> void:
-	SessionManager.send_library_scan_finished_notif = toggled_on
+	SessionManager.set_var('send_library_scan_finished_notif', toggled_on)
 
 
 func _on_ui_scale_value_changed(_value:float) -> void:
@@ -111,11 +111,11 @@ func _on_label_meta_clicked(meta:Variant) -> void:
 
 
 func _on_queue_size_limit_value_changed(value:float) -> void:
-	SessionManager.queue_size_limit = int(value)
+	SessionManager.set_var('queue_size_limit', int(value))
 
 
 func _on_grid_item_size_value_changed(value:float) -> void:
-	SessionManager.grid_item_size = value
+	SessionManager.set_var('grid_item_size', value)
 
 
 func _on_grid_item_size_small_pressed() -> void:
@@ -131,4 +131,4 @@ func _on_grid_item_size_large_pressed() -> void:
 
 
 func _on_auto_scan_interval_value_changed(value:float) -> void:
-	SessionManager.auto_scan_interval = value
+	SessionManager.set_var('auto_scan_interval', value)

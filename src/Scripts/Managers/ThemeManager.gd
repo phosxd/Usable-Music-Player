@@ -61,6 +61,7 @@ var accent_override_color := Color.WHITE:
 		# AccentButton.
 		for item in ['icon_normal_color', 'icon_disabled_color', 'icon_hover_color', 'icon_pressed_color', 'icon_hover_pressed_color']:
 			theme.set_color(item, 'AccentButton', value)
+			theme.set_color(item, 'SoftButton', value)
 		# HSlider.
 		set_stylebox_color('HSlider', 'grabber_area', 'bg_color', value)
 		set_stylebox_color('HSlider', 'grabber_area_highlight', 'bg_color', value)

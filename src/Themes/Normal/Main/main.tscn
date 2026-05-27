@@ -97,7 +97,8 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="HBox" type="HBoxContainer" parent="Global Margin/VBox" unique_id=1144373236]
+[node name="HBox" type="HBoxContainer" parent="Global Margin/VBox" unique_id=1019820567]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
@@ -321,60 +322,73 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_6t3k2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6t3k2")
 toggle_mode = true
 
-[node name="Tab VBox" type="VBoxContainer" parent="Global Margin/VBox/HBox" unique_id=665951843]
+[node name="HBox" type="HBoxContainer" parent="Global Margin/VBox/HBox" unique_id=1671944195]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Tab VBox" type="VBoxContainer" parent="Global Margin/VBox/HBox/HBox" unique_id=665951843]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
-[node name="Topbar" type="HBoxContainer" parent="Global Margin/VBox/HBox/Tab VBox" unique_id=168760710]
+[node name="Main Split" type="HSplitContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox" unique_id=1214499847]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+dragger_visibility = 2
+
+[node name="VBox" type="VBoxContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split" unique_id=1168870367]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Topbar" type="HBoxContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox" unique_id=168760710]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("13_2ok46")
 
-[node name="Search Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Tab VBox/Topbar" unique_id=1676077371]
+[node name="Search Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" unique_id=1676077371]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Search" type="PanelContainer" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin" unique_id=403812495]
+[node name="Search" type="PanelContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin" unique_id=403812495]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"IslandPanelContainer"
 
-[node name="_label" type="Label" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search" unique_id=800551452]
+[node name="_label" type="Label" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search" unique_id=800551452]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Topbar Content" type="HBoxContainer" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search" unique_id=189060353]
+[node name="Topbar Content" type="HBoxContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search" unique_id=189060353]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Back Button" type="Button" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=317194944]
+[node name="Back Button" type="Button" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=317194944]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_default_cursor_shape = 2
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 icon = ExtResource("16_eeh6y")
-flat = true
 
-[node name="Forth Button" type="Button" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=1481356842]
+[node name="Forth Button" type="Button" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=1481356842]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_default_cursor_shape = 2
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 disabled = true
 icon = ExtResource("20_wbs4r")
-flat = true
 
-[node name="Search Icon" type="TextureRect" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=1999607748]
+[node name="Search Icon" type="TextureRect" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=1999607748]
 layout_mode = 2
 texture = ExtResource("14_koken")
 stretch_mode = 5
 script = ExtResource("21_wbs4r")
 
-[node name="Search" type="LineEdit" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=420801843]
+[node name="Search" type="LineEdit" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=420801843]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -383,33 +397,32 @@ editable = false
 clear_button_enabled = true
 flat = true
 
-[node name="Activity" type="Button" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=1549443074]
+[node name="Activity" type="Button" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=1549443074]
 unique_name_in_owner = true
 layout_mode = 2
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 theme_override_constants/icon_max_width = 18
 toggle_mode = true
 icon = ExtResource("22_wbs4r")
-flat = true
 
-[node name="Sorting" type="PanelContainer" parent="Global Margin/VBox/HBox/Tab VBox/Topbar" unique_id=1616870286]
+[node name="Sorting" type="PanelContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" unique_id=1616870286]
 layout_mode = 2
 theme_type_variation = &"IslandPanelContainer"
 
-[node name="_label" type="Label" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Sorting" unique_id=571711661]
+[node name="_label" type="Label" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Sorting" unique_id=571711661]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Tab Tool Buttons" type="HBoxContainer" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Sorting" unique_id=1924207957]
+[node name="Tab Tool Buttons" type="HBoxContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Sorting" unique_id=1924207957]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Sort Mode" type="OptionButton" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Sorting/Tab Tool Buttons" unique_id=1117008205]
+[node name="Sort Mode" type="OptionButton" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Sorting/Tab Tool Buttons" unique_id=1117008205]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 theme_override_constants/icon_max_width = 16
 theme_override_icons/icon = ExtResource("5_vk4q2")
 disabled = true
@@ -419,59 +432,53 @@ item_count = 1
 popup/item_0/text = "Title"
 popup/item_0/id = 0
 
-[node name="Ascend Mode" type="Button" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Sorting/Tab Tool Buttons" unique_id=941825518]
+[node name="Ascend Mode" type="Button" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Sorting/Tab Tool Buttons" unique_id=941825518]
 unique_name_in_owner = true
 layout_mode = 2
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 disabled = true
 text = "A-Z"
 
-[node name="Play All" type="Button" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Sorting/Tab Tool Buttons" unique_id=1744348925]
+[node name="Play All" type="Button" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Sorting/Tab Tool Buttons" unique_id=1744348925]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Play all items in the tab."
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 disabled = true
 icon = ExtResource("9_2ok46")
 
-[node name="Shuffle All" type="Button" parent="Global Margin/VBox/HBox/Tab VBox/Topbar/Sorting/Tab Tool Buttons" unique_id=1232088241]
+[node name="Shuffle All" type="Button" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Sorting/Tab Tool Buttons" unique_id=1232088241]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Shuffle all items in the tab."
-theme_type_variation = &"AccentButton"
+theme_type_variation = &"SoftButton"
 disabled = true
 icon = ExtResource("23_jo7x3")
 
-[node name="Tab Content Split" type="HSplitContainer" parent="Global Margin/VBox/HBox/Tab VBox" unique_id=1044830271]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="Tab Content" type="VBoxContainer" parent="Global Margin/VBox/HBox/Tab VBox/Tab Content Split" unique_id=249872197]
+[node name="Tab Content" type="VBoxContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox" unique_id=249872197]
 unique_name_in_owner = true
 z_index = -1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="_label" type="Label" parent="Global Margin/VBox/HBox/Tab VBox/Tab Content Split/Tab Content" unique_id=850495634]
+[node name="_label" type="Label" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Tab Content" unique_id=850495634]
 layout_mode = 2
 size_flags_vertical = 6
 text = "No tab opened..."
 horizontal_alignment = 1
 
-[node name="Right Sidebar Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Tab VBox/Tab Content Split" unique_id=747587161]
+[node name="Right Sidebar Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split" unique_id=747587161]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Player Bar" type="MarginContainer" parent="Global Margin/VBox/HBox/Tab VBox" unique_id=477050872]
+[node name="Player Bar" type="MarginContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox" unique_id=477050872]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Player" parent="Global Margin/VBox/HBox/Tab VBox/Player Bar" unique_id=1333926168 instance=ExtResource("10_imbg2")]
+[node name="Player" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Player Bar" unique_id=1333926168 instance=ExtResource("10_imbg2")]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -483,9 +490,8 @@ layout_mode = 2
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Genres" to="." method="_on_tab_button_pressed" binds= ["genres"]]
 [connection signal="toggled" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Favorites" to="." method="_on_favorites_toggled"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Cover Art Margin/Panel/Current Track Cover Container/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= [".immersive_player"]]
-[connection signal="pressed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Back Button" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_back_button_pressed"]
-[connection signal="pressed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Forth Button" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_forth_button_pressed"]
-[connection signal="text_changed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_search_text_changed"]
-[connection signal="toggled" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Search Margin/Search/Topbar Content/Activity" to="Global Margin/VBox/HBox/Tab VBox/Topbar" method="_on_activity_toggled"]
-[connection signal="pressed" from="Global Margin/VBox/HBox/Tab VBox/Topbar/Sorting/Tab Tool Buttons/Ascend Mode" to="." method="_on_ascend_mode_pressed"]
-[connection signal="drag_ended" from="Global Margin/VBox/HBox/Tab VBox/Tab Content Split" to="." method="_on_tab_content_split_drag_ended"]
+[connection signal="pressed" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Back Button" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_back_button_pressed"]
+[connection signal="pressed" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Forth Button" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_forth_button_pressed"]
+[connection signal="text_changed" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_search_text_changed"]
+[connection signal="toggled" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Activity" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_activity_toggled"]
+[connection signal="pressed" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Sorting/Tab Tool Buttons/Ascend Mode" to="." method="_on_ascend_mode_pressed"]

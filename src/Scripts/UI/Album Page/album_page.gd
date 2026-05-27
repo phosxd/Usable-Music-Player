@@ -11,7 +11,7 @@ extends Control
 		'enabled': false,
 	}
 }
-@onready var card_scene:PackedScene = SessionManager.get_layout_theme_scene('Tracks/card')
+@onready var card_scene:PackedScene = SessionManager.get_scene('Tracks/card')
 const overlay_color := Color(0.25, 0.25, 0.25, 0.5)
 @onready var options_popup:PopupMenu = %Options.get_popup()
 var loaded_tracks:Array[DBTrack] = []
@@ -52,12 +52,13 @@ func init(album_:DBAlbum=null) -> void:
 	var runtime:float = 0
 	var discs = album.get_tracks_in_order()
 	for disc in discs:
+		var track_cards:Array[Control] = []
 		if discs.size() > 1:
-			add_disc_sep(disc)
+			add_disc_sep(disc, track_cards)
 		for track:DBTrack in discs[disc]:
 			loaded_tracks.append(track)
 			runtime += track.length
-			add_card(track)
+			track_cards.append(add_card(track))
 
 	%'Track Count'.text = '%s Tracks' % loaded_tracks.size()
 	%'Runtime'.text = '%s Minutes' % int(runtime/60.0)
@@ -65,22 +66,37 @@ func init(album_:DBAlbum=null) -> void:
 	%'Copyright'.text = album.copyright
 
 
-func add_disc_sep(disc:String) -> void:
+func add_disc_sep(disc:String, track_cards:Array[Control]) -> void:
+	# Setup label.
 	var label := Label.new()
 	label.theme_type_variation = 'LabelHeader'
 	label.text = 'Disc %s' % disc
+	# Setup collapse button.
+	var button := Button.new()
+	button.modulate = Color.TRANSPARENT
+	button.alignment = HORIZONTAL_ALIGNMENT_FILL
+	button.set_anchors_preset(Control.PRESET_FULL_RECT)
+	var collapsed_state:Array[bool] = [false]
+	button.pressed.connect(func():
+		collapsed_state[0] = not collapsed_state[0]
+		for card:Control in track_cards:
+			card.visible = not collapsed_state[0]
+	)
+	# Add nodes.
+	label.add_child(button)
 	%'Track List'.add_spacer(false)
 	%'Track List'.add_child(label)
 	%'Track List'.add_spacer(false)
 
 
-func add_card(track:DBTrack) -> void:
+func add_card(track:DBTrack) -> Control:
 	if not card_scene: return
 	var card:Control = card_scene.instantiate()
 	card.selected.connect(_on_track_selected.bind(track))
 	card.init(track)
 	card.set_mode(1)
 	%'Track List'.add_child(card)
+	return card
 
 
 func _on_track_selected(track:DBTrack) -> void:
