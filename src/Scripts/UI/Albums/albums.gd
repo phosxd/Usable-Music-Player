@@ -87,8 +87,10 @@ func _sort(grid:Control) -> void:
 func add_card(album:DBAlbum, secondary_text:String, grid:Control) -> void:
 	# Create card.
 	var card:Control = card_scene.instantiate()
-	card.icon = album.artist.library.get_icon()
-	card.icon_tooltip_text = album.artist.library.name
+	# Show library icon if multiple libraries visible.
+	if SessionManager.get_var('visible_libraries').size() > 1:
+		card.icon = album.artist.library.get_icon()
+		card.icon_tooltip_text = album.artist.library.name
 	card.primary_text = album.name
 	card.secondary_text = secondary_text
 	card.images = [album.get_cover()]

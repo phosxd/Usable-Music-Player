@@ -8,7 +8,8 @@ extends Control
 		'enabled': false,
 	},
 	'search': {
-		'enabled': false,
+		'enabled': true,
+		'callback': _on_search_updated,
 	}
 }
 @onready var card_scene:PackedScene = SessionManager.get_scene('Tracks/card')
@@ -97,6 +98,10 @@ func add_card(track:DBTrack) -> Control:
 	card.set_mode(1)
 	%'Track List'.add_child(card)
 	return card
+
+
+func _on_search_updated(_text:String) -> void:
+	pass
 
 
 func _on_track_selected(track:DBTrack) -> void:

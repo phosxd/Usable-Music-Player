@@ -141,16 +141,6 @@ disabled = true
 icon = ExtResource("3_hfg1r")
 icon_alignment = 1
 
-[node name="Customize" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox" unique_id=1381731172]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "Edit tab"
-theme_type_variation = &"AccentButton"
-disabled = true
-icon = ExtResource("5_vk4q2")
-icon_alignment = 1
-
 [node name="Visibility" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Tools Margin/Tools/HBox" unique_id=1203295361]
 unique_name_in_owner = true
 layout_mode = 2
@@ -369,6 +359,14 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="Activity" type="Button" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=1549443074]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SoftButton"
+theme_override_constants/icon_max_width = 18
+toggle_mode = true
+icon = ExtResource("22_wbs4r")
+
 [node name="Back Button" type="Button" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=317194944]
 unique_name_in_owner = true
 layout_mode = 2
@@ -383,6 +381,7 @@ disabled = true
 icon = ExtResource("20_wbs4r")
 
 [node name="Search Icon" type="TextureRect" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=1999607748]
+visible = false
 layout_mode = 2
 texture = ExtResource("14_koken")
 stretch_mode = 5
@@ -396,14 +395,6 @@ placeholder_text = "Search..."
 editable = false
 clear_button_enabled = true
 flat = true
-
-[node name="Activity" type="Button" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content" unique_id=1549443074]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"SoftButton"
-theme_override_constants/icon_max_width = 18
-toggle_mode = true
-icon = ExtResource("22_wbs4r")
 
 [node name="Sorting" type="PanelContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" unique_id=1616870286]
 layout_mode = 2
@@ -490,8 +481,8 @@ layout_mode = 2
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Genres" to="." method="_on_tab_button_pressed" binds= ["genres"]]
 [connection signal="toggled" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Favorites" to="." method="_on_favorites_toggled"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Cover Art Margin/Panel/Current Track Cover Container/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= [".immersive_player"]]
+[connection signal="toggled" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Activity" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_activity_toggled"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Back Button" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_back_button_pressed"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Forth Button" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_forth_button_pressed"]
 [connection signal="text_changed" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Search" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_search_text_changed"]
-[connection signal="toggled" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Activity" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_activity_toggled"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Sorting/Tab Tool Buttons/Ascend Mode" to="." method="_on_ascend_mode_pressed"]

@@ -26,7 +26,7 @@ func _ready() -> void:
 
 
 func _on_theme_fold_folding_changed(is_folded:bool) -> void:
-	if is_folded && section not in SessionManager.folded_sections:
+	if is_folded && section not in SessionManager.get_var('folded_sections'):
 		SessionManager.get_var('folded_sections').append(section)
 	else:
 		SessionManager.get_var('folded_sections').erase(section)

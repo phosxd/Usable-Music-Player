@@ -96,8 +96,10 @@ func _sort(grid:Control, artists:Array[DBArtist]) -> void:
 func add_card(artist:DBArtist, grid:Control) -> void:
 	# Create card.
 	var card:Control = card_scene.instantiate()
-	card.icon = artist.library.get_icon()
-	card.icon_tooltip_text = artist.library.name
+	# Show library icon if multiple libraries visible.
+	if SessionManager.get_var('visible_libraries').size() > 1:
+		card.icon = artist.library.get_icon()
+		card.icon_tooltip_text = artist.library.name
 	card.primary_text = artist.name
 	# Connect signal to card.
 	card.pressed.connect(_on_card_pressed.bind(artist))

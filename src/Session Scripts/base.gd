@@ -160,7 +160,7 @@ var queue_size_limit:int = 150
 
 ## Image detail for album & artist covers.
 ## Resets cached album cover images when set.
-var image_detail:int = image_detail_values[0]:
+var image_detail:int = image_detail_values[3]:
 	set(value):
 		image_detail = value
 		for album:DBAlbum in LibraryManager.get_albums_sorted():
