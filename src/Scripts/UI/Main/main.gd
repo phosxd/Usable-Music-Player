@@ -157,21 +157,21 @@ func _parse_tab_config(scene:Node) -> void:
 
 		# Play config.
 		if play_config is Dictionary:
-			%'Play All'.disabled = not play_config.get('enabled', false)
+			%'Play All'.visible = play_config.get('enabled', false)
 			var play_callback = play_config.get('callback')
 			if play_callback is Callable:
 				%'Play All'.pressed.connect(play_callback)
 
 		# Shuffle config.
 		if shuffle_config is Dictionary:
-			%'Shuffle All'.disabled = not shuffle_config.get('enabled', false)
+			%'Shuffle All'.visible = shuffle_config.get('enabled', false)
 			var shuffle_callback = shuffle_config.get('callback')
 			if shuffle_callback is Callable:
 				%'Shuffle All'.pressed.connect(shuffle_callback)
 
 		# Sort mode config.
 		if sort_mode_config is Dictionary:
-			%'Sort Mode'.disabled = not sort_mode_config.get('enabled', false)
+			%'Sort Mode'.visible = sort_mode_config.get('enabled', false)
 			# Add options.
 			%'Sort Mode'.clear()
 			for item:String in sort_mode_config.get('options',[]):
@@ -190,7 +190,7 @@ func _parse_tab_config(scene:Node) -> void:
 
 		# Ascend mode config.
 		if ascend_mode_config is Dictionary:
-			%'Ascend Mode'.disabled = not ascend_mode_config.get('enabled', false)
+			%'Ascend Mode'.visible = ascend_mode_config.get('enabled', false)
 			# Set default.
 			var ascend_mode_default = ascend_mode_config.get('default')
 			if ascend_mode_default is String:

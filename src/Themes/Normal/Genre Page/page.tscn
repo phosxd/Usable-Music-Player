@@ -20,7 +20,6 @@ shader_parameter/topleft = Color(0, 0, 0, 1)
 shader_parameter/topright = Color(0, 0, 0, 1)
 shader_parameter/bottomleft = Color(0, 0, 0, 1)
 shader_parameter/bottomright = Color(0.21, 0.21, 0.21, 1)
-shader_parameter/period = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_05ng2"]
 content_margin_left = 6.0
@@ -169,7 +168,7 @@ theme_override_constants/separation = 14
 
 [node name="Play" type="Button" parent="VBox/Controls/VBox/HBox/Controls" unique_id=245581158]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(55, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_type_variation = &"AccentButton"
 icon = ExtResource("8_ltosu")
@@ -177,8 +176,7 @@ icon_alignment = 1
 
 [node name="Shuffle" type="Button" parent="VBox/Controls/VBox/HBox/Controls" unique_id=333186358]
 unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(45, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_type_variation = &"AccentButton"
 icon = ExtResource("9_2ph7i")
@@ -186,7 +184,7 @@ icon_alignment = 1
 
 [node name="Options" type="MenuButton" parent="VBox/Controls/VBox/HBox/Controls" unique_id=807633223]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(45, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_type_variation = &"AccentButton"
 icon = ExtResource("10_l1t3e")
@@ -257,3 +255,4 @@ theme_type_variation = &"ScrollFillSeparator"
 
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Icon Margin/Album Button" to="." method="_on_album_button_pressed"]
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Shuffle" to="." method="_on_shuffle_pressed"]

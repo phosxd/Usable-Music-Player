@@ -213,6 +213,7 @@ alignment = 0
 
 [node name="Favorites" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1562961380]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_type_variation = &"AccentButton"
 toggle_mode = true
@@ -416,7 +417,6 @@ size_flags_vertical = 4
 theme_type_variation = &"SoftButton"
 theme_override_constants/icon_max_width = 16
 theme_override_icons/icon = ExtResource("5_vk4q2")
-disabled = true
 selected = 0
 fit_to_longest_item = false
 item_count = 1
@@ -427,7 +427,6 @@ popup/item_0/id = 0
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"SoftButton"
-disabled = true
 text = "A-Z"
 
 [node name="Play All" type="Button" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Sorting/Tab Tool Buttons" unique_id=1744348925]
@@ -435,7 +434,6 @@ unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Play all items in the tab."
 theme_type_variation = &"SoftButton"
-disabled = true
 icon = ExtResource("9_2ok46")
 
 [node name="Shuffle All" type="Button" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Sorting/Tab Tool Buttons" unique_id=1232088241]
@@ -443,7 +441,6 @@ unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Shuffle all items in the tab."
 theme_type_variation = &"SoftButton"
-disabled = true
 icon = ExtResource("23_jo7x3")
 
 [node name="Tab Content" type="VBoxContainer" parent="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox" unique_id=249872197]
