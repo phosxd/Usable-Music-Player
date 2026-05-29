@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="9_6t3k2"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="9_hfg1r"]
 [ext_resource type="Texture2D" uid="uid://5llssbcnf4kg" path="res://Themes/Normal/Assets/Icons/instrument.svg" id="10_2ok46"]
-[ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Themes/Normal/Player/player.tscn" id="10_imbg2"]
+[ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Layouts/Normal/Player/player.tscn" id="10_imbg2"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="11_ahhj6"]
 [ext_resource type="Texture2D" uid="uid://by3qxgtdgkogn" path="res://Themes/Normal/Assets/Icons/favorite.svg" id="11_bb5d1"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="12_eeh6y"]
@@ -34,7 +34,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wbs4r"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wwmpn"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -213,9 +213,9 @@ alignment = 0
 
 [node name="Favorites" type="Button" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1562961380]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_type_variation = &"AccentButton"
+disabled = true
 toggle_mode = true
 text = "Favorites"
 icon = ExtResource("11_bb5d1")
@@ -297,7 +297,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_wbs4r")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wwmpn")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5

@@ -6,10 +6,10 @@
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_hbf8i"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_i3gmp"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_c8ttq"]
-[ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Themes/Normal/Queue/queue.tscn" id="8_fbra8"]
-[ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Themes/Normal/Lyrics/lyrics.tscn" id="8_oc15g"]
+[ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Layouts/Normal/Queue/queue.tscn" id="8_fbra8"]
+[ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Layouts/Normal/Lyrics/lyrics.tscn" id="8_oc15g"]
 [ext_resource type="Script" uid="uid://3c2q7qpnxy2o" path="res://Scripts/UI/Immersive Player/hide_player_timer.gd" id="10_idskp"]
-[ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Themes/Normal/Player/player.tscn" id="10_khquy"]
+[ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Layouts/Normal/Player/player.tscn" id="10_khquy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khquy"]
 corner_radius_top_left = 16

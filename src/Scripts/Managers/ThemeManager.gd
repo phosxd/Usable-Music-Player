@@ -57,11 +57,11 @@ var mode:int = 0
 var accent_override_color := Color.WHITE:
 	set(value):
 		accent_override_color = value
-		theme.set_color('accent_color', 'Control', value)
+		set_color('Control', 'accent_color', value)
 		# AccentButton.
 		for item in ['icon_normal_color', 'icon_disabled_color', 'icon_hover_color', 'icon_pressed_color', 'icon_hover_pressed_color']:
-			theme.set_color(item, 'AccentButton', value)
-			theme.set_color(item, 'SoftButton', value)
+			set_color('AccentButton', item, value)
+			set_color('SoftButton', item, value)
 		# HSlider.
 		set_stylebox_color('HSlider', 'grabber_area', 'bg_color', value)
 		set_stylebox_color('HSlider', 'grabber_area_highlight', 'bg_color', value)
@@ -105,7 +105,7 @@ var accent_color: Color
 ## Default background color. Setting this will not change it's value.
 var default_bg_color: Color:
 	get():
-		return registered_themes[0].config.get_value('Theme','bg_color')
+		return registered_themes[0].config.get_value('Theme:Dark','bg_color')
 
 ## App background color. If transparent, uses default theme color.
 var bg_color := Color.TRANSPARENT:
@@ -145,91 +145,88 @@ var search_margin:Array = [0,0,0,0]:
 var panel_color := Color.TRANSPARENT:
 	set(value):
 		panel_color = value
-		value = value.blend(panel_tint)
-		set_stylebox_color('PanelContainer', 'panel', 'bg_color', value)
-		set_stylebox_color('GridItemPanel', 'panel', 'bg_color', value)
-		set_stylebox_color('IslandPanelContainer', 'panel', 'bg_color', value)
-		set_stylebox_color('ToolsIslandPanelContainer', 'panel', 'bg_color', value)
-		set_stylebox_color('LineEdit', 'normal', 'bg_color', value)
-		set_stylebox_color('LineEdit', 'read_only', 'bg_color', value)
+		set_stylebox_color('PanelContainer', 'panel', 'bg_color', value, true, false, panel_tint)
+		set_stylebox_color('GridItemPanel', 'panel', 'bg_color', value, true, false, panel_tint)
+		set_stylebox_color('IslandPanelContainer', 'panel', 'bg_color', value, true, false, panel_tint)
+		set_stylebox_color('ToolsIslandPanelContainer', 'panel', 'bg_color', value, true, false, panel_tint)
+		set_stylebox_color('LineEdit', 'normal', 'bg_color', value, true, false, panel_tint)
+		set_stylebox_color('LineEdit', 'read_only', 'bg_color', value, true, false, panel_tint)
 
 var section_panel_color := Color.TRANSPARENT:
 	set(value):
 		section_panel_color = value
-		value = value.blend(panel_tint)
-		set_stylebox_color('SectionPanelContainer', 'panel', 'bg_color', value)
+		set_stylebox_color('SectionPanelContainer', 'panel', 'bg_color', value, true, false, panel_tint)
 
 var tooltip_panel_color := Color.TRANSPARENT:
 	set(value):
 		tooltip_panel_color = value
 		value = value.blend(panel_tint)
-		set_stylebox_color('TooltipPanel', 'panel', 'bg_color', value)
-		set_stylebox_color('PopupMenu', 'panel', 'bg_color', value)
+		set_stylebox_color('TooltipPanel', 'panel', 'bg_color', value, true, false)
+		set_stylebox_color('PopupMenu', 'panel', 'bg_color', value, true, false)
 
 var text_color := Color.TRANSPARENT:
 	set(value):
 		text_color = value
-		set_color('Label', 'font_color', value)
-		set_color('RichTextLabel', 'default_color', value)
-		set_color('LineEdit', 'font_color', value)
-		set_color('Button', 'font_color', value)
-		set_color('AccentButton', 'font_color', value)
+		set_color('Label', 'font_color', value, true, false)
+		set_color('RichTextLabel', 'default_color', value, true, false)
+		set_color('LineEdit', 'font_color', value, true, false)
+		set_color('Button', 'font_color', value, true, false)
+		set_color('AccentButton', 'font_color', value, true, false)
 
 var text_disabled_color := Color.TRANSPARENT:
 	set(value):
 		text_disabled_color = value
-		theme.set_color('font_uneditable_color', 'LineEdit', value)
-		theme.set_color('font_placeholder_color', 'LineEdit', value)
-		theme.set_color('font_disabled_color', 'Button', value)
-		theme.set_color('font_disabled_color', 'AccentButton', value)
+		set_color('LineEdit', 'font_uneditable_color', value, true, false)
+		set_color('LineEdit', 'font_placeholder_color', value, true, false)
+		set_color('Button', 'font_disabled_color', value, true, false)
+		set_color('AccentButton', 'font_disabled_color', value, true, false)
 
 var text_hover_color := Color.TRANSPARENT:
 	set(value):
 		text_hover_color = value
 		for item in ['Button','AccentButton']:
 			for item_2 in ['font_hover_color','font_focused_color','font_pressed_color','font_hover_pressed_color']:
-				theme.set_color(item_2, item, value)
-		theme.set_color('font_color', 'LabelHover', value)
-		theme.set_color('font_outline_color', 'LabelHover', value)
+				set_color(item, item_2, value, true, false)
+		set_color('LabelHover', 'font_color', value, true, false)
+		set_color('LabelHover', 'font_outline_color', value, true, false)
 
 var text_primary_color := Color.TRANSPARENT:
 	set(value):
 		text_primary_color = value
-		theme.set_color('font_color', 'LabelPrimary', value)
-		theme.set_color('font_outline_color', 'LabelPrimary', value)
-		theme.set_color('font_color', 'LabelPrimarySmall', value)
-		theme.set_color('font_outline_color', 'LabelPrimarySmall', value)
-		theme.set_color('font_color', 'LabelHeader', value)
-		theme.set_color('font_outline_color', 'LabelHeader', value)
+		set_color('LabelPrimary', 'font_color', value, true, false)
+		set_color('LabelPrimary', 'font_outline_color', value, true, false)
+		set_color('LabelPrimarySmall', 'font_color', value, true, false)
+		set_color('LabelPrimarySmall', 'font_outline_color', value, true, false)
+		set_color('LabelHeader', 'font_color', value, true, false)
+		set_color('LabelHeader', 'font_outline_color', value, true, false)
 
 var text_primary_hover_color := Color.TRANSPARENT:
 	set(value):
 		text_primary_hover_color = value
-		theme.set_color('font_color', 'LabelPrimaryHover', value)
-		theme.set_color('font_outline_color', 'LabelPrimaryHover', value)
-		theme.set_color('font_color', 'LabelHeaderHover', value)
-		theme.set_color('font_outline_color', 'LabelHeaderHover', value)
+		set_color('LabelPrimaryHover', 'font_color', value, true, false)
+		set_color('LabelPrimaryHover', 'font_outline_color', value, true, false)
+		set_color('LabelHeaderHover', 'font_color', value, true, false)
+		set_color('LabelHeaderHover', 'font_outline_color', value, true, false)
 
 var button_color := Color.TRANSPARENT:
 	set(value):
 		button_color = value
-		value = value.blend(button_tint)
-		set_stylebox_color('Button', 'normal', 'bg_color', value, true)
+		set_stylebox_color('Button', 'normal', 'bg_color', value, true, false, button_tint)
 
 var button_disabled_color := Color.TRANSPARENT:
 	set(value):
 		button_disabled_color = value
-		set_stylebox_color('Button', 'disabled', 'bg_color', value.blend(button_tint), true)
+		set_stylebox_color('Button', 'disabled', 'bg_color', value, true, false, button_tint)
 
 var button_hover_color := Color.TRANSPARENT:
 	set(value):
 		button_hover_color = value
-		set_stylebox_color('Button', 'hover', 'bg_color', value.blend(button_tint), true)
+		set_stylebox_color('Button', 'hover', 'bg_color', value, true, false, button_tint)
 
 var button_pressed_color := Color.TRANSPARENT:
 	set(value):
 		button_pressed_color = value
-		set_stylebox_color('Button', 'pressed', 'bg_color', value.blend(button_tint), true)
+		set_stylebox_color('Button', 'pressed', 'bg_color', value, true, false, button_tint)
 
 #endregion
 
@@ -262,53 +259,36 @@ func set_theme(id:String) -> void:
 	modes.clear()
 
 	var registered_theme:Dictionary = registered_themes[theme_index]
-	var theme_name = registered_theme.get('name')
-	if theme_name is not String or theme_name.is_empty(): theme_name = id
-
-	var theme_item = registered_theme.get('item')
-	if theme_item is Theme:
-		theme = theme_item
-		SessionManager.reload_main_scene()
-	elif theme_item is TesseractMod:
-		var theme_path:String = 'res://Themes/%s/theme.tres' % theme_item.id
-		if not ResourceLoader.exists(theme_path):
-			MiniLog.err('Could not find theme resource in mod "%s".' % theme_item.id, ThemeManager)
-			return
-		# Set theme.
-		var theme_resource = load(theme_path)
-		if theme_resource is Theme:
-			theme = theme_resource
-			SessionManager.reload_main_scene()
 
 	# Set config values.
 	var config:ConfigFile = registered_theme.config
 	for section in config.get_sections():
-		if not section.begins_with('Theme'): continue
-		var mode_name:String = 'Default'
-		if section.begins_with('Theme:'): mode_name = section.replace('Theme:','')
+		if not section.begins_with('Theme:'): continue
+		var mode_name = section.replace('Theme:','')
 		var mode_config = {
 			'@mode_name': mode_name,
 		}
 		for key:String in config.get_section_keys(section):
-			if key in ['modes']: continue
-			if self.get(key) == null: continue
 			var value = config.get_value(section, key)
 			if value != null: mode_config.set(key, value)
 		modes.append(mode_config)
 
-	if modes.size() == 0:
-		var mode_config = {
-			'@mode_name': 'Default',
-		}
-		modes.append(mode_config)
-
-	set_theme_mode(0)
+	var theme_variants = config.get_value('Theme', 'variants', [])
+	var default_variant_name = config.get_value('Theme', 'default_variant', '')
+	if theme_variants is Array && default_variant_name is String:
+		set_theme_mode(theme_variants.find(default_variant_name))
 
 
 func set_theme_mode(index:int) -> void:
-	if modes.size() <= index: return
+	if modes.size() <= index or index < 0: return
 	var mode_config = modes.get(index)
 	mode = index
+
+	var source_path = mode_config.get('source')
+	if source_path is not String: return
+	var theme_res = load(source_path)
+	theme = theme_res
+	SessionManager.reload_main_scene()
 
 	# Reset variables.
 	var i:int = -1
@@ -319,7 +299,7 @@ func set_theme_mode(index:int) -> void:
 
 	mode_config = mode_config as Dictionary
 	for key in mode_config:
-		if key is not String or key.begins_with('@'): continue
+		if key is not String or key.begins_with('@') or key in ['source']: continue
 		self.set(key, mode_config[key]) # Set property to value. If mismatched type, nothing happens.
 
 	apply_changes()
@@ -341,9 +321,9 @@ func get_theme_index(id:String) -> int:
 
 ## Apply changes made to [member theme].
 func apply_changes() -> void:
-	get_window().theme = self.theme.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
-	if SessionManager.main_scene != null: SessionManager.main_scene.set('bg_color', self._bg_color)
-	self.theme_applied.emit()
+	get_window().theme = theme.duplicate_deep(Resource.DEEP_DUPLICATE_ALL)
+	if SessionManager.main_scene != null: SessionManager.main_scene.set('bg_color', _bg_color)
+	theme_applied.emit()
 
 
 ## Gets the [member theme] or [param theme_resource] stylebox property.
@@ -354,7 +334,7 @@ func get_stylebox_property(theme_type:String, style_name:String, property_name:S
 	return style.get(property_name)
 
 
-## Sets the [member original_theme] stylebox property.
+## Gets the [member original_theme] stylebox property.
 ## If [param use_default_theme] is [code]true[/code] will grab from the app default theme instead of the current theme.
 func get_stylebox_default_property(theme_type:String, style_name:String, property_name:String, use_default_theme:bool=false) -> Variant:
 	var theme_resource = original_theme
@@ -371,13 +351,18 @@ func set_stylebox_property(theme_type:String, style_name:String, property_name:S
 
 
 ## Sets the [member theme] stylebox color, with modifiers.
-func set_stylebox_color(theme_type:String, style_name:String, property_name:String, property_value:Color, use_default_if_transparent:bool=true, preserve_alpha:bool=true) -> void:
+func set_stylebox_color(theme_type:String, style_name:String, property_name:String, property_value:Color, use_default_if_transparent:bool=true, preserve_alpha:bool=true, after_blend:=Color.TRANSPARENT) -> void:
 	if use_default_if_transparent && property_value.a == 0:
 		var default = get_stylebox_default_property(theme_type, style_name, property_name)
 		if default == null: default = get_stylebox_default_property(theme_type, style_name, property_name, true)
+		property_value = default
 	if preserve_alpha:
-		var alpha:float = get_stylebox_default_property(theme_type, style_name, property_name).a
-		property_value = Color(property_value.r, property_value.g, property_value.b, alpha)
+		var default_stylebox_property = get_stylebox_default_property(theme_type, style_name, property_name)
+		if default_stylebox_property is Color:
+			var alpha:float = default_stylebox_property.a
+			property_value = Color(property_value.r, property_value.g, property_value.b, alpha)
+	if after_blend:
+		property_value = property_value.blend(after_blend)
 	set_stylebox_property(theme_type, style_name, property_name, property_value)
 
 

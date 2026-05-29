@@ -209,7 +209,7 @@ func get_scene(scene_name:String, theme_override:String='', recurse:int=0) -> Pa
 	else: theme_ = theme_override
 
 	var scene
-	var scene_path:String = 'res://Themes/%s/%s.tscn' % [theme_, scene_name]
+	var scene_path:String = 'res://Layouts/%s/%s.tscn' % [theme_, scene_name]
 	if ResourceLoader.exists(scene_path): scene = load(scene_path)
 	if not scene: return SessionManager.get_scene(scene_name, 'Normal', recurse+1)
 	return scene

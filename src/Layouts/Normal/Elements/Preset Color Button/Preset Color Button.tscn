@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dsibuplor3qi1"]
 
-[ext_resource type="Script" uid="uid://brt1eo1g55v" path="res://Themes/Normal/Elements/Preset Color Button/preset_color_button.gd" id="1_ikqpn"]
+[ext_resource type="Script" uid="uid://brt1eo1g55v" path="res://Layouts/Normal/Elements/Preset Color Button/preset_color_button.gd" id="1_ikqpn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ikqpn"]
 bg_color = Color(1, 1, 1, 1)

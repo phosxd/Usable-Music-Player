@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c7hwlx4i6njlf"]
 
-[ext_resource type="Script" uid="uid://dh6g4vy4liksv" path="res://Themes/Normal/Elements/Grid Item/grid_item.gd" id="1_l7ro4"]
+[ext_resource type="Script" uid="uid://dh6g4vy4liksv" path="res://Layouts/Normal/Elements/Grid Item/grid_item.gd" id="1_l7ro4"]
 [ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_elf6b"]
 [ext_resource type="Script" uid="uid://d043648wabjl3" path="res://Elements/GridTextureRect.gd" id="4_d642b"]
 [ext_resource type="Script" uid="uid://cuel4avmaddm" path="res://Elements/ColoredControl.gd" id="4_l7ro4"]

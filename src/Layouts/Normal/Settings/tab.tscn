@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://cw1oexepw7wyu" path="res://Scripts/UI/Settings/section_theme.gd" id="5_pn7em"]
 [ext_resource type="Texture2D" uid="uid://6icvlc6d5rna" path="res://Themes/Normal/Assets/Icons/Save.svg" id="5_ud285"]
 [ext_resource type="Texture2D" uid="uid://oaogwxyubbp5" path="res://Themes/Normal/Assets/Icons/folder.svg" id="7_pn7em"]
-[ext_resource type="PackedScene" uid="uid://dsibuplor3qi1" path="res://Themes/Normal/Elements/Preset Color Button/Preset Color Button.tscn" id="8_sk0tj"]
+[ext_resource type="PackedScene" uid="uid://dsibuplor3qi1" path="res://Layouts/Normal/Elements/Preset Color Button/Preset Color Button.tscn" id="8_sk0tj"]
 [ext_resource type="Script" uid="uid://b036js4iv0a5e" path="res://Scripts/UI/Settings/section_ui.gd" id="11_ispo5"]
 [ext_resource type="Script" uid="uid://dwnymrla8fg3m" path="res://Scripts/UI/Settings/section_audio.gd" id="12_u75xh"]
 [ext_resource type="Script" uid="uid://byhvfeen0t5em" path="res://Scripts/UI/Settings/section_immersive_view.gd" id="13_enh62"]

@@ -47,6 +47,7 @@ unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Save queue as playlist."
 theme_type_variation = &"SoftButton"
+disabled = true
 icon = ExtResource("3_qppo7")
 
 [node name="Sep 1" type="HSeparator" parent="VBox" unique_id=26743642]
