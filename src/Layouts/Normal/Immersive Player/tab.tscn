@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://3c2q7qpnxy2o" path="res://Scripts/UI/Immersive Player/hide_player_timer.gd" id="10_idskp"]
 [ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Layouts/Normal/Player/player.tscn" id="10_khquy"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khquy"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i3s73"]
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -104,7 +104,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_khquy")
+theme_override_styles/panel = SubResource("StyleBoxFlat_i3s73")
 script = ExtResource("3_hbf8i")
 radius_bottom_left = 16
 radius_bottom_right = 16
@@ -184,6 +184,9 @@ visible = false
 self_modulate = Color(1, 1, 1, 0.49019608)
 layout_mode = 1
 anchors_preset = 15
+
+[node name="Track Name" parent="Image Margin/Player/Panel/VBox/HBox/Left/Track Info/Details HBox" parent_id_path=PackedInt32Array(110111644, 476663422) index="2" unique_id=1107486296]
+custom_minimum_size = Vector2(65.890625, 0)
 
 [node name="Hide Player Timer" type="Timer" parent="." unique_id=1911542422]
 unique_name_in_owner = true

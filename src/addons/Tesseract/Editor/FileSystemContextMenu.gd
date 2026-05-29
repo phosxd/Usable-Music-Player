@@ -10,9 +10,16 @@ func _init(icon_:Texture2D) -> void:
 func _popup_menu(paths:PackedStringArray) -> void:
 	if paths.size() != 1: return
 	var path:String = paths[0]
+
+	# If path is a Text Resource, show TRESTools options.
+	if path.get_extension().to_lower() in ['tres','tscn']:
+		add_context_menu_item('Reset UIDs', func(_paths:PackedStringArray) -> void:
+			TRESTools.reset_uids(FileAccess.open(path, FileAccess.READ))
+		)
+
 	if not path.ends_with('/'): return
 
-	# If directory is a mod, show mod options.
+	# If path is a mod directory, show mod options.
 	if FileAccess.file_exists(path+'MOD.cfg'):
 		add_context_menu_item('Export TMOD', export_tmod.bind(path), icon)
 

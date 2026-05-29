@@ -4,6 +4,7 @@ const nodes_to_hide:Array[String] = [
 	'Topbar',
 	'Sidebar',
 	'Right Sidebar Margin',
+	'Player',
 ]
 const default_bg_speed:float = 75.0
 @onready var default_shadow_style:StyleBox = %Shadow.get_theme_stylebox('panel')
@@ -27,12 +28,12 @@ func _ready() -> void:
 		global_margin.add_theme_constant_override('margin_%s' % item, 0)
 
 	# Replace player.
-	SessionManager.main_scene.get_node('%Player').hide()
 	for button:Node in %Player.get_buttons():
 		if button is not Button: continue
 		var style:StyleBox = button.get_theme_stylebox('normal').duplicate()
-		style.bg_color = Color(style.bg_color.r, style.bg_color.g, style.bg_color.b, 0.5)
-		button.add_theme_stylebox_override('normal', style)
+		if style is StyleBoxFlat:
+			style.bg_color = Color(style.bg_color.r, style.bg_color.g, style.bg_color.b, style.bg_color.a/2.0)
+			button.add_theme_stylebox_override('normal', style)
 
 	# Apply texture to background.
 	var bg_texture = SessionManager.call_func('get_immersive_view_texture')
@@ -65,9 +66,6 @@ func _exit_tree() -> void:
 	for item in ['left','top','right','bottom']:
 		i += 1
 		global_margin.add_theme_constant_override('margin_%s' % item, previous_global_margin[i])
-
-	# Restore normal player.
-	SessionManager.main_scene.get_node('%Player').show()
 
 
 func _process(delta:float) -> void:

@@ -21,6 +21,12 @@
 [ext_resource type="StyleBox" uid="uid://bvh1jsjvclehg" path="res://Themes/Normal/Assets/Styles/PanelContainer/tools_island_panel.tres" id="15_qgq1p"]
 [ext_resource type="StyleBox" uid="uid://coe1ck6nubixp" path="res://Themes/Normal/Assets/Styles/PanelContainer/rounded_texture_mask.tres" id="18_qw6u4"]
 [ext_resource type="StyleBox" uid="uid://ivkwcaj8fepd" path="res://Themes/Normal/Assets/Styles/Tooltip/normal.tres" id="21_5687p"]
+[ext_resource type="StyleBox" uid="uid://dletoh6n6ceh7" path="res://Themes/Normal/Assets/Styles/SoftButton/disabled.tres" id="21_l7e3a"]
+[ext_resource type="StyleBox" uid="uid://c141cf4wetryv" path="res://Themes/Normal/Assets/Styles/SoftButton/focus.tres" id="22_fn7dg"]
+[ext_resource type="StyleBox" uid="uid://nk5upqlgq2nd" path="res://Themes/Normal/Assets/Styles/SoftButton/hover.tres" id="23_ub6sa"]
+[ext_resource type="StyleBox" uid="uid://bbx2mc7l3kn2o" path="res://Themes/Normal/Assets/Styles/SoftButton/hover_pressed.tres" id="24_poq2b"]
+[ext_resource type="StyleBox" uid="uid://c34ji3nq144a3" path="res://Themes/Normal/Assets/Styles/SoftButton/normal.tres" id="25_x31us"]
+[ext_resource type="StyleBox" uid="uid://bnd67b7pq2sps" path="res://Themes/Normal/Assets/Styles/SoftButton/pressed.tres" id="26_hjbuk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g11mq"]
 content_margin_left = 6.0
@@ -219,45 +225,6 @@ corner_detail = 4
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4by78"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qw6u4"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xqqwk"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3rvjd"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dhjdp"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-bg_color = Color(1, 1, 1, 0.09803922)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ihyyy"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-bg_color = Color(1, 1, 1, 0.09803922)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d1ttw"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_davr4"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-bg_color = Color(1, 1, 1, 0.13725491)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
 
 [sub_resource type="DPITexture" id="DPITexture_fyvmx"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M8 14A6 6 0 0 0 8 2a6 6 0 0 0 0 12zM5.293 8.707a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L7.414 8l2.293 2.293a1 1 0 0 1-1.414 1.414z\"/></svg>
@@ -643,12 +610,12 @@ ScrollFillSeparator/styles/separator = SubResource("StyleBoxEmpty_qw6u4")
 SectionPanelContainer/base_type = &"PanelContainer"
 SectionPanelContainer/styles/panel = ExtResource("7_u0vf8")
 SoftButton/base_type = &"Button"
-SoftButton/styles/disabled = SubResource("StyleBoxEmpty_xqqwk")
-SoftButton/styles/focus = SubResource("StyleBoxEmpty_3rvjd")
-SoftButton/styles/hover = SubResource("StyleBoxFlat_dhjdp")
-SoftButton/styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_ihyyy")
-SoftButton/styles/normal = SubResource("StyleBoxEmpty_d1ttw")
-SoftButton/styles/pressed = SubResource("StyleBoxFlat_davr4")
+SoftButton/styles/disabled = ExtResource("21_l7e3a")
+SoftButton/styles/focus = ExtResource("22_fn7dg")
+SoftButton/styles/hover = ExtResource("23_ub6sa")
+SoftButton/styles/hover_pressed = ExtResource("24_poq2b")
+SoftButton/styles/normal = ExtResource("25_x31us")
+SoftButton/styles/pressed = ExtResource("26_hjbuk")
 TabContainer/colors/drop_mark_color = Color(0.25275, 0.465, 0.75, 0.825)
 TabContainer/colors/font_disabled_color = Color(1, 1, 1, 0.1925)
 TabContainer/colors/font_hovered_color = Color(1, 1, 1, 0.85)

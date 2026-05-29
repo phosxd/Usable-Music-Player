@@ -1,44 +1,26 @@
 [gd_resource type="Theme" format=3 uid="uid://bwimwur4wig5m"]
 
-[ext_resource type="StyleBox" uid="uid://cief333u263wx" path="res://MODS/UMP Minimal Theme/Assets/Styles/Button/disabled.tres" id="1_oqigd"]
-[ext_resource type="StyleBox" uid="uid://dbqoj8snb1npa" path="res://MODS/UMP Minimal Theme/Assets/Styles/Button/hover.tres" id="2_b8vwl"]
-[ext_resource type="StyleBox" uid="uid://dwfaolldboomw" path="res://MODS/UMP Minimal Theme/Assets/Styles/Button/pressed.tres" id="3_da48y"]
-[ext_resource type="StyleBox" uid="uid://bu8roobr2kax2" path="res://MODS/UMP Minimal Theme/Assets/Styles/Button/normal.tres" id="4_r64bo"]
-[ext_resource type="StyleBox" uid="uid://dxby4gtnbxakt" path="res://MODS/UMP Minimal Theme/Assets/Styles/Button/focus.tres" id="5_m0sqk"]
-[ext_resource type="Texture2D" uid="uid://j1lwltbp0t04" path="res://MODS/UMP Minimal Theme/Assets/Styles/CheckButton/checked.tres" id="6_sdehs"]
-[ext_resource type="Texture2D" uid="uid://cbvoo3b4u4k7s" path="res://MODS/UMP Minimal Theme/Assets/Styles/CheckButton/checked_disabled.tres" id="7_iakho"]
-[ext_resource type="Texture2D" uid="uid://8hibyngottdy" path="res://MODS/UMP Minimal Theme/Assets/Styles/CheckButton/unchecked.tres" id="8_a5t2m"]
-[ext_resource type="Texture2D" uid="uid://ctt8yh60dehwo" path="res://MODS/UMP Minimal Theme/Assets/Styles/CheckButton/unchecked_disabled.tres" id="9_bqhts"]
-[ext_resource type="StyleBox" uid="uid://i3ea546q867t" path="res://MODS/UMP Minimal Theme/Assets/Styles/FoldableContainer/focus.tres" id="10_mjo3n"]
-[ext_resource type="StyleBox" uid="uid://4r2qcjpeceyn" path="res://MODS/UMP Minimal Theme/Assets/Styles/FoldableContainer/panel.tres" id="11_dq56t"]
-[ext_resource type="StyleBox" uid="uid://05niom1qdsh8" path="res://MODS/UMP Minimal Theme/Assets/Styles/Separator/separator.tres" id="12_7ua60"]
-[ext_resource type="StyleBox" uid="uid://i7ymvovqk18e" path="res://MODS/UMP Minimal Theme/Assets/Styles/PanelContainer/island_panel.tres" id="13_qp608"]
-[ext_resource type="StyleBox" uid="uid://dvbiju7d2d77a" path="res://MODS/UMP Minimal Theme/Assets/Styles/LineEdit/focus.tres" id="14_d5iym"]
-[ext_resource type="StyleBox" uid="uid://c2ol5ukxy0g0u" path="res://MODS/UMP Minimal Theme/Assets/Styles/LineEdit/normal.tres" id="15_gsav8"]
-[ext_resource type="StyleBox" uid="uid://cpy6186qdkjqs" path="res://MODS/UMP Minimal Theme/Assets/Styles/LineEdit/ready_only.tres" id="16_qkky8"]
-[ext_resource type="StyleBox" uid="uid://ivkwcaj8fepd" path="res://MODS/UMP Minimal Theme/Assets/Styles/Tooltip/normal.tres" id="17_6hkkm"]
-[ext_resource type="StyleBox" uid="uid://b73y7dtrs0sf2" path="res://MODS/UMP Minimal Theme/Assets/Styles/PanelContainer/panel.tres" id="18_t4b68"]
-[ext_resource type="StyleBox" uid="uid://coe1ck6nubixp" path="res://MODS/UMP Minimal Theme/Assets/Styles/PanelContainer/rounded_texture_mask.tres" id="19_4g4b0"]
-[ext_resource type="StyleBox" uid="uid://ba5xswwps47ww" path="res://MODS/UMP Minimal Theme/Assets/Styles/PanelContainer/section_panel.tres" id="20_e4j0t"]
-[ext_resource type="StyleBox" uid="uid://bvh1jsjvclehg" path="res://MODS/UMP Minimal Theme/Assets/Styles/PanelContainer/tools_island_panel.tres" id="21_tbhb1"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g11mq"]
-content_margin_left = 6.0
-content_margin_top = 6.0
-content_margin_right = 6.0
-content_margin_bottom = 6.0
-bg_color = Color(0.24, 0.24, 0.24, 1)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.337, 0.62, 1, 0.8)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-corner_detail = 4
+[ext_resource type="StyleBox" uid="uid://boquvht8imgf6" path="res://MODS/UMP Modern Theme/Assets/Styles/SoftButton/disabled.tres" id="1_eqm3a"]
+[ext_resource type="StyleBox" uid="uid://cetxxwuy6f7ji" path="res://MODS/UMP Modern Theme/Assets/Styles/SoftButton/focus.tres" id="2_lbh3w"]
+[ext_resource type="StyleBox" uid="uid://cge1hqqd77veg" path="res://MODS/UMP Modern Theme/Assets/Styles/SoftButton/hover.tres" id="3_lqcxi"]
+[ext_resource type="StyleBox" uid="uid://ckhirlfco5nj7" path="res://MODS/UMP Modern Theme/Assets/Styles/SoftButton/hover_pressed.tres" id="4_5qe60"]
+[ext_resource type="StyleBox" uid="uid://jr68pe5slgml" path="res://MODS/UMP Modern Theme/Assets/Styles/SoftButton/normal.tres" id="5_27qop"]
+[ext_resource type="StyleBox" uid="uid://bptpimmytcpvc" path="res://MODS/UMP Modern Theme/Assets/Styles/SoftButton/pressed.tres" id="6_yrh53"]
+[ext_resource type="Texture2D" uid="uid://ctaub14r4rc1b" path="res://MODS/UMP Modern Theme/Assets/Styles/CheckButton/checked.tres" id="7_osxwl"]
+[ext_resource type="Texture2D" uid="uid://d3o2yxof6vyed" path="res://MODS/UMP Modern Theme/Assets/Styles/CheckButton/checked_disabled.tres" id="8_amhcq"]
+[ext_resource type="Texture2D" uid="uid://bkrprgmuyk6oc" path="res://MODS/UMP Modern Theme/Assets/Styles/CheckButton/unchecked.tres" id="9_gngf6"]
+[ext_resource type="Texture2D" uid="uid://b7im2fajvpq2o" path="res://MODS/UMP Modern Theme/Assets/Styles/CheckButton/unchecked_disabled.tres" id="10_naibc"]
+[ext_resource type="StyleBox" uid="uid://dy43m2d046uvb" path="res://MODS/UMP Modern Theme/Assets/Styles/FoldableContainer/panel.tres" id="11_ouidf"]
+[ext_resource type="StyleBox" uid="uid://cyyr3ythf2dka" path="res://MODS/UMP Modern Theme/Assets/Styles/Separator/separator.tres" id="12_adyrn"]
+[ext_resource type="StyleBox" uid="uid://b2kapitdkej2n" path="res://MODS/UMP Modern Theme/Assets/Styles/PanelContainer/island_panel.tres" id="13_qm7wx"]
+[ext_resource type="StyleBox" uid="uid://cx1qlnk8ybj2b" path="res://MODS/UMP Modern Theme/Assets/Styles/LineEdit/focus.tres" id="14_ped42"]
+[ext_resource type="StyleBox" uid="uid://iujefg0jvpv6" path="res://MODS/UMP Modern Theme/Assets/Styles/LineEdit/normal.tres" id="15_rnmj4"]
+[ext_resource type="StyleBox" uid="uid://blskopaes2h71" path="res://MODS/UMP Modern Theme/Assets/Styles/LineEdit/ready_only.tres" id="16_w6t8l"]
+[ext_resource type="StyleBox" uid="uid://dvg7jglehgbmg" path="res://MODS/UMP Modern Theme/Assets/Styles/Tooltip/normal.tres" id="17_domxg"]
+[ext_resource type="StyleBox" uid="uid://bj2f1cy7a05en" path="res://MODS/UMP Modern Theme/Assets/Styles/PanelContainer/panel.tres" id="18_t3jfc"]
+[ext_resource type="StyleBox" uid="uid://cqislx2f82xvd" path="res://MODS/UMP Modern Theme/Assets/Styles/PanelContainer/rounded_texture_mask.tres" id="19_sd76r"]
+[ext_resource type="StyleBox" uid="uid://da7gaudf01aq6" path="res://MODS/UMP Modern Theme/Assets/Styles/PanelContainer/section_panel.tres" id="20_btgno"]
+[ext_resource type="StyleBox" uid="uid://b8yt64tcssagw" path="res://MODS/UMP Modern Theme/Assets/Styles/PanelContainer/tools_island_panel.tres" id="21_krvp2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_swytt"]
 content_margin_left = 8.0
@@ -216,48 +198,27 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g11mq"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.24, 0.24, 0.24, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.337, 0.62, 1, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4by78"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qw6u4"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xqqwk"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3rvjd"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dhjdp"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-bg_color = Color(1, 1, 1, 0.09803922)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ihyyy"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-bg_color = Color(1, 1, 1, 0.09803922)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d1ttw"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_davr4"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-bg_color = Color(1, 1, 1, 0.13725491)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
 
 [sub_resource type="DPITexture" id="DPITexture_fyvmx"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M8 14A6 6 0 0 0 8 2a6 6 0 0 0 0 12zM5.293 8.707a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L7.414 8l2.293 2.293a1 1 0 0 1-1.414 1.414z\"/></svg>
@@ -463,17 +424,12 @@ AccentButton/colors/icon_pressed_color = Color(0.388, 0.713, 1.15, 1)
 AccentButton/constants/align_to_largest_stylebox = 1
 AccentButton/constants/h_separation = 4
 AccentButton/constants/outline_size = 0
-AccentButton/styles/disabled = ExtResource("1_oqigd")
-AccentButton/styles/disabled_mirrored = ExtResource("1_oqigd")
-AccentButton/styles/focus = SubResource("StyleBoxFlat_g11mq")
-AccentButton/styles/hover = ExtResource("2_b8vwl")
-AccentButton/styles/hover_mirrored = ExtResource("2_b8vwl")
-AccentButton/styles/hover_pressed = ExtResource("3_da48y")
-AccentButton/styles/hover_pressed_mirrored = ExtResource("3_da48y")
-AccentButton/styles/normal = ExtResource("4_r64bo")
-AccentButton/styles/normal_mirrored = ExtResource("4_r64bo")
-AccentButton/styles/pressed = ExtResource("3_da48y")
-AccentButton/styles/pressed_mirrored = ExtResource("3_da48y")
+AccentButton/styles/disabled = ExtResource("1_eqm3a")
+AccentButton/styles/focus = ExtResource("2_lbh3w")
+AccentButton/styles/hover = ExtResource("3_lqcxi")
+AccentButton/styles/hover_pressed = ExtResource("4_5qe60")
+AccentButton/styles/normal = ExtResource("5_27qop")
+AccentButton/styles/pressed = ExtResource("6_yrh53")
 Button/colors/font_color = Color(1, 1, 1, 0.75)
 Button/colors/font_disabled_color = Color(1, 1, 1, 0.34901962)
 Button/colors/font_focus_color = Color(1, 1, 1, 1)
@@ -490,34 +446,29 @@ Button/colors/icon_pressed_color = Color(0.38755, 0.713, 1.15, 1)
 Button/constants/align_to_largest_stylebox = 1
 Button/constants/h_separation = 4
 Button/constants/outline_size = 0
-Button/styles/disabled = ExtResource("1_oqigd")
-Button/styles/focus = ExtResource("5_m0sqk")
-Button/styles/hover = ExtResource("2_b8vwl")
-Button/styles/hover_pressed = ExtResource("3_da48y")
-Button/styles/normal = ExtResource("4_r64bo")
-Button/styles/pressed = ExtResource("3_da48y")
-CheckButton/icons/checked = ExtResource("6_sdehs")
-CheckButton/icons/checked_disabled = ExtResource("7_iakho")
-CheckButton/icons/unchecked = ExtResource("8_a5t2m")
-CheckButton/icons/unchecked_disabled = ExtResource("9_bqhts")
+Button/styles/disabled = ExtResource("1_eqm3a")
+Button/styles/focus = ExtResource("2_lbh3w")
+Button/styles/hover = ExtResource("3_lqcxi")
+Button/styles/hover_pressed = ExtResource("4_5qe60")
+Button/styles/normal = ExtResource("5_27qop")
+Button/styles/pressed = ExtResource("6_yrh53")
+CheckButton/icons/checked = ExtResource("7_osxwl")
+CheckButton/icons/checked_disabled = ExtResource("8_amhcq")
+CheckButton/icons/unchecked = ExtResource("9_gngf6")
+CheckButton/icons/unchecked_disabled = ExtResource("10_naibc")
 CheckButton/styles/disabled = SubResource("StyleBoxFlat_swytt")
 CheckButton/styles/hover = SubResource("StyleBoxFlat_7t2es")
 CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_ut2au")
 CheckButton/styles/normal = SubResource("StyleBoxFlat_52ns3")
 CheckButton/styles/pressed = SubResource("StyleBoxFlat_rwfge")
 FoldableContainer/colors/font_color = Color(1, 1, 1, 1)
-FoldableContainer/styles/focus = ExtResource("10_mjo3n")
-FoldableContainer/styles/panel = ExtResource("11_dq56t")
-FoldableContainer/styles/title_collapsed_hover_panel = ExtResource("2_b8vwl")
-FoldableContainer/styles/title_collapsed_panel = ExtResource("4_r64bo")
-FoldableContainer/styles/title_hover_panel = ExtResource("2_b8vwl")
-FoldableContainer/styles/title_panel = ExtResource("4_r64bo")
+FoldableContainer/styles/panel = ExtResource("11_ouidf")
 GridItemPanel/base_type = &"Panel"
 GridItemPanel/styles/panel = SubResource("StyleBoxFlat_3rvjd")
 HFlowContainer/constants/h_separation = 4
 HFlowContainer/constants/v_separation = 4
 HSeparator/constants/separation = 8
-HSeparator/styles/separator = ExtResource("12_7ua60")
+HSeparator/styles/separator = ExtResource("12_adyrn")
 HSlider/constants/center_grabber = 0
 HSlider/constants/grabber_offset = 0
 HSlider/icons/grabber = SubResource("DPITexture_6i4ee")
@@ -526,7 +477,7 @@ HSlider/styles/grabber_area = SubResource("StyleBoxFlat_di31b")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_tg2ob")
 HSlider/styles/slider = SubResource("StyleBoxFlat_s1k85")
 IslandPanelContainer/base_type = &"PanelContainer"
-IslandPanelContainer/styles/panel = ExtResource("13_qp608")
+IslandPanelContainer/styles/panel = ExtResource("13_qm7wx")
 Label/colors/font_color = Color(0.78431374, 0.78431374, 0.78431374, 1)
 Label/colors/font_outline_color = Color(0.78431374, 0.78431374, 0.78431374, 1)
 Label/colors/font_shadow_color = Color(1, 1, 1, 0)
@@ -606,13 +557,13 @@ LineEdit/colors/font_placeholder_color = Color(1, 1, 1, 0.34901962)
 LineEdit/colors/font_selected_color = Color(1, 1, 1, 0.8509804)
 LineEdit/colors/font_uneditable_color = Color(1, 1, 1, 0.6509804)
 LineEdit/colors/selection_color = Color(0.389, 0.713, 1.15, 0.5)
-LineEdit/styles/focus = ExtResource("14_d5iym")
-LineEdit/styles/normal = ExtResource("15_gsav8")
-LineEdit/styles/read_only = ExtResource("16_qkky8")
-MenuBar/styles/normal = ExtResource("17_6hkkm")
+LineEdit/styles/focus = ExtResource("14_ped42")
+LineEdit/styles/normal = ExtResource("15_rnmj4")
+LineEdit/styles/read_only = ExtResource("16_w6t8l")
+MenuBar/styles/normal = ExtResource("17_domxg")
 Panel/styles/panel = SubResource("StyleBoxFlat_36d8i")
-PanelContainer/styles/panel = ExtResource("18_t4b68")
-PopupMenu/styles/panel = ExtResource("17_6hkkm")
+PanelContainer/styles/panel = ExtResource("18_t3jfc")
+PopupMenu/styles/panel = ExtResource("17_domxg")
 PrimaryLabel/base_type = &"Label"
 PrimaryLabel/colors/font_color = Color(0.89411765, 0.89411765, 0.89411765, 1)
 PrimaryLabel/colors/font_outline_color = Color(0.89, 0.89, 0.89, 1)
@@ -632,7 +583,7 @@ RichTextLabel/fonts/normal_font = null
 RichTextLabel/styles/focus = SubResource("StyleBoxEmpty_2pana")
 RichTextLabel/styles/normal = SubResource("StyleBoxFlat_f1hsc")
 RoundedTextureMask/base_type = &"Panel"
-RoundedTextureMask/styles/panel = ExtResource("19_4g4b0")
+RoundedTextureMask/styles/panel = ExtResource("19_sd76r")
 ScrollContainer/colors/scroll_hint_horizontal_color = Color(0, 0, 0, 1)
 ScrollContainer/colors/scroll_hint_vertical_color = Color(0, 0, 0, 1)
 ScrollContainer/styles/focus = SubResource("StyleBoxFlat_g11mq")
@@ -641,14 +592,14 @@ ScrollFillSeparator/base_type = &"HSeparator"
 ScrollFillSeparator/constants/separation = 40
 ScrollFillSeparator/styles/separator = SubResource("StyleBoxEmpty_qw6u4")
 SectionPanelContainer/base_type = &"PanelContainer"
-SectionPanelContainer/styles/panel = ExtResource("20_e4j0t")
+SectionPanelContainer/styles/panel = ExtResource("20_btgno")
 SoftButton/base_type = &"Button"
-SoftButton/styles/disabled = SubResource("StyleBoxEmpty_xqqwk")
-SoftButton/styles/focus = SubResource("StyleBoxEmpty_3rvjd")
-SoftButton/styles/hover = SubResource("StyleBoxFlat_dhjdp")
-SoftButton/styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_ihyyy")
-SoftButton/styles/normal = SubResource("StyleBoxEmpty_d1ttw")
-SoftButton/styles/pressed = SubResource("StyleBoxFlat_davr4")
+SoftButton/styles/disabled = ExtResource("1_eqm3a")
+SoftButton/styles/focus = ExtResource("2_lbh3w")
+SoftButton/styles/hover = ExtResource("3_lqcxi")
+SoftButton/styles/hover_pressed = ExtResource("4_5qe60")
+SoftButton/styles/normal = ExtResource("5_27qop")
+SoftButton/styles/pressed = ExtResource("6_yrh53")
 TabContainer/colors/drop_mark_color = Color(0.25275, 0.465, 0.75, 0.825)
 TabContainer/colors/font_disabled_color = Color(1, 1, 1, 0.1925)
 TabContainer/colors/font_hovered_color = Color(1, 1, 1, 0.85)
@@ -675,12 +626,12 @@ TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_0y7oa")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_aygfs")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_crnkq")
 TabContainer/styles/tabbar_background = SubResource("StyleBoxFlat_p5cll")
-TextEdit/styles/focus = ExtResource("14_d5iym")
-TextEdit/styles/normal = ExtResource("15_gsav8")
-TextEdit/styles/read_only = ExtResource("16_qkky8")
+TextEdit/styles/focus = ExtResource("14_ped42")
+TextEdit/styles/normal = ExtResource("15_rnmj4")
+TextEdit/styles/read_only = ExtResource("16_w6t8l")
 ToolsIslandPanelContainer/base_type = &"PanelContainer"
-ToolsIslandPanelContainer/styles/panel = ExtResource("21_tbhb1")
-TooltipPanel/styles/panel = ExtResource("17_6hkkm")
+ToolsIslandPanelContainer/styles/panel = ExtResource("21_krvp2")
+TooltipPanel/styles/panel = ExtResource("17_domxg")
 VScrollBar/constants/padding_left = 4
 VScrollBar/constants/padding_right = 4
 VScrollBar/icons/decrement = SubResource("ImageTexture_ecbqw")
@@ -695,7 +646,7 @@ VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_paoim")
 VScrollBar/styles/scroll = SubResource("StyleBoxEmpty_85gxb")
 VScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_g11mq")
 VSeparator/constants/separation = 8
-VSeparator/styles/separator = ExtResource("12_7ua60")
+VSeparator/styles/separator = ExtResource("12_adyrn")
 VSlider/constants/center_grabber = 0
 VSlider/constants/grabber_offset = 0
 VSlider/icons/grabber = SubResource("DPITexture_6i4ee")
