@@ -151,18 +151,23 @@ var panel_color := Color.TRANSPARENT:
 		set_stylebox_color('ToolsIslandPanelContainer', 'panel', 'bg_color', value, true, false, panel_tint)
 		set_stylebox_color('LineEdit', 'normal', 'bg_color', value, true, false, panel_tint)
 		set_stylebox_color('LineEdit', 'read_only', 'bg_color', value, true, false, panel_tint)
+	get():
+		return get_stylebox_property('PanelContainer', 'panel', 'bg_color')
 
 var section_panel_color := Color.TRANSPARENT:
 	set(value):
 		section_panel_color = value
 		set_stylebox_color('SectionPanelContainer', 'panel', 'bg_color', value, true, false, panel_tint)
+	get():
+		return get_stylebox_property('SectionPanelContainer', 'panel', 'bg_color')
 
 var tooltip_panel_color := Color.TRANSPARENT:
 	set(value):
 		tooltip_panel_color = value
-		value = value.blend(panel_tint)
-		set_stylebox_color('TooltipPanel', 'panel', 'bg_color', value, true, false)
-		set_stylebox_color('PopupMenu', 'panel', 'bg_color', value, true, false)
+		set_stylebox_color('TooltipPanel', 'panel', 'bg_color', value, true, false, panel_tint)
+		set_stylebox_color('PopupMenu', 'panel', 'bg_color', value, true, false, panel_tint)
+	get():
+		return get_stylebox_property('TooltipPanel', 'panel', 'bg_color')
 
 var text_color := Color.TRANSPARENT:
 	set(value):
@@ -172,6 +177,8 @@ var text_color := Color.TRANSPARENT:
 		set_color('LineEdit', 'font_color', value, true, false)
 		set_color('Button', 'font_color', value, true, false)
 		set_color('AccentButton', 'font_color', value, true, false)
+	get():
+		return theme.get_color('font_color', 'Label')
 
 var text_disabled_color := Color.TRANSPARENT:
 	set(value):
@@ -180,6 +187,8 @@ var text_disabled_color := Color.TRANSPARENT:
 		set_color('LineEdit', 'font_placeholder_color', value, true, false)
 		set_color('Button', 'font_disabled_color', value, true, false)
 		set_color('AccentButton', 'font_disabled_color', value, true, false)
+	get():
+		return theme.get_color('font_disabled_color', 'Button')
 
 var text_hover_color := Color.TRANSPARENT:
 	set(value):
@@ -189,6 +198,8 @@ var text_hover_color := Color.TRANSPARENT:
 				set_color(item, item_2, value, true, false)
 		set_color('LabelHover', 'font_color', value, true, false)
 		set_color('LabelHover', 'font_outline_color', value, true, false)
+	get():
+		return theme.get_color('font_color', 'LabelHover')
 
 var text_primary_color := Color.TRANSPARENT:
 	set(value):
@@ -199,6 +210,8 @@ var text_primary_color := Color.TRANSPARENT:
 		set_color('LabelPrimarySmall', 'font_outline_color', value, true, false)
 		set_color('LabelHeader', 'font_color', value, true, false)
 		set_color('LabelHeader', 'font_outline_color', value, true, false)
+	get():
+		return theme.get_color('font_color', 'LabelPrimary')
 
 var text_primary_hover_color := Color.TRANSPARENT:
 	set(value):
@@ -207,26 +220,36 @@ var text_primary_hover_color := Color.TRANSPARENT:
 		set_color('LabelPrimaryHover', 'font_outline_color', value, true, false)
 		set_color('LabelHeaderHover', 'font_color', value, true, false)
 		set_color('LabelHeaderHover', 'font_outline_color', value, true, false)
+	get():
+		return theme.get_color('font_color', 'LabelPrimaryHover')
 
 var button_color := Color.TRANSPARENT:
 	set(value):
 		button_color = value
 		set_stylebox_color('Button', 'normal', 'bg_color', value, true, false, button_tint)
+	get():
+		return get_stylebox_property('Button', 'normal', 'bg_color')
 
 var button_disabled_color := Color.TRANSPARENT:
 	set(value):
 		button_disabled_color = value
 		set_stylebox_color('Button', 'disabled', 'bg_color', value, true, false, button_tint)
+	get():
+		return get_stylebox_property('Button', 'disabled', 'bg_color')
 
 var button_hover_color := Color.TRANSPARENT:
 	set(value):
 		button_hover_color = value
 		set_stylebox_color('Button', 'hover', 'bg_color', value, true, false, button_tint)
+	get():
+		return get_stylebox_property('Button', 'hover', 'bg_color')
 
 var button_pressed_color := Color.TRANSPARENT:
 	set(value):
 		button_pressed_color = value
 		set_stylebox_color('Button', 'pressed', 'bg_color', value, true, false, button_tint)
+	get():
+		return get_stylebox_property('Button', 'pressed', 'bg_color')
 
 #endregion
 
