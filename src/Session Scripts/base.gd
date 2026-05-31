@@ -107,6 +107,11 @@ const property_data:Array[Array] = [
 	['fetch_album_cover',[TYPE_BOOL]],
 	['send_track_finished_notif',[TYPE_BOOL]],
 	['send_library_scan_finished_notif',[TYPE_BOOL]],
+	# Keybinds.
+	['keybind_play_pause',[TYPE_STRING]],
+	['keybind_skip_backward',[TYPE_STRING]],
+	['keybind_skip_forward',[TYPE_STRING]],
+	['keybind_page_back',[TYPE_STRING]],
 
 	# Misc data.
 	['user_data_bytes',[TYPE_INT]],
@@ -220,6 +225,16 @@ var fetch_artist_cover:bool = false
 var fetch_album_cover:bool = false
 var send_track_finished_notif:bool = true
 var send_library_scan_finished_notif:bool = true
+
+#endregion
+
+#region keybinds
+
+var keybind_play_pause:String = 'Ctrl+Space'
+var keybind_skip_backward:String = 'Ctrl+Left'
+var keybind_skip_forward:String = 'Ctrl+Right'
+var keybind_page_backward:String = 'Shift+Left'
+var keybind_page_forward:String = 'Shift+Right'
 
 #endregion
 

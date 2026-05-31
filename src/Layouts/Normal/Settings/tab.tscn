@@ -15,6 +15,8 @@
 [ext_resource type="Script" uid="uid://dwnymrla8fg3m" path="res://Scripts/UI/Settings/section_audio.gd" id="12_u75xh"]
 [ext_resource type="Script" uid="uid://byhvfeen0t5em" path="res://Scripts/UI/Settings/section_immersive_view.gd" id="13_enh62"]
 [ext_resource type="Script" uid="uid://cni4q5hifbayv" path="res://Scripts/UI/Settings/section_api.gd" id="13_rtbdg"]
+[ext_resource type="Script" uid="uid://w4qi2gcsst0f" path="res://Scripts/UI/Settings/keybinds.gd" id="15_ahvtd"]
+[ext_resource type="PackedScene" uid="uid://cmqpvocj5gymd" path="res://Elements/Keybind Input/Keybind Input.tscn" id="16_43pmp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dp5eg"]
 
@@ -169,9 +171,11 @@ script = ExtResource("12_u75xh")
 [node name="Audio Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/Audio" unique_id=1609975435]
 unique_name_in_owner = true
 layout_mode = 2
+folded = true
 title = "Audio"
 
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Audio/Audio Fold" unique_id=1538532529]
+visible = false
 layout_mode = 2
 
 [node name="Replay Gain" type="HBoxContainer" parent="Scroll/Margin/VBox/Audio/Audio Fold/VBox" unique_id=85143947]
@@ -229,9 +233,11 @@ script = ExtResource("5_pn7em")
 [node name="Theme Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/Theme" unique_id=549826942]
 unique_name_in_owner = true
 layout_mode = 2
+folded = true
 title = "Theme"
 
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Theme/Theme Fold" unique_id=1265648481]
+visible = false
 layout_mode = 2
 
 [node name="Theme" type="HBoxContainer" parent="Scroll/Margin/VBox/Theme/Theme Fold/VBox" unique_id=1894780978]
@@ -547,9 +553,11 @@ script = ExtResource("11_ispo5")
 [node name="UI Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/UI" unique_id=145514113]
 unique_name_in_owner = true
 layout_mode = 2
+folded = true
 title = "User Interface"
 
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold" unique_id=821509536]
+visible = false
 layout_mode = 2
 
 [node name="Clear Queue Warning" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=1689461171]
@@ -743,9 +751,11 @@ script = ExtResource("13_enh62")
 [node name="Immersive View Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/Immersive View" unique_id=412975468]
 unique_name_in_owner = true
 layout_mode = 2
+folded = true
 title = "Immersive View"
 
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold" unique_id=1362471797]
+visible = false
 layout_mode = 2
 
 [node name="Slide Away Player" type="HBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox" unique_id=379749127]
@@ -802,73 +812,74 @@ item_count = 1
 popup/item_0/text = "None"
 popup/item_0/id = 0
 
-[node name="Shortcuts" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=1537575725]
-visible = false
+[node name="Keybinds" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=1537575725]
 layout_mode = 2
 theme_type_variation = &"SectionPanelContainer"
+script = ExtResource("15_ahvtd")
 
-[node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Shortcuts" unique_id=981223624]
+[node name="Keybinds Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/Keybinds" unique_id=1076491876]
+unique_name_in_owner = true
+layout_mode = 2
+title = "Keybinds"
+
+[node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold" unique_id=981223624]
 layout_mode = 2
 
-[node name="Play Pause" type="HBoxContainer" parent="Scroll/Margin/VBox/Shortcuts/VBox" unique_id=1027878200]
+[node name="Play Pause" type="HBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox" unique_id=1027878200]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/Shortcuts/VBox/Play Pause" unique_id=1615511433]
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Play Pause" unique_id=1615511433]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"LabelPrimary"
 text = "Play / Pause"
 
-[node name="Play Pause Key" type="Button" parent="Scroll/Margin/VBox/Shortcuts/VBox/Play Pause" unique_id=1106191019]
+[node name="Play Pause Key" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Play Pause" unique_id=1555127715 instance=ExtResource("16_43pmp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "No key set..."
 
-[node name="Skip Backward" type="HBoxContainer" parent="Scroll/Margin/VBox/Shortcuts/VBox" unique_id=1843368453]
+[node name="Skip Backward" type="HBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox" unique_id=1843368453]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/Shortcuts/VBox/Skip Backward" unique_id=1974193347]
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Skip Backward" unique_id=1974193347]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"LabelPrimary"
 text = "Skip Backward"
 
-[node name="Skip Backward Key" type="Button" parent="Scroll/Margin/VBox/Shortcuts/VBox/Skip Backward" unique_id=848869332]
+[node name="Skip Backward Key" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Skip Backward" unique_id=576971087 instance=ExtResource("16_43pmp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "No key set..."
 
-[node name="Skip Forward" type="HBoxContainer" parent="Scroll/Margin/VBox/Shortcuts/VBox" unique_id=968247680]
+[node name="Skip Forward" type="HBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox" unique_id=968247680]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/Shortcuts/VBox/Skip Forward" unique_id=1116914384]
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Skip Forward" unique_id=1116914384]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"LabelPrimary"
 text = "Skip Forward"
 
-[node name="Skip Forward Key" type="Button" parent="Scroll/Margin/VBox/Shortcuts/VBox/Skip Forward" unique_id=700989784]
+[node name="Skip Forward Key" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Skip Forward" unique_id=1749084442 instance=ExtResource("16_43pmp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "No key set..."
 
-[node name="Page Back" type="HBoxContainer" parent="Scroll/Margin/VBox/Shortcuts/VBox" unique_id=1859468832]
+[node name="Page Backward" type="HBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox" unique_id=1859468832]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/Shortcuts/VBox/Page Back" unique_id=418645861]
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Page Backward" unique_id=418645861]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"LabelPrimary"
 text = "Page Back"
 
-[node name="Page Back Key" type="Button" parent="Scroll/Margin/VBox/Shortcuts/VBox/Page Back" unique_id=797202248]
+[node name="Page Backward Key" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Page Backward" unique_id=1279836606 instance=ExtResource("16_43pmp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "No key set..."
 
 [node name="API" type="PanelContainer" parent="Scroll/Margin/VBox" unique_id=295361639]
 layout_mode = 2
@@ -1047,10 +1058,11 @@ theme_type_variation = &"ScrollFillSeparator"
 [connection signal="toggled" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Slide Away Player/Immersive View Slide Away Player" to="Scroll/Margin/VBox/Immersive View" method="_on_slide_away_player_toggled"]
 [connection signal="toggled" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background/Immersive View Reactive Background" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_reactive_background_toggled"]
 [connection signal="item_selected" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Background Texture/Immersive View Texture Name" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_texture_name_item_selected"]
-[connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Play Pause/Play Pause Key" to="." method="_on_play_pause_key_pressed"]
-[connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Skip Backward/Skip Backward Key" to="." method="_on_skip_backward_key_pressed"]
-[connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Skip Forward/Skip Forward Key" to="." method="_on_skip_forward_key_pressed"]
-[connection signal="pressed" from="Scroll/Margin/VBox/Shortcuts/VBox/Page Back/Page Back Key" to="." method="_on_page_back_key_pressed"]
+[connection signal="folding_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold" to="Scroll/Margin/VBox/Keybinds" method="_on_folding_changed"]
+[connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Play Pause/Play Pause Key" to="Scroll/Margin/VBox/Keybinds" method="_on_play_pause_key_keycode_changed"]
+[connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Skip Backward/Skip Backward Key" to="Scroll/Margin/VBox/Keybinds" method="_on_skip_backward_key_keycode_changed"]
+[connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Skip Forward/Skip Forward Key" to="Scroll/Margin/VBox/Keybinds" method="_on_skip_forward_key_keycode_changed"]
+[connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Page Backward/Page Backward Key" to="Scroll/Margin/VBox/Keybinds" method="_on_page_backward_key_keycode_changed"]
 [connection signal="folding_changed" from="Scroll/Margin/VBox/API/API Fold" to="Scroll/Margin/VBox/API" method="_on_api_fold_folding_changed"]
 [connection signal="toggled" from="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Lyrics/Fetch Lyrics" to="." method="_on_fetch_lyrics_toggled"]
 [connection signal="toggled" from="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Artist Cover/Fetch Artist Cover" to="." method="_on_fetch_artist_cover_toggled"]

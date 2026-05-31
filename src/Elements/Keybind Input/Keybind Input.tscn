@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cmqpvocj5gymd"]
+
+[ext_resource type="Script" uid="uid://bjwtfysrexseq" path="res://Elements/Keybind Input/keybind_input.gd" id="1_h4vxb"]
+
+[node name="Keybind Input" type="LineEdit" unique_id=1555127715]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+placeholder_text = "No key set..."
+keep_editing_on_text_submit = true
+context_menu_enabled = false
+emoji_menu_enabled = false
+clear_button_enabled = true
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+selecting_enabled = false
+drag_and_drop_selection_enabled = false
+script = ExtResource("1_h4vxb")
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="text_changed" from="." to="." method="_on_text_changed"]

@@ -4,12 +4,13 @@ import json
 # Import scripts.
 import Utils
 import Metadata
+import GlobalInput
 
 
 # Runs the "function" & prints the "result" as JSON text.
 # Function output is inserted into "result.data".
 def run_cmd(function, args, result):
-    result['data'] = Metadata.command_get_audio_meta(cmd_args)
+    result['data'] = function(args)
     print(json.dumps(result))
 
 
@@ -47,6 +48,8 @@ if __name__ == "__main__":
         function = None
         if cmd == 'get_audio_meta':
             function = Metadata.command_get_audio_meta
+        elif cmd == 'get_global_input':
+            function = GlobalInput.command_get_global_input
 
         if function == None: continue
 

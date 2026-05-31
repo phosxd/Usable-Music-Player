@@ -1,2 +1,2 @@
-#pyinstaller --onefile "metadata.py"
-nuitka "metadata.py" --onefile --lto=yes
+#pyinstaller --onefile "Main.py"
+nuitka "Main.py" --onefile --lto=yes

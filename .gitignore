@@ -8,7 +8,7 @@ export_presets.cfg
 
 EX/
 src/EXPORT/
-src/Scripts/Python/metadata.dist/
+src/Scripts/Python/Main.dist/
 
 # Imported translations (automatically generated from CSV files)
 *.translation

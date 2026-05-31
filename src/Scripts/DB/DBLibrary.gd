@@ -170,7 +170,7 @@ func _refresh() -> bool:
 		&& (track_lmt is int && lmt == track_lmt): return
 		# Scan file.
 		made_changes[0] = true
-		var entries:Array = Metadata.get_audio_meta([file_path], LibraryManager.image_cache_path)
+		var entries:Array = PyInterface.get_audio_meta([file_path], LibraryManager.image_cache_path)
 		for entry:Dictionary in entries:
 			if entry.is_empty():
 				MiniLog.err('Failed to scan file "%s".' % short_file_path, self)
