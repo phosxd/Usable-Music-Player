@@ -1,3 +1,4 @@
+import sys
 import threading
 import json
 
@@ -36,9 +37,9 @@ if __name__ == "__main__":
             arg_value = arg.removeprefix('(%s) ' % arg_object['type'])
             # Translate value.
             if arg_value.startswith(':'):
-                if arg_value == ':True': arg_value = True
-                elif arg_value == ':False': arg_value = False
-                elif arg_value.removeprefix(':').isnumeric(): arg_value = float(arg_value.removeprefix(':'))
+                if arg_value.lower() == ':true': arg_value = True
+                elif arg_value.lower() == ':false': arg_value = False
+                elif arg_value.removeprefix(':').replace('.','').isnumeric(): arg_value = float(arg_value.removeprefix(':'))
 
             arg_object['value'] = arg_value
             cmd_args.append(arg_object)
@@ -59,7 +60,11 @@ if __name__ == "__main__":
 
         # Get function.
         function:callable = None
-        if cmd == 'get_audio_meta':
+        if cmd == 'quit':
+            MPRIS.quit()
+            GlobalInput.quit()
+            sys.exit()
+        elif cmd == 'get_audio_meta':
             function = Metadata.command_get_audio_meta
         elif cmd == 'get_global_input':
             function = GlobalInput.command_get_global_input
@@ -70,7 +75,8 @@ if __name__ == "__main__":
 
         if function == None: continue
 
+        run_cmd(function, is_quiet, cmd_args, result)
         # Run command on separate thread.
-        cmd_thread = threading.Thread(target=run_cmd, args=(function, is_quiet, cmd_args, result))
-        cmd_thread.start()
+        # cmd_thread = threading.Thread(target=run_cmd, args=(function, is_quiet, cmd_args, result))
+        # cmd_thread.start()
 

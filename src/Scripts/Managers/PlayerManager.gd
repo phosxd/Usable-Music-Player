@@ -34,6 +34,7 @@ enum LoopMode {
 	QUEUE,
 }
 
+const volume_step_ammount:float = 2.5
 
 ## Queued tracks.
 var queue:Array[DBTrack] = []
@@ -83,6 +84,10 @@ func _process(_delta:float) -> void:
 	if audio_stream_player.playing:
 		track_progress = audio_stream_player.get_playback_position()
 		track_progress_updated.emit(track_progress)
+		if Engine.get_process_frames() % 100 == 0:
+			PyInterface.update_mpris_data({
+				'track_position': snappedf(track_progress,0.01),
+			})
 		var track:DBTrack = get_current_track()
 		match SessionManager.get_var('replay_gain_mode'):
 			0: # None.
@@ -112,6 +117,9 @@ func set_playing(playing:bool) -> void:
 	else:
 		audio_stream_player.stop.call_deferred()
 		pause_requested.emit.call_deferred()
+	PyInterface.update_mpris_data({
+		'playback_status': 'Playing' if playing else 'Paused',
+	})
 
 
 func set_track_progress(progress:float) -> void:
@@ -134,6 +142,14 @@ func set_current_track(track_queue_position:int, save_session:bool=true) -> void
 		var stream:AudioStream = track.get_stream()
 		if get_current_track() != track: return
 		audio_stream_player.set_deferred('stream', stream)
+		# Send metadata to MPRIS server.
+		PyInterface.update_mpris_data({
+			'track_title': track.name,
+			'track_album': track.album.name,
+			'track_artist': track.album.artist.name,
+			'track_length': track.length,
+			'art_url': 'file://%s' % track.album.cover_path,
+		})
 	,func(_result) -> void:
 		current_track_load_finished.emit()
 		current_track_loading = false
@@ -157,6 +173,14 @@ func skip_backward() -> void:
 		set_track_progress(0.0)
 	else:
 		set_current_track(queue_position-1)
+
+
+func volume_step_up() -> void:
+	volume += volume_step_ammount
+
+
+func volume_step_down() -> void:
+	volume -= volume_step_ammount
 
 
 ## Replaces queue with [param new_queue] & selects the [param track] & plays it.

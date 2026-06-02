@@ -4,18 +4,18 @@ const global_input_poll_interval:float = 0.5
 
 var ignore_input:bool = false
 var listen_to_global_input:bool = false
-var _timer:float = 0.0
+
+var listener_thread := Thread.new()
 
 
 func _ready() -> void:
-	pass
+	listener_thread.start(_listener)
 
 
-func _process(delta:float) -> void:
-	_timer += delta
-	if _timer >= global_input_poll_interval:
-		_timer = 0
-		#get_global_input()
+func _listener() -> void:
+	while true:
+		await get_tree().create_timer(global_input_poll_interval).timeout
+		get_global_input()
 
 
 func _notification(what:int) -> void:
@@ -41,9 +41,9 @@ func evaluate_input(event_text:String) -> void:
 	if event_text == uniform(SessionManager.get_var('keybind_skip_forward')):
 		PlayerManager.skip_forward()
 	if event_text == uniform(SessionManager.get_var('keybind_volume_up')):
-		PlayerManager.volume += 2.5
+		PlayerManager.volume_step_up()
 	if event_text == uniform(SessionManager.get_var('keybind_volume_down')):
-		PlayerManager.volume -= 2.5
+		PlayerManager.volume_step_down()
 
 	# UI controls.
 	if listen_to_global_input: return # If window unfocused, don't do UI controls.
@@ -60,14 +60,15 @@ func evaluate_input(event_text:String) -> void:
 
 func get_global_input() -> void:
 	# Process keyboard events.
-	var global_input:Array = PyInterface.get_global_input()
-	for event in global_input:
-		if event is not Dictionary: continue
-		var action = event.get('action','')
-		var key = event.get('key','')
-		if action is not String or action != 'press': continue
-		if key is not String or key.is_empty(): continue
-		if listen_to_global_input: evaluate_input(key)
+	if listen_to_global_input:
+		var global_input:Array = PyInterface.get_global_input()
+		for event in global_input:
+			if event is not Dictionary: continue
+			var action = event.get('action','')
+			var key = event.get('key','')
+			if action is not String or action != 'press': continue
+			if key is not String or key.is_empty(): continue
+			if listen_to_global_input: evaluate_input(key)
 
 	# Process MPRIS events.
 	var mpris_events:Array = PyInterface.get_mpris_events()
@@ -81,6 +82,10 @@ func get_global_input() -> void:
 			'set_playing':
 				if value == null: PlayerManager.set_playing(not PlayerManager.is_playing)
 				elif value is bool: PlayerManager.set_playing(value)
+			'skip_backward':
+				PlayerManager.skip_backward()
+			'skip_forward':
+				PlayerManager.skip_forward()
 
 
 func _input(event:InputEvent) -> void:

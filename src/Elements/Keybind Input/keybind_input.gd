@@ -11,6 +11,7 @@ signal keycode_changed(text_keycode:String)
 
 func reset_key() -> void:
 	self.text = OS.get_keycode_string(default_keycode)
+	keycode_changed.emit(self.text)
 
 
 func _on_gui_input(event:InputEvent) -> void:

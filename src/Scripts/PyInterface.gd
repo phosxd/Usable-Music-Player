@@ -8,10 +8,11 @@ var io_access: FileAccess
 var error_access: FileAccess
 var pid: int
 var busy:bool = false
+var sent_on_frame:int = 0
 
 
 func kill() -> void:
-	OS.kill(pid)
+	send_command('quit')
 
 
 func get_audio_meta(paths:PackedStringArray, image_out_dir:String='') -> Array:
@@ -28,6 +29,7 @@ func get_audio_meta(paths:PackedStringArray, image_out_dir:String='') -> Array:
 
 
 func get_global_input() -> Array:
+	return []
 	var response:Dictionary = send_command_and_get_response('get_global_input', [])
 	var data = response.get('data')
 	if data is not Array: data = []
@@ -35,6 +37,7 @@ func get_global_input() -> Array:
 
 
 func get_mpris_events() -> Array:
+	return []
 	var response:Dictionary = send_command_and_get_response('get_mpris_events', [])
 	var data = response.get('data')
 	if data is not Array: data = []
@@ -42,8 +45,8 @@ func get_mpris_events() -> Array:
 
 
 ## Update MPRIS server data.
-func update_mpris_data(data:Dictionary[String,Variant]) -> void:
-	var args := PackedStringArray(['(QUIET)'])
+func update_mpris_data(data:Dictionary) -> void:
+	var args := PackedStringArray()
 	for key:String in data:
 		var value = data[key]
 		if value is float or value is int or value is bool: value = ':%s' % value
@@ -54,7 +57,8 @@ func update_mpris_data(data:Dictionary[String,Variant]) -> void:
 
 ## Sends a command without expecting a response.
 ## To get the response, use [member send_command_and_get_response].
-func send_command(command:String, args:PackedStringArray) -> void:
+func send_command(command:String, args:=PackedStringArray()) -> void:
+	print('send: ',' [&&] '.join([command]+Array(args)))
 	io_access.store_line(' [&&] '.join([command]+Array(args)))
 
 
@@ -65,7 +69,7 @@ func send_command(command:String, args:PackedStringArray) -> void:
 ## [br]- "data" the data returned by the command.
 ## [br][br]
 ## In the case the response is invalid, there can be a binary 4th field "malformed" which tells you the response is invalid. 
-func send_command_and_get_response(command:String, args:PackedStringArray) -> Dictionary:
+func send_command_and_get_response(command:String, args:=PackedStringArray()) -> Dictionary:
 	# Assign random Command ID.
 	args = args.duplicate()
 	var id:String = '%s+%s' % [randf()*10, randi_range(1000,2000)]
@@ -77,13 +81,14 @@ func send_command_and_get_response(command:String, args:PackedStringArray) -> Di
 	# Wait for response & return it.
 	var output:String = io_access.get_line()
 	var json = JSON.parse_string(output)
-	if json is not Dictionary: json = {
+	if json is not Dictionary:
+		MiniLog.err('Malformed result from command $i"%s"i$.' % command, PyInterface)
+		json = {
 		'cmd': command,
 		'id': id,
 		'data': output,
 		'malformed': true,
 	}
-	busy = false
 	return json
 
 

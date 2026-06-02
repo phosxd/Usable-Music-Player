@@ -1,13 +1,12 @@
 import asyncio
 import random
-from typing import Annotated
 from dbus_fast.aio import MessageBus
 from dbus_fast.service import ServiceInterface, dbus_method, dbus_property, dbus_signal
-from dbus_fast.annotations import DBusStr, DBusBool, DBusInt64, DBusDouble, DBusObjectPath, DBusDict
 from dbus_fast import Variant, PropertyAccess
 
 mpris_obj_path:str = '/org/mpris/MediaPlayer2'
-player_name:str = 'sohp_ump.a'+str(random.randint(10000,90000))
+player_name:str = 'sohp_ump.a'+str(random.randint(10000,99999))
+bus:MessageBus = None
 
 # Map data properties to their interface properties.
 data_key_to_interface_property_map:dict[str,str] = {
@@ -17,7 +16,7 @@ data_key_to_interface_property_map:dict[str,str] = {
 	'track_length': '2/Metadata',
 	'art_url': '2/Metadata',
 	'track_position': '2/Position',
-	'is_playing': '2/PlaybackStatus',
+	'playback_status': '2/PlaybackStatus',
 	'app_name': '1/Identity',
 	'desktop_entry': '1/DesktopEntry',
 }
@@ -28,7 +27,7 @@ data:dict[str,any] = {
 	'track_artist': '',
 	'track_length': 0,
 	'track_position': 0,
-	'is_playing': False,
+	'playback_status': 'Paused',
 	'art_url': '',
 	'app_name': 'Placeholder Name',
 	'desktop_entry': '',
@@ -67,6 +66,7 @@ def command_update_data(args:list):
 			property_name = split_key[1]
 			if interface_id_ == interface_id:
 				if property_name == 'Metadata': property_value = interfaces['2'].Metadata
+				elif property_name == 'Position' and (type(property_value) is float or type(property_value) is int): property_value = int(property_value)*1000000
 				interface_properties_to_emit_changed[property_name] = property_value
 		# If properties have changed, emit changes.
 		if len(interface_properties_to_emit_changed) == 0: continue
@@ -97,15 +97,15 @@ class MediaPlayer2Interface(ServiceInterface):
 
 
 	@dbus_property(access=PropertyAccess.READ)
-	def CanQuit(self) -> DBusBool:
+	def CanQuit(self) -> 'b':
 		return True
 
 	@dbus_property(access=PropertyAccess.READ)
-	def CanRaise(self) -> DBusBool:
+	def CanRaise(self) -> 'b':
 		return True
 
 	@dbus_property(access=PropertyAccess.READ)
-	def HasTrackList(self) -> DBusBool:
+	def HasTrackList(self) -> 'b':
 		return False
 
 	@dbus_property(access=PropertyAccess.READ)
@@ -117,11 +117,11 @@ class MediaPlayer2Interface(ServiceInterface):
 		return ['file']
 
 	@dbus_property(access=PropertyAccess.READ)
-	def DesktopEntry(self) -> DBusStr:
+	def DesktopEntry(self) -> 's':
 		return data['desktop_entry']
 
 	@dbus_property(access=PropertyAccess.READ)
-	def Identity(self) -> DBusStr:
+	def Identity(self) -> 's':
 		return data['app_name']
 
 
@@ -180,42 +180,42 @@ class PlayerInterface(ServiceInterface):
 
 
 	@dbus_property(access=PropertyAccess.READ)
-	def CanControl(self) -> DBusBool:
+	def CanControl(self) -> 'b':
 		return True
 
 	@dbus_property(access=PropertyAccess.READ)
-	def CanPlay(self) -> DBusBool:
+	def CanPlay(self) -> 'b':
 		return True
 
 	@dbus_property(access=PropertyAccess.READ)
-	def CanPause(self) -> DBusBool:
-		return False
-
-	@dbus_property(access=PropertyAccess.READ)
-	def CanGoPrevious(self) -> DBusBool:
+	def CanPause(self) -> 'b':
 		return True
 
 	@dbus_property(access=PropertyAccess.READ)
-	def CanGoNext(self) -> DBusBool:
+	def CanGoPrevious(self) -> 'b':
 		return True
 
 	@dbus_property(access=PropertyAccess.READ)
-	def CanSeek(self) -> DBusBool:
+	def CanGoNext(self) -> 'b':
 		return True
 
 	@dbus_property(access=PropertyAccess.READ)
-	def Position(self) -> DBusInt64:
-		return data['track_position']*1000000
+	def CanSeek(self) -> 'b':
+		return True
 
 	@dbus_property(access=PropertyAccess.READ)
-	def PlaybackStatus(self) -> DBusStr:
-		return 'Playing' if data['is_playing'] else 'Paused'
+	def Position(self) -> 'x': # Int64
+		return int(data['track_position'])*1000000
+
+	@dbus_property(access=PropertyAccess.READ)
+	def PlaybackStatus(self) -> 's':
+		return data['playback_status']
 
 	@dbus_property(access=PropertyAccess.READ)
 	def Metadata(self) -> 'a{sv}':
 		return {
 			'mpris:trackid': Variant('i', 0),
-			'mpris:length': Variant('d', data['track_length']*1000000),
+			'mpris:length': Variant('d', int(data['track_length'])*1000000),
 			'xesam:title': Variant('s', data['track_title']),
 			'xesam:album': Variant('s', data['track_album']),
 			'xesam:artist': Variant('s', data['track_artist']),
@@ -235,7 +235,12 @@ def start():
 	asyncio.run(_start())
 
 
+def quit():
+	bus.disconnect()
+
+
 async def _start():
+	global bus
 	bus = await MessageBus().connect()
 	# Export interfaces.
 	for interface in interfaces.values():

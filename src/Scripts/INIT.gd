@@ -44,6 +44,12 @@ func _ready() -> void:
 	# Set up desktop file.
 	if OS.get_name() == 'Linux' && not OS.has_feature('editor'): generate_desktop_file()
 
+	# Initialize MPRIS server.
+	PyInterface.update_mpris_data({
+		'app_name': ProjectSettings.get_setting('application/config/name'),
+		'desktop_entry': desktop_file_path,
+	})
+
 
 ## Generates & saves a Linux desktop file for this app.
 func generate_desktop_file() -> void:

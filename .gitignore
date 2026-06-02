@@ -9,6 +9,7 @@ export_presets.cfg
 EX/
 src/EXPORT/
 src/Scripts/Python/Main.dist/
+src/Scripts/Python/__pycache__/
 
 # Imported translations (automatically generated from CSV files)
 *.translation

@@ -111,6 +111,10 @@ def key_release(key):
 
 
 
-listener = Listener(on_press=key_press, on_release=key_release)
+listener:Listener = Listener(on_press=key_press, on_release=key_release)
 listener.start()
+
+
+def quit():
+	listener.stop()
 
