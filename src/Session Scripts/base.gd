@@ -111,7 +111,11 @@ const property_data:Array[Array] = [
 	['keybind_play_pause',[TYPE_STRING]],
 	['keybind_skip_backward',[TYPE_STRING]],
 	['keybind_skip_forward',[TYPE_STRING]],
-	['keybind_page_back',[TYPE_STRING]],
+	['keybind_volume_up',[TYPE_STRING]],
+	['keybind_volume_down',[TYPE_STRING]],
+	['keybind_page_backward',[TYPE_STRING]],
+	['keybind_page_forward',[TYPE_STRING]],
+	['keybind_toggle_imview',[TYPE_STRING]],
 
 	# Misc data.
 	['user_data_bytes',[TYPE_INT]],
@@ -230,11 +234,17 @@ var send_library_scan_finished_notif:bool = true
 
 #region keybinds
 
-var keybind_play_pause:String = 'Ctrl+Space'
-var keybind_skip_backward:String = 'Ctrl+Left'
-var keybind_skip_forward:String = 'Ctrl+Right'
+# Global keybinds.
+var keybind_play_pause:String = ''
+var keybind_skip_backward:String = ''
+var keybind_skip_forward:String = ''
+var keybind_volume_up:String = ''
+var keybind_volume_down:String = ''
+
+# Focused keybinds.
 var keybind_page_backward:String = 'Shift+Left'
 var keybind_page_forward:String = 'Shift+Right'
+var keybind_toggle_imview:String = 'Ctrl+F'
 
 #endregion
 

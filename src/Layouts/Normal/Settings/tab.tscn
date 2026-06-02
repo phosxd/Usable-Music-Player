@@ -867,6 +867,34 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="Volume Up" type="HBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox" unique_id=1757703412]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Volume Up" unique_id=392594057]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelPrimary"
+text = "Volume Up"
+
+[node name="Volume Up Key" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Volume Up" unique_id=893464052 instance=ExtResource("16_43pmp")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Volume Down" type="HBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox" unique_id=1885648111]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Volume Down" unique_id=1205321412]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelPrimary"
+text = "Volume Down"
+
+[node name="Volume Down Key" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Volume Down" unique_id=1254688893 instance=ExtResource("16_43pmp")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="Page Backward" type="HBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox" unique_id=1859468832]
 layout_mode = 2
 
@@ -874,9 +902,37 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"LabelPrimary"
-text = "Page Back"
+text = "Page Backward"
 
 [node name="Page Backward Key" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Page Backward" unique_id=1279836606 instance=ExtResource("16_43pmp")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Page Forward" type="HBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox" unique_id=1920181869]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Page Forward" unique_id=1116344052]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelPrimary"
+text = "Page Forward"
+
+[node name="Page Forward Key" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Page Forward" unique_id=475841042 instance=ExtResource("16_43pmp")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Toggle ImView" type="HBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox" unique_id=1757792212]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Toggle ImView" unique_id=335166243]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelPrimary"
+text = "Toggle Immersive View"
+
+[node name="Toggle ImView Key" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Toggle ImView" unique_id=425416487 instance=ExtResource("16_43pmp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1062,7 +1118,11 @@ theme_type_variation = &"ScrollFillSeparator"
 [connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Play Pause/Play Pause Key" to="Scroll/Margin/VBox/Keybinds" method="_on_play_pause_key_keycode_changed"]
 [connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Skip Backward/Skip Backward Key" to="Scroll/Margin/VBox/Keybinds" method="_on_skip_backward_key_keycode_changed"]
 [connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Skip Forward/Skip Forward Key" to="Scroll/Margin/VBox/Keybinds" method="_on_skip_forward_key_keycode_changed"]
+[connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Volume Up/Volume Up Key" to="Scroll/Margin/VBox/Keybinds" method="_on_volume_up_key_keycode_changed"]
+[connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Volume Down/Volume Down Key" to="Scroll/Margin/VBox/Keybinds" method="_on_volume_down_key_keycode_changed"]
 [connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Page Backward/Page Backward Key" to="Scroll/Margin/VBox/Keybinds" method="_on_page_backward_key_keycode_changed"]
+[connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Page Forward/Page Forward Key" to="Scroll/Margin/VBox/Keybinds" method="_on_page_forward_key_keycode_changed"]
+[connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Toggle ImView/Toggle ImView Key" to="Scroll/Margin/VBox/Keybinds" method="_on_toggle_imview_key_keycode_changed"]
 [connection signal="folding_changed" from="Scroll/Margin/VBox/API/API Fold" to="Scroll/Margin/VBox/API" method="_on_api_fold_folding_changed"]
 [connection signal="toggled" from="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Lyrics/Fetch Lyrics" to="." method="_on_fetch_lyrics_toggled"]
 [connection signal="toggled" from="Scroll/Margin/VBox/API/API Fold/VBox/Fetch Artist Cover/Fetch Artist Cover" to="." method="_on_fetch_artist_cover_toggled"]

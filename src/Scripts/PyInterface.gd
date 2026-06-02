@@ -7,6 +7,7 @@ const binary_path_external:String = 'user://bin/'
 var io_access: FileAccess
 var error_access: FileAccess
 var pid: int
+var busy:bool = false
 
 
 func kill() -> void:
@@ -31,6 +32,24 @@ func get_global_input() -> Array:
 	var data = response.get('data')
 	if data is not Array: data = []
 	return data
+
+
+func get_mpris_events() -> Array:
+	var response:Dictionary = send_command_and_get_response('get_mpris_events', [])
+	var data = response.get('data')
+	if data is not Array: data = []
+	return data
+
+
+## Update MPRIS server data.
+func update_mpris_data(data:Dictionary[String,Variant]) -> void:
+	var args := PackedStringArray(['(QUIET)'])
+	for key:String in data:
+		var value = data[key]
+		if value is float or value is int or value is bool: value = ':%s' % value
+		args.append('(%s) %s' % [key, value])
+
+	send_command('update_mpris_data', args)
 
 
 ## Sends a command without expecting a response.
@@ -61,8 +80,10 @@ func send_command_and_get_response(command:String, args:PackedStringArray) -> Di
 	if json is not Dictionary: json = {
 		'cmd': command,
 		'id': id,
-		'data': output
+		'data': output,
+		'malformed': true,
 	}
+	busy = false
 	return json
 
 

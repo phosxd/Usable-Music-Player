@@ -58,6 +58,11 @@ def get_key_string(key):
 		elif key == Key.enter: key_string += 'Enter'
 		elif key == Key.insert: key_string += 'Insert'
 		elif key == Key.delete: key_string += 'Delete'
+		elif key == Key.media_play_pause: key_string += 'MediaPlayPause'
+		elif key == Key.media_previous: key_string += 'MediaPrevious'
+		elif key == Key.media_next: key_string += 'MediaNext'
+		elif key == Key.media_volume_up: key_string += 'MediaVolumeUp'
+		elif key == Key.media_volume_up: key_string += 'MediaVolumeDown'
 
 	return key_string.removesuffix('+')
 

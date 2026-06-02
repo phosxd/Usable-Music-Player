@@ -51,6 +51,7 @@ var replay_gain:float = 0.0:
 		replay_gain_updated.emit(value)
 var volume:float = 100.0:
 	set(value):
+		value = min(100,max(0,value))
 		volume = value
 		audio_stream_player.volume_linear = (value*0.01)
 		audio_stream_player.volume_db += replay_gain

@@ -54,7 +54,7 @@ extends Control
 	'tracks': [%'Tab Button Tracks', SessionManager.get_scene('Tracks/tab')],
 	'genres': [%'Tab Button Genres', SessionManager.get_scene('Genres/tab')],
 	'genre_page': [null, SessionManager.get_scene('Genre Page/page')],
-	'.immersive_player': [%'Tab Button Immersive Player', SessionManager.get_scene('Immersive Player/tab')]
+	'immersive_view': [%'Tab Button Immersive Player', SessionManager.get_scene('Immersive View/tab')]
 }
 var tab_history:Array[Array] = []
 
@@ -231,6 +231,10 @@ func go_back() -> void:
 		set_tab('')
 		return
 	set_tab(last_tab[0], last_tab[1])
+
+
+func go_forward() -> void:
+	pass
 
 
 func _on_tab_button_pressed(tab:String) -> void:
