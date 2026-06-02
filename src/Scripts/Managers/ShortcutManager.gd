@@ -1,6 +1,6 @@
 extends Node
 
-const global_input_poll_interval:float = 0.5
+const global_input_poll_interval:float = 0.25
 
 var ignore_input:bool = false
 var listen_to_global_input:bool = false
@@ -9,7 +9,8 @@ var listener_thread := Thread.new()
 
 
 func _ready() -> void:
-	listener_thread.start(_listener)
+	#listener_thread.start(_listener)
+	_listener()
 
 
 func _listener() -> void:

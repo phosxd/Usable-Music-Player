@@ -5,7 +5,6 @@
 - Add simple mini-player.
 - Add option for artist for regrabbing artist image from API.
 - Finish clear queue warning logic. Should not warn if queue has not been filled up via "intentional actions" such as artist/album play/shuffle buttons or via add to queue buttons.
-- Integrate with MPRIS via Python subprocess.
 - Rework how images are stored in user data.
 
 - Read "lyricist" tag to show "Written by:" in lyrics.

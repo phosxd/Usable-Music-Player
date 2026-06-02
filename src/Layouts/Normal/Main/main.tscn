@@ -477,7 +477,7 @@ layout_mode = 2
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Genres" to="." method="_on_tab_button_pressed" binds= ["genres"]]
 [connection signal="toggled" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Favorites" to="." method="_on_favorites_toggled"]
-[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Cover Art Margin/Panel/Current Track Cover Container/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= [".immersive_player"]]
+[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Cover Art Margin/Panel/Current Track Cover Container/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= ["immersive_view"]]
 [connection signal="toggled" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Activity" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_activity_toggled"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Back Button" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_back_button_pressed"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Forth Button" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_forth_button_pressed"]

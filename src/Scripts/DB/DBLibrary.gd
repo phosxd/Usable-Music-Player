@@ -118,7 +118,9 @@ func refresh(auto:bool=false) -> void:
 	if not auto: MiniLog.info('Starting scan for $~%s~$.' % self.name, DBLibrary)
 	scan_started.emit()
 
+	PyInterface.library_scan_mode = true
 	Async.create_thread(_refresh, func(made_changes:bool) -> void:
+		PyInterface.library_scan_mode = false
 		currently_updating = false
 		if made_changes:
 			changed = true
@@ -170,14 +172,17 @@ func _refresh() -> bool:
 		&& (track_lmt is int && lmt == track_lmt): return
 		# Scan file.
 		made_changes[0] = true
-		var entries:Array = PyInterface.get_audio_meta([file_path], LibraryManager.image_cache_path)
-		for entry:Dictionary in entries:
-			if entry.is_empty():
-				MiniLog.err('Failed to scan file "%s".' % short_file_path, self)
-				continue
-			_parse_entry(file_path, short_file_path, entry, parsed_images)
-			progress[0] += 1
-			self.scan_progress_changed.emit.call_deferred(progress[0])
+		var finished:Array[bool] = [false]
+		PyInterface.get_audio_meta([file_path], LibraryManager.image_cache_path, func(entries:Array) -> void:
+			for entry:Dictionary in entries:
+				if entry.is_empty():
+					MiniLog.err('Failed to scan file "%s".' % short_file_path, self)
+					continue
+				_parse_entry(file_path, short_file_path, entry, parsed_images)
+				progress[0] += 1
+				self.scan_progress_changed.emit.call_deferred(progress[0])
+				finished[0] = true
+		)
 	,null, true)
 
 	parsed_images.clear()

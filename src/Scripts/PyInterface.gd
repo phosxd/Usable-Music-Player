@@ -1,3 +1,7 @@
+## Autoload for communicating with the Python interface CLI.
+## [br][br]
+## Be very careful when running commands on separate threads, it may cause collisions with commands on the main
+## [br] causing unpredictable behavior.
 extends Node
 
 const binary_name:String = 'interface'
@@ -7,38 +11,43 @@ const binary_path_external:String = 'user://bin/'
 var io_access: FileAccess
 var error_access: FileAccess
 var pid: int
-var busy:bool = false
-var sent_on_frame:int = 0
+
+var waiting_for_response:bool = false
+## When [code]true[/code], only [member get_audio_meta] command will be actually sent to avoid async command requests.
+## Other functions will return dummy values. [member send_command] is not affected to allow low level commands.
+var library_scan_mode:bool = false
 
 
 func kill() -> void:
 	send_command('quit')
 
 
-func get_audio_meta(paths:PackedStringArray, image_out_dir:String='') -> Array:
+func get_audio_meta(paths:PackedStringArray, image_out_dir:String='', callback:=func(_data:Array):pass) -> void:
 	var args: PackedStringArray
 	for path:String in paths:
 		args.append('(audio) '+path)
 	args.append('(img_out) '+image_out_dir)
 
 	# Send command to Python.
-	var response:Dictionary = send_command_and_get_response('get_audio_meta', args)
+	var response:Dictionary = send_command('get_audio_meta', args)
 	var data = response.get('data')
 	if data is not Array: data = []
-	return data
+	callback.call(data)
 
 
 func get_global_input() -> Array:
-	return []
-	var response:Dictionary = send_command_and_get_response('get_global_input', [])
+	if library_scan_mode: return []
+
+	var response:Dictionary = send_command('get_global_input', [])
 	var data = response.get('data')
 	if data is not Array: data = []
 	return data
 
 
 func get_mpris_events() -> Array:
-	return []
-	var response:Dictionary = send_command_and_get_response('get_mpris_events', [])
+	if library_scan_mode: return []
+
+	var response:Dictionary = send_command('get_mpris_events', [])
 	var data = response.get('data')
 	if data is not Array: data = []
 	return data
@@ -46,6 +55,8 @@ func get_mpris_events() -> Array:
 
 ## Update MPRIS server data.
 func update_mpris_data(data:Dictionary) -> void:
+	if library_scan_mode: return
+
 	var args := PackedStringArray()
 	for key:String in data:
 		var value = data[key]
@@ -55,12 +66,6 @@ func update_mpris_data(data:Dictionary) -> void:
 	send_command('update_mpris_data', args)
 
 
-## Sends a command without expecting a response.
-## To get the response, use [member send_command_and_get_response].
-func send_command(command:String, args:=PackedStringArray()) -> void:
-	print('send: ',' [&&] '.join([command]+Array(args)))
-	io_access.store_line(' [&&] '.join([command]+Array(args)))
-
 
 ## Sends a command with a random ID then waits for a proper response.
 ## [br]The response should be a [Dictionary] with 3 fields:
@@ -69,17 +74,27 @@ func send_command(command:String, args:=PackedStringArray()) -> void:
 ## [br]- "data" the data returned by the command.
 ## [br][br]
 ## In the case the response is invalid, there can be a binary 4th field "malformed" which tells you the response is invalid. 
-func send_command_and_get_response(command:String, args:=PackedStringArray()) -> Dictionary:
+func send_command(command:String, args:=PackedStringArray()) -> Dictionary:
+	# Return placeholder values if another command is currently running.
+	if waiting_for_response:
+		MiniLog.err('Can only send one command at a time, returning placeholder values!', PyInterface)
+		return {'cmd':command,'id':'','data':null}
+
 	# Assign random Command ID.
 	args = args.duplicate()
 	var id:String = '%s+%s' % [randf()*10, randi_range(1000,2000)]
 	args.append('(CID) '+id)
 
-	# Send command.
-	send_command(command, args)
-
-	# Wait for response & return it.
+	waiting_for_response = true
+	io_access.store_line(' [&&] '.join([command]+Array(args)))
 	var output:String = io_access.get_line()
+	var err:Error = io_access.get_error()
+	if err != OK:
+		MiniLog.err('Encountered an error $!!%s!!$, please report then restart the application.' % error_string(err), PyInterface)
+		return {}
+	waiting_for_response = false
+
+	# Parse output & return it.
 	var json = JSON.parse_string(output)
 	if json is not Dictionary:
 		MiniLog.err('Malformed result from command $i"%s"i$.' % command, PyInterface)
