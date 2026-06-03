@@ -118,9 +118,9 @@ func refresh(auto:bool=false) -> void:
 	if not auto: MiniLog.info('Starting scan for $~%s~$.' % self.name, DBLibrary)
 	scan_started.emit()
 
-	PyInterface.library_scan_mode = true
+	PyInterface.whitelisted_functions = [PyInterface.get_audio_meta]
 	Async.create_thread(_refresh, func(made_changes:bool) -> void:
-		PyInterface.library_scan_mode = false
+		PyInterface.whitelisted_functions = PyInterface.default_whitelisted_functions.duplicate()
 		currently_updating = false
 		if made_changes:
 			changed = true

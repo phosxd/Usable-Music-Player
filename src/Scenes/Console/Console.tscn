@@ -20,7 +20,7 @@ rebound_strength = 14.0
 oversampling_override = 1.0
 title = "Console"
 initial_position = 2
-size = Vector2i(300, 500)
+size = Vector2i(600, 500)
 visible = false
 wrap_controls = true
 always_on_top = true
@@ -44,9 +44,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Scroll" type="ScrollContainer" parent="VBox" unique_id=1580724904]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-vertical_scroll_mode = 0
 script = ExtResource("1_w6jb2")
 speed = 150.0
 wheel_scroll_damper = SubResource("Resource_ecldj")
@@ -58,16 +58,20 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_ecldj")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_mcx5f")
 bbcode_enabled = true
-scroll_following = true
+fit_content = true
+scroll_active = false
 autowrap_mode = 0
+selection_enabled = true
+drag_and_drop_selection_enabled = false
 
 [node name="Command" type="LineEdit" parent="VBox" unique_id=1751709615]
 unique_name_in_owner = true
 layout_mode = 2
-placeholder_text = "Enter command..."
+placeholder_text = "Enter expression..."
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="text_submitted" from="VBox/Command" to="." method="_on_command_text_submitted"]

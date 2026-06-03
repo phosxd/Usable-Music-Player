@@ -1,7 +1,14 @@
 extends Node
 
+const console_scene := preload('res://Scenes/Console/Console.tscn')
 const confirmation_dialog_scene:PackedScene = preload('res://Scenes/Dialogs/Confirmation/scene.tscn')
 const shadow_color := Color(0,0,0,0.5)
+
+
+func popup_console() -> void:
+	var popup:Window = console_scene.instantiate()
+	SessionManager.add_child(popup)
+	popup.show()
 
 
 func popup_confirmation_dialog(text:String, subtext:String, confirm_callback:Callable, denied_callback=null) -> void:

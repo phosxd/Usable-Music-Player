@@ -2,8 +2,6 @@ extends Control
 
 signal closed
 
-const console_scene := preload('res://Scenes/Console/Console.tscn')
-
 var library_buttons:Array[CheckBox] = []
 
 
@@ -51,7 +49,5 @@ func _on_library_button_gui_input(event:InputEvent, button:CheckBox) -> void:
 
 
 func _on_console_pressed() -> void:
-	var popup:Window = console_scene.instantiate()
-	SessionManager.add_child(popup)
-	popup.show()
+	DialogManager.popup_console()
 	close()

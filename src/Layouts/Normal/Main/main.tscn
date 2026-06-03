@@ -71,7 +71,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_y3v7k")
-metadata/gdss_enabled = false
 
 [node name="Background" type="ColorRect" parent="." unique_id=951674116]
 unique_name_in_owner = true

@@ -12,10 +12,12 @@ var io_access: FileAccess
 var error_access: FileAccess
 var pid: int
 
+var default_whitelisted_functions:Array[Callable] = [send_command, get_audio_meta, get_global_input, get_mpris_events, update_mpris_data]
+## Whitelisted command functions. Remove items to prevent them from running.
+## They can still be called but they will only return dummy values.
+var whitelisted_functions:Array[Callable] = default_whitelisted_functions.duplicate()
+
 var waiting_for_response:bool = false
-## When [code]true[/code], only [member get_audio_meta] command will be actually sent to avoid async command requests.
-## Other functions will return dummy values. [member send_command] is not affected to allow low level commands.
-var library_scan_mode:bool = false
 
 
 func kill() -> void:
@@ -23,6 +25,8 @@ func kill() -> void:
 
 
 func get_audio_meta(paths:PackedStringArray, image_out_dir:String='', callback:=func(_data:Array):pass) -> void:
+	if get_audio_meta not in whitelisted_functions: return
+
 	var args: PackedStringArray
 	for path:String in paths:
 		args.append('(audio) '+path)
@@ -36,7 +40,7 @@ func get_audio_meta(paths:PackedStringArray, image_out_dir:String='', callback:=
 
 
 func get_global_input() -> Array:
-	if library_scan_mode: return []
+	if get_global_input not in whitelisted_functions: return []
 
 	var response:Dictionary = send_command('get_global_input', [])
 	var data = response.get('data')
@@ -45,7 +49,7 @@ func get_global_input() -> Array:
 
 
 func get_mpris_events() -> Array:
-	if library_scan_mode: return []
+	if get_mpris_events not in whitelisted_functions: return []
 
 	var response:Dictionary = send_command('get_mpris_events', [])
 	var data = response.get('data')
@@ -55,7 +59,7 @@ func get_mpris_events() -> Array:
 
 ## Update MPRIS server data.
 func update_mpris_data(data:Dictionary) -> void:
-	if library_scan_mode: return
+	if update_mpris_data not in whitelisted_functions: return
 
 	var args := PackedStringArray()
 	for key:String in data:
@@ -90,7 +94,7 @@ func send_command(command:String, args:=PackedStringArray()) -> Dictionary:
 	var output:String = io_access.get_line()
 	var err:Error = io_access.get_error()
 	if err != OK:
-		MiniLog.err('Encountered an error $!!%s!!$, please report then restart the application.' % error_string(err), PyInterface)
+		MiniLog.err('Failed to access pipe.', PyInterface)
 		return {}
 	waiting_for_response = false
 
@@ -158,4 +162,15 @@ func _run(path:String) -> void:
 	io_access = bridge.stdio
 	error_access = bridge.stderr
 	pid = bridge.pid
+	# Start error listener thread.
+	var error_thread = Thread.new()
+	error_thread.start(_error_listener)
+
 	MiniLog.info('Started as PID "%s".' % pid, PyInterface)
+
+
+func _error_listener() -> void:
+	var error:String = error_access.get_line()
+	MiniLog.err('Shutting down PyInterface. Encountered an error, please report it then restart the application. Details below:\n$~%s~$' % error, PyInterface)
+	kill()
+	DialogManager.popup_console()
