@@ -17,6 +17,7 @@ data_key_to_interface_property_map:dict[str,str] = {
 	'art_url': '2/Metadata',
 	'track_position': '2/Position',
 	'playback_status': '2/PlaybackStatus',
+	'volume': '2/Volume',
 	'app_name': '1/Identity',
 	'desktop_entry': '1/DesktopEntry',
 }
@@ -28,6 +29,7 @@ data:dict[str,any] = {
 	'track_length': 0,
 	'track_position': 0,
 	'playback_status': 'Paused',
+	'volume': 0,
 	'art_url': '',
 	'app_name': 'Placeholder Name',
 	'desktop_entry': '',
@@ -67,6 +69,7 @@ def command_update_data(args:list):
 			if interface_id_ == interface_id:
 				if property_name == 'Metadata': property_value = interfaces['2'].Metadata
 				elif property_name == 'Position' and (type(property_value) is float or type(property_value) is int): property_value = int(property_value)*1000000
+				elif property_name == 'Volume' and type(property_value) is float: property_value = int(property_value)
 				interface_properties_to_emit_changed[property_name] = property_value
 		# If properties have changed, emit changes.
 		if len(interface_properties_to_emit_changed) == 0: continue
@@ -172,12 +175,31 @@ class PlayerInterface(ServiceInterface):
 
 
 	@dbus_method()
-	def Seek(self, offset:'i'):
+	def Seek(self, offset:'x'): # x = Int64
 		events.append({
 			'type': 'seek',
-			'value': offset,
+			'value': float(offset)/1000000, # Convert to seconds.
 		})
 
+
+	@dbus_property(access=PropertyAccess.READWRITE)
+	def Rate(self) -> 'd': # Double
+		return 1.0 # Always playback at rate of 1.0x
+
+	@Rate.setter
+	def set_rate(self, value:'d'): # Ignore rate setting.
+		pass
+
+	@dbus_property(access=PropertyAccess.READWRITE)
+	def Volume(self) -> 'd': # Double
+		return data['volume']
+
+	@Volume.setter
+	def set_volume(self, value:'d'):
+		events.append({
+			'type': 'set_volume',
+			'value': value,
+		})
 
 	@dbus_property(access=PropertyAccess.READ)
 	def CanControl(self) -> 'b':

@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://cni4q5hifbayv" path="res://Scripts/UI/Settings/section_api.gd" id="13_rtbdg"]
 [ext_resource type="Script" uid="uid://w4qi2gcsst0f" path="res://Scripts/UI/Settings/keybinds.gd" id="15_ahvtd"]
 [ext_resource type="PackedScene" uid="uid://cmqpvocj5gymd" path="res://Elements/Keybind Input/Keybind Input.tscn" id="16_43pmp"]
+[ext_resource type="Script" uid="uid://b8r2smt4ds5y4" path="res://Elements/PlatformControl.gd" id="16_jcwxe"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dp5eg"]
 
@@ -824,6 +825,14 @@ title = "Keybinds"
 
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold" unique_id=981223624]
 layout_mode = 2
+
+[node name="Linux Note Keybinds" type="Label" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox" unique_id=769005835]
+layout_mode = 2
+theme_type_variation = &"LabelSmall"
+text = "Note: due to platform limitations, Linux does not allow applications to listen to alphanumeric keyboard inputs while unfocused. You must use CTRL, ALT, or META modifier keys on top of the key you want to use."
+autowrap_mode = 2
+script = ExtResource("16_jcwxe")
+platforms = Array[int]([0])
 
 [node name="Play Pause" type="HBoxContainer" parent="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox" unique_id=1027878200]
 layout_mode = 2

@@ -89,6 +89,10 @@ func process_mpris_events() -> void:
 				PlayerManager.skip_backward()
 			'skip_forward':
 				PlayerManager.skip_forward()
+			'seek':
+				if value is float or value is int: PlayerManager.set_track_progress(PlayerManager.track_progress+value)
+			'set_volume':
+				if value is float: PlayerManager.volume = value*100.0 # Value is 0.0 to 1.0, convert to a range of 0 to 100.
 
 
 func _input(event:InputEvent) -> void:

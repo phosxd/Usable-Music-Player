@@ -172,5 +172,7 @@ func _run(path:String) -> void:
 func _error_listener() -> void:
 	var error:String = error_access.get_line()
 	MiniLog.err('Shutting down PyInterface. Encountered an error, please report it then restart the application. Details below:\n$~%s~$' % error, PyInterface)
-	kill()
-	DialogManager.popup_console()
+	DialogManager.popup_console.call_deferred()
+	default_whitelisted_functions.clear()
+	whitelisted_functions.clear()
+	kill.call_deferred()
