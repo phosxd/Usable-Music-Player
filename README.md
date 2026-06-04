@@ -1,29 +1,26 @@
-Introducing the music player made with [Godot](https://godotengine.org)!
+Introducing the Linux-first music player made with [Godot](https://godotengine.org)!
 
-# What does UMP have to offer?
+# Features
 
-## The basics
-Like every music player you have the basic controls:
-- Queue management
-- Repeat track/queue
-- Shuffle & unshuffle queue
-- Volume slider
-- Track position slider
+## Media controls
+- Play/pause
+- Previous/next. Skipping to previous while more than a few seconds into the song will bring you to the beginning of the song instead.
+- Volume 0-100%.
+- Volume mute button.
+- Shuffle queue.
+- Repeat track or queue.
 
-## Sorted library
-Categorize your songs by artist, album, tracks, & genres.
-You can also manual search for items using filters like title, artist, year, genre, duration, & more.
+## MPRIS D-Bus integration
+- Track metadata for track title, album title, artist title, & album art.
+- Track progress & length.
+- Track lyrics (via `extra:lyrics` & `extra:lyricsSynced` metadata fields).
 
-## Format support
-UMP can playback MP3, WAV, OggVorvis, & FLAC audio files.
+**Controls:**
+- Play/pause
+- Previous/next
+- Seek track progress.
+- Set volume 0-100%
 
-## Automatic lyrics
-Play your song, then click the lyrics button to open a lyrics panel on your right. If no lyrics are found for your song locally, they will automatically be fetched & saved for later.
-
-## Usable UI
-The UI is simple & easy to understand all while looking good.
-
-## Aesthetic options
-UMP offers visual enhancements that bring your experience to the next level.
-- **Bar visualizer**: visualize frequencies above your player.
-- **Dyanmic accents**: match all UI elements to the song you're playing.
+## Audio formats
+Godot does not natively support many audio formats, so we are quite limited unfortunately.
+The formats currently supported by Godot are WAV, OggVorbis, & MP3. However we can also play 2-channel FLaC using a community-made Godot extension.
