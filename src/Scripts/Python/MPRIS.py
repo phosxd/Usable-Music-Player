@@ -14,10 +14,12 @@ data_key_to_interface_property_map:dict[str,str] = {
 	'track_album': '2/Metadata',
 	'track_artist': '2/Metadata',
 	'track_length': '2/Metadata',
-	'art_url': '2/Metadata',
 	'track_position': '2/Position',
 	'playback_status': '2/PlaybackStatus',
 	'volume': '2/Volume',
+	'art_url': '2/Metadata',
+	'lyrics': '2/Metadata',
+	'lyrics_synced': '2/Metadata',
 	'app_name': '1/Identity',
 	'desktop_entry': '1/DesktopEntry',
 }
@@ -31,6 +33,8 @@ data:dict[str,any] = {
 	'playback_status': 'Paused',
 	'volume': 0,
 	'art_url': '',
+	'lyrics': '',
+	'lyrics_synced': '',
 	'app_name': 'Placeholder Name',
 	'desktop_entry': '',
 }
@@ -177,8 +181,16 @@ class PlayerInterface(ServiceInterface):
 	@dbus_method()
 	def Seek(self, offset:'x'): # x = Int64
 		events.append({
-			'type': 'seek',
-			'value': float(offset)/1000000, # Convert to seconds.
+			'type': 'add_position',
+			'value': float(offset)/1000000, # Convert offset to seconds.
+		})
+
+
+	@dbus_signal()
+	def Seeked(self, position:'x'):
+		events.append({
+			'type': 'set_position',
+			'value': float(position)/1000000 # Convert to seconds.
 		})
 
 
@@ -242,6 +254,8 @@ class PlayerInterface(ServiceInterface):
 			'xesam:album': Variant('s', data['track_album']),
 			'xesam:artist': Variant('s', data['track_artist']),
 			'mpris:artUrl': Variant('s', data['art_url']),
+			'extra:lyrics': Variant('s', data['lyrics']),
+			'extra:lyricsSynced': Variant('s', data['lyrics_synced']),
 		}
 
 
@@ -254,7 +268,10 @@ interfaces = {
 
 
 def start():
-	asyncio.run(_start())
+	try:
+		asyncio.run(_start())
+	finally:
+		pass
 
 
 def quit():

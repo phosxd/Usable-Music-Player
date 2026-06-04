@@ -9,6 +9,10 @@ import GlobalInput
 import MPRIS
 
 
+def throw_exception(e):
+	raise e
+
+
 # Runs the "function" & prints the "result" as JSON text.
 # Function output is inserted into "result.data".
 def run_cmd(function:callable, is_quiet:bool, args, result):
