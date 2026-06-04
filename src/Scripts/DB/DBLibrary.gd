@@ -125,7 +125,7 @@ func refresh(auto:bool=false) -> void:
 		if made_changes:
 			changed = true
 			SessionManager.main_scene.refresh_tab()
-			SystemNotif.send('Usable Music Player', 'Finished scanning library "%s".' % self.name, SystemNotif.Urgency.Normal)
+			SystemNotif.send('Finished scanning library "%s".' % self.name, '', SystemNotif.Urgency.Normal, '', 5)
 		if not auto: MiniLog.info('Finished scan for $~%s$~.' % self.name, DBLibrary)
 		save()
 		scan_finished.emit(made_changes)

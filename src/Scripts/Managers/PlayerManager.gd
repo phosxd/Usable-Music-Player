@@ -271,4 +271,5 @@ func _current_track_finished() -> void:
 				'%s - by %s' % [track.name, track.album.artist.name],
 				SystemNotif.Urgency.Low,
 				track.album.cover_path,
+				2.75,
 			)

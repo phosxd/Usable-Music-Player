@@ -46,7 +46,7 @@ func _ready() -> void:
 
 	# Initialize MPRIS server.
 	PyInterface.update_mpris_data({
-		'app_name': ProjectSettings.get_setting('application/config/name'),
+		'app_name': AppInfo.name,
 		'desktop_entry': desktop_file_path,
 	})
 

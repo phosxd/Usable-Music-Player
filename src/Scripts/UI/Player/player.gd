@@ -1,8 +1,8 @@
 extends Control
 
-var loop_off_icon:Texture2D = SessionManager.get_icon('scale_x2/loop')
-var loop_track_icon:Texture2D = SessionManager.get_icon('scale_x2/loop_track')
-var loop_queue_icon:Texture2D = SessionManager.get_icon('scale_x2/loop_queue')
+var loop_off_icon:Texture2D = SessionManager.get_icon('loop')
+var loop_track_icon:Texture2D = SessionManager.get_icon('loop_track')
+var loop_queue_icon:Texture2D = SessionManager.get_icon('loop_queue')
 var play_icon:Texture2D = SessionManager.get_icon('play')
 var pause_icon:Texture2D = SessionManager.get_icon('pause')
 

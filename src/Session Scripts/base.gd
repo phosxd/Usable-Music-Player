@@ -198,7 +198,7 @@ var custom_accent := Color(0.9, 0.9, 0.9)
 
 var visualizer_mode:VisualizerMode = VisualizerMode.OFF
 
-var visualizer_bar_count:int = 125
+var visualizer_bar_count:int = 100
 
 var visualizer_bar_smoothing:float = 0.5
 
