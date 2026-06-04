@@ -236,6 +236,12 @@ func load_session() -> void:
 	var data = import_config(session_file_path)
 	if data is not Dictionary: return
 
+	# Remove non-existent library IDs in visible libraries.
+	var library_order:PackedStringArray = get_var('library_order')
+	var visible_libraries:PackedStringArray = get_var('visible_libraries')
+	for library_id:String in visible_libraries:
+		if library_id not in library_order: visible_libraries.erase(library_id)
+
 	# Load libraries.
 	LibraryManager.load_libraries()
 
@@ -287,11 +293,13 @@ func save_session() -> void:
 		'volume': PlayerManager.volume,
 	}
 
-	# Sync library order/visibility & save changed libraries.
-	get_var('library_order').clear()
+	# Sync library order & save changed libraries.
+	var library_order:PackedStringArray = get_var('library_order')
+	library_order.clear()
 	for library:DBLibrary in LibraryManager.libraries:
-		get_var('library_order').append(library.id)
+		library_order.append(library.id)
 		if library.changed: library.save()
+	
 
 	# Set data properties.
 	for script in session_scripts.values():
