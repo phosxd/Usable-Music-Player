@@ -81,6 +81,9 @@ var panel_tint := Color.TRANSPARENT:
 		self.set('panel_color', panel_color)
 		self.set('tooltip_panel_color', tooltip_panel_color)
 		self.set('section_panel_color', section_panel_color)
+	get():
+		if allow_panel_tint: return panel_tint
+		else: return Color.TRANSPARENT
 
 var button_tint := Color.TRANSPARENT:
 	set(value):
@@ -89,6 +92,9 @@ var button_tint := Color.TRANSPARENT:
 		self.set('button_disabled_color', button_disabled_color)
 		self.set('button_hover_color', button_hover_color)
 		self.set('button_pressed_color', button_pressed_color)
+	get():
+		if allow_button_tint: return button_tint
+		else: return Color.TRANSPARENT
 
 #endregion
 
@@ -96,6 +102,11 @@ var button_tint := Color.TRANSPARENT:
 
 ## All theme modes & their config values.
 var modes:Array[Dictionary] = []
+
+## If [code]false[/code], [member button_tint] will have no effect.
+var allow_button_tint:bool = true
+## If [code]false[/code], [member panel_tint] will have no effect.
+var allow_panel_tint:bool = true
 
 ## Corner radius applied to all [TextureRectRounded] nodes.
 var image_corner_radius:int = 8
@@ -228,28 +239,32 @@ var button_color := Color.TRANSPARENT:
 		button_color = value
 		set_stylebox_color('Button', 'normal', 'bg_color', value, true, false, button_tint)
 	get():
-		return get_stylebox_property('Button', 'normal', 'bg_color')
+		var prop = get_stylebox_default_property('Button', 'normal', 'bg_color')
+		return prop if prop is Color else Color.TRANSPARENT
 
 var button_disabled_color := Color.TRANSPARENT:
 	set(value):
 		button_disabled_color = value
 		set_stylebox_color('Button', 'disabled', 'bg_color', value, true, false, button_tint)
 	get():
-		return get_stylebox_property('Button', 'disabled', 'bg_color')
+		var prop = get_stylebox_default_property('Button', 'disabled', 'bg_color')
+		return prop if prop is Color else Color.TRANSPARENT
 
 var button_hover_color := Color.TRANSPARENT:
 	set(value):
 		button_hover_color = value
 		set_stylebox_color('Button', 'hover', 'bg_color', value, true, false, button_tint)
 	get():
-		return get_stylebox_property('Button', 'hover', 'bg_color')
+		var prop = get_stylebox_default_property('Button', 'hover', 'bg_color')
+		return prop if prop is Color else Color.TRANSPARENT
 
 var button_pressed_color := Color.TRANSPARENT:
 	set(value):
 		button_pressed_color = value
 		set_stylebox_color('Button', 'pressed', 'bg_color', value, true, false, button_tint)
 	get():
-		return get_stylebox_property('Button', 'pressed', 'bg_color')
+		var prop = get_stylebox_default_property('Button', 'pressed', 'bg_color')
+		return prop if prop is Color else Color.TRANSPARENT
 
 #endregion
 

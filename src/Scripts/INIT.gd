@@ -53,7 +53,7 @@ func _ready() -> void:
 
 ## Generates & saves a Linux desktop file for this app.
 func generate_desktop_file() -> void:
-	MiniLog.info('Generating Linux desktop file.', self)
+	MiniLog.info('Generating Linux desktop file.', INIT)
 	var file := FileAccess.open(desktop_file_path, FileAccess.WRITE)
 	if not file: return
 	file.store_string(desktop_file_data % [

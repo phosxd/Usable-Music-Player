@@ -74,6 +74,13 @@ func _ready() -> void:
 	audio_stream_player.finished.connect(_current_track_finished)
 	self.add_child(audio_stream_player)
 
+	# Send updates to MPRIS server every half second.
+	while true:
+		await get_tree().create_timer(0.5).timeout
+		PyInterface.update_mpris_data({
+			'track_position': snappedf(track_progress,0.01),
+		})
+
 
 func _process(_delta:float) -> void:
 	var peak_volume:float = MathUtils.transfer_range_of_value(Vector2(-200,0), Vector2(-100,0), AudioServer.get_bus_peak_volume_left_db(0,0)+AudioServer.get_bus_peak_volume_right_db(0,0))
@@ -84,11 +91,6 @@ func _process(_delta:float) -> void:
 	if audio_stream_player.playing:
 		track_progress = audio_stream_player.get_playback_position()
 		track_progress_updated.emit(track_progress)
-
-		if Engine.get_process_frames() % 100 == 0:
-			PyInterface.update_mpris_data({
-				'track_position': snappedf(track_progress,0.01),
-			})
 
 		var track:DBTrack = get_current_track()
 		match SessionManager.get_var('replay_gain_mode'):
