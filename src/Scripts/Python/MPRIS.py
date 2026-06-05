@@ -186,11 +186,11 @@ class PlayerInterface(ServiceInterface):
 		})
 
 
-	@dbus_signal()
-	def Seeked(self, position:'x'):
+	@dbus_method()
+	def SetPosition(self, trackId:'o', position:'x'):
 		events.append({
 			'type': 'set_position',
-			'value': float(position)/1000000 # Convert to seconds.
+			'value': float(position)/1000000,
 		})
 
 
@@ -248,7 +248,7 @@ class PlayerInterface(ServiceInterface):
 	@dbus_property(access=PropertyAccess.READ)
 	def Metadata(self) -> 'a{sv}':
 		return {
-			'mpris:trackid': Variant('i', 0),
+			'mpris:trackid': Variant('o', '/org/mpris/MediaPlayer2/TrackList/Track'),
 			'mpris:length': Variant('d', int(data['track_length'])*1000000),
 			'xesam:title': Variant('s', data['track_title']),
 			'xesam:album': Variant('s', data['track_album']),
