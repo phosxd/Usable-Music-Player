@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://d3o2yxof6vyed" path="res://MODS/UMP Modern Theme/Assets/Styles/CheckButton/checked_disabled.tres" id="8_amhcq"]
 [ext_resource type="Texture2D" uid="uid://bkrprgmuyk6oc" path="res://MODS/UMP Modern Theme/Assets/Styles/CheckButton/unchecked.tres" id="9_gngf6"]
 [ext_resource type="Texture2D" uid="uid://b7im2fajvpq2o" path="res://MODS/UMP Modern Theme/Assets/Styles/CheckButton/unchecked_disabled.tres" id="10_naibc"]
+[ext_resource type="StyleBox" uid="uid://bmwv3syglg1md" path="res://MODS/UMP Modern Theme/Assets/Styles/FoldableContainer/focus.tres" id="11_lbh3w"]
 [ext_resource type="StyleBox" uid="uid://dy43m2d046uvb" path="res://MODS/UMP Modern Theme/Assets/Styles/FoldableContainer/panel.tres" id="11_ouidf"]
 [ext_resource type="StyleBox" uid="uid://cyyr3ythf2dka" path="res://MODS/UMP Modern Theme/Assets/Styles/Separator/separator.tres" id="12_adyrn"]
 [ext_resource type="StyleBox" uid="uid://b2kapitdkej2n" path="res://MODS/UMP Modern Theme/Assets/Styles/PanelContainer/island_panel.tres" id="13_qm7wx"]
@@ -462,7 +463,12 @@ CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_ut2au")
 CheckButton/styles/normal = SubResource("StyleBoxFlat_52ns3")
 CheckButton/styles/pressed = SubResource("StyleBoxFlat_rwfge")
 FoldableContainer/colors/font_color = Color(1, 1, 1, 1)
+FoldableContainer/styles/focus = ExtResource("11_lbh3w")
 FoldableContainer/styles/panel = ExtResource("11_ouidf")
+FoldableContainer/styles/title_collapsed_hover_panel = ExtResource("3_lqcxi")
+FoldableContainer/styles/title_collapsed_panel = ExtResource("5_27qop")
+FoldableContainer/styles/title_hover_panel = ExtResource("3_lqcxi")
+FoldableContainer/styles/title_panel = ExtResource("5_27qop")
 GridItemPanel/base_type = &"Panel"
 GridItemPanel/styles/panel = SubResource("StyleBoxFlat_3rvjd")
 HFlowContainer/constants/h_separation = 4
