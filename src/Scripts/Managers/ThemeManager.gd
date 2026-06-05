@@ -3,6 +3,8 @@ extends Node
 signal theme_applied
 
 const variable_names:Array[String] = [
+	'allow_button_tint',
+	'allow_panel_tint',
 	'image_corner_radius',
 	'accent_color',
 	'bg_color',
