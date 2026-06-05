@@ -261,6 +261,9 @@ func _current_track_finished() -> void:
 	MiniLog.pro('Track finished.', PlayerManager)
 	if queue_position+1 >= queue.size(): is_playing = false
 	if loop_mode == LoopMode.TRACK: set_playing(true)
+	elif loop_mode == LoopMode.QUEUE:
+		skip_forward()
+		set_playing(true)
 	else: skip_forward()
 
 	if SessionManager.get_var('send_track_finished_notif'):

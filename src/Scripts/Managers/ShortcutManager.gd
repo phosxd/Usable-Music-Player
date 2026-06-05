@@ -15,10 +15,10 @@ func _ready() -> void:
 func _listener() -> void:
 	while true:
 		await get_tree().create_timer(global_input_poll_interval).timeout
-		process_mpris_events.call_deferred()
+		process_mpris_events()
 		# Wait one frame to process global input.
 		await get_tree().process_frame
-		process_global_input.call_deferred()
+		process_global_input()
 
 
 func uniform(key:String) -> String:
@@ -56,7 +56,7 @@ func evaluate_input(event_text:String) -> void:
 
 ## Get & process global input keyboard events from [PyInterface].
 func process_global_input() -> void:
-	var global_input:Array = PyInterface.get_global_input()
+	var global_input:Array = await PyInterface.get_global_input()
 	for event in global_input:
 		if event is not Dictionary: continue
 		var action = event.get('action','')
@@ -68,7 +68,7 @@ func process_global_input() -> void:
 
 ## Get & process MPRIS DBus events from [PyInterface].
 func process_mpris_events() -> void:
-	var mpris_events:Array = PyInterface.get_mpris_events()
+	var mpris_events:Array = await PyInterface.get_mpris_events()
 	# Limit to only the most recent 2 events.
 	mpris_events.reverse()
 	if mpris_events.size() > 2: mpris_events.resize(2)

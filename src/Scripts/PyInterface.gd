@@ -4,6 +4,8 @@
 ## [br] causing unpredictable behavior.
 extends Node
 
+signal command_freed(command:Array)
+
 const binary_name:String = 'interface'
 const binary_path_internal:String = 'res://BIN/'
 const binary_path_external:String = 'user://bin/'
@@ -12,46 +14,42 @@ var io_access: FileAccess
 var error_access: FileAccess
 var pid: int
 
-var default_whitelisted_functions:Array[Callable] = [send_command, get_audio_meta, get_global_input, get_mpris_events, update_mpris_data]
-## Whitelisted command functions. Remove items to prevent them from running.
-## They can still be called but they will only return dummy values.
-var whitelisted_functions:Array[Callable] = default_whitelisted_functions.duplicate()
+## If [code]true[/code], the PyInterface process is no longer active & cannot recieve any more commands.
+var process_ended:bool = false
+var command_queue:Array[Array] = []
 
-var waiting_for_response:bool = false
+
+#func _process(_delta:float) -> void:
+	#if Engine.get_process_frames() % 50 != 0: return
+	#print(command_queue.size())
 
 
 func kill() -> void:
 	send_command('quit')
 
 
-func get_audio_meta(paths:PackedStringArray, image_out_dir:String='', callback:=func(_data:Array):pass) -> void:
-	if get_audio_meta not in whitelisted_functions: return
-
+func get_audio_meta(paths:PackedStringArray, image_out_dir:String='') -> Array:
 	var args: PackedStringArray
 	for path:String in paths:
 		args.append('(audio) '+path)
 	args.append('(img_out) '+image_out_dir)
 
 	# Send command to Python.
-	var response:Dictionary = send_command('get_audio_meta', args)
+	var response:Dictionary = await send_command('get_audio_meta', args)
 	var data = response.get('data')
 	if data is not Array: data = []
-	callback.call(data)
+	return data
 
 
 func get_global_input() -> Array:
-	if get_global_input not in whitelisted_functions: return []
-
-	var response:Dictionary = send_command('get_global_input', [])
+	var response:Dictionary = await send_command('get_global_input', [])
 	var data = response.get('data')
 	if data is not Array: data = []
 	return data
 
 
 func get_mpris_events() -> Array:
-	if get_mpris_events not in whitelisted_functions: return []
-
-	var response:Dictionary = send_command('get_mpris_events', [])
+	var response:Dictionary = await send_command('get_mpris_events', [])
 	var data = response.get('data')
 	if data is not Array: data = []
 	return data
@@ -59,8 +57,6 @@ func get_mpris_events() -> Array:
 
 ## Update MPRIS server data.
 func update_mpris_data(data:Dictionary) -> void:
-	if update_mpris_data not in whitelisted_functions: return
-
 	var args := PackedStringArray()
 	for key:String in data:
 		var value = data[key]
@@ -79,9 +75,12 @@ func update_mpris_data(data:Dictionary) -> void:
 ## [br][br]
 ## In the case the response is invalid, there can be a binary 4th field "malformed" which tells you the response is invalid. 
 func send_command(command:String, args:=PackedStringArray()) -> Dictionary:
-	# Return placeholder values if another command is currently running.
-	if waiting_for_response:
-		MiniLog.err('Can only send one command at a time, returning placeholder values!', PyInterface)
+	# Return placeholder values if called in the incorrect thread.
+	if OS.get_main_thread_id() != OS.get_thread_caller_id():
+		MiniLog.err('Cannot send commands from outside the main thread, use "call_deferred" instead. Returning placeholder values.', PyInterface)
+		return {'cmd':command,'id':'','data':null}
+	# Return placeholder values if process is no longer running.
+	if process_ended:
 		return {'cmd':command,'id':'','data':null}
 
 	# Assign random Command ID.
@@ -89,14 +88,30 @@ func send_command(command:String, args:=PackedStringArray()) -> Dictionary:
 	var id:String = '%s+%s' % [randf()*10, randi_range(1000,2000)]
 	args.append('(CID) '+id)
 
-	waiting_for_response = true
+	# Add to queue.
+	var queue_item:Array = [command,args]
+	command_queue.append(queue_item)
+
+	# Wait in queue if another command is currently running.
+	if command_queue.size() > 1:
+		var waiting_behind_command:Array = command_queue[-2]
+		while true:
+			var queue_command:Array = await command_freed
+			if queue_command == waiting_behind_command: break
+
+	# Push command & wait for response.
 	io_access.store_line(' [&&] '.join([command]+Array(args)))
-	var output:String = io_access.get_line()
+	var output:String = await wait_for_response()
 	var err:Error = io_access.get_error()
+
+	# Remove from queue & emit freed.
+	command_queue.erase(queue_item)
+	command_freed.emit(queue_item)
+
+	# Check for & print error.
 	if err != OK:
-		MiniLog.err('Failed to access pipe.', PyInterface)
+		MiniLog.err('Failed to access pipe $~(%s)~$.' % error_string(err), PyInterface)
 		return {}
-	waiting_for_response = false
 
 	# Parse output & return it.
 	var json = JSON.parse_string(output)
@@ -109,6 +124,22 @@ func send_command(command:String, args:=PackedStringArray()) -> Dictionary:
 		'malformed': true,
 	}
 	return json
+
+
+func wait_for_response() -> String:
+	var line: String
+	var time_waited:float = 0.0
+	while true:
+		if time_waited > 1.0:
+			MiniLog.err('Response timed-out.', PyInterface)
+			break
+		if io_access.get_length() == 0:
+			await get_tree().create_timer(0.01).timeout
+			time_waited += 0.01
+			continue
+		line = io_access.get_line()
+		break
+	return line
 
 
 func _exit_tree() -> void:
@@ -154,7 +185,7 @@ func _ready() -> void:
 
 
 func _run(path:String) -> void:
-	var bridge:Dictionary = OS.execute_with_pipe(path, [], true)
+	var bridge:Dictionary = OS.execute_with_pipe(path, [], false)
 	if bridge.is_empty():
 		MiniLog.err('Unable to run "%s".' % path, PyInterface)
 		return
@@ -163,22 +194,24 @@ func _run(path:String) -> void:
 	error_access = bridge.stderr
 	pid = bridge.pid
 	# Start error listener thread.
-	var error_thread = Thread.new()
+	var error_thread := Thread.new()
 	error_thread.start(_error_listener)
 
 	MiniLog.info('Started as PID "%s".' % pid, PyInterface)
 
 
 func _error_listener() -> void:
-	# Wait for an error.
-	var error:String = error_access.get_line()
-	# Get the rest of the error.
-	while error_access.get_length() > 0:
-		error += '\n'+error_access.get_line()
-	# Print error & open console.
-	MiniLog.err('Shutting down PyInterface. Encountered an error, please report it then restart the application. Details below:\n$~%s~$' % error, PyInterface)
-	DialogManager.popup_console.call_deferred()
-	# Disallow new commands & kill the interface.
-	default_whitelisted_functions.clear()
-	whitelisted_functions.clear()
-	kill.call_deferred()
+	# Check for error every 1s.
+	while true:
+		OS.delay_msec(1_000)
+		if error_access.get_length() == 0: continue
+
+		# Get error.
+		var error:String = error_access.get_line()
+		while error_access.get_length() > 0:
+			error += '\n'+error_access.get_line()
+		# Print error & open console.
+		MiniLog.err('Encountered an error, please report it then restart the application. Details below:\n$~%s~$' % error, PyInterface)
+		DialogManager.popup_console.call_deferred()
+		# Disallow new commands.
+		process_ended = true

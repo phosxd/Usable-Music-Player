@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://cvuw8ds1htson" path="res://Elements/ControlOnScreen.gd" id="5_d642b"]
 [ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="5_l7ro4"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d642b"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ev8d5"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -25,7 +25,6 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 script = ExtResource("1_l7ro4")
-icon_tooltip_text = null
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1832504744]
 layout_mode = 2
@@ -49,7 +48,7 @@ unique_name_in_owner = true
 clip_children = 1
 custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_d642b")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ev8d5")
 script = ExtResource("3_elf6b")
 stretch_mode = 5
 metadata/_custom_type_script = "uid://b4ukv3a8is182"
