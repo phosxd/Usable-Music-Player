@@ -19,11 +19,6 @@ var process_ended:bool = false
 var command_queue:Array[Array] = []
 
 
-#func _process(_delta:float) -> void:
-	#if Engine.get_process_frames() % 50 != 0: return
-	#print(command_queue.size())
-
-
 func kill() -> void:
 	send_command('quit')
 
@@ -198,6 +193,13 @@ func _run(path:String) -> void:
 	error_thread.start(_error_listener)
 
 	MiniLog.info('Started as PID "%s".' % pid, PyInterface)
+
+	# Send ping every 5 seconds.
+	# If 7.5 seconds goes by within Python, then it should self terminate.
+	# Ping system is implemented so that if the Godot process crashes or can't access Python anymore, then the Python process wont just stick around waiting.
+	while true:
+		await get_tree().create_timer(5.0).timeout
+		send_command('ping')
 
 
 func _error_listener() -> void:

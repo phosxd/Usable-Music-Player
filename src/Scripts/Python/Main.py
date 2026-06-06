@@ -1,4 +1,7 @@
+import os
 import sys
+import time
+import signal
 import threading
 import json
 
@@ -9,8 +12,28 @@ import GlobalInput
 import MPRIS
 
 
-def throw_exception(e):
-	raise e
+max_ping_interval:float = 7.5
+last_ping_time:float = 0.0
+
+
+def ping_timer():
+	while True:
+		time.sleep(max_ping_interval)
+		if time.time()-max_ping_interval >= last_ping_time:
+			shutdown()
+			os.kill(os.getpid(), signal.SIGTERM)
+			break
+
+
+def shutdown():
+	MPRIS.quit()
+	GlobalInput.quit()
+
+
+def command_ping(args:list):
+	global last_ping_time
+	last_ping_time = time.time()
+	return None
 
 
 # Runs the "function" & prints the "result" as JSON text.
@@ -21,13 +44,18 @@ def run_cmd(function:callable, is_quiet:bool, args, result):
 
 
 if __name__ == "__main__":
+	# Start ping timer on separate thread.
+	ping_thread = threading.Thread(target=ping_timer)
+	ping_thread.start()
+
 	# Start MPRIS server on separate thread.
 	mpris_thread = threading.Thread(target=MPRIS.start)
 	mpris_thread.start()
 
+
 	# Main Loop.
 	while True:
-		raw_input = input()
+		raw_input = input() # Wait for input.
 		raw_args:list[str] = raw_input.split(' [&&] ')
 		cmd:str = Utils.list_get(raw_args, 0, '')
 		cmd_args = []
@@ -62,12 +90,13 @@ if __name__ == "__main__":
 			'data': None,
 		}
 
-		# Get function.
+		# Get function or run command action.
 		function:callable = None
 		if cmd == 'quit':
-			MPRIS.quit()
-			GlobalInput.quit()
+			shutdown()
 			sys.exit()
+		elif cmd == 'ping':
+			function = command_ping
 		elif cmd == 'get_audio_meta':
 			function = Metadata.command_get_audio_meta
 		elif cmd == 'get_global_input':
@@ -80,7 +109,4 @@ if __name__ == "__main__":
 		if function == None: continue
 
 		run_cmd(function, is_quiet, cmd_args, result)
-		# Run command on separate thread.
-		# cmd_thread = threading.Thread(target=run_cmd, args=(function, is_quiet, cmd_args, result))
-		# cmd_thread.start()
 
