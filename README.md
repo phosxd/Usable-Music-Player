@@ -1,5 +1,7 @@
 Introducing the Linux-first music player made with [Godot](https://godotengine.org)!
 
+**⚠️ This is heavily work-in-progress ⚠️**
+
 # Features
 
 ## Audio formats
