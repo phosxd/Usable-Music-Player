@@ -3,20 +3,12 @@
 [ext_resource type="Script" uid="uid://d3kxsvnf3vv3b" path="res://Scripts/UI/Immersive Player/immersive_player.gd" id="1_ulmvq"]
 [ext_resource type="StyleBox" uid="uid://b1akcxnxut485" path="res://Assets/shadow_panel.tres" id="2_a3alx"]
 [ext_resource type="Material" uid="uid://b62hwhyefqusc" path="res://Assets/blur_material.tres" id="2_khquy"]
-[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_hbf8i"]
-[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_i3gmp"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_u6ku8"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_c8ttq"]
 [ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Layouts/Normal/Queue/queue.tscn" id="8_fbra8"]
 [ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Layouts/Normal/Lyrics/lyrics.tscn" id="8_oc15g"]
 [ext_resource type="Script" uid="uid://3c2q7qpnxy2o" path="res://Scripts/UI/Immersive Player/hide_player_timer.gd" id="10_idskp"]
 [ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Layouts/Normal/Player/player.tscn" id="10_khquy"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i3s73"]
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-anti_aliasing = false
 
 [node name="Immersive Player" type="Control" unique_id=1697711554]
 layout_mode = 3
@@ -60,7 +52,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.19607843)
 
-[node name="Image Margin" type="VBoxContainer" parent="." unique_id=1624354911]
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1624354911]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,57 +62,67 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Sep 1" type="HSeparator" parent="Image Margin" unique_id=428725820]
+[node name="Sep 1" type="HSeparator" parent="VBox" unique_id=428725820]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Image Margin" unique_id=896511492]
+[node name="HBox" type="HBoxContainer" parent="VBox" unique_id=896511492]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Sep 1" type="VSeparator" parent="Image Margin/HBoxContainer" unique_id=713092414]
+[node name="Sep 1" type="VSeparator" parent="VBox/HBox" unique_id=713092414]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
 
-[node name="Control" type="PanelContainer" parent="Image Margin/HBoxContainer" unique_id=1196254434]
+[node name="Image Container" type="Control" parent="VBox/HBox" unique_id=1982524178]
+unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Shadow" type="Panel" parent="Image Margin/HBoxContainer/Control" unique_id=2125278853]
+[node name="Shadow" type="Panel" parent="VBox/HBox/Image Container" unique_id=2125278853]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 1
 theme_override_styles/panel = ExtResource("2_a3alx")
 
-[node name="Image" type="PanelContainer" parent="Image Margin/HBoxContainer/Control" unique_id=411174489]
+[node name="Image Clip" type="PanelContainer" parent="VBox/HBox/Image Container" unique_id=1159245657]
 unique_name_in_owner = true
 clip_children = 1
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_i3s73")
-script = ExtResource("3_hbf8i")
-radius_bottom_left = 16
-radius_bottom_right = 16
-radius_top_left = 16
-radius_top_right = 16
-texture = ExtResource("4_i3gmp")
-expand_mode = 3
-stretch_mode = 5
-metadata/_custom_type_script = "uid://b4ukv3a8is182"
 
-[node name="Button" parent="Image Margin/HBoxContainer/Control" unique_id=519598093 instance=ExtResource("6_c8ttq")]
+[node name="Image" type="TextureRect" parent="VBox/HBox/Image Container/Image Clip" unique_id=620712543]
 unique_name_in_owner = true
 layout_mode = 2
+texture = ExtResource("4_u6ku8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" parent="VBox/HBox/Image Container" unique_id=519598093 instance=ExtResource("6_c8ttq")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 16.0
+offset_bottom = 12.0
+grow_horizontal = 1
+grow_vertical = 1
 mouse_behavior_recursive = 2
 
-[node name="Middle Separator" type="VSeparator" parent="Image Margin/HBoxContainer" unique_id=1420459499]
+[node name="Middle Separator" type="VSeparator" parent="VBox/HBox" unique_id=1420459499]
 unique_name_in_owner = true
 visible = false
 self_modulate = Color(1, 1, 1, 0)
@@ -128,7 +130,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.2
 
-[node name="Queue" parent="Image Margin/HBoxContainer" unique_id=1119812283 instance=ExtResource("8_fbra8")]
+[node name="Queue" parent="VBox/HBox" unique_id=1119812283 instance=ExtResource("8_fbra8")]
 unique_name_in_owner = true
 visible = false
 self_modulate = Color(1, 1, 1, 0.23529412)
@@ -136,13 +138,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = ExtResource("2_a3alx")
 
-[node name="Controls" parent="Image Margin/HBoxContainer/Queue/VBox" parent_id_path=PackedInt32Array(1119812283, 1514673906) index="0" unique_id=1929815790]
+[node name="Controls" parent="VBox/HBox/Queue/VBox" parent_id_path=PackedInt32Array(1119812283, 1514673906) index="0" unique_id=1929815790]
 visible = false
 
-[node name="Sep 1" parent="Image Margin/HBoxContainer/Queue/VBox" parent_id_path=PackedInt32Array(1119812283, 1514673906) index="1" unique_id=26743642]
+[node name="Sep 1" parent="VBox/HBox/Queue/VBox" parent_id_path=PackedInt32Array(1119812283, 1514673906) index="1" unique_id=26743642]
 visible = false
 
-[node name="Lyrics" parent="Image Margin/HBoxContainer" unique_id=100225784 instance=ExtResource("8_oc15g")]
+[node name="Lyrics" parent="VBox/HBox" unique_id=100225784 instance=ExtResource("8_oc15g")]
 unique_name_in_owner = true
 visible = false
 self_modulate = Color(1, 1, 1, 0.23529412)
@@ -151,42 +153,39 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = ExtResource("2_a3alx")
 
-[node name="Label" parent="Image Margin/HBoxContainer/Lyrics/VBox" parent_id_path=PackedInt32Array(100225784, 1514673906) index="0" unique_id=1803322427]
+[node name="Label" parent="VBox/HBox/Lyrics/VBox" parent_id_path=PackedInt32Array(100225784, 1514673906) index="0" unique_id=1803322427]
 visible = false
 
-[node name="Sep 1" parent="Image Margin/HBoxContainer/Lyrics/VBox" parent_id_path=PackedInt32Array(100225784, 1514673906) index="1" unique_id=26743642]
+[node name="Sep 1" parent="VBox/HBox/Lyrics/VBox" parent_id_path=PackedInt32Array(100225784, 1514673906) index="1" unique_id=26743642]
 visible = false
 
-[node name="Label" parent="Image Margin/HBoxContainer/Lyrics/VBox/Mask/Margin/Scroll/VBox" parent_id_path=PackedInt32Array(100225784, 1799090787) index="1" unique_id=950016221]
+[node name="Label" parent="VBox/HBox/Lyrics/VBox/Mask/Margin/Scroll/VBox" parent_id_path=PackedInt32Array(100225784, 1799090787) index="1" unique_id=950016221]
 theme_type_variation = &"LabelHeader"
 horizontal_alignment = 1
 
-[node name="Sep 2" type="VSeparator" parent="Image Margin/HBoxContainer" unique_id=1607931019]
+[node name="Sep 2" type="VSeparator" parent="VBox/HBox" unique_id=1607931019]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
 
-[node name="Sep 2" type="HSeparator" parent="Image Margin" unique_id=2089730294]
+[node name="Sep 2" type="HSeparator" parent="VBox" unique_id=2089730294]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="Player" parent="Image Margin" unique_id=110111644 instance=ExtResource("10_khquy")]
+[node name="Player" parent="VBox" unique_id=110111644 instance=ExtResource("10_khquy")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Glow Container" parent="Image Margin/Player" index="0" unique_id=1188943884]
+[node name="Glow Container" parent="VBox/Player" index="0" unique_id=1188943884]
 visible = false
 
-[node name="Panel" parent="Image Margin/Player" index="2" unique_id=1314853469]
+[node name="Panel" parent="VBox/Player" index="2" unique_id=1314853469]
 self_modulate = Color(1, 1, 1, 0.49019608)
 layout_mode = 1
 anchors_preset = 15
-
-[node name="Track Name" parent="Image Margin/Player/Panel/VBox/HBox/Left/Track Info/Details HBox" parent_id_path=PackedInt32Array(110111644, 476663422) index="2" unique_id=1107486296]
-custom_minimum_size = Vector2(65.890625, 0)
 
 [node name="Hide Player Timer" type="Timer" parent="." unique_id=1911542422]
 unique_name_in_owner = true
@@ -196,12 +195,12 @@ autostart = true
 script = ExtResource("10_idskp")
 wait_time_2 = 1.5
 
-[connection signal="item_rect_changed" from="Image Margin/HBoxContainer/Control/Image" to="Image Margin" method="_on_image_item_rect_changed"]
-[connection signal="pressed" from="Image Margin/HBoxContainer/Control/Button" to="." method="_on_button_pressed"]
-[connection signal="visibility_changed" from="Image Margin/HBoxContainer/Queue" to="." method="_on_right_item_visibility_changed"]
-[connection signal="visibility_changed" from="Image Margin/HBoxContainer/Lyrics" to="." method="_on_right_item_visibility_changed"]
+[connection signal="resized" from="VBox/HBox/Image Container" to="." method="_on_image_container_resized"]
+[connection signal="pressed" from="VBox/HBox/Image Container/Button" to="." method="_on_button_pressed"]
+[connection signal="visibility_changed" from="VBox/HBox/Queue" to="." method="_on_right_item_visibility_changed"]
+[connection signal="visibility_changed" from="VBox/HBox/Lyrics" to="." method="_on_right_item_visibility_changed"]
 [connection signal="timeout" from="Hide Player Timer" to="Hide Player Timer" method="_on_timeout"]
 
-[editable path="Image Margin/HBoxContainer/Queue"]
-[editable path="Image Margin/HBoxContainer/Lyrics"]
-[editable path="Image Margin/Player"]
+[editable path="VBox/HBox/Queue"]
+[editable path="VBox/HBox/Lyrics"]
+[editable path="VBox/Player"]

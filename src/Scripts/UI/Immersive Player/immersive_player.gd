@@ -47,6 +47,14 @@ func _ready() -> void:
 	if %Background.texture is NoiseTexture2D:
 		%Background.texture.noise.seed = randi_range(0,100_000)
 
+	# Setup "Image Clip" node.
+	var rounded_stylebox := StyleBoxFlat.new()
+	rounded_stylebox.anti_aliasing = false
+	rounded_stylebox.set_corner_radius_all(ThemeManager.image_corner_radius)
+	%'Image Clip'.add_theme_stylebox_override('panel', rounded_stylebox)
+
+	_on_image_container_resized()
+
 	# Connect signals.
 	PlayerManager.current_track_updated.connect(update_current_track)
 	PlayerManager.track_peak_volume_changed.connect(update_visualizer)
@@ -132,3 +140,12 @@ func _on_right_item_visibility_changed() -> void:
 		%'Middle Separator'.hide()
 	else:
 		%'Middle Separator'.show()
+
+
+func _on_image_container_resized() -> void:
+	# Ensure node sizes are always square & centered.
+	for node:Control in [%Shadow,%Button,%'Image Clip']:
+		node.size = %'Image Container'.size
+		if %'Image Container'.size.x > %'Image Container'.size.y: node.size.x = node.size.y
+		else: node.size.y = node.size.x
+		node.position = (%'Image Container'.size/2)-node.size/2

@@ -1,0 +1,293 @@
+[gd_scene format=3 uid="uid://dkitrpshbk2d8"]
+
+[ext_resource type="Script" uid="uid://dx0dmos0pycjr" path="res://Scripts/UI/Playlist Page/playlist_page.gd" id="1_a3j42"]
+[ext_resource type="Shader" uid="uid://dvoc7ypde1coe" path="res://Assets/gradient.gdshader" id="2_421v5"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_cd6sc"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_tg8xc"]
+[ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="5_d5xs4"]
+[ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="7_5wnrd"]
+[ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="8_n2gqb"]
+[ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="9_buxl3"]
+[ext_resource type="Texture2D" uid="uid://d3xi2hlyuvtic" path="res://Themes/Normal/Assets/Icons/queue_play_next.svg" id="10_d7fkq"]
+[ext_resource type="Texture2D" uid="uid://dgf4br6i5tdbe" path="res://Themes/Normal/Assets/Icons/queue_add_to_queue.svg" id="11_mv5g7"]
+[ext_resource type="Texture2D" uid="uid://dod6uhmhu0tw3" path="res://Themes/Normal/Assets/Icons/reload.svg" id="12_lcidh"]
+[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="13_aesv5"]
+[ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="14_103uh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wngf1"]
+shader = ExtResource("2_421v5")
+shader_parameter/topleft = Color(0, 0, 0, 1)
+shader_parameter/topright = Color(0, 0, 0, 1)
+shader_parameter/bottomleft = Color(0, 0, 0, 1)
+shader_parameter/bottomright = Color(0, 0, 0, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0e0sc"]
+blend_mode = 4
+
+[sub_resource type="Gradient" id="Gradient_d17rs"]
+colors = PackedColorArray(0, 0, 0, 0.47058824, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ljtex"]
+gradient = SubResource("Gradient_d17rs")
+height = 128
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a3j42"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[node name="Playlist Page" type="Control" unique_id=373382617]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_a3j42")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=579479730]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Controls" type="Control" parent="VBox" unique_id=773886120]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+
+[node name="Gradient" type="ColorRect" parent="VBox/Controls" unique_id=1098958609]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_wngf1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Fade" type="TextureRect" parent="VBox/Controls" unique_id=1055429295]
+material = SubResource("CanvasItemMaterial_0e0sc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_ljtex")
+flip_v = true
+
+[node name="VBox" type="VBoxContainer" parent="VBox/Controls" unique_id=674117022]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBox" type="HBoxContainer" parent="VBox/Controls/VBox" unique_id=1278799146]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Icon Margin" type="MarginContainer" parent="VBox/Controls/VBox/HBox" unique_id=1186668406]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+
+[node name="Panel" type="Panel" parent="VBox/Controls/VBox/HBox/Icon Margin" unique_id=1007525857]
+layout_mode = 2
+theme_type_variation = &"GridItemPanel"
+
+[node name="Icon" type="PanelContainer" parent="VBox/Controls/VBox/HBox/Icon Margin" unique_id=2014446729]
+unique_name_in_owner = true
+clip_children = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_a3j42")
+script = ExtResource("3_cd6sc")
+texture = ExtResource("4_tg8xc")
+expand_mode = 2
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[node name="Album Button" parent="VBox/Controls/VBox/HBox/Icon Margin" unique_id=519598093 instance=ExtResource("5_d5xs4")]
+layout_mode = 2
+
+[node name="Details" type="VBoxContainer" parent="VBox/Controls/VBox/HBox" unique_id=1685556259]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Primary Details" type="HBoxContainer" parent="VBox/Controls/VBox/HBox/Details" unique_id=1441968863]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 10
+
+[node name="Title" type="Label" parent="VBox/Controls/VBox/HBox/Details/Primary Details" unique_id=1814440858]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelHeader2"
+text = "PLAYLIST NAME"
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Secondary Details" type="HBoxContainer" parent="VBox/Controls/VBox/HBox/Details" unique_id=415955263]
+layout_mode = 2
+
+[node name="Created Date" type="Label" parent="VBox/Controls/VBox/HBox/Details/Secondary Details" unique_id=649305992]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Created: 1/1/2026"
+vertical_alignment = 1
+
+[node name="Sep 1" type="VSeparator" parent="VBox/Controls/VBox/HBox/Details/Secondary Details" unique_id=716059256]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Last Edit Date" type="Label" parent="VBox/Controls/VBox/HBox/Details/Secondary Details" unique_id=1226961899]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Last Edit: 1/1/2026"
+vertical_alignment = 1
+
+[node name="Sep 1" type="VSeparator" parent="VBox/Controls/VBox/HBox" unique_id=413642820]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Controls" type="HBoxContainer" parent="VBox/Controls/VBox/HBox" unique_id=1447041976]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 14
+
+[node name="Play" type="Button" parent="VBox/Controls/VBox/HBox/Controls" unique_id=245581158]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+icon = ExtResource("7_5wnrd")
+icon_alignment = 1
+
+[node name="Shuffle" type="Button" parent="VBox/Controls/VBox/HBox/Controls" unique_id=333186358]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+icon = ExtResource("8_n2gqb")
+icon_alignment = 1
+
+[node name="Options" type="MenuButton" parent="VBox/Controls/VBox/HBox/Controls" unique_id=807633223]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+icon = ExtResource("9_buxl3")
+flat = false
+icon_alignment = 1
+item_count = 3
+popup/item_0/text = "Play next"
+popup/item_0/icon = ExtResource("10_d7fkq")
+popup/item_0/id = 0
+popup/item_1/text = "Add to queue"
+popup/item_1/icon = ExtResource("11_mv5g7")
+popup/item_1/id = 1
+popup/item_2/text = "Rescan"
+popup/item_2/icon = ExtResource("12_lcidh")
+popup/item_2/id = 2
+
+[node name="Sep 2" type="VSeparator" parent="VBox/Controls/VBox/HBox" unique_id=715618603]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Sep 1" type="HSeparator" parent="VBox/Controls/VBox" unique_id=807957149]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="VBox" unique_id=608175237]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+script = ExtResource("13_aesv5")
+speed = 500.0
+wheel_scroll_damper = ExtResource("14_103uh")
+dragging_scroll_damper = ExtResource("14_103uh")
+allow_overdragging = true
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="Content" type="MarginContainer" parent="VBox/Scroll" unique_id=83077900]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.1
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBox" type="VBoxContainer" parent="VBox/Scroll/Content" unique_id=1792085985]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Sep 2" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=1153614261]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Track List" type="VBoxContainer" parent="VBox/Scroll/Content/VBox" unique_id=925906313]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Extra Details" type="HBoxContainer" parent="VBox/Scroll/Content/VBox" unique_id=1065747098]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Sep 1" type="VSeparator" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=61355166]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Track Count" type="Label" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=1212015662]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Track Count"
+
+[node name="Sep 2" type="VSeparator" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=1810795646]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Runtime" type="Label" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=2041285842]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Runtime"
+
+[node name="Bottom Filler" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=168058502]
+layout_mode = 2
+theme_type_variation = &"ScrollFillSeparator"
+
+[connection signal="pressed" from="VBox/Controls/VBox/HBox/Icon Margin/Album Button" to="." method="_on_album_button_pressed"]
+[connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Shuffle" to="." method="_on_shuffle_pressed"]
