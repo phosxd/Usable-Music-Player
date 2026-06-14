@@ -1,6 +1,6 @@
 # TinyTag CLI interface module.
 from tinytag import TinyTag
-import Utils
+import Scripts.Python.Utils as Utils
 
 
 valid_extensions = [

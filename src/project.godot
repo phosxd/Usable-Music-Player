@@ -37,6 +37,7 @@ driver/output_latency=30
 
 TesseractAPI="*uid://dn4wiq2geesy6"
 TesseractErrorServer="*uid://dfsijm3jpbmlm"
+PyRunner="*uid://beclgjifsws85"
 PyInterface="*uid://dc3ho4a0ke1hc"
 INIT="*uid://due46eoqitfqi"
 ThemeManager="*uid://bjpdyq7jbudnr"
@@ -67,13 +68,12 @@ export/convert_text_resources_to_binary=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/A2J/plugin.cfg", "res://addons/ReorderableContainer/plugin.cfg", "res://addons/SmoothScroll/plugin.cfg", "res://addons/Tesseract/plugin.cfg", "res://addons/TextureRectRounded/plugin.cfg")
+enabled=PackedStringArray("res://addons/A2J/plugin.cfg", "res://addons/BinBundle/plugin.cfg", "res://addons/PyBundle/plugin.cfg", "res://addons/ReorderableContainer/plugin.cfg", "res://addons/SmoothScroll/plugin.cfg", "res://addons/Tesseract/plugin.cfg", "res://addons/TextureRectRounded/plugin.cfg")
 
 [file_customization]
 
 folder_colors={
 "res://Assets/": "yellow",
-"res://BIN/": "gray",
 "res://CLIs/": "gray",
 "res://EXPORT/": "gray",
 "res://Elements/": "yellow",

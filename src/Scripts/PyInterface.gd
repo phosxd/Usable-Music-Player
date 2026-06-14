@@ -6,16 +6,8 @@ extends Node
 
 signal command_freed(command:Array)
 
-const binary_name:String = 'interface'
-const binary_path_internal:String = 'res://BIN/'
-const binary_path_external:String = 'user://bin/'
+const entry_point_python_script:String = 'res://Scripts/Python/Main.py'
 
-var io_access: FileAccess
-var error_access: FileAccess
-var pid: int
-
-## If [code]true[/code], the PyInterface process is no longer active & cannot recieve any more commands.
-var process_ended:bool = false
 var command_queue:Array[Array] = []
 
 
@@ -75,7 +67,7 @@ func send_command(command:String, args:=PackedStringArray()) -> Dictionary:
 		MiniLog.err('Cannot send commands from outside the main thread, use "call_deferred" instead. Returning placeholder values.', PyInterface)
 		return {'cmd':command,'id':'','data':null}
 	# Return placeholder values if process is no longer running.
-	if process_ended:
+	if not PyRunner.active:
 		return {'cmd':command,'id':'','data':null}
 
 	# Assign random Command ID.
@@ -95,9 +87,9 @@ func send_command(command:String, args:=PackedStringArray()) -> Dictionary:
 			if queue_command == waiting_behind_command: break
 
 	# Push command & wait for response.
-	io_access.store_line(' [&&] '.join([command]+Array(args)))
+	PyRunner.send_input(' [&&] '.join([command]+Array(args)))
 	var output:String = await wait_for_response()
-	var err:Error = io_access.get_error()
+	var err:Error = PyRunner.io_access.get_error()
 
 	# Remove from queue & emit freed.
 	command_queue.erase(queue_item)
@@ -128,11 +120,11 @@ func wait_for_response() -> String:
 		if time_waited > 1.0:
 			MiniLog.err('Response timed-out.', PyInterface)
 			break
-		if io_access.get_length() == 0:
+		if PyRunner.io_access.get_length() == 0:
 			await get_tree().create_timer(0.01).timeout
 			time_waited += 0.01
 			continue
-		line = io_access.get_line()
+		line = PyRunner.io_access.get_line()
 		break
 	return line
 
@@ -142,57 +134,11 @@ func _exit_tree() -> void:
 
 
 func _ready() -> void:
-	var platform:String = OS.get_name()
-	var architecture:String = Engine.get_architecture_name()
-
-	var extension:String = ''
-	if platform == 'Linux' or platform.ends_with('BSD'):
-		extension = '.linux'
-	elif platform == 'Windows':
-		extension = '.windows'
-
-	extension += '.'+architecture
-	var file_name:String = binary_name+extension
-	var full_path:String = binary_path_internal+file_name
-	var full_path_external:String = ProjectSettings.globalize_path(binary_path_external+file_name)
-
-	# Get binary.
-	var bytes:PackedByteArray = FileAccess.get_file_as_bytes(full_path)
-	if bytes.is_empty():
-		MiniLog.err('Could not find embedded binary "%s" for platform "%s".' % [binary_name, extension], PyInterface)
-		return
-
-	# Write binary to disk.
-	if not FileAccess.file_exists(full_path_external) or FileAccess.get_file_as_bytes(full_path_external).size() != bytes.size():
-		MiniLog.info('Exporting binary.', PyInterface)
-		DirAccess.make_dir_recursive_absolute(binary_path_external)
-		DirAccess.remove_absolute(full_path_external)
-		var file := FileAccess.open(full_path_external, FileAccess.WRITE)
-		file.store_buffer(bytes)
-		file.close()
-		# Give permission to run.
-		var exit_code:int = OS.execute('chmod', ['+x', full_path_external])
-		if exit_code != OK:
-			MiniLog.err('Could not modify permissions of binary "%s".' % binary_name, PyInterface)
-			return
-
-	_run(full_path_external)
-
-
-func _run(path:String) -> void:
-	var bridge:Dictionary = OS.execute_with_pipe(path, [], false)
-	if bridge.is_empty():
-		MiniLog.err('Unable to run "%s".' % path, PyInterface)
-		return
-
-	io_access = bridge.stdio
-	error_access = bridge.stderr
-	pid = bridge.pid
-	# Start error listener thread.
-	var error_thread := Thread.new()
-	error_thread.start(_error_listener)
-
-	MiniLog.info('Started as PID "%s".' % pid, PyInterface)
+	PyRunner.output_poll_interval = -1
+	PyRunner.bundle_error_revieved.connect(func(code:BinBundleProcess.BinBundleError, args:Array) -> void: MiniLog.err('BinBundleProcess error: %s %s' % [code,args], PyInterface))
+	PyRunner.error_received.connect(_on_error_received)
+	PyRunner.start_entry_point(entry_point_python_script)
+	MiniLog.info('Started as PID "%s".' % PyRunner.pid, PyInterface)
 
 	# Send ping every 5 seconds.
 	# If 7.5 seconds goes by within Python, then it should self terminate.
@@ -202,18 +148,9 @@ func _run(path:String) -> void:
 		send_command('ping')
 
 
-func _error_listener() -> void:
-	# Check for error every 1s.
-	while true:
-		OS.delay_msec(1_000)
-		if error_access.get_length() == 0: continue
-
-		# Get error.
-		var error:String = error_access.get_line()
-		while error_access.get_length() > 0:
-			error += '\n'+error_access.get_line()
+func _on_error_received(data:String) -> void:
 		# Print error & open console.
-		MiniLog.err('Encountered an error, please report it then restart the application. Details below:\n$~%s~$' % error, PyInterface)
+		MiniLog.err('Encountered an error, please report it then restart the application. Details below:\n$~%s~$' % data, PyInterface)
 		DialogManager.popup_console.call_deferred()
-		# Disallow new commands.
-		process_ended = true
+		# Stop Python runner.
+		PyRunner.stop()

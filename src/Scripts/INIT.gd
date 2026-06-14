@@ -24,6 +24,12 @@ func _init() -> void:
 	for mod:TesseractMod in TesseractAPI.mod_instances.values():
 		MiniLog.info('Loaded mod "$i%si$".' % mod.id, self)
 
+	# Initialize MPRIS server.
+	PyRunner.entry_point_started.connect(PyInterface.update_mpris_data.bind({
+		'app_name': AppInfo.name,
+		'desktop_entry': desktop_file_path,
+	}))
+
 
 func _on_tes_info(code:int, translations:Array) -> void:
 	MiniLog.info(TesseractErrorServer.info_strings[code] % translations, self)
@@ -43,12 +49,6 @@ func _ready() -> void:
 	icon.get_image().save_png(icon_file_path)
 	# Set up desktop file.
 	if OS.get_name() == 'Linux' && not OS.has_feature('editor'): generate_desktop_file()
-
-	# Initialize MPRIS server.
-	PyInterface.update_mpris_data({
-		'app_name': AppInfo.name,
-		'desktop_entry': desktop_file_path,
-	})
 
 
 ## Generates & saves a Linux desktop file for this app.

@@ -6,10 +6,10 @@ import threading
 import json
 
 # Import scripts.
-import Utils
-import Metadata
-import GlobalInput
-import MPRIS
+import Scripts.Python.Utils as Utils
+import Scripts.Python.Metadata as Metadata
+import Scripts.Python.GlobalInput as GlobalInput
+import Scripts.Python.MPRIS as MPRIS
 
 
 max_ping_interval:float = 7.5
@@ -43,7 +43,7 @@ def run_cmd(function:callable, is_quiet:bool, args, result):
 	if not is_quiet: print(json.dumps(result))
 
 
-if __name__ == "__main__":
+def main():
 	# Start ping timer on separate thread.
 	ping_thread = threading.Thread(target=ping_timer)
 	ping_thread.start()
@@ -110,3 +110,6 @@ if __name__ == "__main__":
 
 		run_cmd(function, is_quiet, cmd_args, result)
 
+
+if __name__ == '__main__':
+	main()
