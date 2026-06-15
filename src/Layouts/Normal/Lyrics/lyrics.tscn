@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://dodvlwoguvgjj"]
 
 [ext_resource type="Script" uid="uid://df4we346k3xk" path="res://Scripts/UI/Lyrics/lyrics.gd" id="1_dygbn"]
+[ext_resource type="Texture2D" uid="uid://dod6uhmhu0tw3" path="res://Themes/Normal/Assets/Icons/reload.svg" id="2_43dl1"]
 [ext_resource type="Texture2D" uid="uid://dvl8ry0j7o180" path="res://Assets/top_bottom_alpha_blend_2.tres" id="2_r0vh7"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_sbr64"]
+[ext_resource type="Texture2D" uid="uid://ck4j4wlj4cr70" path="res://Themes/Normal/Assets/Icons/edit.svg" id="2_tfqgy"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="3_r0vh7"]
 [ext_resource type="LabelSettings" uid="uid://wadklneh8tg0" path="res://Assets/primary_label_dark.tres" id="4_e71wd"]
 
@@ -28,10 +30,35 @@ script = ExtResource("1_dygbn")
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1514673906]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBox" unique_id=1803322427]
+[node name="HBox" type="HBoxContainer" parent="VBox" unique_id=1057099219]
 layout_mode = 2
+
+[node name="Sep 1" type="VSeparator" parent="VBox/HBox" unique_id=1687833955]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="VBox/HBox" unique_id=1803322427]
+layout_mode = 2
+size_flags_horizontal = 6
 text = "Lyrics"
 horizontal_alignment = 1
+
+[node name="Refresh" type="Button" parent="VBox/HBox" unique_id=810789446]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+tooltip_text = "Refresh lyrics."
+theme_type_variation = &"SoftButton"
+icon = ExtResource("2_43dl1")
+
+[node name="Edit" type="Button" parent="VBox/HBox" unique_id=1928107877]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+tooltip_text = "Edit lyrics in external app."
+theme_type_variation = &"SoftButton"
+icon = ExtResource("2_tfqgy")
 
 [node name="Sep 1" type="HSeparator" parent="VBox" unique_id=26743642]
 layout_mode = 2
@@ -54,6 +81,13 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
+
+[node name="Info Label" type="Label" parent="VBox/Mask/Margin" unique_id=1218225724]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fetching lyrics..."
+label_settings = ExtResource("4_e71wd")
+horizontal_alignment = 1
 
 [node name="Scroll" type="ScrollContainer" parent="VBox/Mask/Margin" unique_id=1975157511]
 layout_mode = 2
@@ -96,35 +130,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 16
 
-[node name="VBox" type="VBoxContainer" parent="VBox/Mask/Margin" unique_id=821906855]
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="Info Label" type="Label" parent="VBox/Mask/Margin/VBox" unique_id=1218225724]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 1
-text = "Fetching lyrics..."
-label_settings = ExtResource("4_e71wd")
-horizontal_alignment = 1
-
-[node name="Add Lyrics" type="Button" parent="VBox/Mask/Margin/VBox" unique_id=1756415442]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Add your own"
-
-[node name="Refresh" type="Button" parent="VBox/Mask/Margin/VBox" unique_id=1553721291]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Refresh"
-
-[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1415831965]
-unique_name_in_owner = true
-max_redirects = 4
-
-[connection signal="pressed" from="VBox/Mask/Margin/VBox/Add Lyrics" to="." method="_on_add_lyrics_pressed"]
-[connection signal="pressed" from="VBox/Mask/Margin/VBox/Refresh" to="." method="_on_refresh_pressed"]
+[connection signal="pressed" from="VBox/HBox/Refresh" to="." method="_on_refresh_pressed"]
+[connection signal="pressed" from="VBox/HBox/Edit" to="." method="_on_edit_pressed"]

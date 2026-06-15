@@ -22,12 +22,9 @@ func update(_queue_position:int, track:DBTrack) -> void:
 		attempts_left = 4
 	if attempts_left == 0:
 		%'Info Label'.text = 'No lyrics found...'
-		%'Add Lyrics'.show()
 		return
 	attempts_left -= 1
 	current_track = track
-	%'Add Lyrics'.hide()
-	%'Refresh'.hide()
 	%Label.text = ''
 	%'Info Label'.show()
 	%'Info Label'.text= 'No track...'
@@ -51,7 +48,6 @@ func update(_queue_position:int, track:DBTrack) -> void:
 
 	elif not SessionManager.get_var('fetch_lyrics'):
 		%'Info Label'.text = 'No lyrics found...'
-		%'Add Lyrics'.show()
 
 
 func _on_http_request_request_completed(result:int, data:Dictionary, track:DBTrack) -> void:
@@ -83,14 +79,10 @@ func _on_http_request_request_completed(result:int, data:Dictionary, track:DBTra
 	%Label.text = plain_lyrics
 
 
-func _on_add_lyrics_pressed() -> void:
-	%'Add Lyrics'.hide()
-	%'Refresh'.show()
-	var file_path:String = current_track.get_lyrics_path()
-	var file := FileAccess.open(file_path, FileAccess.WRITE)
-	file.store_string('')
-	OS.shell_open(file_path)
-
-
 func _on_refresh_pressed() -> void:
 	update(0, current_track)
+
+
+func _on_edit_pressed() -> void:
+	var file_path:String = current_track.get_lyrics_path()
+	OS.shell_open(file_path)
