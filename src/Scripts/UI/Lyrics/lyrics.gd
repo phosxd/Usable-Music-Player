@@ -2,22 +2,31 @@ extends PanelContainer
 
 var current_track: DBTrack
 var attempts_left:int = 4
+var updated:bool = false
 
 
 func _ready() -> void:
-	PlayerManager.current_track_updated.connect(update)
-	update(0, PlayerManager.get_current_track())
+	PlayerManager.current_track_updated.connect(func(_queue_position, _track) -> void:
+		updated = false
+		if visible: update()
+		else:
+			await visibility_changed
+			update()
+	)
 	SessionManager.value_changed.connect(_session_manager_value_changed)
 	_session_manager_value_changed('right_sidebar_tab')
+	update()
 
 
 func _session_manager_value_changed(property:String, _source_name:String='base') -> void:
 	match property:
 		'right_sidebar_tab':
-			self.visible = SessionManager.get_var('right_sidebar_tab') == 'lyrics'
+			visible = SessionManager.get_var('right_sidebar_tab') == 'lyrics'
 
 
-func update(_queue_position:int, track:DBTrack) -> void:
+func update() -> void:
+	if updated: return
+	var track:DBTrack = PlayerManager.get_current_track()
 	if track != current_track:
 		attempts_left = 4
 	if attempts_left == 0:
@@ -60,10 +69,10 @@ func _on_http_request_request_completed(result:int, data:Dictionary, track:DBTra
 		HTTPRequest.RESULT_SUCCESS: %'Info Label'.hide()
 		HTTPRequest.RESULT_TIMEOUT:
 			%'Info Label'.text = 'Fetching timed-out, trying again...'
-			update(0, PlayerManager.get_current_track())
+			update()
 			return
 		_:
-			update(0, PlayerManager.get_current_track())
+			update()
 			return
 
 	var body_json = JSON.parse_string(body.get_string_from_utf8())
@@ -80,7 +89,7 @@ func _on_http_request_request_completed(result:int, data:Dictionary, track:DBTra
 
 
 func _on_refresh_pressed() -> void:
-	update(0, current_track)
+	update()
 
 
 func _on_edit_pressed() -> void:

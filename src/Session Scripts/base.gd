@@ -242,7 +242,7 @@ var keybind_volume_up:String = ''
 var keybind_volume_down:String = ''
 
 # Focused keybinds.
-var keybind_page_backward:String = 'Shift+Left'
+var keybind_page_backward:String = 'Escape'
 var keybind_page_forward:String = 'Shift+Right'
 var keybind_toggle_imview:String = 'Ctrl+F'
 

@@ -28,24 +28,6 @@
 [ext_resource type="StyleBox" uid="uid://c34ji3nq144a3" path="res://Themes/Normal/Assets/Styles/SoftButton/normal.tres" id="25_x31us"]
 [ext_resource type="StyleBox" uid="uid://bnd67b7pq2sps" path="res://Themes/Normal/Assets/Styles/SoftButton/pressed.tres" id="26_hjbuk"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g11mq"]
-content_margin_left = 6.0
-content_margin_top = 6.0
-content_margin_right = 6.0
-content_margin_bottom = 6.0
-bg_color = Color(0.24, 0.24, 0.24, 1)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.337, 0.62, 1, 0.8)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-corner_detail = 4
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_swytt"]
 content_margin_left = 8.0
 content_margin_top = 6.0
@@ -216,6 +198,24 @@ content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
 bg_color = Color(0.20159999, 0.20159999, 0.20159999, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g11mq"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.24, 0.24, 0.24, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.337, 0.62, 1, 0.8)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -431,14 +431,10 @@ AccentButton/constants/align_to_largest_stylebox = 1
 AccentButton/constants/h_separation = 4
 AccentButton/constants/outline_size = 0
 AccentButton/styles/disabled = ExtResource("1_d1ttw")
-AccentButton/styles/disabled_mirrored = ExtResource("1_d1ttw")
-AccentButton/styles/focus = SubResource("StyleBoxFlat_g11mq")
+AccentButton/styles/focus = ExtResource("4_u0vf8")
 AccentButton/styles/hover = ExtResource("2_davr4")
-AccentButton/styles/hover_mirrored = ExtResource("2_davr4")
 AccentButton/styles/hover_pressed = ExtResource("3_3n3yh")
-AccentButton/styles/hover_pressed_mirrored = ExtResource("3_3n3yh")
 AccentButton/styles/normal = ExtResource("4_nxdkj")
-AccentButton/styles/normal_mirrored = ExtResource("4_nxdkj")
 AccentButton/styles/pressed = ExtResource("3_3n3yh")
 AccentButton/styles/pressed_mirrored = ExtResource("3_3n3yh")
 Button/colors/font_color = Color(1, 1, 1, 0.75)

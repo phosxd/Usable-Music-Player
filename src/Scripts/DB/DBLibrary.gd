@@ -104,18 +104,18 @@ func remove() -> void:
 
 func refresh(auto:bool=false) -> void:
 	if currently_updating:
-		if not auto: MiniLog.warn('Cannot start scan for $~%s~$, already in progress.' % self.name, DBLibrary)
+		if not auto: MiniLog.warn('Cannot start scan for $~%s~$, already in progress.' % name, DBLibrary)
 		return
 	if not DirAccess.dir_exists_absolute(path):
 		if not auto: MiniLog.err('Library path "%s" is invalid. Skipping scan.' % path, DBLibrary)
 		return
 	for library:DBLibrary in LibraryManager.libraries:
 		if library.currently_updating:
-			if not auto: MiniLog.warn('Cannot start scan for $~%s~$, another library is currently scanning.' % self.name, DBLibrary)
+			if not auto: MiniLog.warn('Cannot start scan for $~%s~$, another library is currently scanning.' % name, DBLibrary)
 			return
 
 	currently_updating = true
-	if not auto: MiniLog.info('Starting scan for $~%s~$.' % self.name, DBLibrary)
+	if not auto: MiniLog.info('Starting scan for $~%s~$.' % name, DBLibrary)
 	scan_started.emit()
 
 	Async.create_thread(_refresh, func(made_changes:bool) -> void:
@@ -123,8 +123,8 @@ func refresh(auto:bool=false) -> void:
 		if made_changes:
 			changed = true
 			SessionManager.main_scene.refresh_tab()
-			SystemNotif.send('Finished scanning library "%s".' % self.name, '', SystemNotif.Urgency.Normal, '', 5)
-		if not auto: MiniLog.info('Finished scan for $~%s$~.' % self.name, DBLibrary)
+			SystemNotif.send('Finished scanning library "%s".' % name, '', SystemNotif.Urgency.Normal, '', 5)
+		if not auto: MiniLog.info('Finished scan for $~%s$~.' % name, DBLibrary)
 		save()
 		scan_finished.emit(made_changes)
 	)
@@ -134,19 +134,19 @@ func _refresh() -> bool:
 	var made_changes:Array[bool] = [false]
 
 	# Remove rogue objects.
-	for artist:DBArtist in self.artists.duplicate():
+	for artist:DBArtist in artists.duplicate():
 		for album:DBAlbum in artist.albums.duplicate():
-			if album not in self.albums:
+			if album not in albums:
 				album.remove()
 			else:
 				for track:DBTrack in album.tracks.duplicate():
-					if track not in self.tracks:
+					if track not in tracks:
 						track.remove()
-	for album:DBAlbum in self.albums.duplicate():
-		if album.artist not in self.artists:
+	for album:DBAlbum in albums.duplicate():
+		if album.artist not in artists:
 			album.artist.remove()
-	for track:DBTrack in self.tracks.duplicate():
-		if track.album not in self.albums:
+	for track:DBTrack in tracks.duplicate():
+		if track.album not in albums:
 			track.album.remove()
 
 	# Get last modified time for all tracks.
@@ -158,15 +158,15 @@ func _refresh() -> bool:
 	var parsed_images:Array[String] = []
 	var found_paths:Array[String] = []
 	var progress:Array[int] = [0]
-	FileUtils.walk_dir(self.path, func(file_path:String) -> void:
-		if not self.valid: return
+	FileUtils.walk_dir(path, func(file_path:String) -> void:
+		if not valid: return
 		if file_path.get_extension().to_lower() not in LibraryManager.valid_audio_extensions: return
-		var short_file_path:String = file_path.trim_prefix(self.path).trim_prefix('/')
+		var short_file_path:String = file_path.trim_prefix(path).trim_prefix('/')
 		found_paths.append(short_file_path)
 		var lmt:int = FileAccess.get_modified_time(file_path)
 		var track_lmt = last_modified_times.get(short_file_path,null)
 		# Don't scan if file has not changed or library version has not changed.
-		if self.version == LibraryManager.library_version \
+		if version == LibraryManager.library_version \
 		&& (track_lmt is int && lmt == track_lmt): return
 		# Scan file.
 		made_changes[0] = true
