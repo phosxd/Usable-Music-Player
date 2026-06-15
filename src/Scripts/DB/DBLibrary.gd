@@ -171,16 +171,23 @@ func _refresh() -> bool:
 		# Scan file.
 		made_changes[0] = true
 		var finished:Array[bool] = [false]
-		var entries:Array = await PyInterface.get_audio_meta([file_path], LibraryManager.image_cache_path)
-		for entry in entries:
-			if entry is not Dictionary or entry.is_empty():
-				MiniLog.err('Failed to scan file "%s".' % short_file_path, self)
-				continue
-			_parse_entry(file_path, short_file_path, entry, parsed_images)
-			progress[0] += 1
-			self.scan_progress_changed.emit.call_deferred(progress[0])
+		# Get metadata from Python.
+		PyInterface.thread_safe_call.call_deferred('get_audio_meta', func(entries:Array) -> void:
+			for entry in entries:
+				if entry is not Dictionary or entry.is_empty():
+					MiniLog.err('Failed to scan file "%s".' % short_file_path, self)
+					continue
+				_parse_entry(file_path, short_file_path, entry, parsed_images)
+				progress[0] += 1
+				scan_progress_changed.emit.call_deferred(progress[0])
 			finished[0] = true
-		
+		,[file_path], LibraryManager.image_cache_path)
+
+		# Wait for response.
+		while true:
+			if finished[0]: break
+			OS.delay_msec(3)
+
 	,null, true)
 
 	parsed_images.clear()

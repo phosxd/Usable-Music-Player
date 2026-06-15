@@ -15,6 +15,14 @@ func kill() -> void:
 	send_command('quit')
 
 
+## Call a method with thread safetey. Callback will be called with the result of the method.
+func thread_safe_call(method_name:String, callback:Callable, ...args) -> void:
+	if not has_method(method_name): return
+	var method:Callable = get(method_name)
+	var result = await method.callv(args)
+	if callback: callback.call(result)
+
+
 func get_audio_meta(paths:PackedStringArray, image_out_dir:String='') -> Array:
 	var args: PackedStringArray
 	for path:String in paths:

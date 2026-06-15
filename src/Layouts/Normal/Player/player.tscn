@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" uid="uid://dsftqlnga24af" path="res://Scripts/UI/Player/player.gd" id="1_8fvqj"]
 [ext_resource type="Script" uid="uid://ctl5olurx2x3b" path="res://Elements/AudioVisualizerBar.gd" id="2_k76c7"]
-[ext_resource type="Texture2D" uid="uid://1c5gdnkmyc1f" path="res://Themes/Normal/Assets/Icons/skip_backward.svg" id="2_rmo75"]
 [ext_resource type="Script" uid="uid://bjisaiqko2bpt" path="res://Elements/FitLabel Nodes/FLMHBoxContainer.gd" id="3_k76c7"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="3_on5bc"]
 [ext_resource type="Texture2D" uid="uid://by3qxgtdgkogn" path="res://Themes/Normal/Assets/Icons/favorite.svg" id="4_a3o2i"]
 [ext_resource type="Texture2D" uid="uid://c6ce7g8avpxng" path="res://Themes/Normal/Assets/Icons/non_favorite.svg" id="4_k76c7"]
-[ext_resource type="Texture2D" uid="uid://du3n6ypwltufy" path="res://Themes/Normal/Assets/Icons/skip_forward.svg" id="4_ucxa4"]
 [ext_resource type="Texture2D" uid="uid://bkkmi7knca7st" path="res://Themes/Normal/Assets/Icons/audio.svg" id="6_5infn"]
 [ext_resource type="PackedScene" uid="uid://4hlv0qpe30h8" path="res://Elements/Clickable Label/Fit Clickable Label.tscn" id="6_836g3"]
 [ext_resource type="Script" uid="uid://cuel4avmaddm" path="res://Elements/ColoredControl.gd" id="6_a3o2i"]
+[ext_resource type="Texture2D" uid="uid://dbmmjodt27ma2" path="res://Themes/Normal/Assets/Icons/play_previous.svg" id="8_7s4lb"]
+[ext_resource type="Texture2D" uid="uid://bjno8sw6k78gm" path="res://Themes/Normal/Assets/Icons/play_next.svg" id="10_0iunq"]
 [ext_resource type="Texture2D" uid="uid://ciqqntp7ixyuj" path="res://Themes/Normal/Assets/Icons/audio_mute.svg" id="13_ds2pc"]
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="13_kemy3"]
 [ext_resource type="Texture2D" uid="uid://cmfhyocnnts36" path="res://Themes/Normal/Assets/Icons/loop.svg" id="14_a3o2i"]
@@ -216,7 +216,7 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"AccentButton"
 text = " "
-icon = ExtResource("2_rmo75")
+icon = ExtResource("8_7s4lb")
 icon_alignment = 1
 
 [node name="Play Pause" type="Button" parent="Panel/VBox/HBox" unique_id=689319497 groups=["solid_button"]]
@@ -239,7 +239,7 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_type_variation = &"AccentButton"
 text = " "
-icon = ExtResource("4_ucxa4")
+icon = ExtResource("10_0iunq")
 icon_alignment = 1
 
 [node name="Sep 5" type="VSeparator" parent="Panel/VBox/HBox/Right" unique_id=1613490969]
