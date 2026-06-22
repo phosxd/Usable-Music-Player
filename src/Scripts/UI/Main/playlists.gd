@@ -11,8 +11,7 @@ func sort() -> void:
 	for child:Node in %'Playlists Container'.get_children():
 		child.queue_free()
 
-	for playlist_id:String in SessionManager.get_var('playlist_order'):
-		var playlist:DBPlaylist = LibraryManager.get_playlist(playlist_id)
+	for playlist:DBPlaylist in LibraryManager.playlists:
 		add_card(playlist)
 
 
@@ -25,3 +24,11 @@ func add_card(playlist:DBPlaylist) -> void:
 
 func _on_card_pressed(playlist:DBPlaylist) -> void:
 	print('pressed %s' %playlist.id)
+
+
+func _on_playlists_container_reordered(from:int, to:int) -> void:
+	var playlist = LibraryManager.playlists.get(from)
+	if playlist is not DBPlaylist: return
+	playlist = playlist as DBPlaylist
+	LibraryManager.playlists.remove_at(from)
+	LibraryManager.playlists.insert(to, playlist)
