@@ -76,6 +76,7 @@ const sections:Array[Array] = [
 const property_data:Array[Array] = [
 	# Library settings.
 	['library_order',[TYPE_PACKED_STRING_ARRAY]],
+	['playlist_order',[TYPE_PACKED_STRING_ARRAY]],
 	['visible_libraries',[TYPE_PACKED_STRING_ARRAY]],
 	['auto_scan_interval',[TYPE_INT,TYPE_FLOAT]],
 	# Theme.
@@ -141,6 +142,7 @@ const property_data:Array[Array] = [
 #region library settings
 
 var library_order: PackedStringArray
+var playlist_order: PackedStringArray
 var visible_libraries: PackedStringArray
 ## How many minutes to wait before automatically scanning.
 var auto_scan_interval:float = 0.5:

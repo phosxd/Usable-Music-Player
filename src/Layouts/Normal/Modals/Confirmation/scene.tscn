@@ -1,16 +1,16 @@
 [gd_scene format=3 uid="uid://braiu28y6hl6h"]
 
-[ext_resource type="Script" uid="uid://bpxwuso43kvii" path="res://Scenes/Dialogs/Confirmation/scene.gd" id="1_mqlmt"]
+[ext_resource type="Script" uid="uid://bpxwuso43kvii" path="res://Layouts/Normal/Modals/Confirmation/scene.gd" id="1_mqlmt"]
 
 [node name="Confirmation" type="PanelContainer" unique_id=1047763430]
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = -1
+anchor_left = 0.367
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 0.633
 anchor_bottom = 0.5
-offset_left = -46.5
+offset_left = 111.10498
 offset_top = -45.5
-offset_right = 46.5
+offset_right = -111.10504
 offset_bottom = 45.5
 grow_horizontal = 2
 grow_vertical = 2

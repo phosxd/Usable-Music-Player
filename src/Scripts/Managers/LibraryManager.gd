@@ -10,6 +10,7 @@ static var a2j_ruleset:Dictionary[String,Dictionary] = {
 		'exclude_default_values': true,
 		'automatic_resource_references': true,
 		'instantiator_arguments': {
+			'DBPlaylist': [{}],
 			'DBTrack': [null, {}],
 			'DBAlbum': [null, {}],
 			'DBArtist': [null, {}],
@@ -35,16 +36,21 @@ static var a2j_ruleset:Dictionary[String,Dictionary] = {
 	'DBTrack': {
 		'property_exclusions': [],
 	},
+	'DBPlaylist': {
+		'property_exclusions': [],
+	},
 }
 const valid_audio_extensions:Array[String] = ['wav','ogg','mp3','flac']
 const placeholder_meta:String = 'None found'
 const libraries_path:String = 'user://libraries/'
+const playlists_path:String = 'user://playlists/'
 static var lyrics_path:String = OS.get_user_data_dir()+'/lyrics'
 static var image_cache_path:String = OS.get_user_data_dir()+'/image_cache'
 static var artist_image_cache:String = image_cache_path+'/artist_covers'
 static var out_path:String = OS.get_user_data_dir()+'/out'
 
 static var libraries:Array[DBLibrary] = []
+static var playlists:Array[DBPlaylist] = []
 
 
 static func load_libraries() -> void:
@@ -61,6 +67,7 @@ static func load_libraries() -> void:
 			if library is not DBLibrary:
 				MiniLog.err('Unable to parse library from "%s". Skipping library.' % path, LibraryManager)
 				return
+			library = library as DBLibrary
 			library.currently_updating = false
 			library.changed = false
 			library.valid = true
@@ -76,7 +83,34 @@ static func load_libraries() -> void:
 		return a_index < b_index
 	)
 
-	await SessionManager.get_tree().create_timer(1.0).timeout
+
+static func load_playlists() -> void:
+	DirAccess.make_dir_recursive_absolute(playlists_path)
+	FileUtils.walk_dir(playlists_path, func(path:String) -> void:
+		var extension:String = path.get_extension().to_lower()
+		if extension == 'json':
+			var file := FileAccess.open(path, FileAccess.READ)
+			if not file:
+				MiniLog.err('Unable to load playlist from "%s". Skipping playlist.' % path, LibraryManager)
+				return
+			var json = JSON.parse_string(file.get_as_text())
+			var playlist = A2J.from_json(json, a2j_ruleset)
+			if playlist is not DBPlaylist:
+				MiniLog.err('Unable to parse playlist from "%s". Skipping playlist.' % path, LibraryManager)
+				return
+			playlist = playlist as DBPlaylist
+			playlist.changed = false
+			playlist.valid = true
+			playlist.id = path.split('/')[-1].trim_suffix('.json')
+			playlists.append(playlist)
+			MiniLog.info('Loaded playlist $i%si$ after $~%sms~$.' % [playlist.id, int(A2J.time_to_finish)], LibraryManager)
+	)
+
+	playlists.sort_custom(func(a:DBPlaylist, b:DBPlaylist) -> bool:
+		var a_index:int = SessionManager.get_var('playlist_order').find(a.id)
+		var b_index:int = SessionManager.get_var('playlist_order').find(b.id)
+		return a_index < b_index
+	)
 
 
 ## Rescans all libraries, in order.
@@ -108,6 +142,13 @@ static func save_libraries() -> void:
 static func get_library(id:String) -> DBLibrary:
 	for library:DBLibrary in libraries:
 		if library.id == id: return library
+	return null
+
+
+## Returns the [DBPlaylist] or [code]null[/code] if none found.
+static func get_playlist(id:String) -> DBPlaylist:
+	for playlist:DBPlaylist in playlists:
+		if playlist.id == id: return playlist
 	return null
 
 

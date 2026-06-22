@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://30dtlb0yhtx1"]
+
+[ext_resource type="Script" uid="uid://cor5k07keywfa" path="res://addons/ReorderableContainer/reorderable_vbox.gd" id="1_mcvk0"]
+
+[node name="ReorderableList" type="Container" unique_id=100561512]
+process_mode = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_mcvk0")
+hold_duration = 0.05
+separation = 0
+is_vertical = true
+auto_scroll_speed = 5.0
+auto_scroll_range = 0.1
+scroll_threshold = 10
+metadata/_custom_type_script = "uid://cor5k07keywfa"

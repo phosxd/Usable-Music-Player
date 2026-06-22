@@ -81,7 +81,6 @@ func _on_http_request_request_completed(result:int, data:Dictionary, track:DBTra
 	if plain_lyrics is not String or plain_lyrics.is_empty():
 		%'Info Label'.text = 'No lyrics found...'
 		%'Info Label'.show()
-		%'Add Lyrics'.show()
 		return
 
 	track.save_lyrics(plain_lyrics)

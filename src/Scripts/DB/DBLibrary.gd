@@ -85,9 +85,9 @@ static func _generate_id() -> String:
 func save() -> void:
 	var ajson = A2J.to_json(self, LibraryManager.a2j_ruleset)
 	if ajson is not Dictionary:
-		MiniLog.err('Failed to save library "%s".' % self.id, self)
+		MiniLog.err('Failed to save library "%s".' % id, self)
 		return
-	var file := FileAccess.open(self.get_file_path(), FileAccess.WRITE)
+	var file := FileAccess.open(get_file_path(), FileAccess.WRITE)
 	file.store_string(JSON.stringify(ajson))
 	file.close()
 
@@ -95,9 +95,9 @@ func save() -> void:
 func remove() -> void:
 	self.valid = false
 	LibraryManager.libraries.erase(self)
-	var err:Error = DirAccess.remove_absolute(self.get_file_path())
+	var err:Error = DirAccess.remove_absolute(get_file_path())
 	if err != OK:
-		MiniLog.warn('Failed to remove library file at $~%s~$.' % self.get_file_path(), DBLibrary)
+		MiniLog.warn('Failed to remove library file at $~%s~$.' % get_file_path(), DBLibrary)
 
 
 #region scanning
@@ -308,13 +308,13 @@ func _parse_entry(full_track_path:String, track_path:String, entry:Dictionary, p
 
 
 func get_file_path() -> String:
-	return LibraryManager.libraries_path+self.id+'.json'
+	return LibraryManager.libraries_path+id+'.json'
 
 
 func get_icon() -> Texture2D:
-	match self.type:
+	match type:
 		LibraryType.LocalDirectory:
-			if self.path.trim_prefix('/').split('/')[0] in ['run','mnt','media']:
+			if path.trim_prefix('/').split('/')[0] in ['run','mnt','media']:
 				return SessionManager.get_icon('lan')
 			return SessionManager.get_icon('folder')
 
@@ -360,7 +360,7 @@ func get_item_by_property(item_type, property:String, value:Variant) -> Array:
 
 ## Returns a list of [DBArtist] sorted using [param sort_mode].
 func get_artists_sorted(sort_mode:=ArtistSortMode.title) -> Array[DBArtist]:
-	var result:Array[DBArtist] = []; result.assign(self.artists)
+	var result:Array[DBArtist] = []; result.assign(artists)
 	match sort_mode:
 		ArtistSortMode.title:
 			result.sort_custom(func(a:DBArtist, b:DBArtist) -> bool:
@@ -372,7 +372,7 @@ func get_artists_sorted(sort_mode:=ArtistSortMode.title) -> Array[DBArtist]:
 
 ## Returns a list of [DBAlbum] sorted using [param sort_mode].
 func get_albums_sorted(sort_mode:=AlbumSortMode.title) -> Array[DBAlbum]:
-	var result:Array[DBAlbum] = []; result.assign(self.albums)
+	var result:Array[DBAlbum] = []; result.assign(albums)
 	match sort_mode:
 		AlbumSortMode.title:
 			result.sort_custom(func(a:DBAlbum, b:DBAlbum) -> bool:
@@ -395,7 +395,7 @@ func get_albums_sorted(sort_mode:=AlbumSortMode.title) -> Array[DBAlbum]:
 
 ## Returns a list of [DBTrack] sorted using [param sort_mode].
 func get_tracks_sorted(sort_mode:=TrackSortMode.title) -> Array[DBTrack]:
-	var result:Array[DBTrack] = []; result.assign(self.tracks)
+	var result:Array[DBTrack] = []; result.assign(tracks)
 	match sort_mode:
 		TrackSortMode.title:
 			result.sort_custom(func(a:DBTrack, b:DBTrack) -> bool:

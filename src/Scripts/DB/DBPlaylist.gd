@@ -3,8 +3,8 @@ class_name DBPlaylist extends RefCounted
 
 static var default_cover := ImageTexture.create_from_image(preload('res://Themes/Normal/Assets/Icons/texture.svg').get_image())
 
-## Playlist name.
-var name:String = ''
+## Playlist id.
+var id:String = ''
 ## Track IDs in this playlist.
 var track_ids: Array[String]
 ## Album cover image path. Use [param get_cover] to get a usable texture.
@@ -15,10 +15,10 @@ var created_date:String = ''
 var last_edit_date:String = ''
 ## Cached color palette for the album cover image.
 var palette:Dictionary[String,Color] = {}
-var replay_gain:float = 0.0
 
 ## Whether or not the DB entry is valid.
-var valid := true
+var valid:bool = true
+var changed:bool = false
 var _cover
 
 
@@ -28,7 +28,7 @@ func _init(data:Dictionary) -> void:
 
 
 func update_data(data:Dictionary) -> void:
-	name = data.get('name','')
+	id = data.get('id','')
 
 	var raw_tracks = data.get('tracks',[])
 	track_ids.clear(); track_ids.assign(raw_tracks)
@@ -42,9 +42,27 @@ func update_data(data:Dictionary) -> void:
 	else: palette = {}
 
 
+func save() -> void:
+	var ajson = A2J.to_json(self, LibraryManager.a2j_ruleset)
+	if ajson is not Dictionary:
+		MiniLog.err('Failed to save playlist "%s".' % id, self)
+		return
+	var file := FileAccess.open(get_file_path(), FileAccess.WRITE)
+	file.store_string(JSON.stringify(ajson))
+	file.close()
+
+
 ## Remove this playlist.
 func remove() -> void:
-	pass
+	self.valid = false
+	LibraryManager.playlists.erase(self)
+	var err:Error = DirAccess.remove_absolute(get_file_path())
+	if err != OK:
+		MiniLog.warn('Failed to remove playlist file at $~%s~$.' % get_file_path(), self)
+
+
+func get_file_path() -> String:
+	return LibraryManager.playlists_path+id+'.json'
 
 
 ## Returns all [DBTrack] objects in the playlist in order.

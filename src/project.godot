@@ -78,6 +78,7 @@ folder_colors={
 "res://EXPORT/": "gray",
 "res://Elements/": "yellow",
 "res://Layouts/Normal/Elements/": "yellow",
+"res://Layouts/Normal/Modals/": "yellow",
 "res://MODS/": "gray",
 "res://Scenes/": "blue",
 "res://Scripts/": "red",

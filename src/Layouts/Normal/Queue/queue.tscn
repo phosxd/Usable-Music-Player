@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="2_0inh1"]
 [ext_resource type="Texture2D" uid="uid://dod6uhmhu0tw3" path="res://Themes/Normal/Assets/Icons/reload.svg" id="2_j0kya"]
 [ext_resource type="Texture2D" uid="uid://6icvlc6d5rna" path="res://Themes/Normal/Assets/Icons/Save.svg" id="3_qppo7"]
-[ext_resource type="Script" uid="uid://cor5k07keywfa" path="res://addons/ReorderableContainer/reorderable_vbox.gd" id="4_0inh1"]
 [ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="5_qppo7"]
+[ext_resource type="PackedScene" uid="uid://30dtlb0yhtx1" path="res://Layouts/Normal/Elements/ReorderableList/ReorderableList.tscn" id="6_crlke"]
 
 [node name="Queue" type="PanelContainer" unique_id=1119812283]
 custom_minimum_size = Vector2(265, 0)
@@ -73,21 +73,10 @@ allow_horizontal_scroll = false
 allow_overdragging = true
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="List" type="Container" parent="VBox/Margin/Scroll" unique_id=2011907827 node_paths=PackedStringArray("scroll_container")]
+[node name="List" parent="VBox/Margin/Scroll" unique_id=100561512 node_paths=PackedStringArray("scroll_container") instance=ExtResource("6_crlke")]
 unique_name_in_owner = true
-process_mode = 1
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource("4_0inh1")
-hold_duration = 0.05
-separation = 0
-is_vertical = true
 scroll_container = NodePath("..")
-auto_scroll_speed = 5.0
-auto_scroll_range = 0.1
-scroll_threshold = 10
-metadata/_custom_type_script = "uid://cor5k07keywfa"
 
 [connection signal="pressed" from="VBox/Controls/Show Current" to="." method="_on_show_current_pressed"]
 [connection signal="pressed" from="VBox/Controls/Save Playlist" to="." method="_on_save_playlist_pressed"]

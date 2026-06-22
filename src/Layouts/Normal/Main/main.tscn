@@ -20,6 +20,8 @@
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="12_eeh6y"]
 [ext_resource type="Script" uid="uid://dtel3yhuvbpap" path="res://Elements/Top Bar/top_bar.gd" id="13_2ok46"]
 [ext_resource type="Texture2D" uid="uid://bg0hgkpiegld2" path="res://Themes/Normal/Assets/Icons/search.svg" id="14_koken"]
+[ext_resource type="PackedScene" uid="uid://30dtlb0yhtx1" path="res://Layouts/Normal/Elements/ReorderableList/ReorderableList.tscn" id="15_1kra7"]
+[ext_resource type="Script" uid="uid://ditp41cuxa6eo" path="res://Scripts/UI/Main/playlists.gd" id="16_aukw7"]
 [ext_resource type="Texture2D" uid="uid://duy3actebvkcu" path="res://Themes/Normal/Assets/Icons/tree_arrow_left.svg" id="16_eeh6y"]
 [ext_resource type="Texture2D" uid="uid://ds3cf6usfh0ax" path="res://Themes/Normal/Assets/Icons/tree_arrow_right.svg" id="20_wbs4r"]
 [ext_resource type="Script" uid="uid://cuel4avmaddm" path="res://Elements/ColoredControl.gd" id="21_wbs4r"]
@@ -34,7 +36,7 @@ rebound_strength = 14.0
 script = ExtResource("12_eeh6y")
 rebound_strength = 14.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wwmpn"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aukw7"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -71,6 +73,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_y3v7k")
+bg_color = null
+global_margin = null
+tools_margin = null
+sidebar_margin = null
+right_sidebar_margin = null
+search_margin = null
 
 [node name="Background" type="ColorRect" parent="." unique_id=951674116]
 unique_name_in_owner = true
@@ -252,13 +260,17 @@ layout_mode = 2
 tooltip_text = "Add playlist"
 mouse_filter = 1
 theme_type_variation = &"AccentButton"
-disabled = true
 icon = ExtResource("6_imbg2")
 icon_alignment = 1
 metadata/_smooth_scroll_default_mouse_filter_set = true
 
-[node name="Playlists Scroll" type="ScrollContainer" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=1677478848]
-layout_direction = 3
+[node name="Playlists" type="VBoxContainer" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox" unique_id=310036722]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("16_aukw7")
+
+[node name="Playlists Scroll" type="ScrollContainer" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Playlists" unique_id=1677478848]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
@@ -268,13 +280,10 @@ wheel_scroll_damper = SubResource("Resource_eqlsm")
 dragging_scroll_damper = SubResource("Resource_lj0cr")
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="Playlists" type="VBoxContainer" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Playlists Scroll" unique_id=1774428216]
+[node name="Playlists Container" parent="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Playlists/Playlists Scroll" unique_id=100561512 node_paths=PackedStringArray("scroll_container") instance=ExtResource("15_1kra7")]
 unique_name_in_owner = true
-layout_direction = 3
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-metadata/_smooth_scroll_default_mouse_filter_set = true
+scroll_container = NodePath("..")
 
 [node name="Cover Art Margin" type="MarginContainer" parent="Global Margin/VBox/HBox/Sidebar" unique_id=21399878]
 unique_name_in_owner = true
@@ -296,7 +305,7 @@ layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_wwmpn")
+theme_override_styles/panel = SubResource("StyleBoxFlat_aukw7")
 script = ExtResource("9_6t3k2")
 texture = ExtResource("9_hfg1r")
 stretch_mode = 5
@@ -476,6 +485,7 @@ layout_mode = 2
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Tracks" to="." method="_on_tab_button_pressed" binds= ["tracks"]]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Tab Button Genres" to="." method="_on_tab_button_pressed" binds= ["genres"]]
 [connection signal="toggled" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Favorites" to="." method="_on_favorites_toggled"]
+[connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Sidebar Margin/Sidebar Panel/VBox/Add Playlist" to="." method="_on_add_playlist_pressed"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/Sidebar/Cover Art Margin/Panel/Current Track Cover Container/Tab Button Immersive Player" to="." method="_on_tab_button_pressed" binds= ["immersive_view"]]
 [connection signal="toggled" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Activity" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_activity_toggled"]
 [connection signal="pressed" from="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar/Search Margin/Search/Topbar Content/Back Button" to="Global Margin/VBox/HBox/HBox/Tab VBox/Main Split/VBox/Topbar" method="_on_back_button_pressed"]

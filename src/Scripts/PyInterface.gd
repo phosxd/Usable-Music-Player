@@ -129,8 +129,8 @@ func wait_for_response() -> String:
 			MiniLog.err('Response timed-out.', PyInterface)
 			break
 		if PyRunner.io_access.get_length() == 0:
-			await get_tree().create_timer(0.01).timeout
-			time_waited += 0.01
+			await get_tree().create_timer(0.005).timeout
+			time_waited += 0.005
 			continue
 		line = PyRunner.io_access.get_line()
 		break

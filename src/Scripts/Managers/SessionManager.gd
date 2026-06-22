@@ -34,8 +34,8 @@ var context_menus:Dictionary[String,ContextMenu] = {}
 
 
 func _ready() -> void:
-	self.default_window_size = self.get_window().size
-	self.current_window_size = default_window_size
+	default_window_size = get_window().size
+	current_window_size = default_window_size
 
 	for mod:TesseractMod in TesseractAPI.mod_instances.values():
 		var files:PackedStringArray = mod.get_files_at('Session Scripts')
@@ -129,6 +129,26 @@ func _ready() -> void:
 				'type': 'button',
 				'text': 'Show In Files',
 				'icon': SessionManager.get_icon('folder'),
+			},
+		]),
+		'playlist_card': ContextMenu.new([
+			{
+				'id': 'play',
+				'type': 'button',
+				'text': 'Play (clear queue)',
+				'icon': SessionManager.get_icon('play'),
+			},
+			{
+				'id': 'play_next',
+				'type': 'button',
+				'text': 'Play Next',
+				'icon': SessionManager.get_icon('queue_play_next'),
+			},
+			{
+				'id': 'add_to_queue',
+				'type': 'button',
+				'text': 'Add To Queue',
+				'icon': SessionManager.get_icon('queue_add_to_queue'),
 			},
 		]),
 	}
@@ -242,8 +262,9 @@ func load_session() -> void:
 	for library_id:String in visible_libraries:
 		if library_id not in library_order: visible_libraries.erase(library_id)
 
-	# Load libraries.
+	# Load libraries & playlists.
 	LibraryManager.load_libraries()
+	LibraryManager.load_playlists()
 
 	# Load queue.
 	var raw_queue = data.get('queue')
@@ -299,7 +320,14 @@ func save_session() -> void:
 	for library:DBLibrary in LibraryManager.libraries:
 		library_order.append(library.id)
 		if library.changed: library.save()
-	
+
+	# Sync playlist order & save changed playlists.
+	var playlist_order:PackedStringArray = get_var('playlist_order')
+	playlist_order.clear()
+	for playlist:DBPlaylist in LibraryManager.playlists:
+		playlist_order.append(playlist.id)
+		if playlist.changed: playlist.save()
+
 
 	# Set data properties.
 	for script in session_scripts.values():

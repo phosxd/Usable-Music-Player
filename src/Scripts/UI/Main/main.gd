@@ -252,3 +252,19 @@ func _on_favorites_toggled(toggled_on:bool) -> void:
 
 func _on_main_split_drag_ended() -> void:
 	SessionManager.set_var('main_split', %'Main Split'.split_offsets)
+
+
+func _on_add_playlist_pressed() -> void:
+	DialogManager.popup_custom(DialogManager.create_playlist_scene.instantiate(), func(data:Dictionary) -> void:
+		var playlist_id:String = StringUtils.resolve_duplicate(data.get('name'), SessionManager.get_var('playlist_order'))
+		var playlist := DBPlaylist.new({
+			'id': playlist_id,
+			'tracks': [],
+			
+		})
+		playlist.created_date = Time.get_datetime_string_from_system().split('T')[0]
+		playlist.save()
+		LibraryManager.playlists.append(playlist)
+		SessionManager.get_var('playlist_order').append(playlist.id)
+		%Playlists.sort()
+	)

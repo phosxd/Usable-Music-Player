@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://rvvp16rg86ao"]
+
+[ext_resource type="Script" uid="uid://dovik7sj2leuc" path="res://Layouts/Normal/Modals/Create Playlist/scene.gd" id="1_7aekc"]
+
+[node name="Create Playlist" type="PanelContainer" unique_id=1047763430]
+anchors_preset = -1
+anchor_left = 0.367
+anchor_top = 0.5
+anchor_right = 0.633
+anchor_bottom = 0.5
+offset_left = -0.39501953
+offset_top = -68.5
+offset_right = 0.3949585
+offset_bottom = 68.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"SectionPanelContainer"
+script = ExtResource("1_7aekc")
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=11663374]
+layout_mode = 2
+
+[node name="Text" type="Label" parent="VBox" unique_id=1971945543]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Create Playlist"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Sep 1" type="HSeparator" parent="VBox" unique_id=807982989]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Name" type="HBoxContainer" parent="VBox" unique_id=89018175]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/Name" unique_id=610958312]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Name"
+
+[node name="Name" type="LineEdit" parent="VBox/Name" unique_id=686552965]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Playlist name..."
+
+[node name="Sep 2" type="HSeparator" parent="VBox" unique_id=1306350611]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Controls" type="HBoxContainer" parent="VBox" unique_id=225517884]
+layout_mode = 2
+
+[node name="Yes" type="Button" parent="VBox/Controls" unique_id=1254662541]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Confirm"
+
+[node name="No" type="Button" parent="VBox/Controls" unique_id=1079428529]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[connection signal="pressed" from="VBox/Controls/Yes" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="VBox/Controls/No" to="." method="_on_no_pressed"]
