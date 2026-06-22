@@ -9,6 +9,7 @@ enum CardMode {
 
 @onready var context_menu:ContextMenu = SessionManager.context_menus.track_card
 @onready var card_details_scene:PackedScene = SessionManager.get_scene('Tracks/card_details')
+
 var track: DBTrack
 var selected_mode := CardMode.detailed
 var card_details_instance: Control
@@ -18,12 +19,12 @@ var details_reserved:bool = false
 func init(db_track:DBTrack) -> void:
 	track = db_track
 	if not track:
-		self.queue_free()
+		queue_free()
 		return
 
 
 func set_mode(mode:int) -> void:
-	self.selected_mode = mode as CardMode
+	selected_mode = mode as CardMode
 	if card_details_instance: card_details_instance.set_mode(mode)
 
 
@@ -58,7 +59,7 @@ func _on_control_on_screen_activated_2(button:Button) -> void:
 	if card_details_instance: return
 	card_details_instance = card_details_scene.instantiate()
 	card_details_instance.init(self, self.track, button)
-	self.add_child.call_deferred(card_details_instance)
+	add_child.call_deferred(card_details_instance)
 
 
 func _on_control_on_screen_deactivated() -> void:

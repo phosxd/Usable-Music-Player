@@ -23,7 +23,7 @@ func add_card(playlist:DBPlaylist) -> void:
 
 
 func _on_card_pressed(playlist:DBPlaylist) -> void:
-	print('pressed %s' %playlist.id)
+	SessionManager.main_scene.set_tab('playlist_page', playlist)
 
 
 func _on_playlists_container_reordered(from:int, to:int) -> void:

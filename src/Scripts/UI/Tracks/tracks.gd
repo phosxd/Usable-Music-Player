@@ -34,7 +34,6 @@ extends VBoxContainer
 @onready var card_scene := SessionManager.get_scene('Tracks/card')
 
 var tracks:Array[DBTrack] = []
-var selected_track_index: int
 var sort_mode: DBLibrary.TrackSortMode
 var ascend_mode = null
 var update_count:int = 0

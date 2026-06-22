@@ -10,9 +10,9 @@ var initialized:bool = false
 
 
 func _ready() -> void:
-	self.parent.context_menu.id_pressed.connect(_on_option_id_pressed)
-	self.parent.context_menu.closed.connect(func() -> void:
-		if self.parent.context_menu.current_instance_id != self.parent.name: return
+	parent.context_menu.id_pressed.connect(_on_option_id_pressed)
+	parent.context_menu.closed.connect(func() -> void:
+		if parent.context_menu.current_instance_id != parent.name: return
 		%Options.button_pressed = false
 	)
 
@@ -21,8 +21,8 @@ func init(parent_:Node, db_track:DBTrack, button_:Button) -> void:
 	parent = parent_
 	button = button_
 	track = db_track
-	if not self.track:
-		self.queue_free.call_deferred()
+	if not track:
+		queue_free.call_deferred()
 		return
 	if not self: return
 
@@ -38,7 +38,8 @@ func init(parent_:Node, db_track:DBTrack, button_:Button) -> void:
 	var cover = track.album.get_cover() if track.album else DBAlbum.default_cover
 	if not self: return
 	if %Image: %Image.texture = cover
-	if not self.parent: return
+	if not parent: return
+
 	set_mode(self.parent.get('selected_mode'))
 	initialized = true
 	init_completed.emit()

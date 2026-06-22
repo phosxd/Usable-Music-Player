@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://cf07p56wdt20g"]
+
+[ext_resource type="Script" uid="uid://d02ujuxf10lo2" path="res://Scripts/UI/Modals/Select Tracks/track_card_details.gd" id="1_vl17q"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_a6bns"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="3_wrkm7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vl17q"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[node name="TrackCardDetails" type="HBoxContainer" unique_id=238601125]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+mouse_behavior_recursive = 1
+script = ExtResource("1_vl17q")
+
+[node name="Sep 1" type="VSeparator" parent="." unique_id=1157292228]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Image" type="PanelContainer" parent="." unique_id=41597945]
+unique_name_in_owner = true
+clip_children = 1
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_vl17q")
+script = ExtResource("2_a6bns")
+texture = ExtResource("3_wrkm7")
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[node name="Sep 2" type="VSeparator" parent="." unique_id=571381733]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Name" type="Label" parent="." unique_id=1960972200]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelPrimarySmall"
+text = "Track"
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Album" type="Label" parent="." unique_id=1653555644]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelSmall"
+text = "Album"
+clip_text = true
+text_overrun_behavior = 5
+
+[node name="Artist" type="Label" parent="." unique_id=160941431]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelSmall"
+text = "Artist"
+clip_text = true
+text_overrun_behavior = 5

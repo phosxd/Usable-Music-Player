@@ -1,8 +1,11 @@
 extends Node
 
-const console_scene := preload('res://Scenes/Console/Console.tscn')
-const confirmation_dialog_scene:PackedScene = preload('res://Layouts/Normal/Modals/Confirmation/scene.tscn')
-const create_playlist_scene := preload('res://Layouts/Normal/Modals/Create Playlist/scene.tscn')
+const console_scene:PackedScene = preload('res://Scenes/Console/Console.tscn')
+
+@onready var confirmation_dialog_scene:PackedScene = SessionManager.get_scene('Modals/Confirmation/scene')
+@onready var create_playlist_scene:PackedScene = SessionManager.get_scene('Modals/Create Playlist/scene')
+@onready var select_tracks_scene:PackedScene = SessionManager.get_scene('Modals/Select Tracks/scene')
+
 const shadow_color := Color(0,0,0,0.5)
 
 

@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="3_wan55"]
 [ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="4_uaxmd"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wec5g"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1xdd"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -48,7 +48,7 @@ custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 mouse_filter = 2
 mouse_behavior_recursive = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_wec5g")
+theme_override_styles/panel = SubResource("StyleBoxFlat_f1xdd")
 script = ExtResource("1_nnlgi")
 texture = ExtResource("2_wec5g")
 stretch_mode = 5

@@ -29,8 +29,8 @@ func init(playlist_:DBPlaylist=null) -> void:
 	if not playlist_: return
 	playlist = playlist_
 	await ready
-	%Title.text = playlist.name
-	%Title.tooltip_text = playlist.name
+	%Title.text = playlist.id
+	%Title.tooltip_text = playlist.id
 	%'Created Date'.text = playlist.created_date
 	%'Last Edit Date'.text = playlist.last_edit_date
 	var cover = playlist.get_cover()
@@ -48,6 +48,13 @@ func init(playlist_:DBPlaylist=null) -> void:
 	for i in ['topright','topleft','bottomright','bottomleft']:
 		index += 1
 		mat.set_shader_parameter(i, dominant_colors[index].blend(overlay_color))
+
+	sort()
+
+
+func sort() -> void:
+	for child in %'Track List'.get_children():
+		child.queue_free()
 
 	var runtime:float = 0
 	for track:DBTrack in playlist.get_tracks():
@@ -103,3 +110,13 @@ func _on_option_id_pressed(id:int) -> void:
 		# Rescan.
 		2:
 			pass
+
+
+func _on_add_pressed() -> void:
+	DialogManager.popup_custom(DialogManager.select_tracks_scene.instantiate(), func(data:Dictionary) -> void:
+		var tracks:Array[DBTrack] = data.get('selected_tracks')
+		for track:DBTrack in tracks:
+			playlist.track_ids.append(track.as_id())
+
+		sort()
+	)

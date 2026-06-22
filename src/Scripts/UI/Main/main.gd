@@ -54,6 +54,7 @@ extends Control
 	'tracks': [%'Tab Button Tracks', SessionManager.get_scene('Tracks/tab')],
 	'genres': [%'Tab Button Genres', SessionManager.get_scene('Genres/tab')],
 	'genre_page': [null, SessionManager.get_scene('Genre Page/page')],
+	'playlist_page': [null, SessionManager.get_scene('Playlist Page/page')],
 	'immersive_view': [%'Tab Button Immersive Player', SessionManager.get_scene('Immersive View/tab')]
 }
 var tab_history:Array[Array] = []

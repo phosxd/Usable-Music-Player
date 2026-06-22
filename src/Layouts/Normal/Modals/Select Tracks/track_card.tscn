@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://b7gosruyybpwn"]
+
+[ext_resource type="Script" uid="uid://d1dn5h5aqurx" path="res://Scripts/UI/Modals/Select Tracks/track_card.gd" id="1_tt6o6"]
+[ext_resource type="Script" uid="uid://cvuw8ds1htson" path="res://Elements/ControlOnScreen.gd" id="2_jwmef"]
+
+[node name="TrackCard" type="Control" unique_id=436783485]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("1_tt6o6")
+
+[node name="ControlOnScreen" type="Control" parent="." unique_id=893989022]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_jwmef")
+update_interval = 0.04
+preserve_size = false
+ratio_up = 4.0
+ratio_down = 4.0
+metadata/_custom_type_script = "uid://cvuw8ds1htson"
+
+[node name="Button" type="Button" parent="." unique_id=974529750]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"SoftButton"
+toggle_mode = true
+
+[connection signal="activated" from="ControlOnScreen" to="." method="_on_control_on_screen_activated"]
+[connection signal="deactivated" from="ControlOnScreen" to="." method="_on_control_on_screen_deactivated"]
+[connection signal="toggled" from="Button" to="." method="_on_button_toggled"]
