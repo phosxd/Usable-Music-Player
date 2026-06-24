@@ -1,4 +1,3 @@
-- Add playlists.
 - Fix queue not being updated properly when reordering an item BEFORE the currently playing track.
 - Add right-click options for artist, album, & genre cards.
 - Add ability to upload custom artist & album covers.

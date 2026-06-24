@@ -68,11 +68,13 @@ var is_shuffled:bool = false
 
 
 func _ready() -> void:
+	SessionManager.value_changed.connect(_on_session_manager_value_changed)
+
 	audio_stream_player = AudioStreamPlayer.new()
 	audio_stream_player.bus = &'Master'
 	audio_stream_player.mix_target = AudioStreamPlayer.MIX_TARGET_SURROUND
 	audio_stream_player.finished.connect(_current_track_finished)
-	self.add_child(audio_stream_player)
+	add_child(audio_stream_player)
 
 	# Send updates to MPRIS server every half second.
 	while true:
@@ -83,28 +85,36 @@ func _ready() -> void:
 
 
 func _process(_delta:float) -> void:
-	var peak_volume:float = MathUtils.transfer_range_of_value(Vector2(-200,0), Vector2(-100,0), AudioServer.get_bus_peak_volume_left_db(0,0)+AudioServer.get_bus_peak_volume_right_db(0,0))
-	if peak_volume != last_peak_volume:
-		track_peak_volume_changed.emit(peak_volume)
-	last_peak_volume = peak_volume
+	if Engine.get_process_frames() % 5 != 0: return
+
+	if audio_stream_player.playing or last_peak_volume != -200:
+		var peak_volume:float = MathUtils.transfer_range_of_value(Vector2(-200,0), Vector2(-100,0), AudioServer.get_bus_peak_volume_left_db(0,0)+AudioServer.get_bus_peak_volume_right_db(0,0))
+		if peak_volume != last_peak_volume: track_peak_volume_changed.emit(peak_volume)
+		last_peak_volume = peak_volume
 
 	if audio_stream_player.playing:
 		track_progress = audio_stream_player.get_playback_position()
 		track_progress_updated.emit(track_progress)
 
-		var track:DBTrack = get_current_track()
-		match SessionManager.get_var('replay_gain_mode'):
-			0: # None.
-				if 0.0 != replay_gain: replay_gain = 0.0
-			1: # Track.
-				if track.replay_gain != replay_gain: replay_gain = track.replay_gain
-			2: # Album.
-				if track.album.replay_gain != replay_gain: replay_gain = track.album.replay_gain
-			3: # Auto.
-				if track.album.replay_gain != replay_gain:
-					replay_gain = track.album.replay_gain
-				if track.replay_gain != replay_gain:
-					replay_gain = track.replay_gain
+
+func _on_session_manager_value_changed(property_name:String, source_name:String) -> void:
+	if source_name != 'base' or property_name != 'replay_gain_mode': return
+
+	# Update replay gain.
+	var track:DBTrack = get_current_track()
+	match SessionManager.get_var('replay_gain_mode'):
+		0: # None.
+			if replay_gain != 0.0: replay_gain = 0.0
+		1: # Track.
+			if track.replay_gain != replay_gain: replay_gain = track.replay_gain
+		2: # Album.
+			if track.album.replay_gain != replay_gain: replay_gain = track.album.replay_gain
+		3: # Auto.
+			if track.album.replay_gain != replay_gain:
+				replay_gain = track.album.replay_gain
+			if track.replay_gain != replay_gain:
+				replay_gain = track.replay_gain
+	
 
 
 ## Returns track currently selected in the queue or [code]null[/code] if none selected.

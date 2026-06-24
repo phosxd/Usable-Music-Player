@@ -77,7 +77,7 @@ def command_update_data(args:list):
 				interface_properties_to_emit_changed[property_name] = property_value
 		# If properties have changed, emit changes.
 		if len(interface_properties_to_emit_changed) == 0: continue
-		interface.emit_properties_changed(changed_properties=interface_properties_to_emit_changed)
+		interface.emit_properties_changed(changed_properties=interface_properties_to_emit_changed.copy())
 
 
 	return

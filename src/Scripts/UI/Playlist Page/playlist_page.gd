@@ -31,8 +31,10 @@ func init(playlist_:DBPlaylist=null) -> void:
 	await ready
 	%Title.text = playlist.id
 	%Title.tooltip_text = playlist.id
-	%'Created Date'.text = playlist.created_date
-	%'Last Edit Date'.text = playlist.last_edit_date
+	%'Created Date'.text = StringUtils.get_readable_date(playlist.created_date)
+	%'Last Edit Date'.text = ''
+	if not playlist.last_edit_date.is_empty():
+		%'Last Edit Date'.text = 'Modified: '+StringUtils.get_readable_date(playlist.last_edit_date)
 	var cover = playlist.get_cover()
 	%Icon.texture = cover if cover else DBAlbum.default_cover
 	var dominant_color = playlist.get_cover_dominant_color()
@@ -69,10 +71,49 @@ func sort() -> void:
 func add_card(track:DBTrack) -> void:
 	if not card_scene: return
 	var card:Control = card_scene.instantiate()
-	card.selected.connect(_on_track_selected.bind(track))
 	card.init(track)
-	card.set_mode(1)
+	card.set_mode(0)
+	card.selected.connect(_on_track_selected.bind(track))
 	%'Track List'.add_child(card)
+
+
+func edit_details() -> void:
+	var scene:Control = DialogManager.create_playlist_scene.instantiate()
+	scene.title = 'Edit Details'
+	scene.playlist_name = playlist.id
+	scene.cover_path = playlist.cover_path
+	scene.cover_texture = %Icon.texture
+	DialogManager.popup_custom(scene, func(data:Dictionary) -> void:
+		playlist.last_edit_date = DBPlaylist.get_current_date()
+		%'Last Edit Date'.text = 'Modified: '+StringUtils.get_readable_date(playlist.last_edit_date)
+
+		# Rename playlist.
+		var playlist_order:PackedStringArray = SessionManager.get_var('playlist_order')
+		var index:int = playlist_order.find(playlist.id)
+		playlist_order.erase(playlist.id)
+		DirAccess.remove_absolute(playlist.get_file_path()) # Delete playlist file with old name.
+		playlist.id = StringUtils.resolve_duplicate(data.get('name'), playlist_order)
+
+		if index == -1: playlist_order.append(playlist.id)
+		else: playlist_order.insert(index, playlist.id)
+
+		%Title.text = playlist.id
+
+		# Update cover.
+		playlist.cover_path = data.get('cover_path')
+		var cover = playlist.get_cover()
+		# If no cover, skip image processing & just save here.
+		if not cover:
+			playlist.save()
+			SessionManager.refresh_current_page()
+			return
+		playlist.palette = DBAlbum.calculate_colors(cover) # Update color palette.
+		%Icon.texture = cover if cover else DBAlbum.default_cover
+
+		# Save playlist file & refresh page.
+		playlist.save()
+		SessionManager.refresh_current_page()
+	)
 
 
 func _on_search_updated(_text:String) -> void:
@@ -101,22 +142,27 @@ func _on_shuffle_pressed() -> void:
 
 func _on_option_id_pressed(id:int) -> void:
 	match id:
-		# Play next.
-		0:
+		0: # Play next.
 			pass
-		# Add to queue.
-		1:
+		1: # Add to queue.
 			pass
-		# Rescan.
-		2:
-			pass
+		2: # Edit details.
+			edit_details()
+		3: # Delete.
+			DialogManager.popup_confirmation_dialog('Delete Playlist', 'Are you sure you want to delete this playlist?', func() -> void:
+				playlist.remove()
+				SessionManager.refresh_current_page()
+			)
 
 
 func _on_add_pressed() -> void:
 	DialogManager.popup_custom(DialogManager.select_tracks_scene.instantiate(), func(data:Dictionary) -> void:
 		var tracks:Array[DBTrack] = data.get('selected_tracks')
+		if tracks.is_empty(): return
 		for track:DBTrack in tracks:
 			playlist.track_ids.append(track.as_id())
-
+		playlist.last_edit_date = DBPlaylist.get_current_date()
+		%'Last Edit Date'.text = 'Modified: '+StringUtils.get_readable_date(playlist.last_edit_date)
+		playlist.save()
 		sort()
 	)

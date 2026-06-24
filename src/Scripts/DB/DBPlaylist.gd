@@ -1,6 +1,9 @@
 ## Database item for music playlist.
 class_name DBPlaylist extends RefCounted
 
+signal saved
+signal removed
+
 static var default_cover := ImageTexture.create_from_image(preload('res://Themes/Normal/Assets/Icons/texture.svg').get_image())
 
 ## Playlist id.
@@ -8,7 +11,10 @@ var id:String = ''
 ## Track IDs in this playlist.
 var track_ids: Array[String]
 ## Album cover image path. Use [param get_cover] to get a usable texture.
-var cover_path:String = ''
+var cover_path:String = '':
+	set(v):
+		cover_path = v
+		_cover = null
 ## Playlist date created.
 var created_date:String = ''
 ## Playlist date last edited.
@@ -50,15 +56,18 @@ func save() -> void:
 	var file := FileAccess.open(get_file_path(), FileAccess.WRITE)
 	file.store_string(JSON.stringify(ajson))
 	file.close()
+	saved.emit()
 
 
 ## Remove this playlist.
 func remove() -> void:
-	self.valid = false
+	valid = false
 	LibraryManager.playlists.erase(self)
 	var err:Error = DirAccess.remove_absolute(get_file_path())
 	if err != OK:
 		MiniLog.warn('Failed to remove playlist file at $~%s~$.' % get_file_path(), self)
+
+	removed.emit()
 
 
 func get_file_path() -> String:
@@ -75,10 +84,10 @@ func get_tracks() -> Array[DBTrack]:
 
 ## Returns the playlist cover [ImageTexture] or [code]null[/code] if it cannot be found.
 func get_cover() -> ImageTexture:
-	if self._cover: return self._cover
+	if _cover: return _cover
 	var cover
-	if FileAccess.file_exists(self.cover_path):
-		var image = Image.load_from_file(self.cover_path)
+	if FileAccess.file_exists(cover_path):
+		var image = Image.load_from_file(cover_path)
 		if image is Image:
 			ImageUtils.limit_size(image, Vector2.ONE*SessionManager.get_var('image_detail'))
 			image.generate_mipmaps()
@@ -102,3 +111,8 @@ func get_cover_threaded(callback:Callable) -> void:
 func get_cover_dominant_color() -> Color:
 	var blend_full:Color = palette.get('blend_full', Color.WHITE)
 	return blend_full
+
+
+## Gets the current date. Use the result from this to set a properly formatted date in [member created_date] or [member last_edit_date].
+static func get_current_date() -> String:
+	return Time.get_datetime_string_from_system().split('T')[0]

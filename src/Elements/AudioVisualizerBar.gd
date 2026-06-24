@@ -58,14 +58,12 @@ func _process(delta:float) -> void:
 			queue_redraw()
 			_time_passed = 0
 
-		if PlayerManager.is_playing:
-			_idle_time = 0
-		else:
-			_idle_time += delta
+		if PlayerManager.is_playing: _idle_time = 0
+		else: _idle_time += delta
 
 
 func _draw() -> void:
-	if data.is_empty(): return
+	if data.is_empty() or not visible: return
 	for i in bar_count:
 		var height = data[i]
 		var rect := Rect2(
@@ -74,7 +72,7 @@ func _draw() -> void:
 			bar_width-2,
 			-MathUtils.transfer_range_of_value(Vector2(0,1), Vector2(0,size.y), height),
 		)
-		if self.visible: draw_rect(rect, colors[wrap(i, 0, colors.size())])
+		draw_rect(rect, colors[wrap(i, 0, colors.size())])
 
 
 ## Sets [param _smoothing] to a usable value based on [param smoothing].

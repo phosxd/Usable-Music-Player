@@ -73,12 +73,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_y3v7k")
-bg_color = null
-global_margin = null
-tools_margin = null
-sidebar_margin = null
-right_sidebar_margin = null
-search_margin = null
 
 [node name="Background" type="ColorRect" parent="." unique_id=951674116]
 unique_name_in_owner = true

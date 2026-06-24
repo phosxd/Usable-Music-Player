@@ -204,6 +204,10 @@ func reload_main_scene() -> void:
 	SessionManager.main_scene = main_scene_instance
 
 
+func refresh_current_page() -> void:
+	main_scene.set_tab(main_scene.tab_history[0][0], main_scene.tab_history[0][1])
+
+
 func get_accent_color() -> Color:
 	var accent: Color
 

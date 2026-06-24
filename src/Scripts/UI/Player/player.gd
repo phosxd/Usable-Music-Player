@@ -45,18 +45,10 @@ func  _ready() -> void:
 	%'Play Pause'.icon = pause_icon if PlayerManager.is_playing else play_icon
 
 
-func _process(_delta:float) -> void:
-	var min_size := Vector2.ZERO
-	for child:Node in self.get_children():
-		if child is not Control: continue
-		min_size.x = max(min_size.x, child.size.x)
-		min_size.y = max(min_size.y, child.size.y)
-
-
 func _session_manager_value_changed(property_name:String, _source_name:String='base') -> void:
 	match property_name:
 		'visualizer_mode':
-			self.update_visualizer([ThemeManager.accent_override_color])
+			update_visualizer([ThemeManager.accent_override_color])
 		'visualizer_bar_count':
 			%'Bar Visualizer'.bar_count = SessionManager.get_var('visualizer_bar_count')
 		'visualizer_bar_smoothing':
@@ -97,8 +89,7 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 
 func update_volume(value:float) -> void:
 	%Volume.set_value_no_signal(value)
-	if value == 0:
-		%'Mute Button'.button_pressed = true
+	%'Mute Button'.button_pressed = value == 0
 
 
 func update_replaygain_indicator(value:float) -> void:
@@ -109,19 +100,21 @@ func update_replaygain_indicator(value:float) -> void:
 func update_visualizer(colors:Array, _db:float=0) -> void:
 	var glow_gradient = %Glow.texture.gradient as Gradient
 	visualizer_color = colors.get(0)
-	glow_gradient.set_color(0, colors.get(0))
 	%'Bar Visualizer'.hide()
 	%'Bar Visualizer'.process_mode = Node.PROCESS_MODE_DISABLED
-	if SessionManager.get_var('visualizer_mode') == 0: # 0 = Off.
+	var visualizer_mode:int = SessionManager.get_var('visualizer_mode')
+	if visualizer_mode == 0: # 0 = Off.
 		%Glow.position.y = -40
-	if SessionManager.get_var('visualizer_mode') == 1: # 1 = Glow.
+	if visualizer_mode == 1: # 1 = Glow.
 		%Glow.position.y = -40
-	elif SessionManager.get_var('visualizer_mode') == 2: # 2 = Bar.
+		glow_gradient.set_color(0, colors.get(0))
+	elif visualizer_mode == 2: # 2 = Bar.
 		%'Bar Visualizer'.process_mode = Node.PROCESS_MODE_INHERIT
 		%'Bar Visualizer'.show()
 		%Glow.position.y = -50
 		glow_gradient.set_color(0, Color(0,0,0,0.5))
 		%'Bar Visualizer'.colors = colors
+
 	%Glow.texture.gradient = glow_gradient
 	#var color_2:Color = glow_gradient.get_color(1)
 	glow_gradient.set_color(1, Color(0,0,0,0))

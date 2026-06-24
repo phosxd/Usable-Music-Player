@@ -138,5 +138,7 @@ func _on_option_id_pressed(id:int) -> void:
 			pass
 		# Rescan.
 		2:
-			self.album.remove()
-			self.album.artist.library.refresh()
+			album.remove()
+			album.artist.library.refresh()
+			await album.artist.library.scan_finished
+			SessionManager.refresh_current_page()

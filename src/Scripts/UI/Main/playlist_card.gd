@@ -16,10 +16,24 @@ func init(playlist_:DBPlaylist) -> void:
 	if not playlist:
 		queue_free()
 		return
+	update_data()
+	playlist.saved.connect(_on_playlist_saved)
+	playlist.removed.connect(_on_playlist_removed)
+
+
+func update_data() -> void:
 	%Name.text = playlist.id
 	#%'Track Count'.text = str(playlist.track_ids.size())
 	#%Image.texture = playlist.get_cover()
 	%Button.tooltip_text = playlist.id
+
+
+func _on_playlist_saved() -> void:
+	update_data()
+
+
+func _on_playlist_removed() -> void:
+	queue_free()
 
 
 func _on_button_pressed() -> void:

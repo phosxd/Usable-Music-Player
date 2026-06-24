@@ -10,8 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="8_n2gqb"]
 [ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="9_buxl3"]
 [ext_resource type="Texture2D" uid="uid://d3xi2hlyuvtic" path="res://Themes/Normal/Assets/Icons/queue_play_next.svg" id="10_d7fkq"]
+[ext_resource type="Texture2D" uid="uid://ck4j4wlj4cr70" path="res://Themes/Normal/Assets/Icons/edit.svg" id="11_421v5"]
 [ext_resource type="Texture2D" uid="uid://dgf4br6i5tdbe" path="res://Themes/Normal/Assets/Icons/queue_add_to_queue.svg" id="11_mv5g7"]
-[ext_resource type="Texture2D" uid="uid://dod6uhmhu0tw3" path="res://Themes/Normal/Assets/Icons/reload.svg" id="12_lcidh"]
+[ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Themes/Normal/Assets/Icons/remove.svg" id="12_421v5"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="13_aesv5"]
 [ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="14_103uh"]
 
@@ -34,7 +35,7 @@ height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a3j42"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_421v5"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -117,7 +118,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_a3j42")
+theme_override_styles/panel = SubResource("StyleBoxFlat_421v5")
 script = ExtResource("3_cd6sc")
 texture = ExtResource("4_tg8xc")
 expand_mode = 2
@@ -153,19 +154,13 @@ layout_mode = 2
 [node name="Created Date" type="Label" parent="VBox/Controls/VBox/HBox/Details/Secondary Details" unique_id=649305992]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Created: 1/1/2026"
+text = "January 1st 2026"
 vertical_alignment = 1
 
 [node name="Sep 1" type="VSeparator" parent="VBox/Controls/VBox/HBox/Details/Secondary Details" unique_id=716059256]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 4
-
-[node name="Last Edit Date" type="Label" parent="VBox/Controls/VBox/HBox/Details/Secondary Details" unique_id=1226961899]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Last Edit: 1/1/2026"
-vertical_alignment = 1
 
 [node name="Sep 1" type="VSeparator" parent="VBox/Controls/VBox/HBox" unique_id=413642820]
 self_modulate = Color(1, 1, 1, 0)
@@ -194,15 +189,6 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("8_n2gqb")
 icon_alignment = 1
 
-[node name="Add" type="Button" parent="VBox/Controls/VBox/HBox/Controls" unique_id=323876770]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-tooltip_text = "Add tracks to playlist."
-theme_type_variation = &"AccentButton"
-icon = ExtResource("8_4obdu")
-icon_alignment = 1
-
 [node name="Options" type="MenuButton" parent="VBox/Controls/VBox/HBox/Controls" unique_id=807633223]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
@@ -211,16 +197,19 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("9_buxl3")
 flat = false
 icon_alignment = 1
-item_count = 3
+item_count = 4
 popup/item_0/text = "Play next"
 popup/item_0/icon = ExtResource("10_d7fkq")
 popup/item_0/id = 0
 popup/item_1/text = "Add to queue"
 popup/item_1/icon = ExtResource("11_mv5g7")
 popup/item_1/id = 1
-popup/item_2/text = "Rescan"
-popup/item_2/icon = ExtResource("12_lcidh")
+popup/item_2/text = "Edit Details"
+popup/item_2/icon = ExtResource("11_421v5")
 popup/item_2/id = 2
+popup/item_3/text = "Delete"
+popup/item_3/icon = ExtResource("12_421v5")
+popup/item_3/id = 3
 
 [node name="Sep 2" type="VSeparator" parent="VBox/Controls/VBox/HBox" unique_id=715618603]
 self_modulate = Color(1, 1, 1, 0)
@@ -257,16 +246,24 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Sep 2" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=1153614261]
-self_modulate = Color(1, 1, 1, 0)
+[node name="Items" type="VBoxContainer" parent="VBox/Scroll/Content/VBox" unique_id=278029313]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Track List" type="VBoxContainer" parent="VBox/Scroll/Content/VBox" unique_id=925906313]
+[node name="Track List" type="VBoxContainer" parent="VBox/Scroll/Content/VBox/Items" unique_id=925906313]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
+
+[node name="Add" type="Button" parent="VBox/Scroll/Content/VBox/Items" unique_id=323876770]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_type_variation = &"AccentButton"
+text = " "
+icon = ExtResource("8_4obdu")
+icon_alignment = 1
 
 [node name="Extra Details" type="HBoxContainer" parent="VBox/Scroll/Content/VBox" unique_id=1065747098]
 unique_name_in_owner = true
@@ -294,6 +291,20 @@ layout_mode = 2
 size_flags_vertical = 0
 text = "Runtime"
 
+[node name="Sep 3" type="VSeparator" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=127865055]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Last Edit Date" type="Label" parent="VBox/Scroll/Content/VBox/Extra Details" unique_id=1226961899]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Modified: January 2nd 2026"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 5
+
 [node name="Bottom Filler" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=168058502]
 layout_mode = 2
 theme_type_variation = &"ScrollFillSeparator"
@@ -301,4 +312,4 @@ theme_type_variation = &"ScrollFillSeparator"
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Icon Margin/Album Button" to="." method="_on_album_button_pressed"]
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Shuffle" to="." method="_on_shuffle_pressed"]
-[connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Add" to="." method="_on_add_pressed"]
+[connection signal="pressed" from="VBox/Scroll/Content/VBox/Items/Add" to="." method="_on_add_pressed"]

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://wwi4j1ii0hba"]
+
+[ext_resource type="Script" uid="uid://dytv0olgy5f64" path="res://Layouts/Normal/Modals/Select File/scene.gd" id="1_qwekl"]
+
+[node name="Select File" type="Node" unique_id=763143029]
+script = ExtResource("1_qwekl")
+
+[node name="popup" type="FileDialog" parent="." unique_id=1648321339]
+unique_name_in_owner = true
+oversampling_override = 1.0
+title = "Select File"
+initial_position = 2
+visible = true
+mode_overrides_title = false
+file_mode = 0
+access = 2
+use_native_dialog = true
+
+[connection signal="canceled" from="popup" to="." method="_on_popup_canceled"]
+[connection signal="close_requested" from="popup" to="popup" method="_on_close_requested"]
+[connection signal="file_selected" from="popup" to="." method="_on_popup_file_selected"]
