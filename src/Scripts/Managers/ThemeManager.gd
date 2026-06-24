@@ -79,10 +79,10 @@ var accent_override_color := Color.WHITE:
 var panel_tint := Color.TRANSPARENT:
 	set(value):
 		panel_tint = value
-		self.set('bg_color', bg_color)
-		self.set('panel_color', panel_color)
-		self.set('tooltip_panel_color', tooltip_panel_color)
-		self.set('section_panel_color', section_panel_color)
+		set('bg_color', bg_color)
+		set('panel_color', panel_color)
+		set('tooltip_panel_color', tooltip_panel_color)
+		set('section_panel_color', section_panel_color)
 	get():
 		if allow_panel_tint: return panel_tint
 		else: return Color.TRANSPARENT
@@ -90,10 +90,10 @@ var panel_tint := Color.TRANSPARENT:
 var button_tint := Color.TRANSPARENT:
 	set(value):
 		button_tint = value
-		self.set('button_color', button_color)
-		self.set('button_disabled_color', button_disabled_color)
-		self.set('button_hover_color', button_hover_color)
-		self.set('button_pressed_color', button_pressed_color)
+		set('button_color', button_color)
+		set('button_disabled_color', button_disabled_color)
+		set('button_hover_color', button_hover_color)
+		set('button_pressed_color', button_pressed_color)
 	get():
 		if allow_button_tint: return button_tint
 		else: return Color.TRANSPARENT
@@ -158,6 +158,7 @@ var search_margin:Array = [0,0,0,0]:
 var panel_color := Color.TRANSPARENT:
 	set(value):
 		panel_color = value
+		print(value)
 		set_stylebox_color('PanelContainer', 'panel', 'bg_color', value, true, false, panel_tint)
 		set_stylebox_color('GridItemPanel', 'panel', 'bg_color', value, true, false, panel_tint)
 		set_stylebox_color('IslandPanelContainer', 'panel', 'bg_color', value, true, false, panel_tint)
@@ -165,14 +166,16 @@ var panel_color := Color.TRANSPARENT:
 		set_stylebox_color('LineEdit', 'normal', 'bg_color', value, true, false, panel_tint)
 		set_stylebox_color('LineEdit', 'read_only', 'bg_color', value, true, false, panel_tint)
 	get():
-		return get_stylebox_property('PanelContainer', 'panel', 'bg_color')
+		var prop = get_stylebox_default_property('PanelContainer', 'panel', 'bg_color')
+		return prop if prop is Color else Color.TRANSPARENT
 
 var section_panel_color := Color.TRANSPARENT:
 	set(value):
 		section_panel_color = value
 		set_stylebox_color('SectionPanelContainer', 'panel', 'bg_color', value, true, false, panel_tint)
 	get():
-		return get_stylebox_property('SectionPanelContainer', 'panel', 'bg_color')
+		var prop = get_stylebox_default_property('SectionPanelContainer', 'panel', 'bg_color')
+		return prop if prop is Color else Color.TRANSPARENT
 
 var tooltip_panel_color := Color.TRANSPARENT:
 	set(value):
@@ -180,7 +183,8 @@ var tooltip_panel_color := Color.TRANSPARENT:
 		set_stylebox_color('TooltipPanel', 'panel', 'bg_color', value, true, false, panel_tint)
 		set_stylebox_color('PopupMenu', 'panel', 'bg_color', value, true, false, panel_tint)
 	get():
-		return get_stylebox_property('TooltipPanel', 'panel', 'bg_color')
+		var prop = get_stylebox_default_property('TooltipPanel', 'panel', 'bg_color')
+		return prop if prop is Color else Color.TRANSPARENT
 
 var text_color := Color.TRANSPARENT:
 	set(value):
@@ -335,12 +339,12 @@ func set_theme_mode(index:int) -> void:
 	for variable:String in variable_names:
 		i += 1
 		if variable in mode_config: continue
-		self.set(variable, variable_defaults[i])
+		set(variable, variable_defaults[i])
 
 	mode_config = mode_config as Dictionary
 	for key in mode_config:
 		if key is not String or key.begins_with('@') or key in ['source']: continue
-		self.set(key, mode_config[key]) # Set property to value. If mismatched type, nothing happens.
+		set(key, mode_config[key]) # Set property to value. If mismatched type, nothing happens.
 
 	apply_changes()
 

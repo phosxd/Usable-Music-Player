@@ -55,7 +55,6 @@ file_logging/log_path="user://logs/.log"
 
 window/size/viewport_width=1185
 window/size/transparent=true
-window/per_pixel_transparency/allowed=true
 window/vsync/vsync_mode=0
 
 [dotnet]

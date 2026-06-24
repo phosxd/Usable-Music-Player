@@ -199,7 +199,7 @@ func call_func(func_name:String, args:Array=[], source_name:String='base') -> Va
 func reload_main_scene() -> void:
 	var main_scene_ = SessionManager.get_scene('Main/main')
 	var main_scene_instance:Node = main_scene_.instantiate()
-	var tree:SceneTree = self.get_tree()
+	var tree:SceneTree = get_tree()
 	tree.change_scene_to_node.call_deferred(main_scene_instance)
 	SessionManager.main_scene = main_scene_instance
 
@@ -331,7 +331,6 @@ func save_session() -> void:
 	for playlist:DBPlaylist in LibraryManager.playlists:
 		playlist_order.append(playlist.id)
 		if playlist.changed: playlist.save()
-
 
 	# Set data properties.
 	for script in session_scripts.values():

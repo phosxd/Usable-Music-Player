@@ -184,15 +184,19 @@ var clear_queue_warning:bool = true
 
 #region theme settings
 
+var _theme_changed_frame: int
 var theme:String = '':
 	set(value):
 		theme = value
 		ThemeManager.set_theme(value)
+		_theme_changed_frame = Engine.get_process_frames()
 
 var theme_mode:int = 0:
 	set(value):
 		theme_mode = value
-		ThemeManager.set_theme_mode(value)
+		# Don't set twice in the same frame.
+		if Engine.get_process_frames() != _theme_changed_frame:
+			ThemeManager.set_theme_mode(value)
 
 var accent_mode := AccentMode.System
 
