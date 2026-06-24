@@ -20,6 +20,7 @@ func show(id:String) -> void:
 	current_instance_id = id
 	var mouse_position:Vector2i = SessionManager.main_scene.get_global_mouse_position()
 	popup_menu.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
+	popup_menu.theme = ThemeManager.theme
 	popup_menu.popup(Rect2(
 		mouse_position.x-50,
 		mouse_position.y+10,
@@ -71,7 +72,8 @@ static func _build(items:Array, popup_menu_node:PopupMenu, index_pressed_callbac
 
 
 func _process(_delta:float) -> void:
-	if Input.is_action_just_pressed('right_click'):
+	if not popup_menu.visible: return
+	if Input.is_action_just_pressed('right_click') or Input.is_action_just_pressed('left_click'):
 		popup_menu.hide()
 
 

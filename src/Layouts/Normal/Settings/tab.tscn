@@ -554,11 +554,9 @@ script = ExtResource("11_ispo5")
 [node name="UI Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/UI" unique_id=145514113]
 unique_name_in_owner = true
 layout_mode = 2
-folded = true
 title = "User Interface"
 
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold" unique_id=821509536]
-visible = false
 layout_mode = 2
 
 [node name="Clear Queue Warning" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=1689461171]
@@ -604,6 +602,41 @@ popup/item_3/id = 3
 popup/item_4/text = "Genres"
 popup/item_4/id = 4
 
+[node name="GUI Scale" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=1022861259]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/GUI Scale" unique_id=141327545]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelPrimary"
+text = "GUI Scale"
+
+[node name="HBox" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/GUI Scale" unique_id=1064029886]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GUI Scale" type="HSlider" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/GUI Scale/HBox" unique_id=313711375]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(175, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.5
+max_value = 2.0
+step = 0.05
+value = 1.0
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="GUI Scale Label" type="Label" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/GUI Scale/HBox" unique_id=1667657668]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"LabelPrimary"
+text = "100%"
+
+[node name="Sep 1" type="HSeparator" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=1930821496]
+layout_mode = 2
+
 [node name="Grid Item Size" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=217067420]
 layout_mode = 2
 
@@ -639,41 +672,6 @@ text = "Medium"
 [node name="Grid Item Size Large" type="Button" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/Grid Item Size/HBox" unique_id=150074770]
 layout_mode = 2
 text = "Large"
-
-[node name="UI Scale" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=1022861259]
-visible = false
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/UI Scale" unique_id=141327545]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"LabelPrimary"
-text = "UI Scale"
-
-[node name="HBox" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/UI Scale" unique_id=1064029886]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="UI Scale" type="HSlider" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/UI Scale/HBox" unique_id=313711375]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(175, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-min_value = 25.0
-max_value = 125.0
-step = 25.0
-value = 100.0
-rounded = true
-tick_count = 5
-ticks_on_borders = true
-ticks_position = 3
-
-[node name="UI Scale Label" type="Label" parent="Scroll/Margin/VBox/UI/UI Fold/VBox/UI Scale/HBox" unique_id=1667657668]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"LabelPrimary"
-text = "100%"
 
 [node name="Queue Size Limit" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=1208568361]
 layout_mode = 2
@@ -1111,12 +1109,13 @@ theme_type_variation = &"ScrollFillSeparator"
 [connection signal="value_changed" from="Scroll/Margin/VBox/Theme/Theme Fold/VBox/Visualizer Bar Smoothing/HBox/Visualizer Bar Smoothing" to="Scroll/Margin/VBox/Theme" method="_on_visualizer_bar_smoothing_value_changed"]
 [connection signal="folding_changed" from="Scroll/Margin/VBox/UI/UI Fold" to="Scroll/Margin/VBox/UI" method="_on_ui_fold_folding_changed"]
 [connection signal="toggled" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Clear Queue Warning/Clear Queue Warning" to="Scroll/Margin/VBox/UI" method="_on_clear_queue_warning_toggled"]
-[connection signal="item_selected" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Landing Page/Landing Page" to="." method="_on_landing_page_item_selected"]
+[connection signal="item_selected" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Landing Page/Landing Page" to="Scroll/Margin/VBox/UI" method="_on_landing_page_item_selected"]
+[connection signal="drag_ended" from="Scroll/Margin/VBox/UI/UI Fold/VBox/GUI Scale/HBox/GUI Scale" to="Scroll/Margin/VBox/UI" method="_on_gui_scale_drag_ended"]
+[connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/GUI Scale/HBox/GUI Scale" to="Scroll/Margin/VBox/UI" method="_on_gui_scale_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Grid Item Size/HBox/Grid Item Size" to="." method="_on_grid_item_size_value_changed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Grid Item Size/HBox/Grid Item Size Small" to="." method="_on_grid_item_size_small_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Grid Item Size/HBox/Grid Item Size Normal" to="." method="_on_grid_item_size_normal_pressed"]
 [connection signal="pressed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Grid Item Size/HBox/Grid Item Size Large" to="." method="_on_grid_item_size_large_pressed"]
-[connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/UI Scale/HBox/UI Scale" to="." method="_on_ui_scale_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Queue Size Limit/Queue Size Limit" to="." method="_on_queue_size_limit_value_changed"]
 [connection signal="value_changed" from="Scroll/Margin/VBox/UI/UI Fold/VBox/Image Detail/Image Detail" to="Scroll/Margin/VBox/UI" method="_on_image_detail_value_changed"]
 [connection signal="folding_changed" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_fold_folding_changed"]

@@ -55,6 +55,7 @@ const sections:Array[Array] = [
 	]],
 	['UI', [
 		'landing_page',
+		'gui_scale',
 		'grid_item_size',
 		'queue_size_limit',
 		'image_detail',
@@ -91,6 +92,7 @@ const property_data:Array[Array] = [
 	['button_tint',[TYPE_COLOR]],
 	# UI.
 	['landing_page',[TYPE_STRING]],
+	['gui_scale',[TYPE_FLOAT]],
 	['grid_item_size',[TYPE_INT,TYPE_FLOAT]],
 	['queue_size_limit',[TYPE_INT]],
 	['image_detail',[TYPE_INT]],
@@ -165,6 +167,13 @@ var replay_gain_preamp:float = 0.0
 
 #region ui settings
 
+## Application GUI scale.
+var gui_scale:float = 1.0:
+	set(v):
+		gui_scale = v
+		SessionManager.get_window().content_scale_factor = gui_scale
+
+## Size of grid items, in pixels.
 var grid_item_size:float = 175
 ## The maximum number of items allowed in the queue at once.
 var queue_size_limit:int = 150

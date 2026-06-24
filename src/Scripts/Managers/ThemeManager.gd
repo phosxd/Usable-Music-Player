@@ -158,7 +158,6 @@ var search_margin:Array = [0,0,0,0]:
 var panel_color := Color.TRANSPARENT:
 	set(value):
 		panel_color = value
-		print(value)
 		set_stylebox_color('PanelContainer', 'panel', 'bg_color', value, true, false, panel_tint)
 		set_stylebox_color('GridItemPanel', 'panel', 'bg_color', value, true, false, panel_tint)
 		set_stylebox_color('IslandPanelContainer', 'panel', 'bg_color', value, true, false, panel_tint)

@@ -11,19 +11,10 @@ var tab_config:Dictionary[String,Variant] = {
 		'enabled': false,
 	},
 }
-const landing_page_options:Array[String] = [
-	'',
-	'artists',
-	'albums',
-	'tracks',
-	'genres',
-]
 
 
 func _ready() -> void:
 	%'Auto Scan Interval'.set_value_no_signal(SessionManager.get_var('auto_scan_interval'))
-	# ---
-	%'Landing Page'.selected = landing_page_options.find(SessionManager.get_var('landing_page'))
 	# ---
 	%'Grid Item Size'.set_value_no_signal(SessionManager.get_var('grid_item_size'))
 	# ---
@@ -62,10 +53,6 @@ func _on_theme_mode_item_selected(index:int) -> void:
 	SessionManager.set_var('theme_mode', index)
 
 
-func _on_landing_page_item_selected(index:int) -> void:
-	SessionManager.set_var('landing_page', landing_page_options[index])
-
-
 func _on_fetch_lyrics_toggled(toggled_on:bool) -> void:
 	SessionManager.set_var('fetch_lyrics', toggled_on)
 
@@ -100,10 +87,6 @@ func _on_track_finished_notif_toggled(toggled_on:bool) -> void:
 
 func _on_library_scan_finished_notif_toggled(toggled_on:bool) -> void:
 	SessionManager.set_var('send_library_scan_finished_notif', toggled_on)
-
-
-func _on_ui_scale_value_changed(_value:float) -> void:
-	pass
 
 
 func _on_label_meta_clicked(meta:Variant) -> void:

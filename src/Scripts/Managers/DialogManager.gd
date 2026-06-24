@@ -54,6 +54,7 @@ func popup_file_select(title:String, filters:PackedStringArray, confirm_callback
 	popup_custom(popup, confirm_callback, denied_callback)
 
 
+# Returned texture is an [ImageTexture].
 func popup_image_select(confirm_callback:Callable, denied_callback=null, title:String='Select Image') -> void:
 	DialogManager.popup_file_select(title, ['*.png','*.jpg','*.jpeg','*.webp','*.svg'], func(data:Dictionary) -> void:
 		var path:String = data.get('path')

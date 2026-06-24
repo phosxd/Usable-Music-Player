@@ -29,10 +29,11 @@ var cover_added:bool = false
 
 
 func _on_yes_pressed() -> void:
+	if %Name.text.is_empty(): return
 	confirmed.emit({
 		'name': %Name.text,
 		'cover_path': cover_path,
-		'texture': %Cover.texture,
+		'texture': %Cover.texture if %Cover.texture is ImageTexture else null,
 	})
 	queue_free()
 
@@ -46,7 +47,7 @@ func _on_set_cover_pressed() -> void:
 	DialogManager.popup_image_select(func(data:Dictionary) -> void:
 		var path = data.get('path')
 		var texture = data.get('texture')
-		if texture is not Texture2D or path is not String: return
+		if texture is not ImageTexture or path is not String: return
 		cover_path = path
 		cover_texture = texture
 		cover_added = true
