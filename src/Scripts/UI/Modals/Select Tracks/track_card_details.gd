@@ -22,7 +22,7 @@ func init(parent_:Node, track_:DBTrack, button_:Button) -> void:
 	%Album.text = track.album.name
 	%Artist.text = track.album.artist.name
 	%Image.texture = track.album.get_cover()
-	button.set_deferred('tooltip_text', track.name)
+	if button: button.set_deferred('tooltip_text', track.name)
 	
 	if not self or not parent: return
 	initialized = true

@@ -12,7 +12,7 @@ var command_queue:Array[Array] = []
 
 
 func kill() -> void:
-	send_command('quit')
+	send_command('quit', [], false)
 
 
 ## Call a method with thread safetey. Callback will be called with the result of the method.
@@ -58,7 +58,7 @@ func update_mpris_data(data:Dictionary) -> void:
 		if value is float or value is int or value is bool: value = ':%s' % value
 		args.append('(%s) %s' % [key, value])
 
-	send_command('update_mpris_data', args)
+	send_command('update_mpris_data', args, false)
 
 
 
@@ -69,7 +69,7 @@ func update_mpris_data(data:Dictionary) -> void:
 ## [br]- "data" the data returned by the command.
 ## [br][br]
 ## In the case the response is invalid, there can be a binary 4th field "malformed" which tells you the response is invalid. 
-func send_command(command:String, args:=PackedStringArray()) -> Dictionary:
+func send_command(command:String, args:=PackedStringArray(), respond:bool=true) -> Dictionary:
 	# Return placeholder values if called in the incorrect thread.
 	if OS.get_main_thread_id() != OS.get_thread_caller_id():
 		MiniLog.err('Cannot send commands from outside the main thread, use "call_deferred" instead. Returning placeholder values.', PyInterface)
@@ -94,8 +94,10 @@ func send_command(command:String, args:=PackedStringArray()) -> Dictionary:
 			var queue_command:Array = await command_freed
 			if queue_command == waiting_behind_command: break
 
-	# Push command & wait for response.
+	# Push command.
 	PyRunner.send_input(' [&&] '.join([command]+Array(args)))
+
+	# Wait for response.
 	var output:String = await wait_for_response()
 	var err:Error = PyRunner.io_access.get_error()
 
@@ -109,6 +111,7 @@ func send_command(command:String, args:=PackedStringArray()) -> Dictionary:
 		return {}
 
 	# Parse output & return it.
+	if not respond: return {}
 	var json = JSON.parse_string(output)
 	if json is not Dictionary:
 		MiniLog.err('Malformed result from command $i"%s"i$.' % command, PyInterface)
@@ -123,17 +126,19 @@ func send_command(command:String, args:=PackedStringArray()) -> Dictionary:
 
 func wait_for_response() -> String:
 	var line: String
+	const interval:float = 0.005
 	var time_waited:float = 0.0
 	while true:
-		if time_waited > 1.0:
+		if time_waited > 2.5:
 			MiniLog.err('Response timed-out.', PyInterface)
 			break
 		if PyRunner.io_access.get_length() == 0:
-			await get_tree().create_timer(0.005).timeout
-			time_waited += 0.005
+			await get_tree().create_timer(interval).timeout
+			time_waited += interval
 			continue
 		line = PyRunner.io_access.get_line()
 		break
+
 	return line
 
 

@@ -8,7 +8,7 @@ extends Control
 		'enabled': false,
 	},
 	'search': {
-		'enabled': true,
+		'enabled': false,
 		'callback': _on_search_updated,
 	}
 }

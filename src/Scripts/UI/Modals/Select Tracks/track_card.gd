@@ -32,7 +32,9 @@ func _on_control_on_screen_activated() -> void:
 func _on_control_on_screen_activated_2(button:Button) -> void:
 	if card_details_instance: return
 	card_details_instance = card_details_scene.instantiate()
+	if not button: return
 	card_details_instance.init(self, track, button)
+	if not self: return
 	add_child.call_deferred(card_details_instance)
 
 

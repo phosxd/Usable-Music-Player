@@ -124,9 +124,9 @@ const property_data:Array[Array] = [
 	['user_data_bytes',[TYPE_INT]],
 	# Tab data.
 	['last_tab',[TYPE_STRING]],
-	['artists_tab_scroll_value',[TYPE_FLOAT]],
-	['albums_tab_scroll_value',[TYPE_FLOAT]],
-	['tracks_tab_scroll_value',[TYPE_FLOAT]],
+	['artists_tab_scroll_value',[TYPE_INT,TYPE_FLOAT]],
+	['albums_tab_scroll_value',[TYPE_INT,TYPE_FLOAT]],
+	['tracks_tab_scroll_value',[TYPE_INT,TYPE_FLOAT]],
 	['right_sidebar_tab',[TYPE_STRING]],
 	['tab_content_split',[TYPE_PACKED_INT32_ARRAY]],
 	# Sort data.

@@ -17,29 +17,21 @@ func _ready() -> void:
 func _session_manager_value_changed(property:String, _source_name:String='base') -> void:
 	match property:
 		'right_sidebar_tab':
-			self.visible = SessionManager.get_var('right_sidebar_tab') == 'queue'
+			visible = SessionManager.get_var('right_sidebar_tab') == 'queue'
 
 
 func update(code:=PlayerManager.QueueUpdateCode.Set, data:Variant=null) -> void:
-	if code in [0,1,3,4]: # Set, add, insert, or shuffle.
+	if code in [0,3,4]: # Set, insert, or shuffle.
 		if queue_update_blocked:
 			queue_update_blocked = false
 			return
 		update_count += 1
 		for child:Node in %List.get_children():
 			child.queue_free()
+		Async.create_thread(_sort.bind(%List))
 
-		var queue = PlayerManager.queue
-		var current_count:int = update_count
-		var iter:int = 0
-		for track:DBTrack in queue:
-			if update_count != current_count: return
-			iter += 1
-			add_card(track)
-			# Add one frame delay every 4th iteration to give time to add child.
-			if iter % 4 == 0: await get_tree().process_frame
-		if update_count != current_count: return
-		track_updated(PlayerManager.queue_position, PlayerManager.get_current_track())
+	elif code == 1: # Add
+		add_card(PlayerManager.queue[-1], %List)
 
 	elif code == 2: # Remove.
 		if data.index >= %List.get_child_count(): return
@@ -63,11 +55,22 @@ func track_updated(queue_position:int, _track:DBTrack) -> void:
 		#auto_queue_node.get_node('%Auto Queue Indicator').show()
 
 
-func add_card(track:DBTrack) -> void:
+func _sort(list:Control) -> void:
+	var queue = PlayerManager.queue
+	var current_count:Array[int] = [update_count]
+	for track:DBTrack in queue:
+		if update_count != current_count[0]: return
+		add_card(track, list)
+		OS.delay_msec(4)
+	if update_count != current_count[0]: return
+	track_updated.call_deferred(PlayerManager.queue_position, PlayerManager.get_current_track())
+
+
+func add_card(track:DBTrack, list:Control) -> void:
 	if not card_scene: return
 	var card = card_scene.instantiate()
 	card.init(track)
-	%List.add_child(card)
+	list.add_child.call_deferred(card)
 
 
 func _on_list_reordered(from:int, to:int) -> void:
@@ -86,4 +89,11 @@ func _on_show_current_pressed() -> void:
 
 
 func _on_save_playlist_pressed() -> void:
-	pass
+	var scene:Node = DialogManager.create_playlist_scene.instantiate()
+	DialogManager.popup_custom(scene, func(data:Dictionary) -> void:
+		var track_ids:Array[String] = []
+		for track:DBTrack in PlayerManager.queue:
+			track_ids.append(track.as_id())
+		DBPlaylist.add_from_data(data, track_ids)
+		SessionManager.main_scene.get_node('%Playlists').sort()
+	)

@@ -59,6 +59,22 @@ func save() -> void:
 	saved.emit()
 
 
+static func add_from_data(data:Dictionary, add_track_ids:Array[String]=[]) -> DBPlaylist:
+	var playlist_id:String = StringUtils.resolve_duplicate(data.get('name'), SessionManager.get_var('playlist_order'))
+	var texture = data.get('texture')
+	var playlist := DBPlaylist.new({
+		'id': playlist_id,
+		'tracks': add_track_ids,
+		'cover_path': data.get('cover_path'),
+		'palette': DBAlbum.calculate_colors(texture) if texture is Texture2D else {},
+	})
+	playlist.created_date = DBPlaylist.get_current_date()
+	playlist.save()
+	LibraryManager.playlists.append(playlist)
+	SessionManager.get_var('playlist_order').append(playlist.id)
+	return playlist
+
+
 ## Remove this playlist.
 func remove() -> void:
 	valid = false

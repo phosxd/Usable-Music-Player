@@ -257,17 +257,6 @@ func _on_main_split_drag_ended() -> void:
 
 func _on_add_playlist_pressed() -> void:
 	DialogManager.popup_custom(DialogManager.create_playlist_scene.instantiate(), func(data:Dictionary) -> void:
-		var playlist_id:String = StringUtils.resolve_duplicate(data.get('name'), SessionManager.get_var('playlist_order'))
-		var texture = data.get('texture')
-		var playlist := DBPlaylist.new({
-			'id': playlist_id,
-			'tracks': [],
-			'cover_path': data.get('cover_path'),
-			'palette': DBAlbum.calculate_colors(texture) if texture is Texture2D else {},
-		})
-		playlist.created_date = DBPlaylist.get_current_date()
-		playlist.save()
-		LibraryManager.playlists.append(playlist)
-		SessionManager.get_var('playlist_order').append(playlist.id)
+		DBPlaylist.add_from_data(data)
 		%Playlists.sort()
 	)

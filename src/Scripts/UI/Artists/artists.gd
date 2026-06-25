@@ -42,6 +42,9 @@ func _ready() -> void:
 
 func unload() -> void:
 	update_count += 1 # Interupt sorting.
+
+	SessionManager.set_var('artists_tab_scroll_value', %Scroll.scroll_vertical)
+
 	Async.unload(%Grid.get_children(), (func(scene:Node) -> void:
 		scene.queue_free()
 	).bind(self))
@@ -58,42 +61,30 @@ func sort() -> void:
 	var artists := LibraryManager.get_artists_sorted(sort_mode)
 	if ascend_mode == false: artists.reverse()
 
-	Async.create_thread(_sort.bind(%Grid, artists))
+	Async.create_thread(_sort.bind(artists, %Grid, %Scroll))
 
 
-func _sort(grid:Control, artists:Array[DBArtist]) -> void:
+func _sort(artists:Array[DBArtist], list:Control, scroll:ScrollContainer) -> void:
 	if artists.is_empty(): return
 
 	var current_count:Array[int] = [update_count]
-	var iter:int = 0
-	#var current_library_id:String = artists[0].library.id
 	for artist:DBArtist in artists:
 		if update_count != current_count[0]: return
-		## If new library, add separator.
-		#if artist.library.id != current_library_id:
-			#var separator := HSeparator.new()
-			#separator.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			#var title := Label.new()
-			#title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			#title.text = artist.library.name
-			#title.theme_type_variation = 'LabelHeader2'
-			#grid.add_child(title)
-			#grid.add_child(separator)
-
 		# Filter with search term.
 		if not SessionManager.get_var('search_term').is_empty():
 			var search_term:String = SessionManager.get_var('search_term').to_lower()
 			if not artist.name.to_lower().contains(search_term):
 				continue
-		iter += 1
 		# Add card.
 		loaded_artists.append(artist)
-		add_card(artist, grid)
-		# Wait one frame to give time to add child.
-		if iter % 4 == 0: await get_tree().process_frame
+		add_card(artist, list)
+		OS.delay_msec(4)
+
+	if scroll && scroll.scroll_vertical == 0:
+		scroll.set_deferred('scroll_vertical', SessionManager.get_var('artists_tab_scroll_value'))
 
 
-func add_card(artist:DBArtist, grid:Control) -> void:
+func add_card(artist:DBArtist, list:Control) -> void:
 	# Create card.
 	var card:Control = card_scene.instantiate()
 	# Show library icon if multiple libraries visible.
@@ -122,8 +113,8 @@ func add_card(artist:DBArtist, grid:Control) -> void:
 			if images.size() == 4: break
 		card.images = images
 
-	# Add to grid.
-	grid.add_child.call_deferred(card)
+	# Add to list.
+	list.add_child.call_deferred(card)
 
 
 #region card_functions

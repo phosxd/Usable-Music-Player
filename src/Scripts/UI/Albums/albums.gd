@@ -44,6 +44,9 @@ func _ready() -> void:
 
 func unload() -> void:
 	update_count += 1 # Interupt sorting.
+
+	SessionManager.set_var('albums_tab_scroll_value', %Scroll.scroll_vertical)
+
 	Async.unload(%Grid.get_children(), (func(scene:Node) -> void:
 		scene.queue_free()
 	).bind(self))
@@ -68,10 +71,10 @@ func sort() -> void:
 	) 
 	if ascend_mode == false: albums.reverse()
 
-	Async.create_thread(_sort.bind(%Grid))
+	Async.create_thread(_sort.bind(%Grid, %Scroll))
 
 
-func _sort(grid:Control) -> void:
+func _sort(list:Control, scroll:ScrollContainer) -> void:
 	var current_count:Array[int] = [update_count]
 	for album:DBAlbum in albums:
 		if not album or update_count != current_count[0]: return
@@ -79,12 +82,14 @@ func _sort(grid:Control) -> void:
 		match sort_mode:
 			DBLibrary.AlbumSortMode.year: secondary_text = album.year
 		# Add card.
-		add_card(album, secondary_text, grid)
-		# Wait one frame to give time to add child.
-		await get_tree().process_frame
+		add_card(album, secondary_text, list)
+		OS.delay_msec(4)
+
+	if scroll && scroll.scroll_vertical == 0:
+		scroll.set_deferred('scroll_vertical', SessionManager.get_var('albums_tab_scroll_value'))
 
 
-func add_card(album:DBAlbum, secondary_text:String, grid:Control) -> void:
+func add_card(album:DBAlbum, secondary_text:String, list:Control) -> void:
 	# Create card.
 	var card:Control = card_scene.instantiate()
 	# Show library icon if multiple libraries visible.
@@ -97,8 +102,8 @@ func add_card(album:DBAlbum, secondary_text:String, grid:Control) -> void:
 	# Connect signal to card.
 	card.pressed.connect(_on_card_pressed.bind(album))
 	card.secondary_pressed.connect(_on_card_secondary_pressed.bind(album))
-	# Add to grid.
-	grid.add_child.call_deferred(card)
+	# Add to list.
+	list.add_child.call_deferred(card)
 
 
 func _on_card_pressed(album:DBAlbum) -> void:

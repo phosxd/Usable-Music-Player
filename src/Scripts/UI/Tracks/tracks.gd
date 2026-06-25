@@ -45,12 +45,11 @@ func _ready() -> void:
 	sort()
 
 
-func _process(_delta:float) -> void:
-	SessionManager.set_var('tracks_tab_scroll_value', %Scroll.scroll_vertical)
-
-
 func unload() -> void:
 	update_count += 1 # Interupt sorting.
+
+	SessionManager.set_var('tracks_tab_scroll_value', %Scroll.scroll_vertical)
+
 	Async.unload(%Grid.get_children(), (func(scene:Node) -> void:
 		scene.queue_free()
 	).bind(self))
@@ -76,17 +75,19 @@ func sort() -> void:
 	)
 	if ascend_mode == false: tracks.reverse()
 
-	Async.create_thread(_sort.bind(%Grid))
+	Async.create_thread(_sort.bind(%Grid, %Scroll))
 
 
-func _sort(grid:Control) -> void:
+func _sort(grid:Control, scroll:ScrollContainer=null) -> void:
 	var current_count:Array[int] = [update_count]
 	for track:DBTrack in tracks:
 		if update_count != current_count[0]: return
 		# Add card.
 		add_card(track, _on_track_selected.bind(track), grid)
-		# Wait one frame to give time to add child.
-		await get_tree().process_frame
+		OS.delay_msec(4)
+
+	if scroll && scroll.scroll_vertical == 0:
+		scroll.set_deferred('scroll_vertical', SessionManager.get_var('tracks_tab_scroll_value'))
 
 
 func add_card(track:DBTrack, callback:Callable, grid:Control) -> void:

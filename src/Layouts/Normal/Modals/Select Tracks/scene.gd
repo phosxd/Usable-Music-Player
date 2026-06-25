@@ -15,10 +15,20 @@ func _ready() -> void:
 
 
 func sort() -> void:
+	update_count += 1
 	for child:Node in %List.get_children():
 		child.queue_free()
 
-	tracks = LibraryManager.get_tracks_sorted()
+	var search_term:String = %Search.text
+	tracks = LibraryManager.get_tracks_sorted().filter(func(track:DBTrack) -> bool:
+		if not search_term.is_empty():
+			if not StringUtils.fuzzy_match(search_term, track.name) \
+			&& not StringUtils.fuzzy_match(search_term, track.album.artist.name) \
+			&& not StringUtils.fuzzy_match(search_term, track.album.name) \
+			&& not track.album.year.contains(search_term):
+				return false
+		return true
+	)
 	Async.create_thread(_sort.bind(%List))
 
 
@@ -45,7 +55,7 @@ func _on_card_selected(card:Control, track:DBTrack) -> void:
 
 
 func _on_search_text_changed(_new_text:String) -> void:
-	pass
+	sort()
 
 
 func _on_yes_pressed() -> void:

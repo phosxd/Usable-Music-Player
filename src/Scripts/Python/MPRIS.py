@@ -1,3 +1,4 @@
+import sys
 import asyncio
 import random
 from dbus_fast.aio import MessageBus
@@ -77,7 +78,10 @@ def command_update_data(args:list):
 				interface_properties_to_emit_changed[property_name] = property_value
 		# If properties have changed, emit changes.
 		if len(interface_properties_to_emit_changed) == 0: continue
-		interface.emit_properties_changed(changed_properties=interface_properties_to_emit_changed.copy())
+		try:
+			interface.emit_properties_changed(changed_properties=interface_properties_to_emit_changed)
+		except:
+			continue
 
 
 	return
@@ -287,7 +291,11 @@ async def _start():
 	# Request name.
 	await bus.request_name(f'org.mpris.MediaPlayer2.{player_name}')
 	# Hold thread until bus disconnect.
-	await bus.wait_for_disconnect()
+	try:
+		await bus.wait_for_disconnect()
+	except Exception as e:
+		print('MPRIS error "{e}", restarting.', file=sys.stderr)
+		_start()
 
 
 if __name__ == "__main__":

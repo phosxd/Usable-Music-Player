@@ -1,10 +1,10 @@
 - Fix queue not being updated properly when reordering an item BEFORE the currently playing track.
 - Add right-click options for artist, album, & genre cards.
 - Add ability to upload custom artist & album covers.
-- Add simple mini-player.
 - Add option for artist for regrabbing artist image from API.
 - Finish clear queue warning logic. Should not warn if queue has not been filled up via "intentional actions" such as artist/album play/shuffle buttons or via add to queue buttons.
 - Rework how images are stored in user data.
+- Add "add to playlist" context menu options for track cards, queue cards, album cards, & artist cards.
 
 - Read "lyricist" tag to show "Written by:" in lyrics.
 - Read "releasetype".

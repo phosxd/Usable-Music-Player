@@ -24,22 +24,22 @@ static var enabled_global:bool = true
 @export var ratio_up:float = 1.0:
 	set(value):
 		ratio_up = value
-		if self.is_node_ready(): calculate_margins()
+		if is_node_ready(): calculate_margins()
 ## Downward margin ratio.
 @export var ratio_down:float = 1.0:
 	set(value):
 		ratio_down = value
-		if self.is_node_ready(): calculate_margins()
+		if is_node_ready(): calculate_margins()
 ## Lefthand margin ratio.
 @export var ratio_left:float = 1.0:
 	set(value):
 		ratio_left = value
-		if self.is_node_ready(): calculate_margins()
+		if is_node_ready(): calculate_margins()
 ## Righthand margin ratio.
 @export var ratio_right:float = 1.0:
 	set(value):
 		ratio_right = value
-		if self.is_node_ready(): calculate_margins()
+		if is_node_ready(): calculate_margins()
 
 var _cache:Array[float] = [0,0,0,0]
 
@@ -48,11 +48,11 @@ var on_screen:bool = false
 var last_global_position: Vector2
 var _timer:float = 0.0
 
-@onready var window:Window = self.get_window()
+@onready var window:Window = get_window()
 
 
 func _ready() -> void:
-	self.resized.connect(_on_resized)
+	resized.connect(_on_resized)
 
 
 func _process(delta:float) -> void:
@@ -61,9 +61,9 @@ func _process(delta:float) -> void:
 	if _timer < update_interval: return
 	_timer = 0.0
 	# If the global position of this node has changed, run checks to see if it has entered or left the window.
-	if self.global_position != last_global_position:
+	if global_position != last_global_position:
 		update()
-		last_global_position = self.global_position
+		last_global_position = global_position
 
 
 func _on_resized() -> void:
@@ -73,10 +73,10 @@ func _on_resized() -> void:
 
 func calculate_margins() -> void:
 	_cache = [
-		self.size.y * ratio_up,
-		self.size.y * ratio_down,
-		self.size.x * ratio_left,
-		self.size.x * ratio_right,
+		size.y * ratio_up,
+		size.y * ratio_down,
+		size.x * ratio_left,
+		size.x * ratio_right,
 	]
 
 
@@ -107,7 +107,7 @@ func activate() -> void:
 
 func deactivate() -> void:
 	# Set minimum size if "preserve_size" is enabled.
-	if preserve_size: self.custom_minimum_size = self.size
+	if preserve_size: custom_minimum_size = size
 	# Show nodes.
 	for node:Control in show_nodes:
 		if not node: continue
@@ -124,17 +124,17 @@ func deactivate() -> void:
 ## Global position & size is taken into account.
 func check_on_screen() -> bool:
 	if window == null:
-		window = self.get_window()
+		window = get_window()
 		if window == null:
 			printerr('Cannot get window.')
 			return false
 
 	return not (\
 		# Check Y axis.
-		(self.global_position.y < -_cache[0] \
-		or self.global_position.y - _cache[1] > window.size.y) \
+		(global_position.y < -_cache[0] \
+		or global_position.y - _cache[1] > window.size.y) \
 		or \
 		# Check X axis.
-		(self.global_position.x < -_cache[2] \
-		or self.global_position.x - _cache[3] > window.size.x)
+		(global_position.x < -_cache[2] \
+		or global_position.x - _cache[3] > window.size.x)
 	)

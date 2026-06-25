@@ -38,6 +38,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="activated" from="ControlOnScreen" to="." method="_on_control_on_screen_activated"]
 [connection signal="deactivated" from="ControlOnScreen" to="." method="_on_control_on_screen_deactivated"]
 [connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
