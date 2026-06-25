@@ -249,7 +249,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Sep 2" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=1153614261]
+[node name="Top Filler" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=1153614261]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 

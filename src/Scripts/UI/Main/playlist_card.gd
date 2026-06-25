@@ -2,7 +2,7 @@ extends Control
 
 signal pressed
 
-@onready var context_menu:ContextMenu = SessionManager.context_menus.playlist_card
+@onready var context_menu:ContextMenu = SessionManager.get_context_menu('playlist_card')
 var is_dragging:bool = false
 var playlist: DBPlaylist
 
@@ -74,3 +74,16 @@ func _context_menu_id_pressed(id:String):
 		'play':
 			var tracks:Array[DBTrack] = playlist.get_tracks()
 			if tracks.size() > 0: PlayerManager.set_queue_and_track(tracks, tracks[0])
+		'play_next':
+			for track:DBTrack in playlist.get_tracks():
+				PlayerManager.add_next_in_queue_with_context(track)
+		'add_to_queue':
+			for track:DBTrack in playlist.get_tracks():
+				PlayerManager.add_to_queue_with_context(track)
+		'remove':
+			DialogManager.popup_confirmation_dialog(
+				'Delete Playlist',
+				'Are you sure you want to delete this playlist?',
+				func() -> void:
+					playlist.remove()
+			)

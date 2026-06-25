@@ -76,6 +76,7 @@ folder_colors={
 "res://CLIs/": "gray",
 "res://EXPORT/": "gray",
 "res://Elements/": "yellow",
+"res://Layouts/Normal/Context Menus/": "yellow",
 "res://Layouts/Normal/Elements/": "yellow",
 "res://Layouts/Normal/Modals/": "yellow",
 "res://MODS/": "gray",
@@ -114,6 +115,7 @@ common/physics_ticks_per_second=1
 textures/canvas_textures/default_texture_filter=2
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 shader_compiler/shader_cache/enabled=false
 anti_aliasing/screen_space_roughness_limiter/enabled=false
 anti_aliasing/quality/use_debanding=true

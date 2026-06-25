@@ -24,12 +24,9 @@ func init(parent_:Node, db_track:DBTrack, button_:Button) -> void:
 		if track.number == 0: %'Track Number'.hide()
 		else: %'Track Number'.text = '%s' % (track.number)
 	if %Artist: %Artist.text = track.actual_artist
-	if %Album: %Album.text = track.album.name
 	if %Length: %Length.text = DBTrack.get_track_position_formatted(track.length)
 	if %Format: %Format.text = '.%s' % track.path.split('.')[-1].to_lower()
-	var cover = track.album.get_cover() if track.album else DBAlbum.default_cover
 	if not self: return
-	if %Image: %Image.texture = cover
 	if not parent: return
 
 	initialized = true
@@ -46,10 +43,6 @@ func _on_context_menu_closed() -> void:
 
 func _on_context_menu_id_pressed(_id:String) -> void:
 	pass
-
-
-func _on_album_pressed() -> void:
-	SessionManager.main_scene.set_tab('album_page', track.album)
 
 
 func _on_artist_pressed() -> void:

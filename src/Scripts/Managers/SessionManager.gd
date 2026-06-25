@@ -30,7 +30,6 @@ var current_window_size: Vector2i:
 
 var session_scripts:Dictionary[String,Object] = {}
 var session_ready:bool = false
-var context_menus:Dictionary[String,ContextMenu] = {}
 
 
 func _ready() -> void:
@@ -53,107 +52,6 @@ func _ready() -> void:
 
 	load_session()
 	if get_var('theme').is_empty(): set_var('theme', 'UMP_DEFAULT') # Set default layout theme if none set by session file.
-
-
-	context_menus = {
-		'track_card': ContextMenu.new([
-			{
-				'id': 'play',
-				'type': 'button',
-				'text': 'Play (clear queue)',
-				'icon': SessionManager.get_icon('play'),
-			},
-			{
-				'id': 'play_next',
-				'type': 'button',
-				'text': 'Play Next',
-				'icon': SessionManager.get_icon('queue_play_next'),
-			},
-			{
-				'id': 'add_to_queue',
-				'type': 'button',
-				'text': 'Add To Queue',
-				'icon': SessionManager.get_icon('queue_add_to_queue'),
-			},
-			{
-				'id': 'show_album',
-				'type': 'button',
-				'text': 'Show Album',
-				'icon': SessionManager.get_icon('folder'),
-			},
-			{
-				'id': 'show_in_files',
-				'type': 'button',
-				'text': 'Show In Files',
-				'icon': SessionManager.get_icon('folder'),
-			},
-		]),
-		'queue_card': ContextMenu.new([
-			{
-				'id': 'remove',
-				'type': 'submenu',
-				'text': 'Remove',
-				'icon': SessionManager.get_icon('remove'),
-				'items': [
-					{
-						'id': 'remove_track',
-						'type': 'button',
-						'text': 'Track',
-					},
-					{
-						'id': 'remove_album',
-						'type': 'button',
-						'text': 'Album',
-					},
-					{
-						'id': 'remove_artist',
-						'type': 'button',
-						'text': 'Artist',
-					},
-				],
-			},
-			{
-				'id': 'stop_after_this',
-				'type': 'button',
-				'text': 'Stop After This',
-				'icon': SessionManager.get_icon('pause'),
-			},
-			{
-				'id': 'show_album',
-				'type': 'button',
-				'text': 'Show Album',
-				'icon': SessionManager.get_icon('folder'),
-			},
-			{
-				'id': 'show_in_files',
-				'type': 'button',
-				'text': 'Show In Files',
-				'icon': SessionManager.get_icon('folder'),
-			},
-		]),
-		'playlist_card': ContextMenu.new([
-			{
-				'id': 'play',
-				'type': 'button',
-				'text': 'Play (clear queue)',
-				'icon': SessionManager.get_icon('play'),
-			},
-			{
-				'id': 'play_next',
-				'type': 'button',
-				'text': 'Play Next',
-				'icon': SessionManager.get_icon('queue_play_next'),
-			},
-			{
-				'id': 'add_to_queue',
-				'type': 'button',
-				'text': 'Add To Queue',
-				'icon': SessionManager.get_icon('queue_add_to_queue'),
-			},
-		]),
-	}
-
-
 	session_ready = true
 
 
@@ -225,18 +123,37 @@ func get_accent_color() -> Color:
 	return accent
 
 
-## Get the scene at [param scene_name] for the current theme or [param theme_override].
-func get_scene(scene_name:String, theme_override:String='', recurse:int=0) -> PackedScene:
+## Get the scene at [param scene_name] for the current layout or [param layout_override].
+func get_scene(scene_name:String, layout_override:String='', recurse:int=0) -> PackedScene:
 	if recurse > 1: return null
-	var theme_: String
-	if theme_override.is_empty(): theme_ = get_var('theme')
-	else: theme_ = theme_override
+	var layout: String
+	if layout_override.is_empty(): layout = get_var('theme')
+	else: layout = layout_override
 
 	var scene
-	var scene_path:String = 'res://Layouts/%s/%s.tscn' % [theme_, scene_name]
+	var scene_path:String = 'res://Layouts/%s/%s.tscn' % [layout, scene_name]
 	if ResourceLoader.exists(scene_path): scene = load(scene_path)
-	if not scene: return SessionManager.get_scene(scene_name, 'Normal', recurse+1)
+	if scene == null: return SessionManager.get_scene(scene_name, 'Normal', recurse+1)
+	if scene is not PackedScene: return null
 	return scene
+
+
+## Get the [ContextMenu] at [param menu_name] for the current layout or [param layout_override].
+func get_context_menu(menu_name:String, layout_override:String='', recurse:int=0) -> ContextMenu:
+	if recurse > 1: return null
+	var layout: String
+	if layout_override.is_empty(): layout = get_var('theme')
+	else: layout = layout_override
+
+	var menu
+	var menu_path:String = 'res://Layouts/%s/Context Menus/%s.tres' % [layout, menu_name]
+	if ResourceLoader.exists(menu_path):
+		var initialized:bool = ResourceLoader.has_cached(menu_path)
+		menu = load(menu_path)
+		if not initialized && menu.has_method('init'): menu.call('init')
+	if menu == null: return SessionManager.get_context_menu(menu_name, 'Normal', recurse+1)
+	if menu is not ContextMenu: return null
+	return menu
 
 
 ## Returns the icon at [param icon_name] for the current theme or [param theme_override].

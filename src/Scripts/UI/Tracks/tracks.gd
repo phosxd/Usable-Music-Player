@@ -64,9 +64,9 @@ func sort() -> void:
 		child.queue_free()
 
 	# Get filtered & sorted tracks.
+	var search_term = SessionManager.get_var('search_term')
 	tracks = LibraryManager.get_tracks_sorted(sort_mode).filter(func(track:DBTrack) -> bool:
-		if not SessionManager.get_var('search_term').is_empty():
-			var search_term:String = SessionManager.search_term
+		if not search_term.is_empty():
 			if not StringUtils.fuzzy_match(search_term, track.name) \
 			&& not StringUtils.fuzzy_match(search_term, track.album.artist.name) \
 			&& not StringUtils.fuzzy_match(search_term, track.album.name) \
@@ -91,6 +91,7 @@ func _sort(grid:Control) -> void:
 
 func add_card(track:DBTrack, callback:Callable, grid:Control) -> void:
 	var card:Control = card_scene.instantiate()
+	card.details_scene_name = 'Tracks/card_details'
 	card.init(track)
 	card.selected.connect(callback)
 	grid.add_child.call_deferred(card)

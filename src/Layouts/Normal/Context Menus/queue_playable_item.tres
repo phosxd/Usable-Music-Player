@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ContextMenu" format=3 uid="uid://dcexkluaacg8p"]
+
+[ext_resource type="Script" uid="uid://igkpxx7l8lt6" path="res://Scripts/Resources/ContextMenu/ContextMenuItem.gd" id="1_ti2dy"]
+[ext_resource type="Script" uid="uid://dntgrcvt7r370" path="res://Scripts/Resources/ContextMenu/ContextMenu.gd" id="2_8vbi2"]
+
+[sub_resource type="Resource" id="Resource_81j1u"]
+script = ExtResource("1_ti2dy")
+id = "play"
+text = "Play (clear queue)"
+icon_name = &"play"
+metadata/_custom_type_script = "uid://igkpxx7l8lt6"
+
+[sub_resource type="Resource" id="Resource_ti2dy"]
+script = ExtResource("1_ti2dy")
+id = "play_next"
+text = "Play Next"
+icon_name = &"queue_play_next"
+metadata/_custom_type_script = "uid://igkpxx7l8lt6"
+
+[sub_resource type="Resource" id="Resource_8vbi2"]
+script = ExtResource("1_ti2dy")
+id = "add_to_queue"
+text = "Add To Queue"
+icon_name = &"queue_add_to_queue"
+metadata/_custom_type_script = "uid://igkpxx7l8lt6"
+
+[resource]
+script = ExtResource("2_8vbi2")
+items = [SubResource("Resource_81j1u"), SubResource("Resource_ti2dy"), SubResource("Resource_8vbi2")]
+metadata/_custom_type_script = "uid://dntgrcvt7r370"

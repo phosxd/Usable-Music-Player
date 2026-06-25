@@ -1,6 +1,6 @@
 extends Control
 
-@onready var context_menu:ContextMenu = SessionManager.context_menus.queue_card
+@onready var context_menu:ContextMenu = SessionManager.get_context_menu('queue_card')
 var is_dragging:bool = false
 
 
@@ -44,7 +44,7 @@ func _on_move_down_pressed() -> void:
 
 func _on_drag_button_button_down() -> void:
 	is_dragging = true
-	var list = self.get_parent()
+	var list = get_parent()
 	if list is not ReorderableContainer: return
 	list._focus_child = self
 	list._is_press = true
@@ -52,7 +52,7 @@ func _on_drag_button_button_down() -> void:
 
 func _on_drag_button_button_up() -> void:
 	is_dragging = false
-	var list = self.get_parent()
+	var list = get_parent()
 	if list is not ReorderableContainer: return
 	list._is_press = false
 
@@ -64,7 +64,7 @@ func _on_button_gui_input(event:InputEvent) -> void:
 
 func _context_menu_id_pressed(id:String):
 	if context_menu.current_instance_id != name: return
-	var track:DBTrack = PlayerManager.queue[self.get_index()]
+	var track:DBTrack = PlayerManager.queue[get_index()]
 	if id in ['remove','remove_track']:
 		PlayerManager.remove_from_queue(track)
 	match id:

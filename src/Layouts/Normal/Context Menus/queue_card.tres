@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="ContextMenu" format=3 uid="uid://62puwtreudjr"]
+
+[ext_resource type="Script" uid="uid://igkpxx7l8lt6" path="res://Scripts/Resources/ContextMenu/ContextMenuItem.gd" id="1_1twel"]
+[ext_resource type="Script" uid="uid://dntgrcvt7r370" path="res://Scripts/Resources/ContextMenu/ContextMenu.gd" id="2_kkss6"]
+
+[sub_resource type="Resource" id="Resource_1twel"]
+script = ExtResource("1_1twel")
+id = "remove_track"
+text = "Track"
+metadata/_custom_type_script = "uid://igkpxx7l8lt6"
+
+[sub_resource type="Resource" id="Resource_kkss6"]
+script = ExtResource("1_1twel")
+id = "remove_album"
+text = "Album"
+metadata/_custom_type_script = "uid://igkpxx7l8lt6"
+
+[sub_resource type="Resource" id="Resource_5p3n8"]
+script = ExtResource("1_1twel")
+id = "remove_artist"
+text = "Artist"
+metadata/_custom_type_script = "uid://igkpxx7l8lt6"
+
+[sub_resource type="Resource" id="Resource_ga4q3"]
+script = ExtResource("1_1twel")
+type = 1
+id = "remove"
+text = "Remove"
+icon_name = &"remove"
+items = Array[ExtResource("1_1twel")]([SubResource("Resource_1twel"), SubResource("Resource_kkss6"), SubResource("Resource_5p3n8")])
+metadata/_custom_type_script = "uid://igkpxx7l8lt6"
+
+[sub_resource type="Resource" id="Resource_pqy0y"]
+script = ExtResource("1_1twel")
+id = "stop_after_this"
+text = "Stop After This"
+icon_name = &"pause"
+metadata/_custom_type_script = "uid://igkpxx7l8lt6"
+
+[sub_resource type="Resource" id="Resource_4iddo"]
+script = ExtResource("1_1twel")
+id = "show_album"
+text = "Show Album"
+icon_name = &"folder"
+metadata/_custom_type_script = "uid://igkpxx7l8lt6"
+
+[sub_resource type="Resource" id="Resource_mmv12"]
+script = ExtResource("1_1twel")
+id = "show_in_files"
+text = "Show In Files"
+icon_name = &"folder"
+metadata/_custom_type_script = "uid://igkpxx7l8lt6"
+
+[resource]
+script = ExtResource("2_kkss6")
+items = [SubResource("Resource_ga4q3"), SubResource("Resource_pqy0y"), SubResource("Resource_4iddo"), SubResource("Resource_mmv12")]
+metadata/_custom_type_script = "uid://dntgrcvt7r370"

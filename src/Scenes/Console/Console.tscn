@@ -53,7 +53,14 @@ wheel_scroll_damper = SubResource("Resource_ecldj")
 dragging_scroll_damper = SubResource("Resource_mcx5f")
 metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
-[node name="Label" type="RichTextLabel" parent="VBox/Scroll" unique_id=1511097181]
+[node name="Margin" type="MarginContainer" parent="VBox/Scroll" unique_id=867166418]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+
+[node name="Label" type="RichTextLabel" parent="VBox/Scroll/Margin" unique_id=1511097181]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -71,7 +78,8 @@ drag_and_drop_selection_enabled = false
 [node name="Command" type="LineEdit" parent="VBox" unique_id=1751709615]
 unique_name_in_owner = true
 layout_mode = 2
-placeholder_text = "Enter expression..."
+placeholder_text = "Type \"help\" for info..."
+keep_editing_on_text_submit = true
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="text_submitted" from="VBox/Command" to="." method="_on_command_text_submitted"]

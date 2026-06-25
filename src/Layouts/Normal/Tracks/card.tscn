@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cvuw8ds1htson" path="res://Elements/ControlOnScreen.gd" id="6_g85ae"]
 
 [node name="Card" type="Control" unique_id=70016340]
+editor_description = "Use this scene as a wrapper for the card content, which is allowed to vary."
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 3
 anchor_right = 1.0

@@ -1,0 +1,159 @@
+[gd_scene format=3 uid="uid://cmmtq474ypenh"]
+
+[ext_resource type="Script" uid="uid://fp5282han56p" path="res://Scripts/UI/Playlist Page/card_details.gd" id="1_mf0or"]
+[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_iefsg"]
+[ext_resource type="PackedScene" uid="uid://dk2dr0g8mm5n0" path="res://Elements/Clickable Label/Clickable Label.tscn" id="2_rpd0h"]
+[ext_resource type="Texture2D" uid="uid://bup81pbj7sl2i" path="res://Themes/Normal/Assets/Icons/options.svg" id="2_xve08"]
+[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="3_b56yu"]
+[ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="3_xve08"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iefsg"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[node name="Card Details" type="HBoxContainer" unique_id=920346302]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 70.0
+grow_horizontal = 2
+mouse_filter = 2
+script = ExtResource("1_mf0or")
+
+[node name="HBox" type="HBoxContainer" parent="." unique_id=1688935031]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="HBox" type="HBoxContainer" parent="HBox" unique_id=836333170]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Image Sep" type="VSeparator" parent="HBox/HBox" unique_id=231971001]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(10, 70)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Image" type="PanelContainer" parent="HBox/HBox" unique_id=1768975035]
+unique_name_in_owner = true
+clip_children = 1
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+mouse_filter = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_iefsg")
+script = ExtResource("2_iefsg")
+texture = ExtResource("3_b56yu")
+stretch_mode = 5
+metadata/_custom_type_script = "uid://b4ukv3a8is182"
+
+[node name="Drag Button Margin" type="MarginContainer" parent="HBox/HBox" unique_id=906446184]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = -8
+theme_override_constants/margin_right = -8
+
+[node name="Drag Button" type="Button" parent="HBox/HBox/Drag Button Margin" unique_id=757370968]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 7
+theme_type_variation = &"AccentButton"
+icon = ExtResource("2_xve08")
+flat = true
+
+[node name="Sep 1" type="VSeparator" parent="HBox/HBox" unique_id=1546274667]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Sep 2" type="VSeparator" parent="HBox/HBox" unique_id=911121500]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Name" type="Label" parent="HBox/HBox" unique_id=666174245]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelPrimary"
+text = "Track"
+text_overrun_behavior = 5
+
+[node name="Sep 2" type="VSeparator" parent="HBox" unique_id=1936071818]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Album" parent="HBox" unique_id=732696473 instance=ExtResource("2_rpd0h")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Album"
+text_overrun_behavior = 5
+hover_theme_type_variation = "LabelHover"
+
+[node name="Sep 4" type="VSeparator" parent="HBox" unique_id=859631978]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Artist" parent="HBox" unique_id=158690566 instance=ExtResource("2_rpd0h")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Artist"
+text_overrun_behavior = 5
+hover_theme_type_variation = "LabelHover"
+
+[node name="Format" type="Label" parent="." unique_id=1997057498]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"LabelSmall"
+text = ".wav"
+
+[node name="Sep 1" type="VSeparator" parent="." unique_id=691796749]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Length" type="Label" parent="." unique_id=2122092756]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0:00"
+
+[node name="Sep 2" type="VSeparator" parent="." unique_id=688590194]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Options" type="Button" parent="." unique_id=923930253]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"AccentButton"
+toggle_mode = true
+icon = ExtResource("3_xve08")
+
+[node name="Sep 3" type="VSeparator" parent="." unique_id=843317273]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[connection signal="button_down" from="HBox/HBox/Drag Button Margin/Drag Button" to="." method="_on_drag_button_button_down"]
+[connection signal="button_up" from="HBox/HBox/Drag Button Margin/Drag Button" to="." method="_on_drag_button_button_up"]
+[connection signal="pressed" from="HBox/Album" to="." method="_on_album_pressed"]
+[connection signal="pressed" from="HBox/Artist" to="." method="_on_artist_pressed"]
+[connection signal="toggled" from="Options" to="." method="_on_options_toggled"]

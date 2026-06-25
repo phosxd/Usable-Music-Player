@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://dqead5vipb7wo" path="res://Themes/Normal/Assets/Icons/remove.svg" id="12_421v5"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="13_aesv5"]
 [ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="14_103uh"]
+[ext_resource type="PackedScene" uid="uid://30dtlb0yhtx1" path="res://Layouts/Normal/Elements/ReorderableList/ReorderableList.tscn" id="15_cd6sc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wngf1"]
 shader = ExtResource("2_421v5")
@@ -35,7 +36,7 @@ height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_421v5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cd6sc"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -118,7 +119,7 @@ unique_name_in_owner = true
 clip_children = 1
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_421v5")
+theme_override_styles/panel = SubResource("StyleBoxFlat_cd6sc")
 script = ExtResource("3_cd6sc")
 texture = ExtResource("4_tg8xc")
 expand_mode = 2
@@ -154,7 +155,7 @@ layout_mode = 2
 [node name="Created Date" type="Label" parent="VBox/Controls/VBox/HBox/Details/Secondary Details" unique_id=649305992]
 unique_name_in_owner = true
 layout_mode = 2
-text = "January 1st 2026"
+text = "January 1 2026"
 vertical_alignment = 1
 
 [node name="Sep 1" type="VSeparator" parent="VBox/Controls/VBox/HBox/Details/Secondary Details" unique_id=716059256]
@@ -246,15 +247,19 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Top Filler" type="HSeparator" parent="VBox/Scroll/Content/VBox" unique_id=1418008468]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
 [node name="Items" type="VBoxContainer" parent="VBox/Scroll/Content/VBox" unique_id=278029313]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Track List" type="VBoxContainer" parent="VBox/Scroll/Content/VBox/Items" unique_id=925906313]
+[node name="Track List" parent="VBox/Scroll/Content/VBox/Items" unique_id=100561512 instance=ExtResource("15_cd6sc")]
 unique_name_in_owner = true
-self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_vertical = 1
+separation = 4
 
 [node name="Add" type="Button" parent="VBox/Scroll/Content/VBox/Items" unique_id=323876770]
 unique_name_in_owner = true
@@ -300,7 +305,7 @@ theme_override_constants/separation = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Modified: January 2nd 2026"
+text = "Modified: January 2 2026"
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 5
@@ -312,4 +317,6 @@ theme_type_variation = &"ScrollFillSeparator"
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Icon Margin/Album Button" to="." method="_on_album_button_pressed"]
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Shuffle" to="." method="_on_shuffle_pressed"]
+[connection signal="reordered" from="VBox/Scroll/Content/VBox/Items/Track List" to="." method="_on_track_list_reordered"]
+[connection signal="sort_children" from="VBox/Scroll/Content/VBox/Items/Track List" to="VBox/Scroll/Content/VBox/Items/Track List" method="_on_sort_children"]
 [connection signal="pressed" from="VBox/Scroll/Content/VBox/Items/Add" to="." method="_on_add_pressed"]

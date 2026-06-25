@@ -21,10 +21,10 @@ _________________!$
 - $iPlayer.set_playing(playing:bool) -> voidi$
 : $~Set current track playing state.~$
 
-- $iPlayer.skip_backward() -> voidi$
+- $iPlayer.previous() -> voidi$
 : $~Skip to the previous track in the queue.~$
 
-- $iPlayer.skip_forward() -> voidi$
+- $iPlayer.next() -> voidi$
 : $~Skip to the next track in the queue.~$
 
 - $iPlayer.set_track_progress(progress:float) -> voidi$

@@ -151,11 +151,11 @@ func _on_play_pause_pressed() -> void:
 
 
 func _on_skip_backward_pressed() -> void:
-	PlayerManager.skip_backward()
+	PlayerManager.previous()
 
 
 func _on_skip_forward_pressed() -> void:
-	PlayerManager.skip_forward()
+	PlayerManager.next()
 
 
 func _on_volume_value_changed(value:float) -> void:

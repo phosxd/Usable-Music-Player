@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ContextMenu" format=3 uid="uid://cvrkejxlslhgo"]
+
+[ext_resource type="Script" uid="uid://dntgrcvt7r370" path="res://Scripts/Resources/ContextMenu/ContextMenu.gd" id="1_imf0u"]
+[ext_resource type="Resource" uid="uid://dcexkluaacg8p" path="res://Layouts/Normal/Context Menus/queue_playable_item.tres" id="1_n0cyp"]
+[ext_resource type="Script" uid="uid://igkpxx7l8lt6" path="res://Scripts/Resources/ContextMenu/ContextMenuItem.gd" id="2_lgv2q"]
+
+[sub_resource type="Resource" id="Resource_ttuto"]
+script = ExtResource("2_lgv2q")
+id = "remove"
+text = "Remove"
+icon_name = &"remove"
+metadata/_custom_type_script = "uid://igkpxx7l8lt6"
+
+[resource]
+script = ExtResource("1_imf0u")
+items = [ExtResource("1_n0cyp"), SubResource("Resource_ttuto")]
+metadata/_custom_type_script = "uid://dntgrcvt7r370"

@@ -93,9 +93,9 @@ func add_disc_sep(disc:String, track_cards:Array[Control]) -> void:
 func add_card(track:DBTrack) -> Control:
 	if not card_scene: return
 	var card:Control = card_scene.instantiate()
+	card.details_scene_name = 'Album Page/card_details'
 	card.selected.connect(_on_track_selected.bind(track))
 	card.init(track)
-	card.set_mode(1)
 	%'Track List'.add_child(card)
 	return card
 

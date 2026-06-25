@@ -1,6 +1,6 @@
 extends Node
 
-const global_input_poll_interval:float = 0.25
+const global_input_poll_interval := int(0.25*1000)
 
 var ignore_input:bool = false
 var listen_to_global_input:bool = false
@@ -12,13 +12,16 @@ func _ready() -> void:
 	listener_thread.start(_listener)
 
 
+func _exit_tree() -> void:
+	listener_thread.set_meta('canceled', true)
+
+
 func _listener() -> void:
-	while true:
-		await get_tree().create_timer(global_input_poll_interval).timeout
-		process_mpris_events()
-		# Wait one frame to process global input.
-		await get_tree().process_frame
-		process_global_input()
+	while not listener_thread.get_meta('canceled',false):
+		OS.delay_msec(global_input_poll_interval)
+		process_mpris_events.call_deferred()
+		OS.delay_msec(5)
+		process_global_input.call_deferred()
 
 
 func uniform(key:String) -> String:
@@ -33,9 +36,9 @@ func evaluate_input(event_text:String) -> void:
 	if event_text == uniform(SessionManager.get_var('keybind_play_pause')):
 		PlayerManager.set_playing(not PlayerManager.is_playing)
 	if event_text == uniform(SessionManager.get_var('keybind_skip_backward')):
-		PlayerManager.skip_backward()
+		PlayerManager.previous()
 	if event_text == uniform(SessionManager.get_var('keybind_skip_forward')):
-		PlayerManager.skip_forward()
+		PlayerManager.next()
 	if event_text == uniform(SessionManager.get_var('keybind_volume_up')):
 		PlayerManager.volume_step_up()
 	if event_text == uniform(SessionManager.get_var('keybind_volume_down')):
@@ -86,9 +89,9 @@ func process_mpris_events() -> void:
 				if value == null: PlayerManager.set_playing(not PlayerManager.is_playing)
 				elif value is bool: PlayerManager.set_playing(value)
 			'skip_backward':
-				PlayerManager.skip_backward()
+				PlayerManager.previous()
 			'skip_forward':
-				PlayerManager.skip_forward()
+				PlayerManager.next()
 			'add_position':
 				if value is float or value is int: PlayerManager.set_track_progress(PlayerManager.track_progress+value)
 			'set_position':

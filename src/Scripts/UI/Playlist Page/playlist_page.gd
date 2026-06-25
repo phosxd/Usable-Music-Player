@@ -37,6 +37,12 @@ func init(playlist_:DBPlaylist=null) -> void:
 		%'Last Edit Date'.text = 'Modified: '+StringUtils.get_readable_date(playlist.last_edit_date)
 	var cover = playlist.get_cover()
 	%Icon.texture = cover if cover else DBAlbum.default_cover
+	update_gradient()
+
+	sort()
+
+
+func update_gradient() -> void:
 	var dominant_color = playlist.get_cover_dominant_color()
 	var dominant_colors = [
 		dominant_color,
@@ -51,10 +57,9 @@ func init(playlist_:DBPlaylist=null) -> void:
 		index += 1
 		mat.set_shader_parameter(i, dominant_colors[index].blend(overlay_color))
 
-	sort()
-
 
 func sort() -> void:
+	loaded_tracks.clear()
 	for child in %'Track List'.get_children():
 		child.queue_free()
 
@@ -71,8 +76,11 @@ func sort() -> void:
 func add_card(track:DBTrack) -> void:
 	if not card_scene: return
 	var card:Control = card_scene.instantiate()
+	card.context_menu_name = 'playlist_card'
+	card.details_scene_name = 'Playlist Page/card_details'
+	card.set_meta('playlist', playlist)
+	card.set_meta('scene', self)
 	card.init(track)
-	card.set_mode(0)
 	card.selected.connect(_on_track_selected.bind(track))
 	%'Track List'.add_child(card)
 
@@ -105,14 +113,13 @@ func edit_details() -> void:
 		# If no cover, skip image processing & just save here.
 		if not cover:
 			playlist.save()
-			SessionManager.refresh_current_page()
 			return
 		playlist.palette = DBAlbum.calculate_colors(cover) # Update color palette.
 		%Icon.texture = cover if cover else DBAlbum.default_cover
+		update_gradient()
 
 		# Save playlist file & refresh page.
 		playlist.save()
-		SessionManager.refresh_current_page()
 	)
 
 
@@ -166,3 +173,17 @@ func _on_add_pressed() -> void:
 		playlist.save()
 		sort()
 	)
+
+
+func _on_track_list_reordered(from:int, to:int) -> void:
+	var track_id:String = playlist.track_ids[from]
+	playlist.track_ids.remove_at(from)
+	if playlist.track_ids.size() <= to: playlist.track_ids.append(track_id)
+	else: playlist.track_ids.insert(to, track_id)
+
+	var track:DBTrack = loaded_tracks[from]
+	loaded_tracks.remove_at(from)
+	if loaded_tracks.size() <= to: loaded_tracks.append(track)
+	else: loaded_tracks.insert(to, track)
+
+	playlist.save()

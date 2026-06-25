@@ -143,6 +143,7 @@ func set_track_progress(progress:float) -> void:
 	track_progress_updated.emit(progress)
 
 
+## Set the selected track in the [member queue]. If [param save_session] is [code]true[/code], will save the [SessionManager] session after loading the track.
 func set_current_track(track_queue_position:int, save_session:bool=true) -> void:
 	if track_queue_position >= queue.size() or track_queue_position < 0: return
 	var track = queue.get(track_queue_position)
@@ -178,14 +179,16 @@ func set_current_track(track_queue_position:int, save_session:bool=true) -> void
 	)
 
 
-func skip_forward() -> void:
+## Skip to the next track in the [member queue].
+func next() -> void:
 	if loop_mode == LoopMode.QUEUE && queue.size() == queue_position+1:
 		set_current_track(0)
 	else:
 		set_current_track(queue_position+1)
 
 
-func skip_backward() -> void:
+## Skip to the previous track in the [member queue].
+func previous() -> void:
 	if track_progress > 3.0:
 		set_track_progress(0.0)
 	else:
@@ -227,12 +230,34 @@ func set_queue(new_queue:Array[DBTrack], anchor:DBTrack=null) -> void:
 	queue_updated.emit(QueueUpdateCode.Set, null)
 
 
+## Add a track to the very end of the [member queue].
 func add_to_queue(track:DBTrack, emit:bool=true) -> void:
 	queue.append(track)
 	if queue.size() >= SessionManager.get_var('queue_size_limit'):
 		remove_from_queue(queue[0 if queue_position != 0 else 1])
 
 	if emit: queue_updated.emit(QueueUpdateCode.Add, track)
+
+
+## Add a track to the end of the [member queue], or before the start of the [member auto_queue_start_index].
+func add_to_queue_with_context(track:DBTrack, emit:bool=true) -> void:
+	if auto_queue_start_index > queue_position:
+		insert_to_queue(auto_queue_start_index, track, emit)
+		auto_queue_start_index += 1
+	else:
+		add_to_queue(track, emit)
+
+
+func add_next_in_queue(track:DBTrack, emit:bool=true) -> void:
+	insert_to_queue(queue_position+1, track, emit)
+
+
+func add_next_in_queue_with_context(track:DBTrack, emit:bool=true) -> void:
+	insert_to_queue(queue_position+1, track, emit)
+	if auto_queue_start_index == -1:
+		auto_queue_start_index = queue_position+2
+	else:
+		auto_queue_start_index += 1
 
 
 func remove_from_queue(track:DBTrack, emit:bool=true) -> void:
@@ -274,9 +299,9 @@ func _current_track_finished() -> void:
 	if queue_position+1 >= queue.size(): is_playing = false
 	if loop_mode == LoopMode.TRACK: set_playing(true)
 	elif loop_mode == LoopMode.QUEUE:
-		skip_forward()
+		next()
 		set_playing(true)
-	else: skip_forward()
+	else: next()
 
 	if SessionManager.get_var('send_track_finished_notif'):
 		var track:DBTrack = get_current_track()

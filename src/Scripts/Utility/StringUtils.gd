@@ -70,8 +70,8 @@ static func get_ordinal_number(number:int) -> String:
 static func get_readable_date(text:String) -> String:
 	var split:PackedStringArray = text.replace('-','/').replace(' ','/').split('/', false)
 	if split.size() != 3: return ''
-	return '%s %s %s' % [
+	return '%s %s, %s' % [
 		months.get(int(split[1])-1),
-		get_ordinal_number(int(split[2])),
+		int(split[2]),
 		split[0],
 	]
