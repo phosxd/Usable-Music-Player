@@ -294,8 +294,8 @@ async def _start():
 	try:
 		await bus.wait_for_disconnect()
 	except Exception as e:
-		print('MPRIS error "{e}", restarting.', file=sys.stderr)
-		_start()
+		#print(f'MPRIS error "{e}", restarting.', file=sys.stderr)
+		await _start()
 
 
 if __name__ == "__main__":

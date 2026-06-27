@@ -60,6 +60,7 @@ func _sort(list:Control) -> void:
 	var current_count:Array[int] = [update_count]
 	for track:DBTrack in queue:
 		if update_count != current_count[0]: return
+		if not self: return
 		add_card(track, list)
 		OS.delay_msec(4)
 	if update_count != current_count[0]: return
@@ -70,7 +71,7 @@ func add_card(track:DBTrack, list:Control) -> void:
 	if not card_scene: return
 	var card = card_scene.instantiate()
 	card.init(track)
-	list.add_child.call_deferred(card)
+	if list: list.add_child.call_deferred(card)
 
 
 func _on_list_reordered(from:int, to:int) -> void:
