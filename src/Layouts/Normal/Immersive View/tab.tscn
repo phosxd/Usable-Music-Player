@@ -183,7 +183,7 @@ layout_mode = 2
 visible = false
 
 [node name="Panel" parent="VBox/Player" index="2" unique_id=1314853469]
-self_modulate = Color(1, 1, 1, 0.49019608)
+self_modulate = Color(1, 1, 1, 0.50980395)
 layout_mode = 1
 anchors_preset = 15
 

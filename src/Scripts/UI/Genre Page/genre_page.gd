@@ -31,18 +31,6 @@ func init(data:Dictionary={}) -> void:
 	await ready
 	%Title.text = genre_name
 	%Title.tooltip_text = genre_name
-	var dominant_colors = [
-		Color.WHITE,
-		Color.WHITE,
-		Color.WHITE,
-		Color.WHITE,
-	]
-	dominant_colors.shuffle()
-	var mat = %Gradient.material
-	var index:int = -1
-	for i in ['topright','topleft','bottomright','bottomleft']:
-		index += 1
-		mat.set_shader_parameter(i, dominant_colors[index].blend(overlay_color))
 
 	for album in albums:
 		if album is not DBAlbum: continue

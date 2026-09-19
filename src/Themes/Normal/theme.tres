@@ -18,6 +18,9 @@
 [ext_resource type="StyleBox" uid="uid://dvbiju7d2d77a" path="res://Themes/Normal/Assets/Styles/LineEdit/focus.tres" id="9_p4va6"]
 [ext_resource type="StyleBox" uid="uid://c2ol5ukxy0g0u" path="res://Themes/Normal/Assets/Styles/LineEdit/normal.tres" id="9_pa6ds"]
 [ext_resource type="StyleBox" uid="uid://cpy6186qdkjqs" path="res://Themes/Normal/Assets/Styles/LineEdit/ready_only.tres" id="10_f6ltk"]
+[ext_resource type="Texture2D" uid="uid://dpqsqtxi0kakf" path="res://Themes/Normal/Assets/Icons/grabber.svg" id="13_ub6sa"]
+[ext_resource type="Texture2D" uid="uid://csfitydllo66x" path="res://Themes/Normal/Assets/Icons/grabber_disabled.svg" id="14_poq2b"]
+[ext_resource type="Texture2D" uid="uid://d1uw46b6mqpd8" path="res://Themes/Normal/Assets/Icons/grabber_highlight.svg" id="15_poq2b"]
 [ext_resource type="StyleBox" uid="uid://bvh1jsjvclehg" path="res://Themes/Normal/Assets/Styles/PanelContainer/tools_island_panel.tres" id="15_qgq1p"]
 [ext_resource type="StyleBox" uid="uid://coe1ck6nubixp" path="res://Themes/Normal/Assets/Styles/PanelContainer/rounded_texture_mask.tres" id="18_qw6u4"]
 [ext_resource type="StyleBox" uid="uid://ivkwcaj8fepd" path="res://Themes/Normal/Assets/Styles/Tooltip/normal.tres" id="21_5687p"]
@@ -122,26 +125,6 @@ corner_radius_bottom_left = 8
 shadow_color = Color(0, 0, 0, 0.29411766)
 shadow_size = 2
 shadow_offset = Vector2(2, 2)
-
-[sub_resource type="DPITexture" id="DPITexture_6i4ee"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"3\" fill=\"#fff\" fill-opacity=\".9\"/><circle cx=\"8\" cy=\"8\" r=\"6\" fill=\"none\" stroke=\"#e0e0e0\" stroke-opacity=\".29\" stroke-width=\"2\"/></svg>
-"
-saturation = 2.0
-color_map = {
-Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
-Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
-Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
-}
-
-[sub_resource type="DPITexture" id="DPITexture_xwxhs"]
-_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"3\" fill=\"#fff\" fill-opacity=\".9\"/><circle cx=\"8\" cy=\"8\" r=\"6\" fill=\"none\" stroke=\"#e0e0e0\" stroke-width=\"2\"/></svg>
-"
-saturation = 2.0
-color_map = {
-Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
-Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
-Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
-}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_di31b"]
 content_margin_left = 0.0
@@ -380,6 +363,26 @@ content_margin_top = 0.0
 content_margin_right = 3.0
 content_margin_bottom = 0.0
 
+[sub_resource type="DPITexture" id="DPITexture_6i4ee"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"3\" fill=\"#fff\" fill-opacity=\".9\"/><circle cx=\"8\" cy=\"8\" r=\"6\" fill=\"none\" stroke=\"#e0e0e0\" stroke-opacity=\".29\" stroke-width=\"2\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
+[sub_resource type="DPITexture" id="DPITexture_xwxhs"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"3\" fill=\"#fff\" fill-opacity=\".9\"/><circle cx=\"8\" cy=\"8\" r=\"6\" fill=\"none\" stroke=\"#e0e0e0\" stroke-width=\"2\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oyf0h"]
 content_margin_left = 2.0
 content_margin_top = 0.0
@@ -483,8 +486,9 @@ HSeparator/constants/separation = 8
 HSeparator/styles/separator = ExtResource("5_3n3yh")
 HSlider/constants/center_grabber = 0
 HSlider/constants/grabber_offset = 0
-HSlider/icons/grabber = SubResource("DPITexture_6i4ee")
-HSlider/icons/grabber_highlight = SubResource("DPITexture_xwxhs")
+HSlider/icons/grabber = ExtResource("13_ub6sa")
+HSlider/icons/grabber_disabled = ExtResource("14_poq2b")
+HSlider/icons/grabber_highlight = ExtResource("15_poq2b")
 HSlider/styles/grabber_area = SubResource("StyleBoxFlat_di31b")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_tg2ob")
 HSlider/styles/slider = SubResource("StyleBoxFlat_s1k85")

@@ -1,10 +1,6 @@
 [gd_scene format=3 uid="uid://v1bf34e7axh5"]
 
 [ext_resource type="Script" uid="uid://calslw8pduvmo" path="res://Scripts/UI/Genre Page/genre_page.gd" id="1_s3kyt"]
-[ext_resource type="Shader" uid="uid://dvoc7ypde1coe" path="res://Assets/gradient.gdshader" id="2_g4b1r"]
-[ext_resource type="Script" uid="uid://b4ukv3a8is182" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="4_5ku3p"]
-[ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="5_3f3rx"]
-[ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_0biy0"]
 [ext_resource type="Texture2D" uid="uid://c13ui4j5ns70k" path="res://Themes/Normal/Assets/Icons/play.svg" id="8_ltosu"]
 [ext_resource type="Texture2D" uid="uid://1fmbpq2gde8k" path="res://Themes/Normal/Assets/Icons/shuffle.svg" id="9_2ph7i"]
 [ext_resource type="Texture2D" uid="uid://42ovqy4emoj6" path="res://Themes/Normal/Assets/Icons/options_horizontal.svg" id="10_l1t3e"]
@@ -13,40 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://dx774m7gpfar8" path="res://Themes/Normal/Assets/Icons/modifiers.svg" id="13_j0d1a"]
 [ext_resource type="Resource" uid="uid://bq51bvd045uht" path="res://Assets/ScrollSettings/main.tres" id="13_ysr7q"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/smooth_scroll_container.gd" id="14_rdpiu"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wngf1"]
-shader = ExtResource("2_g4b1r")
-shader_parameter/topleft = Color(0, 0, 0, 1)
-shader_parameter/topright = Color(0, 0, 0, 1)
-shader_parameter/bottomleft = Color(0, 0, 0, 1)
-shader_parameter/bottomright = Color(0.21, 0.21, 0.21, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_05ng2"]
-content_margin_left = 6.0
-content_margin_top = 4.0
-content_margin_right = 6.0
-content_margin_bottom = 4.0
-bg_color = Color(0.1848, 0.1848, 0.1848, 1)
-corner_detail = 4
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0e0sc"]
-blend_mode = 4
-
-[sub_resource type="Gradient" id="Gradient_d17rs"]
-colors = PackedColorArray(0, 0, 0, 0.47058824, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ljtex"]
-gradient = SubResource("Gradient_d17rs")
-height = 128
-fill_from = Vector2(0.5, 0)
-fill_to = Vector2(0.5, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tsf30"]
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-anti_aliasing = false
 
 [node name="Genre Page" type="Control" unique_id=373382617]
 layout_mode = 3
@@ -68,106 +30,51 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="Controls" type="Control" parent="VBox" unique_id=773886120]
+[node name="Controls" type="MarginContainer" parent="VBox" unique_id=1825597167]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.4
+size_flags_stretch_ratio = 0.06
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
 
-[node name="Gradient" type="Panel" parent="VBox/Controls" unique_id=366783618]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_wngf1")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_05ng2")
+[node name="Panel" type="PanelContainer" parent="VBox/Controls" unique_id=1648389026]
+self_modulate = Color(1, 1, 1, 0.50980395)
+layout_mode = 2
 
-[node name="Fade" type="TextureRect" parent="VBox/Controls" unique_id=1055429295]
-material = SubResource("CanvasItemMaterial_0e0sc")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("GradientTexture2D_ljtex")
-expand_mode = 1
-flip_v = true
-
-[node name="VBox" type="VBoxContainer" parent="VBox/Controls" unique_id=674117022]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HBox" type="HBoxContainer" parent="VBox/Controls/VBox" unique_id=1278799146]
+[node name="HBox" type="HBoxContainer" parent="VBox/Controls/Panel" unique_id=1278799146]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Icon Margin" type="MarginContainer" parent="VBox/Controls/VBox/HBox" unique_id=1186668406]
+[node name="Sep" type="VSeparator" parent="VBox/Controls/Panel/HBox" unique_id=1740263402]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 3
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 14
-theme_override_constants/margin_right = 14
+theme_override_constants/separation = 2
 
-[node name="Panel" type="Panel" parent="VBox/Controls/VBox/HBox/Icon Margin" unique_id=1007525857]
-layout_mode = 2
-theme_type_variation = &"GridItemPanel"
-
-[node name="Icon" type="PanelContainer" parent="VBox/Controls/VBox/HBox/Icon Margin" unique_id=2014446729]
-unique_name_in_owner = true
-clip_children = 1
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_tsf30")
-script = ExtResource("4_5ku3p")
-texture = ExtResource("5_3f3rx")
-expand_mode = 2
-stretch_mode = 5
-metadata/_custom_type_script = "uid://b4ukv3a8is182"
-
-[node name="Album Button" parent="VBox/Controls/VBox/HBox/Icon Margin" unique_id=519598093 instance=ExtResource("6_0biy0")]
-layout_mode = 2
-
-[node name="Details" type="VBoxContainer" parent="VBox/Controls/VBox/HBox" unique_id=1685556259]
+[node name="Title" type="Label" parent="VBox/Controls/Panel/HBox" unique_id=1814440858]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 0
-
-[node name="Primary Details" type="HBoxContainer" parent="VBox/Controls/VBox/HBox/Details" unique_id=1441968863]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 10
-
-[node name="Title" type="Label" parent="VBox/Controls/VBox/HBox/Details/Primary Details" unique_id=1814440858]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
+size_flags_vertical = 1
 theme_type_variation = &"LabelHeader2"
 text = "GENRE NAME"
 clip_text = true
 text_overrun_behavior = 5
 
-[node name="Sep 1" type="VSeparator" parent="VBox/Controls/VBox/HBox" unique_id=413642820]
+[node name="Sep 1" type="VSeparator" parent="VBox/Controls/Panel/HBox" unique_id=413642820]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Controls" type="HBoxContainer" parent="VBox/Controls/VBox/HBox" unique_id=1447041976]
+[node name="Controls" type="HBoxContainer" parent="VBox/Controls/Panel/HBox" unique_id=1447041976]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 8
+size_flags_vertical = 4
 theme_override_constants/separation = 14
 
-[node name="Play" type="Button" parent="VBox/Controls/VBox/HBox/Controls" unique_id=245581158]
+[node name="Play" type="Button" parent="VBox/Controls/Panel/HBox/Controls" unique_id=245581158]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
@@ -175,7 +82,7 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("8_ltosu")
 icon_alignment = 1
 
-[node name="Shuffle" type="Button" parent="VBox/Controls/VBox/HBox/Controls" unique_id=333186358]
+[node name="Shuffle" type="Button" parent="VBox/Controls/Panel/HBox/Controls" unique_id=333186358]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
@@ -183,7 +90,7 @@ theme_type_variation = &"AccentButton"
 icon = ExtResource("9_2ph7i")
 icon_alignment = 1
 
-[node name="Options" type="MenuButton" parent="VBox/Controls/VBox/HBox/Controls" unique_id=807633223]
+[node name="Options" type="MenuButton" parent="VBox/Controls/Panel/HBox/Controls" unique_id=807633223]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
@@ -202,14 +109,10 @@ popup/item_2/text = "Rescan"
 popup/item_2/icon = ExtResource("13_j0d1a")
 popup/item_2/id = 2
 
-[node name="Sep 2" type="VSeparator" parent="VBox/Controls/VBox/HBox" unique_id=715618603]
+[node name="Sep 2" type="VSeparator" parent="VBox/Controls/Panel/HBox" unique_id=715618603]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 20
-
-[node name="Sep 1" type="HSeparator" parent="VBox/Controls/VBox" unique_id=807957149]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
 
 [node name="Scroll" type="ScrollContainer" parent="VBox" unique_id=608175237]
 layout_mode = 2
@@ -254,6 +157,5 @@ theme_override_constants/v_separation = 6
 layout_mode = 2
 theme_type_variation = &"ScrollFillSeparator"
 
-[connection signal="pressed" from="VBox/Controls/VBox/HBox/Icon Margin/Album Button" to="." method="_on_album_button_pressed"]
-[connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="VBox/Controls/VBox/HBox/Controls/Shuffle" to="." method="_on_shuffle_pressed"]
+[connection signal="pressed" from="VBox/Controls/Panel/HBox/Controls/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBox/Controls/Panel/HBox/Controls/Shuffle" to="." method="_on_shuffle_pressed"]
