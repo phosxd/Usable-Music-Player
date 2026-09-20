@@ -18,6 +18,7 @@
 [ext_resource type="StyleBox" uid="uid://dvbiju7d2d77a" path="res://Themes/Normal/Assets/Styles/LineEdit/focus.tres" id="9_p4va6"]
 [ext_resource type="StyleBox" uid="uid://c2ol5ukxy0g0u" path="res://Themes/Normal/Assets/Styles/LineEdit/normal.tres" id="9_pa6ds"]
 [ext_resource type="StyleBox" uid="uid://cpy6186qdkjqs" path="res://Themes/Normal/Assets/Styles/LineEdit/ready_only.tres" id="10_f6ltk"]
+[ext_resource type="StyleBox" uid="uid://leqvarl57cpl" path="res://Themes/Normal/Assets/Styles/PanelContainer/grid_item_panel.tres" id="12_x31us"]
 [ext_resource type="Texture2D" uid="uid://dpqsqtxi0kakf" path="res://Themes/Normal/Assets/Icons/grabber.svg" id="13_ub6sa"]
 [ext_resource type="Texture2D" uid="uid://csfitydllo66x" path="res://Themes/Normal/Assets/Icons/grabber_disabled.svg" id="14_poq2b"]
 [ext_resource type="Texture2D" uid="uid://d1uw46b6mqpd8" path="res://Themes/Normal/Assets/Icons/grabber_highlight.svg" id="15_poq2b"]
@@ -115,16 +116,6 @@ corner_detail = 4
 shadow_color = Color(0, 0, 0, 0.005)
 shadow_size = 8
 shadow_offset = Vector2(0, 4)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3rvjd"]
-bg_color = Color(0.14, 0.14, 0.14, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-shadow_color = Color(0, 0, 0, 0.29411766)
-shadow_size = 2
-shadow_offset = Vector2(2, 2)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_di31b"]
 content_margin_left = 0.0
@@ -479,7 +470,7 @@ FoldableContainer/styles/title_collapsed_panel = ExtResource("4_nxdkj")
 FoldableContainer/styles/title_hover_panel = ExtResource("2_davr4")
 FoldableContainer/styles/title_panel = ExtResource("4_nxdkj")
 GridItemPanel/base_type = &"Panel"
-GridItemPanel/styles/panel = SubResource("StyleBoxFlat_3rvjd")
+GridItemPanel/styles/panel = ExtResource("12_x31us")
 HFlowContainer/constants/h_separation = 4
 HFlowContainer/constants/v_separation = 4
 HSeparator/constants/separation = 8

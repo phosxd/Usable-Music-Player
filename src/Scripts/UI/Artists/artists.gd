@@ -78,7 +78,6 @@ func _sort(artists:Array[DBArtist], list:Control, scroll:ScrollContainer) -> voi
 		# Add card.
 		loaded_artists.append(artist)
 		add_card(artist, list)
-		OS.delay_msec(4)
 
 	if scroll && scroll.scroll_vertical == 0:
 		scroll.set_deferred('scroll_vertical', SessionManager.get_var('artists_tab_scroll_value'))

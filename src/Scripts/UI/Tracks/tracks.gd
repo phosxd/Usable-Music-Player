@@ -75,19 +75,16 @@ func sort() -> void:
 	)
 	if ascend_mode == false: tracks.reverse()
 
-	Async.create_thread(_sort.bind(%Grid, %Scroll))
+	Async.create_thread(_sort.bind(%Grid))
 
 
-func _sort(grid:Control, scroll:ScrollContainer=null) -> void:
+func _sort(grid:Control) -> void:
 	var current_count:Array[int] = [update_count]
 	for track:DBTrack in tracks:
 		if update_count != current_count[0]: return
 		# Add card.
 		add_card(track, _on_track_selected.bind(track), grid)
 		OS.delay_msec(4)
-
-	if scroll && scroll.scroll_vertical == 0:
-		scroll.set_deferred('scroll_vertical', SessionManager.get_var('tracks_tab_scroll_value'))
 
 
 func add_card(track:DBTrack, callback:Callable, grid:Control) -> void:

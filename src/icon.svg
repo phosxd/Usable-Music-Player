@@ -49,23 +49,23 @@
        id="linearGradient19"
        inkscape:collect="always">
       <stop
-         style="stop-color:#4d4d4d;stop-opacity:1;"
+         style="stop-color:#333333;stop-opacity:1;"
          offset="0"
          id="stop19" />
       <stop
-         style="stop-color:#5e7480;stop-opacity:1;"
+         style="stop-color:#425059;stop-opacity:1;"
          offset="0.25080606"
          id="stop281" />
       <stop
-         style="stop-color:#595959;stop-opacity:1;"
-         offset="0.49709013"
+         style="stop-color:#404040;stop-opacity:1;"
+         offset="0.49644148"
          id="stop2" />
       <stop
-         style="stop-color:#55806d;stop-opacity:1;"
+         style="stop-color:#3c594c;stop-opacity:1;"
          offset="0.74992371"
          id="stop282" />
       <stop
-         style="stop-color:#4d4d4d;stop-opacity:1;"
+         style="stop-color:#333333;stop-opacity:1;"
          offset="0.99751663"
          id="stop20" />
     </linearGradient>
@@ -99,9 +99,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="3.139523"
-     inkscape:cx="-19.748223"
-     inkscape:cy="20.226002"
+     inkscape:zoom="2.5631262"
+     inkscape:cx="-12.484754"
+     inkscape:cy="22.823691"
      inkscape:window-width="1920"
      inkscape:window-height="1008"
      inkscape:window-x="0"

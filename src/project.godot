@@ -26,7 +26,7 @@ run/max_fps=80
 run/low_processor_mode=true
 run/low_processor_mode_sleep_usec=10000
 boot_splash/show_image=false
-config/icon="uid://dvf313eolgmy2"
+config/icon="uid://bg3esme2pp3nh"
 
 [audio]
 

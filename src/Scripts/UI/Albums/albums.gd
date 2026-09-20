@@ -71,10 +71,10 @@ func sort() -> void:
 	) 
 	if ascend_mode == false: albums.reverse()
 
-	Async.create_thread(_sort.bind(%Grid, %Scroll))
+	Async.create_thread(_sort.bind(%Grid), _post_sort.bind(%Scroll))
 
 
-func _sort(list:Control, scroll:ScrollContainer) -> void:
+func _sort(list:Control) -> void:
 	var current_count:Array[int] = [update_count]
 	for album:DBAlbum in albums:
 		if not album or update_count != current_count[0]: return
@@ -83,13 +83,13 @@ func _sort(list:Control, scroll:ScrollContainer) -> void:
 			DBLibrary.AlbumSortMode.year: secondary_text = album.year
 		# Add card.
 		add_card(album, secondary_text, list)
-		OS.delay_msec(4)
 
+func _post_sort(_result, scroll:ScrollContainer) -> void:
 	if scroll && scroll.scroll_vertical == 0:
 		scroll.set_deferred('scroll_vertical', SessionManager.get_var('albums_tab_scroll_value'))
 
 
-func add_card(album:DBAlbum, secondary_text:String, list:Control) -> void:
+func add_card(album:DBAlbum, secondary_text:String, list:Control):
 	# Create card.
 	var card:Control = card_scene.instantiate()
 	# Show library icon if multiple libraries visible.
