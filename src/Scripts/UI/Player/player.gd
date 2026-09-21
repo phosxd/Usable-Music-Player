@@ -89,7 +89,7 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 
 func update_volume(value:float) -> void:
 	%Volume.set_value_no_signal(value)
-	%'Mute Button'.button_pressed = value == 0
+	%'Mute Button'.set_pressed_no_signal(value == 0)
 
 
 func update_replaygain_indicator(value:float) -> void:

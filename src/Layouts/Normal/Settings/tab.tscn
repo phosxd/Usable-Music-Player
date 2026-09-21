@@ -554,9 +554,11 @@ script = ExtResource("11_ispo5")
 [node name="UI Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/UI" unique_id=145514113]
 unique_name_in_owner = true
 layout_mode = 2
+folded = true
 title = "User Interface"
 
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold" unique_id=821509536]
+visible = false
 layout_mode = 2
 
 [node name="Clear Queue Warning" type="HBoxContainer" parent="Scroll/Margin/VBox/UI/UI Fold/VBox" unique_id=1689461171]
@@ -750,11 +752,9 @@ script = ExtResource("13_enh62")
 [node name="Immersive View Fold" type="FoldableContainer" parent="Scroll/Margin/VBox/Immersive View" unique_id=412975468]
 unique_name_in_owner = true
 layout_mode = 2
-folded = true
 title = "Immersive View"
 
 [node name="VBox" type="VBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold" unique_id=1362471797]
-visible = false
 layout_mode = 2
 
 [node name="Slide Away Player" type="HBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox" unique_id=379749127]
@@ -790,6 +790,26 @@ text = "Reactive Background"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
+
+[node name="Reactive Background Intensity" type="HBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox" unique_id=1146682761]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background Intensity" unique_id=1107318282]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Modulate the immersive view's background based on volume during playback.
+
+Works best on brighter colors, & louder songs."
+mouse_filter = 1
+theme_type_variation = &"LabelPrimary"
+text = "Reactive Intensity"
+
+[node name="Immersive View Reactive Background Intensity" type="SpinBox" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background Intensity" unique_id=119618628]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+max_value = 2.0
+step = 0.001
 
 [node name="Background Texture" type="HBoxContainer" parent="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox" unique_id=2074534880]
 layout_mode = 2
@@ -1121,6 +1141,7 @@ theme_type_variation = &"ScrollFillSeparator"
 [connection signal="folding_changed" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_fold_folding_changed"]
 [connection signal="toggled" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Slide Away Player/Immersive View Slide Away Player" to="Scroll/Margin/VBox/Immersive View" method="_on_slide_away_player_toggled"]
 [connection signal="toggled" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background/Immersive View Reactive Background" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_reactive_background_toggled"]
+[connection signal="value_changed" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Reactive Background Intensity/Immersive View Reactive Background Intensity" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_reactive_background_intensity_value_changed"]
 [connection signal="item_selected" from="Scroll/Margin/VBox/Immersive View/Immersive View Fold/VBox/Background Texture/Immersive View Texture Name" to="Scroll/Margin/VBox/Immersive View" method="_on_immersive_view_texture_name_item_selected"]
 [connection signal="folding_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold" to="Scroll/Margin/VBox/Keybinds" method="_on_folding_changed"]
 [connection signal="keycode_changed" from="Scroll/Margin/VBox/Keybinds/Keybinds Fold/VBox/Play Pause/Play Pause Key" to="Scroll/Margin/VBox/Keybinds" method="_on_play_pause_key_keycode_changed"]

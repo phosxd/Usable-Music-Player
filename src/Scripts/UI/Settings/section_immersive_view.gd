@@ -6,6 +6,7 @@ const section:String = 'Immersive View'
 func _ready() -> void:
 	%'Immersive View Slide Away Player'.set_pressed_no_signal(SessionManager.get_var('immersive_view_slide_away_player'))
 	%'Immersive View Reactive Background'.set_pressed_no_signal(SessionManager.get_var('immersive_view_reactive_background'))
+	%'Immersive View Reactive Background Intensity'.set_value_no_signal(SessionManager.get_var('immersive_view_reactive_background_intensity'))
 	%'Immersive View Fold'.folded = section in SessionManager.get_var('folded_sections')
 	for texture_name:String in SessionManager.get_var('immersive_view_texture_names'):
 		%'Immersive View Texture Name'.add_item(texture_name)
@@ -18,6 +19,10 @@ func _on_immersive_view_fold_folding_changed(is_folded:bool) -> void:
 		SessionManager.get_var('folded_sections').append(section)
 	else:
 		SessionManager.get_var('folded_sections').erase(section)
+
+
+func _on_immersive_view_reactive_background_intensity_value_changed(value: float) -> void:
+	SessionManager.set_var('immersive_view_reactive_background_intensity', value)
 
 
 func _on_immersive_view_texture_name_item_selected(index:int) -> void:

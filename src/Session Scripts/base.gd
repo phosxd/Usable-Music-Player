@@ -100,6 +100,7 @@ const property_data:Array[Array] = [
 	# Immersive View.
 	['immersive_view_slide_away_player',[TYPE_BOOL]],
 	['immersive_view_reactive_background',[TYPE_BOOL]],
+	['immersive_view_reactive_background_intensity',[TYPE_FLOAT]],
 	['immersive_view_texture_name',[TYPE_STRING]],
 	# Audio.
 	['replay_gain_mode',[TYPE_INT]],
@@ -215,7 +216,7 @@ var visualizer_mode:VisualizerMode = VisualizerMode.OFF
 
 var visualizer_bar_count:int = 100
 
-var visualizer_bar_smoothing:float = 0.5
+var visualizer_bar_smoothing:float = 0.6
 
 var panel_tint := Color.TRANSPARENT:
 	set(value):
@@ -233,6 +234,7 @@ var button_tint := Color.TRANSPARENT:
 
 var immersive_view_slide_away_player:bool = true
 var immersive_view_reactive_background:bool = false
+var immersive_view_reactive_background_intensity:float = 0.1
 var immersive_view_texture_name:String = 'Stripes'
 
 #endregion

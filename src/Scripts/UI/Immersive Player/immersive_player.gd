@@ -122,11 +122,10 @@ func update_visualizer(db:float) -> void:
 		%Background.self_modulate = Color.WHITE
 		return
 
-	var linear := db_to_linear(db)
-	var bg_color := Color.WHITE*linear
+	var bg_color := Color.WHITE * MathUtils.transfer_range_of_value(Vector2(0.0,db_to_linear(PlayerManager.track_peak)), Vector2(0.0,1.75), db_to_linear(db))
 	bg_color.a = 1.0
-	bg_color.v = max(0.3,min(1.5,bg_color.v))
-	bg_color = lerp(prev_bg_color, bg_color, 0.025)
+	bg_color.v = max(0.3,min(1.3,bg_color.v))
+	bg_color = lerp(prev_bg_color, bg_color, SessionManager.get_var('immersive_view_reactive_background_intensity'))
 	%Background.self_modulate = bg_color
 	prev_bg_color = bg_color
 

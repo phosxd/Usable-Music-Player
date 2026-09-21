@@ -43,7 +43,8 @@ var auto_queue_start_index:int = -1
 var audio_stream_player: AudioStreamPlayer
 var current_track_loading:bool = false
 var track_progress: float
-var last_peak_volume: float
+var last_peak_volume: float # Not the track's total peak volume, instead this is the immediate loudness of the track.
+var track_peak:float = 0.0 # Track's peak volume, the loudest the track has been since playing it.
 var loop_mode := LoopMode.OFF
 var replay_gain:float = 0.0:
 	set(value):
@@ -66,6 +67,9 @@ var stop_at_index:int = -1
 var is_playing:bool = false
 var is_shuffled:bool = false
 
+var next_track_stream:AudioStream = null # Preloaded stream for next track in queue.
+var loading_next_track_stream:bool = false
+
 
 func _ready() -> void:
 	SessionManager.value_changed.connect(_on_session_manager_value_changed)
@@ -87,14 +91,27 @@ func _ready() -> void:
 func _process(_delta:float) -> void:
 	if Engine.get_process_frames() % 5 != 0: return
 
+	# Emit loudness changes.
 	if audio_stream_player.playing or last_peak_volume != -200:
 		var peak_volume:float = MathUtils.transfer_range_of_value(Vector2(-200,0), Vector2(-100,0), AudioServer.get_bus_peak_volume_left_db(0,0)+AudioServer.get_bus_peak_volume_right_db(0,0))
-		if peak_volume != last_peak_volume: track_peak_volume_changed.emit(peak_volume)
+		if peak_volume != last_peak_volume:
+			if peak_volume > track_peak: track_peak = peak_volume # Update track peak.
+			track_peak_volume_changed.emit(peak_volume)
 		last_peak_volume = peak_volume
 
+	# Update track progress.
 	if audio_stream_player.playing:
 		track_progress = audio_stream_player.get_playback_position()
 		track_progress_updated.emit(track_progress)
+		# Preload next track if nearing end of this track.
+		if track_progress > audio_stream_player.stream.get_length()*0.75 && next_track_stream == null && not loading_next_track_stream:
+			var next_track:DBTrack = queue.get(queue_position+1)
+			if next_track:
+				loading_next_track_stream = true
+				Async.create_thread(func() -> void:
+					next_track_stream = next_track.get_stream()
+					loading_next_track_stream = false
+				)
 
 
 func _on_session_manager_value_changed(property_name:String, source_name:String) -> void:
@@ -126,11 +143,11 @@ func get_current_track() -> DBTrack:
 func set_playing(playing:bool) -> void:
 	is_playing = playing
 	if playing:
-		audio_stream_player.play.call_deferred(track_progress)
-		play_requested.emit.call_deferred()
+		audio_stream_player.play(track_progress)
+		play_requested.emit()
 	else:
-		audio_stream_player.stop.call_deferred()
-		pause_requested.emit.call_deferred()
+		audio_stream_player.stop()
+		pause_requested.emit()
 
 	PyInterface.update_mpris_data({
 		'playback_status': 'Playing' if playing else 'Paused',
@@ -144,7 +161,7 @@ func set_track_progress(progress:float) -> void:
 
 
 ## Set the selected track in the [member queue]. If [param save_session] is [code]true[/code], will save the [SessionManager] session after loading the track.
-func set_current_track(track_queue_position:int, save_session:bool=true) -> void:
+func set_current_track(track_queue_position:int, save_session:bool=true, use_preloaded_next_stream:bool=false) -> void:
 	if track_queue_position >= queue.size() or track_queue_position < 0: return
 	var track = queue.get(track_queue_position)
 	if track is not DBTrack: return
@@ -154,11 +171,18 @@ func set_current_track(track_queue_position:int, save_session:bool=true) -> void
 	current_track_updated.emit(track_queue_position, track)
 	current_track_loading = true
 	current_track_load_started.emit()
-	Async.create_thread(func() -> void:
-		var stream:AudioStream = track.get_stream()
-		if get_current_track() != track: return
-		audio_stream_player.set_deferred('stream', stream)
-	,func(_result) -> void:
+	
+	var post_load = func(_result) -> void:
+		# Set playing.
+		if is_playing && track_queue_position != stop_at_index: set_playing(true)
+		else:
+			set_playing(false)
+			stop_at_index = -1
+		# Emit current track load finished.
+		current_track_load_finished.emit()
+		current_track_loading = false
+		# Save session.
+		if save_session: SessionManager.save_session()
 		# Send metadata to MPRIS server.
 		PyInterface.update_mpris_data({
 			'track_title': track.name,
@@ -167,16 +191,17 @@ func set_current_track(track_queue_position:int, save_session:bool=true) -> void
 			'track_length': track.length,
 			'art_url': 'file://%s' % track.album.cover_path,
 		})
-		# Emit load finished & set playing.
-		current_track_load_finished.emit()
-		current_track_loading = false
-		if is_playing && track_queue_position != stop_at_index: set_playing(true)
-		else:
-			set_playing(false)
-			stop_at_index = -1
-		# Save session.
-		if save_session: SessionManager.save_session()
-	)
+
+	if use_preloaded_next_stream && next_track_stream:
+		audio_stream_player.stream = next_track_stream
+		next_track_stream = null
+		post_load.call(null)
+	else:
+		Async.create_thread(func() -> void:
+			var stream:AudioStream = track.get_stream()
+			if get_current_track() != track: return
+			audio_stream_player.set_deferred('stream', stream)
+		,post_load)
 
 
 ## Skip to the next track in the [member queue].
@@ -184,7 +209,7 @@ func next() -> void:
 	if loop_mode == LoopMode.QUEUE && queue.size() == queue_position+1:
 		set_current_track(0)
 	else:
-		set_current_track(queue_position+1)
+		set_current_track(queue_position+1, true, true)
 
 
 ## Skip to the previous track in the [member queue].
