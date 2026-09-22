@@ -17,6 +17,7 @@ func start_animation(targets:Array[float], duration:float) -> void:
 	tween.set_trans(Tween.TRANS_QUART) # Give smoothing effect.
 	tween.tween_property(%Player/%Panel, 'position:y', targets[0], duration)
 	tween.tween_property(%Player/%'Bar Visualizer', 'position_offset:y', targets[1], duration)
+	tween.tween_property(%Title, 'modulate:a', targets[2], duration)
 	tween.play()
 
 
@@ -26,7 +27,7 @@ func _process(_delta:float) -> void:
 
 	# If hovering over player while hidden, play animation to show it.
 	if self.time_left == 0:
-		start_animation([0,0], 0.5)
+		start_animation([0,0, 0], 0.5)
 
 	# Reset timer when hovering over player.
 	%'Hide Player Timer'.stop()
@@ -35,5 +36,5 @@ func _process(_delta:float) -> void:
 
 func _on_timeout() -> void:
 	if not SessionManager.get_var('immersive_view_slide_away_player'): return
-	start_animation([%Player/%Panel.size.y, %Player/%'Bar Visualizer'.size.y], 0.75)
+	start_animation([%Player/%Panel.size.y, %Player/%'Bar Visualizer'.size.y, 1.0], 0.75)
 	self.wait_time = wait_time_2

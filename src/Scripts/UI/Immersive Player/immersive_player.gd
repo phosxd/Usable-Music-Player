@@ -78,7 +78,7 @@ func _exit_tree() -> void:
 
 func _process(delta:float) -> void:
 	# Animate background.
-	if Engine.get_process_frames() % 2 == 0 && %Background.texture is NoiseTexture2D:
+	if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_MINIMIZED && Engine.get_process_frames() % 2 == 0 && %Background.texture is NoiseTexture2D:
 		var noise:FastNoiseLite = (%Background.texture as NoiseTexture2D).noise
 		noise.offset.z += delta*bg_speed
 
@@ -103,15 +103,20 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 		if %Background.texture is NoiseTexture2D: grad = %Background.texture.color_ramp
 		elif %Background.texture is GradientTexture2D: grad = %Background.texture.gradient
 		for i in grad.colors.size():
-			grad.set_color(i, dominant_colors[wrap(i,0,2)])
+			grad.set_color(i, dominant_colors[wrap(i,0,3)])
+
+	# Update title.
+	%Title.text = ' '+track.name+' '
+	var title_color:Color = Color(dominant_color.r, dominant_color.g, dominant_color.b, 1.0)
+	title_color.v = min(title_color.v+0.4, 1.0)
+	%Title.self_modulate = title_color
 
 	# Update album cover shadow.
 	var new_style = default_shadow_style.duplicate()
 	var shadow_color:Color = dominant_color
 	shadow_color.v = 1.0
-	shadow_color.a = 0.3
+	shadow_color.a = 0.6
 	new_style.shadow_color = shadow_color
-	new_style.shadow_size = 14
 	%Shadow.remove_theme_stylebox_override('panel')
 	%Shadow.add_theme_stylebox_override('panel', new_style)
 

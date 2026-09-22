@@ -6,7 +6,7 @@ colors = PackedColorArray(1, 1, 1, 1, 0.43303573, 0.43303573, 0.43303573, 1, 0, 
 
 [resource]
 gradient = SubResource("Gradient_ain0q")
-width = 32
-height = 32
+width = 360
+height = 360
 fill = 1
 metadata/blur = false

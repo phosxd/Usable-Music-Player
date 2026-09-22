@@ -166,7 +166,9 @@ static func calculate_colors(image_texture:ImageTexture) -> Dictionary[String,Co
 			if pixel.a != 1.0: continue # Exclude transparent pixels.
 			# Exclude similar pixels.
 			for color:Color in colors:
-				if pixel.is_equal_approx(color): continue
+				if pixel.is_equal_approx(color):
+					colors[color] += 1
+					continue
 			# Add color to count.
 			colors.get_or_add(pixel, 0)
 			colors[pixel] += 1

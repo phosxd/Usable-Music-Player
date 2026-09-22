@@ -10,6 +10,15 @@
 [ext_resource type="Script" uid="uid://3c2q7qpnxy2o" path="res://Scripts/UI/Immersive Player/hide_player_timer.gd" id="10_idskp"]
 [ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Layouts/Normal/Player/player.tscn" id="10_khquy"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u6ku8"]
+bg_color = Color(0, 0, 0, 0)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.05882353)
+shadow_size = 22
+
 [node name="Immersive Player" type="Control" unique_id=1697711554]
 layout_mode = 3
 anchors_preset = 15
@@ -32,9 +41,8 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Blur" type="ColorRect" parent="Background" unique_id=136730947]
+[node name="Blur" type="ColorRect" parent="Background" unique_id=994197137]
 unique_name_in_owner = true
-visible = false
 material = ExtResource("2_khquy")
 layout_mode = 1
 anchors_preset = 15
@@ -42,6 +50,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0, 0, 0, 0.19607843)
 
 [node name="Darken" type="ColorRect" parent="Background" unique_id=2096559225]
 layout_mode = 1
@@ -173,7 +182,31 @@ size_flags_stretch_ratio = 0.3
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.25
+size_flags_stretch_ratio = 0.05
+
+[node name="Title" type="Label" parent="VBox" unique_id=1618611196]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"LabelImmersiveTitle"
+text = "Track Title"
+
+[node name="PanelContainer" type="PanelContainer" parent="VBox/Title" unique_id=558237125]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u6ku8")
+
+[node name="Sep 3" type="HSeparator" parent="VBox" unique_id=1227057597]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
 
 [node name="Player" parent="VBox" unique_id=110111644 instance=ExtResource("10_khquy")]
 unique_name_in_owner = true

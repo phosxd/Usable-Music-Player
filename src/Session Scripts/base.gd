@@ -234,8 +234,8 @@ var button_tint := Color.TRANSPARENT:
 
 var immersive_view_slide_away_player:bool = true
 var immersive_view_reactive_background:bool = false
-var immersive_view_reactive_background_intensity:float = 0.1
-var immersive_view_texture_name:String = 'Stripes'
+var immersive_view_reactive_background_intensity:float = 0.13
+var immersive_view_texture_name:String = 'Animated Gradient'
 
 #endregion
 

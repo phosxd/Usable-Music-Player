@@ -168,6 +168,7 @@ func set_current_track(track_queue_position:int, save_session:bool=true, use_pre
 	set_track_progress(0)
 	audio_stream_player.stop()
 	queue_position = track_queue_position
+	track_peak = 0
 	current_track_updated.emit(track_queue_position, track)
 	current_track_loading = true
 	current_track_load_started.emit()
