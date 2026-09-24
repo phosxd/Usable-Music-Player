@@ -38,7 +38,7 @@ func _ready() -> void:
 	# Apply texture to background.
 	var bg_texture = SessionManager.call_func('get_immersive_view_texture')
 	if bg_texture:
-		%Background.texture = bg_texture
+		%Background.texture = bg_texture.duplicate()
 		var bg_speed_ = bg_texture.get_meta('speed') if bg_texture.has_meta('speed') else null
 		%Blur.visible = bg_texture.get_meta('blur') if bg_texture.has_meta('blur') else false
 		if bg_speed_ is not float: bg_speed = default_bg_speed
@@ -93,8 +93,8 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 	# Update background colors.
 	var dominant_color = track.album.get_album_dominant_color()
 	dominant_colors = [
-		dominant_color,
 		track.album.palette.get('primary', Color.WHITE),
+		dominant_color,
 		track.album.palette.get('secondary', Color.WHITE),
 		track.album.palette.get('trinary', Color.WHITE),
 	]
@@ -104,12 +104,17 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 		elif %Background.texture is GradientTexture2D: grad = %Background.texture.gradient
 		for i in grad.colors.size():
 			grad.set_color(i, dominant_colors[wrap(i,0,3)])
+		# Apply point overrides.
+		var point_overrides:Dictionary = %Background.texture.get_meta('point_overrides', {})
+		for key in point_overrides:
+			if key is not int: continue
+			var value = point_overrides[key]
+			if value is not Array or value.size() != 2 or value[0] is not int or value[1] is not Color: continue
+			print(dominant_colors[value[0]].blend(value[1]))
+			grad.set_color(key, dominant_colors[value[0]].blend(value[1]))
 
 	# Update title.
-	%Title.text = ' '+track.name+' '
-	var title_color:Color = Color(dominant_color.r, dominant_color.g, dominant_color.b, 1.0)
-	title_color.v = min(title_color.v+0.4, 1.0)
-	%Title.self_modulate = title_color
+	%Title.text = '  '+track.name+'  '
 
 	# Update album cover shadow.
 	var new_style = default_shadow_style.duplicate()
@@ -121,18 +126,26 @@ func update_current_track(_track_queue_position:int, track:DBTrack) -> void:
 	%Shadow.add_theme_stylebox_override('panel', new_style)
 
 
-var prev_bg_color := Color.WHITE
-func update_visualizer(db:float) -> void:
+var prev_darken:Array[Color] = [Color.BLACK, Color.BLACK]
+var intensity = SessionManager.get_var('immersive_view_reactive_background_intensity')
+func update_visualizer(_db:float, db_left:float, db_right:float) -> void:
 	if not SessionManager.get_var('immersive_view_reactive_background'):
-		%Background.self_modulate = Color.WHITE
+		%Darken.texture.gradient.set_color(0, Color.BLACK)
+		%Darken.texture.gradient.set_color(1, Color.BLACK)
 		return
 
-	var bg_color := Color.WHITE * MathUtils.transfer_range_of_value(Vector2(0.0,db_to_linear(PlayerManager.track_peak)), Vector2(0.0,1.75), db_to_linear(db))
-	bg_color.a = 1.0
-	bg_color.v = max(0.3,min(1.3,bg_color.v))
-	bg_color = lerp(prev_bg_color, bg_color, SessionManager.get_var('immersive_view_reactive_background_intensity'))
-	%Background.self_modulate = bg_color
-	prev_bg_color = bg_color
+	var track_peak:float = PlayerManager.track_peak
+	var db_left_linear:float = db_to_linear(db_left)
+	var db_right_linear:float = db_to_linear(db_right)
+	# Get darkness.
+	var darken_left := Color(0,0,0, remap(remap(db_left_linear, 0,track_peak, 0,1), 0,1, 1,0))
+	var darken_right := Color(0,0,0, remap(remap(db_right_linear, 0,track_peak, 0,1), 0,1, 1,0))
+	# Smoothly transition color.
+	darken_left = lerp(prev_darken[0], darken_left, intensity)
+	darken_right = lerp(prev_darken[1], darken_right, intensity)
+	%Darken.texture.gradient.set_color(0, darken_left)
+	%Darken.texture.gradient.set_color(1, darken_right)
+	prev_darken = [darken_left, darken_right]
 
 
 func _on_button_pressed() -> void:

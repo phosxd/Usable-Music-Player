@@ -70,14 +70,14 @@ func _draw() -> void:
 			(i*bar_width) + position_offset.x,
 			size.y + position_offset.y - (size.y if align_top else 0.0),
 			bar_width-2,
-			-MathUtils.transfer_range_of_value(Vector2(0,1), Vector2(0,size.y), height),
+			-remap(height, 0,1, 0,size.y),
 		)
 		draw_rect(rect, colors[wrap(i, 0, colors.size())])
 
 
 ## Sets [param _smoothing] to a usable value based on [param smoothing].
 func _init_smoothing() -> void:
-	_smoothing = MathUtils.transfer_range_of_value(Vector2(0,1), Vector2(1,0), smoothing)
+	_smoothing = remap(smoothing, 0,1, 1,0)
 
 
 ## Sets [param _update_time] to a usable value based on [param frame_rate].

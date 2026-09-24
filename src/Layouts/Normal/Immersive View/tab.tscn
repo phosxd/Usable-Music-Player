@@ -5,18 +5,26 @@
 [ext_resource type="Material" uid="uid://b62hwhyefqusc" path="res://Assets/blur_material.tres" id="2_khquy"]
 [ext_resource type="Texture2D" uid="uid://clplu742fuo4d" path="res://Themes/Normal/Assets/Icons/texture.svg" id="4_u6ku8"]
 [ext_resource type="PackedScene" uid="uid://ffqky4tb7tv8" path="res://Elements/Album Button/album_button.tscn" id="6_c8ttq"]
+[ext_resource type="StyleBox" uid="uid://brvl6e6ffdkhb" path="res://Assets/transparent_panel.tres" id="7_v172e"]
 [ext_resource type="PackedScene" uid="uid://b3crhnchggv8n" path="res://Layouts/Normal/Queue/queue.tscn" id="8_fbra8"]
 [ext_resource type="PackedScene" uid="uid://dodvlwoguvgjj" path="res://Layouts/Normal/Lyrics/lyrics.tscn" id="8_oc15g"]
+[ext_resource type="Script" uid="uid://cuel4avmaddm" path="res://Elements/ColoredControl.gd" id="9_5gjwf"]
 [ext_resource type="Script" uid="uid://3c2q7qpnxy2o" path="res://Scripts/UI/Immersive Player/hide_player_timer.gd" id="10_idskp"]
 [ext_resource type="PackedScene" uid="uid://tnbma5uvjto1" path="res://Layouts/Normal/Player/player.tscn" id="10_khquy"]
 
+[sub_resource type="Gradient" id="Gradient_v172e"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5gjwf"]
+gradient = SubResource("Gradient_v172e")
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u6ku8"]
-bg_color = Color(0, 0, 0, 0)
+bg_color = Color(0.6, 0.6, 0.6, 0)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
-shadow_color = Color(0, 0, 0, 0.05882353)
+shadow_color = Color(0, 0, 0, 0.039215688)
 shadow_size = 22
 
 [node name="Immersive Player" type="Control" unique_id=1697711554]
@@ -52,14 +60,15 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.19607843)
 
-[node name="Darken" type="ColorRect" parent="Background" unique_id=2096559225]
+[node name="Darken" type="TextureRect" parent="Background" unique_id=1062226536]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.19607843)
+texture = SubResource("GradientTexture1D_5gjwf")
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1624354911]
 layout_mode = 1
@@ -75,7 +84,7 @@ size_flags_vertical = 3
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.25
+size_flags_stretch_ratio = 0.2
 
 [node name="HBox" type="HBoxContainer" parent="VBox" unique_id=896511492]
 layout_mode = 2
@@ -87,19 +96,24 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
 
-[node name="Image Container" type="Control" parent="VBox/HBox" unique_id=1982524178]
+[node name="VBox" type="VBoxContainer" parent="VBox/HBox" unique_id=1909815238]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Image Container" type="Control" parent="VBox/HBox/VBox" unique_id=1982524178]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Shadow" type="Panel" parent="VBox/HBox/Image Container" unique_id=2125278853]
+[node name="Shadow" type="Panel" parent="VBox/HBox/VBox/Image Container" unique_id=2125278853]
 unique_name_in_owner = true
 layout_mode = 1
 theme_override_styles/panel = ExtResource("2_a3alx")
 
-[node name="Image Clip" type="PanelContainer" parent="VBox/HBox/Image Container" unique_id=1159245657]
+[node name="Image Clip" type="PanelContainer" parent="VBox/HBox/VBox/Image Container" unique_id=1159245657]
 unique_name_in_owner = true
 clip_children = 1
 layout_mode = 1
@@ -112,14 +126,14 @@ size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
 
-[node name="Image" type="TextureRect" parent="VBox/HBox/Image Container/Image Clip" unique_id=620712543]
+[node name="Image" type="TextureRect" parent="VBox/HBox/VBox/Image Container/Image Clip" unique_id=620712543]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("4_u6ku8")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Button" parent="VBox/HBox/Image Container" unique_id=519598093 instance=ExtResource("6_c8ttq")]
+[node name="Button" parent="VBox/HBox/VBox/Image Container" unique_id=519598093 instance=ExtResource("6_c8ttq")]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 0
@@ -145,7 +159,7 @@ visible = false
 self_modulate = Color(1, 1, 1, 0.23529412)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = ExtResource("2_a3alx")
+theme_override_styles/panel = ExtResource("7_v172e")
 
 [node name="Controls" parent="VBox/HBox/Queue/VBox" parent_id_path=PackedInt32Array(1119812283, 1514673906) index="0" unique_id=1929815790]
 visible = false
@@ -160,7 +174,7 @@ self_modulate = Color(1, 1, 1, 0.23529412)
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = ExtResource("2_a3alx")
+theme_override_styles/panel = ExtResource("7_v172e")
 
 [node name="Label" parent="VBox/HBox/Lyrics/VBox/HBox" parent_id_path=PackedInt32Array(100225784, 1057099219) index="1" unique_id=1803322427]
 visible = false
@@ -178,9 +192,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
 
-[node name="Sep 2" type="HSeparator" parent="VBox" unique_id=2089730294]
+[node name="Sep 2" type="VSeparator" parent="VBox" unique_id=1267668642]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.05
 
@@ -189,8 +204,10 @@ unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 0
 theme_type_variation = &"LabelImmersiveTitle"
 text = "Track Title"
+script = ExtResource("9_5gjwf")
 
 [node name="PanelContainer" type="PanelContainer" parent="VBox/Title" unique_id=558237125]
 show_behind_parent = true
@@ -202,11 +219,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_u6ku8")
 
-[node name="Sep 3" type="HSeparator" parent="VBox" unique_id=1227057597]
+[node name="Sep 3" type="HSeparator" parent="VBox" unique_id=2089730294]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
+size_flags_stretch_ratio = 0.09
 
 [node name="Player" parent="VBox" unique_id=110111644 instance=ExtResource("10_khquy")]
 unique_name_in_owner = true
@@ -228,8 +245,8 @@ autostart = true
 script = ExtResource("10_idskp")
 wait_time_2 = 1.5
 
-[connection signal="resized" from="VBox/HBox/Image Container" to="." method="_on_image_container_resized"]
-[connection signal="pressed" from="VBox/HBox/Image Container/Button" to="." method="_on_button_pressed"]
+[connection signal="resized" from="VBox/HBox/VBox/Image Container" to="." method="_on_image_container_resized"]
+[connection signal="pressed" from="VBox/HBox/VBox/Image Container/Button" to="." method="_on_button_pressed"]
 [connection signal="visibility_changed" from="VBox/HBox/Queue" to="." method="_on_right_item_visibility_changed"]
 [connection signal="visibility_changed" from="VBox/HBox/Lyrics" to="." method="_on_right_item_visibility_changed"]
 [connection signal="timeout" from="Hide Player Timer" to="Hide Player Timer" method="_on_timeout"]

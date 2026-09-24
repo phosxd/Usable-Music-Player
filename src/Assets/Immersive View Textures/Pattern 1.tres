@@ -6,7 +6,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0.47001648, 0.4700165, 0.4700165, 1, 0.860
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_khquy"]
 noise_type = 2
-frequency = 0.025
+frequency = 0.015
 fractal_type = 0
 cellular_jitter = 0.5
 cellular_return_type = 2

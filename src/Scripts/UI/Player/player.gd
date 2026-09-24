@@ -120,13 +120,13 @@ func update_visualizer(colors:Array, _db:float=0) -> void:
 	glow_gradient.set_color(1, Color(0,0,0,0))
 
 
-func update_visualizer_2(db:float) -> void:
+func update_visualizer_2(db:float, _db_left:float, _db_right:float) -> void:
 	if SessionManager.get_var('visualizer_mode') == 1: # 1 = Glow.
 		var glow_gradient = %Glow.texture.gradient as Gradient
 		var linear:float = db_to_linear(db)
 		glow_gradient.set_color(0, Color(visualizer_color.r, visualizer_color.g, visualizer_color.b,
-			MathUtils.transfer_range_of_value(Vector2(0,1), Vector2(0.25, 1), linear))
-		)
+			remap(linear, 0,1, 0.25,1)
+		))
 		%Glow.texture.gradient = glow_gradient
 		var color_2:Color = glow_gradient.get_color(1)
 		glow_gradient.set_color(1, Color(color_2.r, color_2.g, color_2.b, 0))
@@ -135,7 +135,7 @@ func update_visualizer_2(db:float) -> void:
 func update_track_progress(value:float) -> void:
 	if current_track == null: return
 	if track_progress_blocked: return
-	%'Play Progress'.value = MathUtils.transfer_range_of_value(Vector2(0,current_track.length), Vector2(0,100), value)
+	%'Play Progress'.value = remap(value, 0,current_track.length, 0,100)
 	%'Track Length'.text = DBTrack.get_track_position_formatted(value) + ' / ' + DBTrack.get_track_position_formatted(current_track.length)
 
 
@@ -168,7 +168,7 @@ func _on_play_progress_drag_ended(value_changed:bool) -> void:
 	if current_track == null: return
 	track_progress_blocked = false
 	if value_changed:
-		PlayerManager.set_track_progress(MathUtils.transfer_range_of_value(Vector2(0,100), Vector2(0,current_track.length), %'Play Progress'.value))
+		PlayerManager.set_track_progress(remap(%'Play Progress'.value, 0,100, 0,current_track.length))
 
 
 func _on_play_progress_drag_started() -> void:

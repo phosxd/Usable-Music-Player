@@ -18,5 +18,5 @@ generate_mipmaps = false
 noise = SubResource("FastNoiseLite_khquy")
 color_ramp = SubResource("Gradient_oc15g")
 in_3d_space = true
-metadata/speed = 50.0
+metadata/speed = 20.0
 metadata/blur = true

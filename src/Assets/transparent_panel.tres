@@ -1,4 +1,4 @@
-[gd_resource type="StyleBoxFlat" format=3 uid="uid://b1akcxnxut485"]
+[gd_resource type="StyleBoxFlat" format=3 uid="uid://brvl6e6ffdkhb"]
 
 [resource]
 draw_center = false
@@ -6,4 +6,5 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.15686275)
+shadow_size = 30

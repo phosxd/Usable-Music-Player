@@ -5,7 +5,6 @@ offsets = PackedFloat32Array(0, 0.5, 1)
 colors = PackedColorArray(0, 0, 0, 1, 0.47001648, 0.4700165, 0.4700165, 1, 0.86036915, 0.8603692, 0.8603692, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_khquy"]
-frequency = 0.025
 fractal_type = 2
 cellular_jitter = 0.5
 cellular_return_type = 2

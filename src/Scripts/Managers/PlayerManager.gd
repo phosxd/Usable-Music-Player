@@ -17,7 +17,7 @@ signal track_progress_updated(track_progress:float)
 ## Emitted when the volume has changed.
 signal volume_updated(value:float)
 ## [param db] is a float with a minimum of -100.
-signal track_peak_volume_changed(db:float)
+signal track_peak_volume_changed(db:float, db_left:float, db_right:float)
 signal replay_gain_updated(value:float)
 
 enum QueueUpdateCode {
@@ -44,7 +44,7 @@ var audio_stream_player: AudioStreamPlayer
 var current_track_loading:bool = false
 var track_progress: float
 var last_peak_volume: float # Not the track's total peak volume, instead this is the immediate loudness of the track.
-var track_peak:float = 0.0 # Track's peak volume, the loudest the track has been since playing it.
+var track_peak:float = 0.0 # Track's peak volume (linear, the loudest the track has been since playing it.
 var loop_mode := LoopMode.OFF
 var replay_gain:float = 0.0:
 	set(value):
@@ -93,10 +93,13 @@ func _process(_delta:float) -> void:
 
 	# Emit loudness changes.
 	if audio_stream_player.playing or last_peak_volume != -200:
-		var peak_volume:float = MathUtils.transfer_range_of_value(Vector2(-200,0), Vector2(-100,0), AudioServer.get_bus_peak_volume_left_db(0,0)+AudioServer.get_bus_peak_volume_right_db(0,0))
+		var peak_volume_left:float = AudioServer.get_bus_peak_volume_left_db(0,0)
+		var peak_volume_right:float = AudioServer.get_bus_peak_volume_right_db(0,0)
+		var peak_volume:float = remap(peak_volume_left+peak_volume_right, -200,0, -100,0)
 		if peak_volume != last_peak_volume:
-			if peak_volume > track_peak: track_peak = peak_volume # Update track peak.
-			track_peak_volume_changed.emit(peak_volume)
+			var linear_peak_volume:float = db_to_linear(peak_volume)
+			if linear_peak_volume > track_peak: track_peak = linear_peak_volume # Update track peak.
+			track_peak_volume_changed.emit(peak_volume, peak_volume_left, peak_volume_right)
 		last_peak_volume = peak_volume
 
 	# Update track progress.
@@ -183,7 +186,10 @@ func set_current_track(track_queue_position:int, save_session:bool=true, use_pre
 		current_track_load_finished.emit()
 		current_track_loading = false
 		# Save session.
-		if save_session: SessionManager.save_session()
+		if save_session:
+			Async.create_thread(func() -> void:
+				SessionManager.save_session()
+			)
 		# Send metadata to MPRIS server.
 		PyInterface.update_mpris_data({
 			'track_title': track.name,
